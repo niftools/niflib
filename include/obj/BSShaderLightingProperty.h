@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class BSShaderLightingProperty;
 typedef Ref<BSShaderLightingProperty> BSShaderLightingPropertyRef;
 
 /*! Bethesda-specific property. */
-class BSShaderLightingProperty : public NiProperty {
+class BSShaderLightingProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API BSShaderLightingProperty();
@@ -58,27 +58,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	unsigned short flags;
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
-	int unknownInt2;
-	/*! Unknown */
 	int unknownInt3;
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	int unknownInt5;
-	/*! The normal string. */
-	string fileName;
-	/*! Unknown */
-	int unknownInt6;
-	/*! Unknown */
-	int unknownInt7;
-	/*! Unknown */
-	int unknownInt8;
-	/*! Unknown */
-	float unknownFloat2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

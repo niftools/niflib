@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type DistantLODShaderProperty::TYPE("DistantLODShaderProperty", &NiShadeProperty::TYPE );
+const Type DistantLODShaderProperty::TYPE("DistantLODShaderProperty", &BSShaderProperty::TYPE );
 
 DistantLODShaderProperty::DistantLODShaderProperty() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -45,7 +45,7 @@ void DistantLODShaderProperty::Read( istream& in, list<unsigned int> & link_stac
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Read( in, link_stack, info );
+	BSShaderProperty::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -57,7 +57,7 @@ void DistantLODShaderProperty::Write( ostream& out, const map<NiObjectRef,unsign
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Write( out, link_map, info );
+	BSShaderProperty::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -71,7 +71,7 @@ std::string DistantLODShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiShadeProperty::asString();
+	out << BSShaderProperty::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -84,7 +84,7 @@ void DistantLODShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::FixLinks( objects, link_stack, info );
+	BSShaderProperty::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -93,7 +93,7 @@ void DistantLODShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 std::list<NiObjectRef> DistantLODShaderProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiShadeProperty::GetRefs();
+	refs = BSShaderProperty::GetRefs();
 	return refs;
 }
 

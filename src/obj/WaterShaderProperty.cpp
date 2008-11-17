@@ -18,9 +18,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type WaterShaderProperty::TYPE("WaterShaderProperty", &NiProperty::TYPE );
+const Type WaterShaderProperty::TYPE("WaterShaderProperty", &BSShaderProperty::TYPE );
 
-WaterShaderProperty::WaterShaderProperty() : unknownShort1((short)0), unknownInt1((int)0), unknownShort2((short)0), unknownUshort1((unsigned short)0), unknownInt2((int)0), unknownFloat1(0.0f) {
+WaterShaderProperty::WaterShaderProperty() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,13 +45,7 @@ void WaterShaderProperty::Read( istream& in, list<unsigned int> & link_stack, co
 
 	//--END CUSTOM CODE--//
 
-	NiProperty::Read( in, link_stack, info );
-	NifStream( unknownShort1, in, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownShort2, in, info );
-	NifStream( unknownUshort1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownFloat1, in, info );
+	BSShaderProperty::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -63,13 +57,7 @@ void WaterShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 
 	//--END CUSTOM CODE--//
 
-	NiProperty::Write( out, link_map, info );
-	NifStream( unknownShort1, out, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownShort2, out, info );
-	NifStream( unknownUshort1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownFloat1, out, info );
+	BSShaderProperty::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -83,13 +71,7 @@ std::string WaterShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiProperty::asString();
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
-	out << "  Unknown ushort 1:  " << unknownUshort1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << BSShaderProperty::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -102,7 +84,7 @@ void WaterShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 	//--END CUSTOM CODE--//
 
-	NiProperty::FixLinks( objects, link_stack, info );
+	BSShaderProperty::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -111,7 +93,7 @@ void WaterShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 std::list<NiObjectRef> WaterShaderProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiProperty::GetRefs();
+	refs = BSShaderProperty::GetRefs();
 	return refs;
 }
 

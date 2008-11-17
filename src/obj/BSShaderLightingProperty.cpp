@@ -18,9 +18,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSShaderLightingProperty::TYPE("BSShaderLightingProperty", &NiProperty::TYPE );
+const Type BSShaderLightingProperty::TYPE("BSShaderLightingProperty", &BSShaderProperty::TYPE );
 
-BSShaderLightingProperty::BSShaderLightingProperty() : flags((unsigned short)0), unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownFloat1(0.0f), unknownInt5((int)0), unknownInt6((int)0), unknownInt7((int)0), unknownInt8((int)0), unknownFloat2(0.0f) {
+BSShaderLightingProperty::BSShaderLightingProperty() : unknownInt3((int)3) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,18 +45,8 @@ void BSShaderLightingProperty::Read( istream& in, list<unsigned int> & link_stac
 
 	//--END CUSTOM CODE--//
 
-	NiProperty::Read( in, link_stack, info );
-	NifStream( flags, in, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
+	BSShaderProperty::Read( in, link_stack, info );
 	NifStream( unknownInt3, in, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownInt5, in, info );
-	NifStream( fileName, in, info );
-	NifStream( unknownInt6, in, info );
-	NifStream( unknownInt7, in, info );
-	NifStream( unknownInt8, in, info );
-	NifStream( unknownFloat2, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -68,18 +58,8 @@ void BSShaderLightingProperty::Write( ostream& out, const map<NiObjectRef,unsign
 
 	//--END CUSTOM CODE--//
 
-	NiProperty::Write( out, link_map, info );
-	NifStream( flags, out, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
+	BSShaderProperty::Write( out, link_map, info );
 	NifStream( unknownInt3, out, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownInt5, out, info );
-	NifStream( fileName, out, info );
-	NifStream( unknownInt6, out, info );
-	NifStream( unknownInt7, out, info );
-	NifStream( unknownInt8, out, info );
-	NifStream( unknownFloat2, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -93,18 +73,8 @@ std::string BSShaderLightingProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiProperty::asString();
-	out << "  Flags:  " << flags << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	out << BSShaderProperty::asString();
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Int 5:  " << unknownInt5 << endl;
-	out << "  File Name:  " << fileName << endl;
-	out << "  Unknown Int 6:  " << unknownInt6 << endl;
-	out << "  Unknown Int 7:  " << unknownInt7 << endl;
-	out << "  Unknown Int 8:  " << unknownInt8 << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -117,7 +87,7 @@ void BSShaderLightingProperty::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	//--END CUSTOM CODE--//
 
-	NiProperty::FixLinks( objects, link_stack, info );
+	BSShaderProperty::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -126,7 +96,7 @@ void BSShaderLightingProperty::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 std::list<NiObjectRef> BSShaderLightingProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiProperty::GetRefs();
+	refs = BSShaderProperty::GetRefs();
 	return refs;
 }
 

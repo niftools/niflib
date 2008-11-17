@@ -57,7 +57,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Object name. */
+	/*! Number of Textures */
 	mutable int numTextures;
 	/*! Textures */
 	vector<string > textures;

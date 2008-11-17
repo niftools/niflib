@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiShadeProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class HairShaderProperty;
 typedef Ref<HairShaderProperty> HairShaderPropertyRef;
 
 /*! Bethesda-specific node. */
-class HairShaderProperty : public NiShadeProperty {
+class HairShaderProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API HairShaderProperty();

@@ -659,6 +659,32 @@ ostream & operator<<( ostream & out, CoordGenType const & val ) {
 }
 
 
+//--BSShaderType--//
+
+void NifStream( BSShaderType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = BSShaderType(temp);
+}
+
+void NifStream( BSShaderType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BSShaderType const & val ) {
+	switch ( val ) {
+		case SHADER_TALL_GRASS: return out << "SHADER_TALL_GRASS";
+		case SHADER_DEFAULT: return out << "SHADER_DEFAULT";
+		case SHADER_SKY: return out << "SHADER_SKY";
+		case SHADER_WATER: return out << "SHADER_WATER";
+		case SHADER_LIGHTING30: return out << "SHADER_LIGHTING30";
+		case SHADER_TILE: return out << "SHADER_TILE";
+		case SHADER_NOLIGHTING: return out << "SHADER_NOLIGHTING";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--ApplyMode--//
 
 void NifStream( ApplyMode & val, istream& in, const NifInfo & info ) {

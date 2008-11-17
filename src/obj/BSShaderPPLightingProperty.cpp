@@ -19,9 +19,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSShaderPPLightingProperty::TYPE("BSShaderPPLightingProperty", &NiShadeProperty::TYPE );
+const Type BSShaderPPLightingProperty::TYPE("BSShaderPPLightingProperty", &BSShaderLightingProperty::TYPE );
 
-BSShaderPPLightingProperty::BSShaderPPLightingProperty() : unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownInt4((int)0), unknownInt5((int)0), textureSet(NULL), unknownInt6((int)0), unknownInt7((int)0), unknownInt8((int)0), unknownInt9((int)0) {
+BSShaderPPLightingProperty::BSShaderPPLightingProperty() : textureSet(NULL), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(4.0f), unknownFloat5(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -47,19 +47,16 @@ void BSShaderPPLightingProperty::Read( istream& in, list<unsigned int> & link_st
 	//--END CUSTOM CODE--//
 
 	unsigned int block_num;
-	NiShadeProperty::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownInt3, in, info );
-	NifStream( unknownInt4, in, info );
-	NifStream( unknownInt5, in, info );
+	BSShaderLightingProperty::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 14)) ) {
-		NifStream( unknownInt6, in, info );
-		NifStream( unknownInt7, in, info );
-		NifStream( unknownInt8, in, info );
-		NifStream( unknownInt9, in, info );
+		NifStream( unknownFloat2, in, info );
+		NifStream( unknownFloat3, in, info );
+	};
+	if ( ((info.userVersion == 11) && (info.userVersion2 > 24)) ) {
+		NifStream( unknownFloat4, in, info );
+		NifStream( unknownFloat5, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -72,12 +69,7 @@ void BSShaderPPLightingProperty::Write( ostream& out, const map<NiObjectRef,unsi
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Write( out, link_map, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownInt3, out, info );
-	NifStream( unknownInt4, out, info );
-	NifStream( unknownInt5, out, info );
+	BSShaderLightingProperty::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*textureSet), out, info );
 	} else {
@@ -88,10 +80,12 @@ void BSShaderPPLightingProperty::Write( ostream& out, const map<NiObjectRef,unsi
 		}
 	}
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 14)) ) {
-		NifStream( unknownInt6, out, info );
-		NifStream( unknownInt7, out, info );
-		NifStream( unknownInt8, out, info );
-		NifStream( unknownInt9, out, info );
+		NifStream( unknownFloat2, out, info );
+		NifStream( unknownFloat3, out, info );
+	};
+	if ( ((info.userVersion == 11) && (info.userVersion2 > 24)) ) {
+		NifStream( unknownFloat4, out, info );
+		NifStream( unknownFloat5, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -106,17 +100,12 @@ std::string BSShaderPPLightingProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiShadeProperty::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	out << "  Unknown Int 4:  " << unknownInt4 << endl;
-	out << "  Unknown Int 5:  " << unknownInt5 << endl;
+	out << BSShaderLightingProperty::asString();
 	out << "  Texture Set:  " << textureSet << endl;
-	out << "  Unknown Int 6:  " << unknownInt6 << endl;
-	out << "  Unknown Int 7:  " << unknownInt7 << endl;
-	out << "  Unknown Int 8:  " << unknownInt8 << endl;
-	out << "  Unknown Int 9:  " << unknownInt9 << endl;
+	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
+	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
+	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -129,7 +118,7 @@ void BSShaderPPLightingProperty::FixLinks( const map<unsigned int,NiObjectRef> &
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::FixLinks( objects, link_stack, info );
+	BSShaderLightingProperty::FixLinks( objects, link_stack, info );
 	textureSet = FixLink<BSShaderTextureSet>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
@@ -139,7 +128,7 @@ void BSShaderPPLightingProperty::FixLinks( const map<unsigned int,NiObjectRef> &
 
 std::list<NiObjectRef> BSShaderPPLightingProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiShadeProperty::GetRefs();
+	refs = BSShaderLightingProperty::GetRefs();
 	if ( textureSet != NULL )
 		refs.push_back(StaticCast<NiObject>(textureSet));
 	return refs;

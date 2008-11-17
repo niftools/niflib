@@ -70,10 +70,6 @@ void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		NifStream( hasShader, in, info );
 		if ( (hasShader != 0) ) {
 			NifStream( shaderName, in, info );
-		};
-	};
-	if ( info.version >= 0x0A000100 ) {
-		if ( (hasShader != 0) ) {
 			NifStream( unknownInteger, in, info );
 		};
 	};
@@ -128,10 +124,6 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		NifStream( hasShader, out, info );
 		if ( (hasShader != 0) ) {
 			NifStream( shaderName, out, info );
-		};
-	};
-	if ( info.version >= 0x0A000100 ) {
-		if ( (hasShader != 0) ) {
 			NifStream( unknownInteger, out, info );
 		};
 	};

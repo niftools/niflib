@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type HairShaderProperty::TYPE("HairShaderProperty", &NiShadeProperty::TYPE );
+const Type HairShaderProperty::TYPE("HairShaderProperty", &BSShaderProperty::TYPE );
 
 HairShaderProperty::HairShaderProperty() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -45,7 +45,7 @@ void HairShaderProperty::Read( istream& in, list<unsigned int> & link_stack, con
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Read( in, link_stack, info );
+	BSShaderProperty::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -57,7 +57,7 @@ void HairShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Write( out, link_map, info );
+	BSShaderProperty::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -71,7 +71,7 @@ std::string HairShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiShadeProperty::asString();
+	out << BSShaderProperty::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -84,7 +84,7 @@ void HairShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::FixLinks( objects, link_stack, info );
+	BSShaderProperty::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -93,7 +93,7 @@ void HairShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 std::list<NiObjectRef> HairShaderProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiShadeProperty::GetRefs();
+	refs = BSShaderProperty::GetRefs();
 	return refs;
 }
 

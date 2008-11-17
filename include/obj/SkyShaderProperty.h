@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class SkyShaderProperty;
 typedef Ref<SkyShaderProperty> SkyShaderPropertyRef;
 
 /*! Bethesda-specific node? Found in Fallout3 */
-class SkyShaderProperty : public NiProperty {
+class SkyShaderProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API SkyShaderProperty();
@@ -58,20 +58,8 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	short unknownShort1;
-	/*! Unknown */
-	short unknownShort2;
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
-	int unknownInt2;
-	/*! Unknown */
-	int unknownInt3;
-	/*! Unknown */
 	int unknownInt4;
-	/*! Unknown */
-	short unknownShort3;
-	/*! The normal string. */
+	/*! The texture. */
 	string fileName;
 	/*! Unknown */
 	int unknownInt5;

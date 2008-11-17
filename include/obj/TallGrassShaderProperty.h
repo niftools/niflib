@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiShadeProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class TallGrassShaderProperty;
 typedef Ref<TallGrassShaderProperty> TallGrassShaderPropertyRef;
 
 /*! Bethesda-specific node. */
-class TallGrassShaderProperty : public NiShadeProperty {
+class TallGrassShaderProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API TallGrassShaderProperty();
@@ -57,15 +57,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
-	int unknownInt2;
-	/*! Unknown */
-	int unknownInt3;
-	/*! Unknown */
-	int unknownFloat1;
-	/*! The normal string. */
+	/*! Texture file name */
 	string fileName;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

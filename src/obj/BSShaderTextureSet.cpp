@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSShaderTextureSet::TYPE("BSShaderTextureSet", &NiObject::TYPE );
 
-BSShaderTextureSet::BSShaderTextureSet() : numTextures((int)0) {
+BSShaderTextureSet::BSShaderTextureSet() : numTextures((int)6) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

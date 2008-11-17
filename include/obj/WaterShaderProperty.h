@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class WaterShaderProperty;
 typedef Ref<WaterShaderProperty> WaterShaderPropertyRef;
 
 /*! Bethesda-specific node? Found in Fallout3 */
-class WaterShaderProperty : public NiProperty {
+class WaterShaderProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API WaterShaderProperty();
@@ -56,19 +56,6 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
-protected:
-	/*! Unknown */
-	short unknownShort1;
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
-	short unknownShort2;
-	/*! Unknown */
-	unsigned short unknownUshort1;
-	/*! Unknown */
-	int unknownInt2;
-	/*! Unknown */
-	float unknownFloat1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

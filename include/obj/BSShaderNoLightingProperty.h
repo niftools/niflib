@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiProperty.h"
+#include "BSShaderLightingProperty.h"
 namespace Niflib {
 
 class BSShaderNoLightingProperty;
 typedef Ref<BSShaderNoLightingProperty> BSShaderNoLightingPropertyRef;
 
 /*! Bethesda-specific property. */
-class BSShaderNoLightingProperty : public NiProperty {
+class BSShaderNoLightingProperty : public BSShaderLightingProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API BSShaderNoLightingProperty();
@@ -57,28 +57,19 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	unsigned short flags;
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
-	int unknownInt2;
-	/*! Unknown */
-	int unknownInt3;
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	int unknownInt5;
-	/*! The normal string. */
+	/*! The texture glow map. */
 	string fileName;
 	/*! Unknown */
-	int unknownInt6;
-	/*! Unknown */
-	int unknownInt7;
-	/*! Unknown */
-	int unknownInt8;
-	/*! Unknown */
 	float unknownFloat2;
+	/*!
+	 * Normally what appears to be a junk value (0xB33BBD2E). Appears to be related to
+	 * glow when Unk Flags is (0x82000148).
+	 */
+	float unknownFloat3;
+	/*! Unknown */
+	float unknownFloat4;
+	/*! Unknown */
+	float unknownFloat5;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

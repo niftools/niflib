@@ -10,6 +10,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../NIF_IO.h"
 
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
@@ -29,7 +31,7 @@ struct SkinShape {
 	/*! The shape. */
 	NiTriBasedGeom * shape;
 	/*! Skinning instance for the shape? */
-	NiSkinInstance * skinInstance;
+	Ref<NiSkinInstance > skinInstance;
 };
 
 }

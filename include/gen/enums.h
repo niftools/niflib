@@ -359,6 +359,22 @@ enum CoordGenType {
 
 ostream & operator<<( ostream & out, CoordGenType const & val );
 
+/*!
+ * The type of animation interpolation (blending) that will be used on the
+ * associated key frames.
+ */
+enum BSShaderType {
+	SHADER_TALL_GRASS = 0, /*!< Tall Grass Shader */
+	SHADER_DEFAULT = 1, /*!< Standard Lighting Shader */
+	SHADER_SKY = 10, /*!< Sky Shader */
+	SHADER_WATER = 17, /*!< Water Shader */
+	SHADER_LIGHTING30 = 29, /*!< Lighting 3.0 Shader */
+	SHADER_TILE = 32, /*!< Tiled Shader */
+	SHADER_NOLIGHTING = 33, /*!< No Lighting Shader */
+};
+
+ostream & operator<<( ostream & out, BSShaderType const & val );
+
 /*! An unsigned 32-bit integer, describing the apply mode of a texture. */
 enum ApplyMode {
 	APPLY_REPLACE = 0, /*!< Replaces existing color */

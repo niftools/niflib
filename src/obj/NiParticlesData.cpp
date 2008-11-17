@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticlesData::TYPE("NiParticlesData", &NiObject::TYPE );
 
-NiParticlesData::NiParticlesData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL), numParticles((unsigned short)0), hasRadii(false), numActive((unsigned short)0), hasSizes1((int)0), hasSizes(false), hasRotations1(false), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
+NiParticlesData::NiParticlesData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL), numParticles((unsigned short)0), hasRadii(false), numActive((unsigned short)0), hasSizes1((int)0), hasSizes(false), hasRotations1(false), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -63,6 +63,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 	};
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( numUvSets, in, info );
+		NifStream( tspaceFlag, in, info );
 	};
 	NifStream( hasNormals, in, info );
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
@@ -74,7 +75,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 		};
 	};
 	if ( ( info.version >= 0x0A010000 ) && ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) ) {
-		if ( ((hasNormals != 0) && (numUvSets & 61440)) ) {
+		if ( ((hasNormals != 0) && (tspaceFlag & 240)) ) {
 			binormals.resize(numVertices);
 			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
 				NifStream( binormals[i3], in, info );
@@ -98,6 +99,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 	};
 	if ( info.version <= 0x04020200 ) {
 		NifStream( numUvSets, in, info );
+		NifStream( tspaceFlag, in, info );
 	};
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasUv, in, info );
@@ -139,7 +141,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasSizes1, in, info );
 	};
-	if ( info.version >= 0x0A010000 ) {
+	if ( info.version >= 0x0401000C ) {
 		NifStream( hasSizes, in, info );
 	};
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
@@ -204,7 +206,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 
 	NiObject::Write( out, link_map, info );
 	numUnknownStuff1 = (short)(unknownStuff1.size());
-	numUvSets = (unsigned short)(uvSets.size());
+	numUvSets = (byte)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( name, out, info );
@@ -224,6 +226,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	};
 	if ( info.version >= 0x0A000100 ) {
 		NifStream( numUvSets, out, info );
+		NifStream( tspaceFlag, out, info );
 	};
 	NifStream( hasNormals, out, info );
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
@@ -234,7 +237,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		};
 	};
 	if ( ( info.version >= 0x0A010000 ) && ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) ) {
-		if ( ((hasNormals != 0) && (numUvSets & 61440)) ) {
+		if ( ((hasNormals != 0) && (tspaceFlag & 240)) ) {
 			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
 				NifStream( binormals[i3], out, info );
 			};
@@ -255,6 +258,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	};
 	if ( info.version <= 0x04020200 ) {
 		NifStream( numUvSets, out, info );
+		NifStream( tspaceFlag, out, info );
 	};
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasUv, out, info );
@@ -300,7 +304,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasSizes1, out, info );
 	};
-	if ( info.version >= 0x0A010000 ) {
+	if ( info.version >= 0x0401000C ) {
 		NifStream( hasSizes, out, info );
 	};
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
@@ -362,7 +366,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	numUnknownStuff1 = (short)(unknownStuff1.size());
-	numUvSets = (unsigned short)(uvSets.size());
+	numUvSets = (byte)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	out << "  Name:  " << name << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
@@ -384,6 +388,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 		};
 	};
 	out << "  Num UV Sets:  " << numUvSets << endl;
+	out << "  TSpace Flag:  " << tspaceFlag << endl;
 	out << "  Has Normals:  " << hasNormals << endl;
 	if ( (hasNormals != 0) ) {
 		array_output_count = 0;
@@ -399,7 +404,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	if ( ((hasNormals != 0) && (numUvSets & 61440)) ) {
+	if ( ((hasNormals != 0) && (tspaceFlag & 240)) ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < binormals.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSDistantTreeShaderProperty::TYPE("BSDistantTreeShaderProperty", &NiShadeProperty::TYPE );
+const Type BSDistantTreeShaderProperty::TYPE("BSDistantTreeShaderProperty", &BSShaderProperty::TYPE );
 
 BSDistantTreeShaderProperty::BSDistantTreeShaderProperty() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -45,7 +45,7 @@ void BSDistantTreeShaderProperty::Read( istream& in, list<unsigned int> & link_s
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Read( in, link_stack, info );
+	BSShaderProperty::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -57,7 +57,7 @@ void BSDistantTreeShaderProperty::Write( ostream& out, const map<NiObjectRef,uns
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Write( out, link_map, info );
+	BSShaderProperty::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -71,7 +71,7 @@ std::string BSDistantTreeShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiShadeProperty::asString();
+	out << BSShaderProperty::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -84,7 +84,7 @@ void BSDistantTreeShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> 
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::FixLinks( objects, link_stack, info );
+	BSShaderProperty::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -93,7 +93,7 @@ void BSDistantTreeShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> 
 
 std::list<NiObjectRef> BSDistantTreeShaderProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiShadeProperty::GetRefs();
+	refs = BSShaderProperty::GetRefs();
 	return refs;
 }
 

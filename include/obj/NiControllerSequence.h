@@ -7,8 +7,8 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _NiControllerSequence_H_
-#define _NiControllerSequence_H_
+#ifndef _NICONTROLLERSEQUENCE_H_
+#define _NICONTROLLERSEQUENCE_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
 namespace Niflib {

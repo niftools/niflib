@@ -228,6 +228,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiPSysTurbulenceFieldModifier.h"
 #include "../../include/obj/NiPSysFieldMagnitudeCtlr.h"
 #include "../../include/obj/NiPSysAirFieldModifier.h"
+#include "../../include/obj/NiPSysTrailEmitter.h"
 #include "../../include/obj/NiLightIntensityController.h"
 #include "../../include/obj/NiLODData.h"
 #include "../../include/obj/NiRangeLODData.h"
@@ -302,14 +303,22 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiRoom.h"
 #include "../../include/obj/NiPortal.h"
 #include "../../include/obj/BSFadeNode.h"
+#include "../../include/obj/BSShaderProperty.h"
 #include "../../include/obj/BSShaderLightingProperty.h"
 #include "../../include/obj/BSShaderNoLightingProperty.h"
 #include "../../include/obj/BSShaderPPLightingProperty.h"
 #include "../../include/obj/BSShaderTextureSet.h"
-#include "../../include/obj/BSDismemberSkinInstance.h"
-#include "../../include/obj/BSDecalPlacementVectorExtraData.h"
 #include "../../include/obj/WaterShaderProperty.h"
 #include "../../include/obj/SkyShaderProperty.h"
+#include "../../include/obj/TileShaderProperty.h"
+#include "../../include/obj/DistantLODShaderProperty.h"
+#include "../../include/obj/BSDistantTreeShaderProperty.h"
+#include "../../include/obj/TallGrassShaderProperty.h"
+#include "../../include/obj/VolumetricFogShaderProperty.h"
+#include "../../include/obj/HairShaderProperty.h"
+#include "../../include/obj/Lighting30ShaderProperty.h"
+#include "../../include/obj/BSDismemberSkinInstance.h"
+#include "../../include/obj/BSDecalPlacementVectorExtraData.h"
 #include "../../include/obj/BSPSysSimpleColorModifier.h"
 #include "../../include/obj/BSValueNode.h"
 #include "../../include/obj/BSStripParticleSystem.h"
@@ -322,14 +331,6 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/BSOrderedNode.h"
 #include "../../include/obj/BSBlastNode.h"
 #include "../../include/obj/BSDamageStage.h"
-#include "../../include/obj/BSShaderProperty.h"
-#include "../../include/obj/TileShaderProperty.h"
-#include "../../include/obj/DistantLODShaderProperty.h"
-#include "../../include/obj/BSDistantTreeShaderProperty.h"
-#include "../../include/obj/TallGrassShaderProperty.h"
-#include "../../include/obj/VolumetricFogShaderProperty.h"
-#include "../../include/obj/HairShaderProperty.h"
-#include "../../include/obj/Lighting30ShaderProperty.h"
 #include "../../include/obj/BSRefractionFirePeriodController.h"
 #include "../../include/obj/bhkConvexListShape.h"
 #include "../../include/obj/BSTreadTransfInterpolator.h"
@@ -573,6 +574,7 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiPSysTurbulenceFieldModifier", NiPSysTurbulenceFieldModifier::Create );
 		ObjectRegistry::RegisterObject( "NiPSysFieldMagnitudeCtlr", NiPSysFieldMagnitudeCtlr::Create );
 		ObjectRegistry::RegisterObject( "NiPSysAirFieldModifier", NiPSysAirFieldModifier::Create );
+		ObjectRegistry::RegisterObject( "NiPSysTrailEmitter", NiPSysTrailEmitter::Create );
 		ObjectRegistry::RegisterObject( "NiLightIntensityController", NiLightIntensityController::Create );
 		ObjectRegistry::RegisterObject( "NiLODData", NiLODData::Create );
 		ObjectRegistry::RegisterObject( "NiRangeLODData", NiRangeLODData::Create );
@@ -647,14 +649,22 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "NiRoom", NiRoom::Create );
 		ObjectRegistry::RegisterObject( "NiPortal", NiPortal::Create );
 		ObjectRegistry::RegisterObject( "BSFadeNode", BSFadeNode::Create );
+		ObjectRegistry::RegisterObject( "BSShaderProperty", BSShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "BSShaderLightingProperty", BSShaderLightingProperty::Create );
 		ObjectRegistry::RegisterObject( "BSShaderNoLightingProperty", BSShaderNoLightingProperty::Create );
 		ObjectRegistry::RegisterObject( "BSShaderPPLightingProperty", BSShaderPPLightingProperty::Create );
 		ObjectRegistry::RegisterObject( "BSShaderTextureSet", BSShaderTextureSet::Create );
-		ObjectRegistry::RegisterObject( "BSDismemberSkinInstance", BSDismemberSkinInstance::Create );
-		ObjectRegistry::RegisterObject( "BSDecalPlacementVectorExtraData", BSDecalPlacementVectorExtraData::Create );
 		ObjectRegistry::RegisterObject( "WaterShaderProperty", WaterShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "SkyShaderProperty", SkyShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "TileShaderProperty", TileShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "DistantLODShaderProperty", DistantLODShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSDistantTreeShaderProperty", BSDistantTreeShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "TallGrassShaderProperty", TallGrassShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "VolumetricFogShaderProperty", VolumetricFogShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "HairShaderProperty", HairShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "Lighting30ShaderProperty", Lighting30ShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSDismemberSkinInstance", BSDismemberSkinInstance::Create );
+		ObjectRegistry::RegisterObject( "BSDecalPlacementVectorExtraData", BSDecalPlacementVectorExtraData::Create );
 		ObjectRegistry::RegisterObject( "BSPSysSimpleColorModifier", BSPSysSimpleColorModifier::Create );
 		ObjectRegistry::RegisterObject( "BSValueNode", BSValueNode::Create );
 		ObjectRegistry::RegisterObject( "BSStripParticleSystem", BSStripParticleSystem::Create );
@@ -667,14 +677,6 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "BSOrderedNode", BSOrderedNode::Create );
 		ObjectRegistry::RegisterObject( "BSBlastNode", BSBlastNode::Create );
 		ObjectRegistry::RegisterObject( "BSDamageStage", BSDamageStage::Create );
-		ObjectRegistry::RegisterObject( "BSShaderProperty", BSShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "TileShaderProperty", TileShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "DistantLODShaderProperty", DistantLODShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "BSDistantTreeShaderProperty", BSDistantTreeShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "TallGrassShaderProperty", TallGrassShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "VolumetricFogShaderProperty", VolumetricFogShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "HairShaderProperty", HairShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "Lighting30ShaderProperty", Lighting30ShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "BSRefractionFirePeriodController", BSRefractionFirePeriodController::Create );
 		ObjectRegistry::RegisterObject( "bhkConvexListShape", bhkConvexListShape::Create );
 		ObjectRegistry::RegisterObject( "BSTreadTransfInterpolator", BSTreadTransfInterpolator::Create );

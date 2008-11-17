@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiShadeProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class DistantLODShaderProperty;
 typedef Ref<DistantLODShaderProperty> DistantLODShaderPropertyRef;
 
 /*! Bethesda-specific node. */
-class DistantLODShaderProperty : public NiShadeProperty {
+class DistantLODShaderProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API DistantLODShaderProperty();

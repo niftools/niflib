@@ -75,11 +75,10 @@ protected:
 	bool hasVertices;
 	/*! The mesh vertices. */
 	vector<Vector3 > vertices;
-	/*!
-	 * Methods for saving binormals and tangents saved in upper byte.  Texture flags in
-	 * lower byte.
-	 */
-	mutable unsigned short numUvSets;
+	/*! Texture flags in lower byte. */
+	mutable byte numUvSets;
+	/*! Methods for saving binormals and tangents saved in upper byte. */
+	byte tspaceFlag;
 	/*!
 	 * Do we have lighting normals? These are essential for proper lighting: if not
 	 * present, the model will only be influenced by ambient light.

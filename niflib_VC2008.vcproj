@@ -1769,6 +1769,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\NiPSysTrailEmitter.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\NiPSysTurbulenceFieldModifier.cpp"
 					>
 				</File>
@@ -3476,6 +3480,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\NiPSysSphericalCollider.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\NiPSysTrailEmitter.h"
 					>
 				</File>
 				<File

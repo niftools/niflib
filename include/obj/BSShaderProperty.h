@@ -56,6 +56,17 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
+protected:
+	/*! Unknown */
+	unsigned short flags;
+	/*! Unknown (Set to 0x21 for NoLighting, 0x11 for Water) */
+	BSShaderType shaderType;
+	/*! Unknown */
+	unsigned int unknownFlags1;
+	/*! Unknown */
+	int unknownInt2;
+	/*! Unknown */
+	float unknownFloat1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

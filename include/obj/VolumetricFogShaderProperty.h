@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiShadeProperty.h"
+#include "BSShaderProperty.h"
 namespace Niflib {
 
 class VolumetricFogShaderProperty;
 typedef Ref<VolumetricFogShaderProperty> VolumetricFogShaderPropertyRef;
 
 /*! Bethesda-specific node. */
-class VolumetricFogShaderProperty : public NiShadeProperty {
+class VolumetricFogShaderProperty : public BSShaderProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API VolumetricFogShaderProperty();

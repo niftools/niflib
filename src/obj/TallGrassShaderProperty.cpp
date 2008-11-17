@@ -18,9 +18,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type TallGrassShaderProperty::TYPE("TallGrassShaderProperty", &NiShadeProperty::TYPE );
+const Type TallGrassShaderProperty::TYPE("TallGrassShaderProperty", &BSShaderProperty::TYPE );
 
-TallGrassShaderProperty::TallGrassShaderProperty() : unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownFloat1((int)0) {
+TallGrassShaderProperty::TallGrassShaderProperty() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,11 +45,7 @@ void TallGrassShaderProperty::Read( istream& in, list<unsigned int> & link_stack
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownInt3, in, info );
-	NifStream( unknownFloat1, in, info );
+	BSShaderProperty::Read( in, link_stack, info );
 	NifStream( fileName, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -62,11 +58,7 @@ void TallGrassShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigne
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::Write( out, link_map, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownInt3, out, info );
-	NifStream( unknownFloat1, out, info );
+	BSShaderProperty::Write( out, link_map, info );
 	NifStream( fileName, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -81,11 +73,7 @@ std::string TallGrassShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiShadeProperty::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << BSShaderProperty::asString();
 	out << "  File Name:  " << fileName << endl;
 	return out.str();
 
@@ -99,7 +87,7 @@ void TallGrassShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & ob
 
 	//--END CUSTOM CODE--//
 
-	NiShadeProperty::FixLinks( objects, link_stack, info );
+	BSShaderProperty::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -108,7 +96,7 @@ void TallGrassShaderProperty::FixLinks( const map<unsigned int,NiObjectRef> & ob
 
 std::list<NiObjectRef> TallGrassShaderProperty::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiShadeProperty::GetRefs();
+	refs = BSShaderProperty::GetRefs();
 	return refs;
 }
 

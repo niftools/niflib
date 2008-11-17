@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiShadeProperty.h"
+#include "BSShaderLightingProperty.h"
 namespace Niflib {
 
 class TileShaderProperty;
 typedef Ref<TileShaderProperty> TileShaderPropertyRef;
 
 /*! Bethesda-specific node. */
-class TileShaderProperty : public NiShadeProperty {
+class TileShaderProperty : public BSShaderLightingProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API TileShaderProperty();
@@ -57,17 +57,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
-	int unknownInt2;
-	/*! Unknown */
-	int unknownInt3;
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	int unknownInt5;
-	/*! The normal string. */
+	/*! Texture file name */
 	string fileName;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

@@ -142,6 +142,12 @@ void NifStream( CoordGenType & val, istream& in, const NifInfo & info = NifInfo(
 void NifStream( CoordGenType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---BSShaderType---//
+
+void NifStream( BSShaderType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BSShaderType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---ApplyMode---//
 
 void NifStream( ApplyMode & val, istream& in, const NifInfo & info = NifInfo() );
