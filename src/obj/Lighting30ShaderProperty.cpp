@@ -97,6 +97,8 @@ std::list<NiObjectRef> Lighting30ShaderProperty::GetRefs() const {
 	return refs;
 }
 
+//--This object has no eligable attributes.  No example implementation generated--//
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

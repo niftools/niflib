@@ -123,4 +123,24 @@ std::list<NiObjectRef> BSShaderTextureSet::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+vector<string > BSShaderTextureSet::GetTextures() const {
+	return textures;
+}
+
+void BSShaderTextureSet::SetTextures( const vector<string >& value ) {
+	textures = value;
+}
+
+string BSShaderTextureSet::GetTexture(size_t i) const {
+	if (i >= textures.size())
+		throw runtime_error("Invalid Texture Index specified");
+	return textures[i];
+}
+
+void BSShaderTextureSet::SetTexture( size_t i, const string& value) {
+	if (i >= textures.size())
+		textures.resize(i+1);
+	textures[i] = value;
+}
+
 //--END CUSTOM CODE--//

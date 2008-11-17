@@ -55,6 +55,23 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
+	// Textures
+	// \return The current value.
+	vector<string > GetTextures() const;
+
+	// Textures
+	// \param[in] value The new value.
+	void SetTextures( const vector<string >& value );
+
+	// Textures
+	// \return The current value.
+	string GetTexture( size_t i ) const;
+
+	// Textures
+	// \param[in] i Index of texture to set
+	// \param[in] value The new value.
+	void SetTexture( size_t i, const string& value);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of Textures */

@@ -108,4 +108,12 @@ std::list<NiObjectRef> SkyShaderProperty::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+string SkyShaderProperty::GetFileName() const {
+	return fileName;
+}
+
+void SkyShaderProperty::SetFileName( const string & value ) {
+	fileName = value;
+}
+
 //--END CUSTOM CODE--//

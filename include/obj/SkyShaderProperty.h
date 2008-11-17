@@ -55,6 +55,14 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
+	// The texture.
+	// \return The current value.
+	string GetFileName() const;
+
+	// The texture.
+	// \param[in] value The new value.
+	void SetFileName( const string & value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */

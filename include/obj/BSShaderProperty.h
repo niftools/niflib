@@ -55,6 +55,22 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
+	// Unknown
+	// \return The current value.
+	unsigned short GetFlags() const;
+
+	// Unknown
+	// \param[in] value The new value.
+	void SetFlags( unsigned short value );
+
+	// Unknown (Set to 0x21 for NoLighting, 0x11 for Water)
+	// \return The current value.
+	BSShaderType GetShaderType() const;
+
+	// Unknown (Set to 0x21 for NoLighting, 0x11 for Water)
+	// \param[in] value The new value.
+	void SetShaderType( BSShaderType value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */

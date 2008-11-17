@@ -102,4 +102,12 @@ std::list<NiObjectRef> TileShaderProperty::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+string TileShaderProperty::GetFileName() const {
+	return fileName;
+}
+
+void TileShaderProperty::SetFileName( const string & value ) {
+	fileName = value;
+}
+
 //--END CUSTOM CODE--//

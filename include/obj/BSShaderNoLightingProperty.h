@@ -54,6 +54,13 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+	// The texture glow map.
+	// \return The current value.
+	string GetFileName() const;
+
+	// The texture glow map.
+	// \param[in] value The new value.
+	void SetFileName( const string & value );
 
 	//--END CUSTOM CODE--//
 protected:

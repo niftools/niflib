@@ -114,4 +114,20 @@ std::list<NiObjectRef> BSShaderProperty::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+unsigned short BSShaderProperty::GetFlags() const {
+	return flags;
+}
+
+void BSShaderProperty::SetFlags( unsigned short value ) {
+	flags = value;
+}
+
+BSShaderType BSShaderProperty::GetShaderType() const {
+	return shaderType;
+}
+
+void BSShaderProperty::SetShaderType( BSShaderType value ) {
+	shaderType = value;
+}
+
 //--END CUSTOM CODE--//

@@ -102,4 +102,12 @@ std::list<NiObjectRef> TallGrassShaderProperty::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+string TallGrassShaderProperty::GetFileName() const {
+	return fileName;
+}
+
+void TallGrassShaderProperty::SetFileName( const string & value ) {
+	fileName = value;
+}
+
 //--END CUSTOM CODE--//

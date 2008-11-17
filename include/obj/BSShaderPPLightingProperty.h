@@ -60,6 +60,14 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
+	// Texture Set
+	// \return The current value.
+	Ref<BSShaderTextureSet > GetTextureSet() const;
+
+	// Texture Set
+	// \param[in] value The new value.
+	void SetTextureSet( Ref<BSShaderTextureSet > value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Texture Set */

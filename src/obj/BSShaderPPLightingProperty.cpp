@@ -136,4 +136,12 @@ std::list<NiObjectRef> BSShaderPPLightingProperty::GetRefs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+Ref<BSShaderTextureSet > BSShaderPPLightingProperty::GetTextureSet() const {
+	return textureSet;
+}
+
+void BSShaderPPLightingProperty::SetTextureSet( Ref<BSShaderTextureSet > value ) {
+	textureSet = value;
+}
+
 //--END CUSTOM CODE--//
