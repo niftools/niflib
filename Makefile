@@ -27,8 +27,7 @@ DEBUGGING	=
 # Example: -march=k8 would generate enhancements for the k8 family (opterons and some athlons).or -march=pentium4 for a pentium4
 # For more info read this: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/i386-and-x86_002d64-Options.html#i386-and-x86_002d64-Options
 #
-#CFLAGS      = -fPIC 
-CFLAGS 		= -O2 -Wall $(DEBUGGING) -fpermissive -Iinclude -D BUILDING_NIFLIB_DLL
+CFLAGS 		= -O2 -Wall $(DEBUGGING) -fpermissive -Iinclude -D BUILDING_NIFLIB_DLL -fPIC
 CXXFLAGS	= $(CFLAGS)
 #IT should find the libs used, but if it doesn't specify here. Ex: -lm for libm.so.<whatever>
 LIBS		=
@@ -477,6 +476,8 @@ clean: clean
 	-$(RM) -f src/*.o
 	-$(RM) -f src/gen/*.o
 	-$(RM) -f src/obj/*.o	
+	-$(RM) -f NvTriStrip/*.o	
+	-$(RM) -f TriStripper/*.o	
 	-$(RM) -f $(TARGETA)
 	-$(RM) -f $(TARGETD)
 	-$(RM) -f $(TARGET0)
