@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSShaderPPLightingProperty::TYPE("BSShaderPPLightingProperty", &BSShaderLightingProperty::TYPE );
 
-BSShaderPPLightingProperty::BSShaderPPLightingProperty() : textureSet(NULL), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(4.0f), unknownFloat5(1.0f) {
+BSShaderPPLightingProperty::BSShaderPPLightingProperty() : textureSet(NULL), unknownFloat2(0.0f), refractionPeriod((int)0.0), unknownFloat4(4.0f), unknownFloat5(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -52,7 +52,7 @@ void BSShaderPPLightingProperty::Read( istream& in, list<unsigned int> & link_st
 	link_stack.push_back( block_num );
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 14)) ) {
 		NifStream( unknownFloat2, in, info );
-		NifStream( unknownFloat3, in, info );
+		NifStream( refractionPeriod, in, info );
 	};
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 24)) ) {
 		NifStream( unknownFloat4, in, info );
@@ -81,7 +81,7 @@ void BSShaderPPLightingProperty::Write( ostream& out, const map<NiObjectRef,unsi
 	}
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 14)) ) {
 		NifStream( unknownFloat2, out, info );
-		NifStream( unknownFloat3, out, info );
+		NifStream( refractionPeriod, out, info );
 	};
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 24)) ) {
 		NifStream( unknownFloat4, out, info );
@@ -103,7 +103,7 @@ std::string BSShaderPPLightingProperty::asString( bool verbose ) const {
 	out << BSShaderLightingProperty::asString();
 	out << "  Texture Set:  " << textureSet << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
-	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
+	out << "  Refraction Period:  " << refractionPeriod << endl;
 	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
 	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
 	return out.str();

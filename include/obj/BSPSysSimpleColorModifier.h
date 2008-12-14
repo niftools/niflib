@@ -62,13 +62,13 @@ protected:
 	/*! Unknown */
 	float fadeOutPercent;
 	/*! Unknown */
-	int color1EndPercent;
+	float color1EndPercent;
 	/*! Unknown */
-	int color1StartPercent;
+	float color1StartPercent;
 	/*! Unknown */
-	int color2EndPercent;
+	float color2EndPercent;
 	/*! Unknown */
-	int color2StartPercent;
+	float color2StartPercent;
 	/*! Colors */
 	array<3,Color4 > colors;
 public:

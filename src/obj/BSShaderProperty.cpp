@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSShaderProperty::TYPE("BSShaderProperty", &NiProperty::TYPE );
 
-BSShaderProperty::BSShaderProperty() : flags((unsigned short)1), shaderType((BSShaderType)1), unknownFlags1((unsigned int)0x82000000), unknownInt2((int)1), unknownFloat1(1.0f) {
+BSShaderProperty::BSShaderProperty() : flags((unsigned short)1), shaderType((BSShaderType)1), shaderFlags((BSShaderFlags)0x82000000), unknownInt2((int)1), envmapScale(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -48,9 +48,9 @@ void BSShaderProperty::Read( istream& in, list<unsigned int> & link_stack, const
 	NiProperty::Read( in, link_stack, info );
 	NifStream( flags, in, info );
 	NifStream( shaderType, in, info );
-	NifStream( unknownFlags1, in, info );
+	NifStream( shaderFlags, in, info );
 	NifStream( unknownInt2, in, info );
-	NifStream( unknownFloat1, in, info );
+	NifStream( envmapScale, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -65,9 +65,9 @@ void BSShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NiProperty::Write( out, link_map, info );
 	NifStream( flags, out, info );
 	NifStream( shaderType, out, info );
-	NifStream( unknownFlags1, out, info );
+	NifStream( shaderFlags, out, info );
 	NifStream( unknownInt2, out, info );
-	NifStream( unknownFloat1, out, info );
+	NifStream( envmapScale, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -84,9 +84,9 @@ std::string BSShaderProperty::asString( bool verbose ) const {
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Shader Type:  " << shaderType << endl;
-	out << "  Unknown Flags 1:  " << unknownFlags1 << endl;
+	out << "  Shader Flags:  " << shaderFlags << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Envmap Scale:  " << envmapScale << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -246,5 +246,14 @@ void NifStream( DecayType const & val, ostream& out, const NifInfo & info = NifI
 void NifStream( EmitFrom & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( EmitFrom const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( MtlFlags & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( MtlFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---BSShaderFlags---//
+
+void NifStream( BSShaderFlags & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BSShaderFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 }
 #endif

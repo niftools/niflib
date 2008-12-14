@@ -77,12 +77,12 @@ protected:
 	unsigned short flags;
 	/*! Unknown (Set to 0x21 for NoLighting, 0x11 for Water) */
 	BSShaderType shaderType;
-	/*! Unknown */
-	unsigned int unknownFlags1;
+	/*! Shader Property Flags */
+	BSShaderFlags shaderFlags;
 	/*! Unknown */
 	int unknownInt2;
 	/*! Unknown */
-	float unknownFloat1;
+	float envmapScale;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

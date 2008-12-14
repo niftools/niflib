@@ -367,6 +367,7 @@ enum BSShaderType {
 	SHADER_TALL_GRASS = 0, /*!< Tall Grass Shader */
 	SHADER_DEFAULT = 1, /*!< Standard Lighting Shader */
 	SHADER_SKY = 10, /*!< Sky Shader */
+	SHADER_SKIN = 14, /*!< Skin Shader */
 	SHADER_WATER = 17, /*!< Water Shader */
 	SHADER_LIGHTING30 = 29, /*!< Lighting 3.0 Shader */
 	SHADER_TILE = 32, /*!< Tiled Shader */
@@ -579,6 +580,59 @@ enum EmitFrom {
 };
 
 ostream & operator<<( ostream & out, EmitFrom const & val );
+
+enum MtlFlags {
+	MTL_WIRE = 1, /*!< Wire */
+	MTL_TWO_SIDED = 2, /*!< Two Sided */
+	MTL_FACEMAP = 4, /*!< Facemap */
+	MTL_FACETED = 8, /*!< Faceted */
+	MTL_ADDITIVE = 16, /*!< Additive */
+	MTL_SUBTRACTIVE = 32, /*!< Subtractive */
+	MTL_CRY_SHADER = 64, /*!< Cry Shader */
+	MTL_PHYSICALIZE = 128, /*!< Physicalize */
+	MTL_ADDITIVE_DECAL = 256, /*!< Additive Decal */
+	MTL_USE_GLOSSINESS = 512, /*!< Use Glossiness */
+};
+
+ostream & operator<<( ostream & out, MtlFlags const & val );
+
+/*! Shader Property Flags */
+enum BSShaderFlags {
+	SF_ZBUFFER_TEST = 1, /*!< ZBuffer Test (1=on) */
+	SF_SHADOW_MAP = 2, /*!< Shadow Map */
+	SF_EXTERNAL_EMITTANCE = 4, /*!< External Emittance */
+	SF_PARALLAX_OCCLUSION = 8, /*!< Parallax Occlusion */
+	SF_DYNAMIC_DECAL = 16, /*!< Dynamic Decal */
+	SF_DECAL = 32, /*!< Decal */
+	SF_UNKNOWN_6 = 64, /*!< Unknown\Light fade? (if 0 and envmap is on, "envmap light fade" is not present) */
+	SF_MULTIPLE_TEXTURES = 128, /*!< Multiple Textures (base diff/norm become null) */
+	SF_SHADOW_FRUSTUM = 256, /*!< Shadow Frustum */
+	SF_TREE_BILLBOARD = 512, /*!< Tree Billboard */
+	SF_WINDOW_ENVIRONMENT_MAPPING = 1024, /*!< Window Environment Mapping */
+	SF_LOCALMAP_HIDE_SECRET = 2048, /*!< Localmap Hide Secret */
+	SF_DYNAMIC_ALPHA = 4096, /*!< Dynamic Alpha */
+	SF_HAIR = 8192, /*!< Hair */
+	SF_EYE_ENVIRONMENT_MAPPING = 16384, /*!< Eye Environment Mapping (does not use envmap light fade or envmap scale) */
+	SF_FIRE_REFRACTION = 32768, /*!< Fire Refraction (switches on refraction power/period) */
+	SF_REFRACTION = 65536, /*!< Refraction (switches on refraction power) */
+	SF_UNKNOWN_17 = 131072, /*!< Unknown/Crash */
+	NON_PROJECTIVE_SHADOWS = 262144, /*!< Non-Projective Shadows */
+	SF_UNKNOWN_19 = 524288, /*!< Unknown/Crash */
+	SF_PARALLAX = 1048576, /*!< Parallax */
+	SF_FACEGEN_SKIN = 2097152, /*!< Facegen\Skin */
+	SF_UNKNOWN_22 = 4194304, /*!< Unknown (Always 0?) */
+	SF_UNKNOWN_23 = 8388608, /*!< Unknown (usually 1) */
+	SF_ENVIRONMENT_MAPPING = 16777216, /*!< Environment mapping (uses Envmap Scale) */
+	SF_EMPTY = 33554432, /*!< EMPTY (usually seen w/texture animation) */
+	SF_SINGLE_PASS = 67108864, /*!< Single Pass (uses same default shader path as diff/norm/spec setup BSSM_ADTS10) */
+	SF_UNKNOWN_27 = 134217728, /*!< Unknown (Always 0?) */
+	SF_VERTEX_ALPHA = 268435456, /*!< Vertex Alpha */
+	SF_LOWDDETAIL = 536870912, /*!< Lowddetail (seems to use standard diff/norm/spec shader) */
+	SF_SKINNED = 1073741824, /*!< Skinned. */
+	SF_UNKNOWN_31 = 2147483648, /*!< Unknown */
+};
+
+ostream & operator<<( ostream & out, BSShaderFlags const & val );
 
 }
 #endif

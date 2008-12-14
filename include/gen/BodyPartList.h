@@ -24,7 +24,7 @@ struct BodyPartList {
 	/*! Copy Operator */
 	NIFLIB_API BodyPartList & operator=( const BodyPartList & src );
 	/*! Unknown */
-	short unknownShort;
+	unsigned short unknownFlag;
 	/*! Unknown */
 	short bodyPart;
 };

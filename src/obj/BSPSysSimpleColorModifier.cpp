@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSPSysSimpleColorModifier::TYPE("BSPSysSimpleColorModifier", &NiPSysModifier::TYPE );
 
-BSPSysSimpleColorModifier::BSPSysSimpleColorModifier() : fadeInPercent(0.0f), fadeOutPercent(0.0f), color1EndPercent((int)0), color1StartPercent((int)0), color2EndPercent((int)0), color2StartPercent((int)0) {
+BSPSysSimpleColorModifier::BSPSysSimpleColorModifier() : fadeInPercent(0.0f), fadeOutPercent(0.0f), color1EndPercent(0.0f), color1StartPercent(0.0f), color2EndPercent(0.0f), color2StartPercent(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

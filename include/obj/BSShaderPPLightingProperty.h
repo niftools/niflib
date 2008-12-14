@@ -74,8 +74,8 @@ protected:
 	Ref<BSShaderTextureSet > textureSet;
 	/*! Unknown */
 	float unknownFloat2;
-	/*! Unknown */
-	float unknownFloat3;
+	/*! Rate of texture movement for refraction shader. */
+	int refractionPeriod;
 	/*! Unknown */
 	float unknownFloat4;
 	/*! Unknown */

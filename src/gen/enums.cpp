@@ -676,6 +676,7 @@ ostream & operator<<( ostream & out, BSShaderType const & val ) {
 		case SHADER_TALL_GRASS: return out << "SHADER_TALL_GRASS";
 		case SHADER_DEFAULT: return out << "SHADER_DEFAULT";
 		case SHADER_SKY: return out << "SHADER_SKY";
+		case SHADER_SKIN: return out << "SHADER_SKIN";
 		case SHADER_WATER: return out << "SHADER_WATER";
 		case SHADER_LIGHTING30: return out << "SHADER_LIGHTING30";
 		case SHADER_TILE: return out << "SHADER_TILE";
@@ -1110,6 +1111,86 @@ ostream & operator<<( ostream & out, EmitFrom const & val ) {
 		case EMIT_FROM_EDGE_CENTER: return out << "EMIT_FROM_EDGE_CENTER";
 		case EMIT_FROM_FACE_SURFACE: return out << "EMIT_FROM_FACE_SURFACE";
 		case EMIT_FROM_EDGE_SURFACE: return out << "EMIT_FROM_EDGE_SURFACE";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--MtlFlags--//
+
+void NifStream( MtlFlags & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = MtlFlags(temp);
+}
+
+void NifStream( MtlFlags const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, MtlFlags const & val ) {
+	switch ( val ) {
+		case MTL_WIRE: return out << "MTL_WIRE";
+		case MTL_TWO_SIDED: return out << "MTL_TWO_SIDED";
+		case MTL_FACEMAP: return out << "MTL_FACEMAP";
+		case MTL_FACETED: return out << "MTL_FACETED";
+		case MTL_ADDITIVE: return out << "MTL_ADDITIVE";
+		case MTL_SUBTRACTIVE: return out << "MTL_SUBTRACTIVE";
+		case MTL_CRY_SHADER: return out << "MTL_CRY_SHADER";
+		case MTL_PHYSICALIZE: return out << "MTL_PHYSICALIZE";
+		case MTL_ADDITIVE_DECAL: return out << "MTL_ADDITIVE_DECAL";
+		case MTL_USE_GLOSSINESS: return out << "MTL_USE_GLOSSINESS";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--BSShaderFlags--//
+
+void NifStream( BSShaderFlags & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = BSShaderFlags(temp);
+}
+
+void NifStream( BSShaderFlags const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BSShaderFlags const & val ) {
+	switch ( val ) {
+		case SF_ZBUFFER_TEST: return out << "SF_ZBUFFER_TEST";
+		case SF_SHADOW_MAP: return out << "SF_SHADOW_MAP";
+		case SF_EXTERNAL_EMITTANCE: return out << "SF_EXTERNAL_EMITTANCE";
+		case SF_PARALLAX_OCCLUSION: return out << "SF_PARALLAX_OCCLUSION";
+		case SF_DYNAMIC_DECAL: return out << "SF_DYNAMIC_DECAL";
+		case SF_DECAL: return out << "SF_DECAL";
+		case SF_UNKNOWN_6: return out << "SF_UNKNOWN_6";
+		case SF_MULTIPLE_TEXTURES: return out << "SF_MULTIPLE_TEXTURES";
+		case SF_SHADOW_FRUSTUM: return out << "SF_SHADOW_FRUSTUM";
+		case SF_TREE_BILLBOARD: return out << "SF_TREE_BILLBOARD";
+		case SF_WINDOW_ENVIRONMENT_MAPPING: return out << "SF_WINDOW_ENVIRONMENT_MAPPING";
+		case SF_LOCALMAP_HIDE_SECRET: return out << "SF_LOCALMAP_HIDE_SECRET";
+		case SF_DYNAMIC_ALPHA: return out << "SF_DYNAMIC_ALPHA";
+		case SF_HAIR: return out << "SF_HAIR";
+		case SF_EYE_ENVIRONMENT_MAPPING: return out << "SF_EYE_ENVIRONMENT_MAPPING";
+		case SF_FIRE_REFRACTION: return out << "SF_FIRE_REFRACTION";
+		case SF_REFRACTION: return out << "SF_REFRACTION";
+		case SF_UNKNOWN_17: return out << "SF_UNKNOWN_17";
+		case NON_PROJECTIVE_SHADOWS: return out << "NON_PROJECTIVE_SHADOWS";
+		case SF_UNKNOWN_19: return out << "SF_UNKNOWN_19";
+		case SF_PARALLAX: return out << "SF_PARALLAX";
+		case SF_FACEGEN_SKIN: return out << "SF_FACEGEN_SKIN";
+		case SF_UNKNOWN_22: return out << "SF_UNKNOWN_22";
+		case SF_UNKNOWN_23: return out << "SF_UNKNOWN_23";
+		case SF_ENVIRONMENT_MAPPING: return out << "SF_ENVIRONMENT_MAPPING";
+		case SF_EMPTY: return out << "SF_EMPTY";
+		case SF_SINGLE_PASS: return out << "SF_SINGLE_PASS";
+		case SF_UNKNOWN_27: return out << "SF_UNKNOWN_27";
+		case SF_VERTEX_ALPHA: return out << "SF_VERTEX_ALPHA";
+		case SF_LOWDDETAIL: return out << "SF_LOWDDETAIL";
+		case SF_SKINNED: return out << "SF_SKINNED";
+		case SF_UNKNOWN_31: return out << "SF_UNKNOWN_31";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
