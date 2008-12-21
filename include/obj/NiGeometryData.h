@@ -63,6 +63,9 @@ protected:
 	vector<int > vertexIndices;
 public:
 
+	NIFLIB_API string GetName();
+	NIFLIB_API void SetName( const string & new_name );
+
 	//--Counts--//
 
 	/*! 

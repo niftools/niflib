@@ -62,7 +62,7 @@ void NiMorphData::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A020000 ) ) {
 			NifStream( morphs[i1].unknownInt, in, info );
 		};
-		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14010003 ) ) {
+		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14010003 ) && ( info.userVersion == 0 ) ) {
 			NifStream( morphs[i1].unknownInt, in, info );
 		};
 		morphs[i1].vectors.resize(numVertices);
@@ -99,7 +99,7 @@ void NiMorphData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A020000 ) ) {
 			NifStream( morphs[i1].unknownInt, out, info );
 		};
-		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14010003 ) ) {
+		if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14010003 ) && ( info.userVersion == 0 ) ) {
 			NifStream( morphs[i1].unknownInt, out, info );
 		};
 		for (unsigned int i2 = 0; i2 < morphs[i1].vectors.size(); i2++) {

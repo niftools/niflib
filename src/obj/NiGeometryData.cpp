@@ -408,6 +408,15 @@ static void CalcCenteredSphere(const vector<Vector3>& vertices, Vector3& center,
 	}
 }
 
+
+string NiGeometryData::GetName() {
+	return name;
+}
+
+void NiGeometryData::SetName( const string & new_name ) {
+	name = new_name;
+}
+
 int NiGeometryData::GetVertexCount() const {
 	return int(vertices.size());
 }
