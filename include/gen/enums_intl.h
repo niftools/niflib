@@ -84,6 +84,9 @@ void NifStream( MipMapFormat const & val, ostream& out, const NifInfo & info = N
 void NifStream( StencilAction & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( StencilAction const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( BSDismemberBodyPartType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BSDismemberBodyPartType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 void NifStream( ChannelType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( ChannelType const & val, ostream& out, const NifInfo & info = NifInfo() );
 

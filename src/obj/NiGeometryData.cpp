@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL) {
+NiGeometryData::NiGeometryData() : unknownId((int)0), numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -45,7 +45,7 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
 	if ( info.version >= 0x0A020000 ) {
-		NifStream( name, in, info );
+		NifStream( unknownId, in, info );
 	};
 	NifStream( numVertices, in, info );
 	if ( info.version >= 0x0A010000 ) {
@@ -136,7 +136,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	numUvSets = (byte)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	if ( info.version >= 0x0A020000 ) {
-		NifStream( name, out, info );
+		NifStream( unknownId, out, info );
 	};
 	NifStream( numVertices, out, info );
 	if ( info.version >= 0x0A010000 ) {
@@ -226,7 +226,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	out << NiObject::asString();
 	numUvSets = (byte)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
-	out << "  Name:  " << name << endl;
+	out << "  Unknown ID:  " << unknownId << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	out << "  Keep Flags:  " << keepFlags << endl;
 	out << "  Compress Flags:  " << compressFlags << endl;
@@ -406,15 +406,6 @@ static void CalcCenteredSphere(const vector<Vector3>& vertices, Vector3& center,
 		float mag = diff.Magnitude();
 		radius = max(radius, mag);
 	}
-}
-
-
-string NiGeometryData::GetName() {
-	return name;
-}
-
-void NiGeometryData::SetName( const string & new_name ) {
-	name = new_name;
 }
 
 int NiGeometryData::GetVertexCount() const {

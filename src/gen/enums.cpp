@@ -346,6 +346,78 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
 }
 
 
+//--BSDismemberBodyPartType--//
+
+void NifStream( BSDismemberBodyPartType & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = BSDismemberBodyPartType(temp);
+}
+
+void NifStream( BSDismemberBodyPartType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BSDismemberBodyPartType const & val ) {
+	switch ( val ) {
+		case BP_TORSO: return out << "BP_TORSO";
+		case BP_HEAD: return out << "BP_HEAD";
+		case BP_HEAD2: return out << "BP_HEAD2";
+		case BP_LEFTARM: return out << "BP_LEFTARM";
+		case BP_LEFTARM2: return out << "BP_LEFTARM2";
+		case BP_RIGHTARM: return out << "BP_RIGHTARM";
+		case BP_RIGHTARM2: return out << "BP_RIGHTARM2";
+		case BP_LEFTLEG: return out << "BP_LEFTLEG";
+		case BP_LEFTLEG2: return out << "BP_LEFTLEG2";
+		case BP_LEFTLEG3: return out << "BP_LEFTLEG3";
+		case BP_RIGHTLEG: return out << "BP_RIGHTLEG";
+		case BP_RIGHTLEG2: return out << "BP_RIGHTLEG2";
+		case BP_RIGHTLEG3: return out << "BP_RIGHTLEG3";
+		case BP_BRAIN: return out << "BP_BRAIN";
+		case BP_SECTIONCAP_HEAD: return out << "BP_SECTIONCAP_HEAD";
+		case BP_SECTIONCAP_HEAD2: return out << "BP_SECTIONCAP_HEAD2";
+		case BP_SECTIONCAP_LEFTARM: return out << "BP_SECTIONCAP_LEFTARM";
+		case BP_SECTIONCAP_LEFTARM2: return out << "BP_SECTIONCAP_LEFTARM2";
+		case BP_SECTIONCAP_RIGHTARM: return out << "BP_SECTIONCAP_RIGHTARM";
+		case BP_SECTIONCAP_RIGHTARM2: return out << "BP_SECTIONCAP_RIGHTARM2";
+		case BP_SECTIONCAP_LEFTLEG: return out << "BP_SECTIONCAP_LEFTLEG";
+		case BP_SECTIONCAP_LEFTLEG2: return out << "BP_SECTIONCAP_LEFTLEG2";
+		case BP_SECTIONCAP_LEFTLEG3: return out << "BP_SECTIONCAP_LEFTLEG3";
+		case BP_SECTIONCAP_RIGHTLEG: return out << "BP_SECTIONCAP_RIGHTLEG";
+		case BP_SECTIONCAP_RIGHTLEG2: return out << "BP_SECTIONCAP_RIGHTLEG2";
+		case BP_SECTIONCAP_RIGHTLEG3: return out << "BP_SECTIONCAP_RIGHTLEG3";
+		case BP_SECTIONCAP_BRAIN: return out << "BP_SECTIONCAP_BRAIN";
+		case BP_TORSOCAP_HEAD: return out << "BP_TORSOCAP_HEAD";
+		case BP_TORSOCAP_HEAD2: return out << "BP_TORSOCAP_HEAD2";
+		case BP_TORSOCAP_LEFTARM: return out << "BP_TORSOCAP_LEFTARM";
+		case BP_TORSOCAP_LEFTARM2: return out << "BP_TORSOCAP_LEFTARM2";
+		case BP_TORSOCAP_RIGHTARM: return out << "BP_TORSOCAP_RIGHTARM";
+		case BP_TORSOCAP_RIGHTARM2: return out << "BP_TORSOCAP_RIGHTARM2";
+		case BP_TORSOCAP_LEFTLEG: return out << "BP_TORSOCAP_LEFTLEG";
+		case BP_TORSOCAP_LEFTLEG2: return out << "BP_TORSOCAP_LEFTLEG2";
+		case BP_TORSOCAP_LEFTLEG3: return out << "BP_TORSOCAP_LEFTLEG3";
+		case BP_TORSOCAP_RIGHTLEG: return out << "BP_TORSOCAP_RIGHTLEG";
+		case BP_TORSOCAP_RIGHTLEG2: return out << "BP_TORSOCAP_RIGHTLEG2";
+		case BP_TORSOCAP_RIGHTLEG3: return out << "BP_TORSOCAP_RIGHTLEG3";
+		case BP_TORSOCAP_BRAIN: return out << "BP_TORSOCAP_BRAIN";
+		case BP_TORSOSECTION_HEAD: return out << "BP_TORSOSECTION_HEAD";
+		case BP_TORSOSECTION_HEAD2: return out << "BP_TORSOSECTION_HEAD2";
+		case BP_TORSOSECTION_LEFTARM: return out << "BP_TORSOSECTION_LEFTARM";
+		case BP_TORSOSECTION_LEFTARM2: return out << "BP_TORSOSECTION_LEFTARM2";
+		case BP_TORSOSECTION_RIGHTARM: return out << "BP_TORSOSECTION_RIGHTARM";
+		case BP_TORSOSECTION_RIGHTARM2: return out << "BP_TORSOSECTION_RIGHTARM2";
+		case BP_TORSOSECTION_LEFTLEG: return out << "BP_TORSOSECTION_LEFTLEG";
+		case BP_TORSOSECTION_LEFTLEG2: return out << "BP_TORSOSECTION_LEFTLEG2";
+		case BP_TORSOSECTION_LEFTLEG3: return out << "BP_TORSOSECTION_LEFTLEG3";
+		case BP_TORSOSECTION_RIGHTLEG: return out << "BP_TORSOSECTION_RIGHTLEG";
+		case BP_TORSOSECTION_RIGHTLEG2: return out << "BP_TORSOSECTION_RIGHTLEG2";
+		case BP_TORSOSECTION_RIGHTLEG3: return out << "BP_TORSOSECTION_RIGHTLEG3";
+		case BP_TORSOSECTION_BRAIN: return out << "BP_TORSOSECTION_BRAIN";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--ChannelType--//
 
 void NifStream( ChannelType & val, istream& in, const NifInfo & info ) {

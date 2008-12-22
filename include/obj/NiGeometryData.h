@@ -63,9 +63,6 @@ protected:
 	vector<int > vertexIndices;
 public:
 
-	NIFLIB_API string GetName();
-	NIFLIB_API void SetName( const string & new_name );
-
 	//--Counts--//
 
 	/*! 
@@ -208,8 +205,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Name of this object. */
-	IndexString name;
+	/*! Unknown identifier. Always 0 */
+	int unknownId;
 	/*! Number of vertices. For NiPSysData this is max particles. */
 	mutable unsigned short numVertices;
 	/*! Used with NiCollision objects when OBB or TRI is set. */
