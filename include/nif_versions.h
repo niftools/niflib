@@ -27,6 +27,7 @@ const unsigned VER_20_0_0_4    = 0x14000004; /*!< NIF Version 20.0.0.4 */
 const unsigned VER_20_0_0_5    = 0x14000005; /*!< NIF Version 20.0.0.4 */ 
 const unsigned VER_20_1_0_3    = 0x14010003; /*!< NIF Version 20.1.0.3 */ 
 const unsigned VER_20_2_0_7    = 0x14020007; /*!< NIF Version 20.2.0.7 */ 
+const unsigned VER_20_2_0_8    = 0x14020008; /*!< NIF Version 20.2.0.7 */ 
 const unsigned VER_20_3_0_3    = 0x14030003; /*!< NIF Version 20.3.0.3 */ 
 const unsigned VER_20_3_0_6    = 0x14030006; /*!< NIF Version 20.3.0.6 */ 
 const unsigned VER_UNSUPPORTED = 0xFFFFFFFF; /*!< Unsupported NIF Version */

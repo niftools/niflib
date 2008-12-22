@@ -357,6 +357,8 @@ void NifStream( HeaderString & val, istream& in, NifInfo & info ) {
 		ver_start = 32;
 	} else if ( val.header.substr(0, 20) == "Gamebryo File Format" ) {
 		ver_start = 30;
+	} else if ( val.header.substr(0, 6) == "NDSNIF" ) {
+		ver_start = 30;
 	} else {
 		//Not a NIF file
 		info.version = VER_INVALID;
