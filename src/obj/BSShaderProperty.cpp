@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSShaderProperty::TYPE("BSShaderProperty", &NiProperty::TYPE );
 
-BSShaderProperty::BSShaderProperty() : flags((unsigned short)1), shaderType((BSShaderType)1), shaderFlags((BSShaderFlags)0x82000000), unknownInt2((int)1), envmapScale(1.0f) {
+BSShaderProperty::BSShaderProperty() : flags((unsigned short)1), shaderType((BSShaderType)1), shaderFlags((BSShaderFlags)0x82000103), unknownInt2((int)1), envmapScale(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -115,19 +115,35 @@ std::list<NiObjectRef> BSShaderProperty::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short BSShaderProperty::GetFlags() const {
-	return flags;
+   return flags;
 }
 
 void BSShaderProperty::SetFlags( unsigned short value ) {
-	flags = value;
+   flags = value;
 }
 
 BSShaderType BSShaderProperty::GetShaderType() const {
-	return shaderType;
+   return shaderType;
 }
 
-void BSShaderProperty::SetShaderType( BSShaderType value ) {
-	shaderType = value;
+void BSShaderProperty::SetShaderType( const BSShaderType & value ) {
+   shaderType = value;
+}
+
+BSShaderFlags BSShaderProperty::GetShaderFlags() const {
+   return shaderFlags;
+}
+
+void BSShaderProperty::SetShaderFlags( const BSShaderFlags & value ) {
+   shaderFlags = value;
+}
+
+float BSShaderProperty::GetEnvmapScale() const {
+   return envmapScale;
+}
+
+void BSShaderProperty::SetEnvmapScale( float value ) {
+   envmapScale = value;
 }
 
 //--END CUSTOM CODE--//

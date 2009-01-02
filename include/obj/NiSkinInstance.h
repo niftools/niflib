@@ -95,7 +95,7 @@ public:
 	 * This constructor is called by NiTriBasedGeom when it creates a new skin
 	 * instance using the BindSkin function.
 	 */
-	NIFLIB_HIDDEN NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes );
+	NIFLIB_HIDDEN void BindSkin( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes );
 
 	/*! 
 	 * NIFLIB_HIDDEN function.  For internal use only.

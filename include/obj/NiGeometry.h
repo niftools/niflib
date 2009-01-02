@@ -70,7 +70,14 @@ public:
 	 * NiSkinInstance and NiSkinData class. The bones must have a common
 	 * ancestor in the scenegraph.  This becomes the skeleton root.
 	 */
-	NIFLIB_API void BindSkin( vector< Ref<NiNode> > bone_nodes );
+	NIFLIB_API void BindSkin( vector< Ref<NiNode> >& bone_nodes );
+
+   /*!
+    * Binds this geometry to a list of bones.  Creates and attatches a
+    * NiSkinInstance and NiSkinData class. The bones must have a common
+    * ancestor in the scenegraph.  This becomes the skeleton root.
+    */
+   NIFLIB_API void BindSkinWith( vector< Ref<NiNode> >& bone_nodes,  NiObject * (*SkinInstConstructor)() );
 
 	/*!
 	 * Unbinds this geometry from the bones.  This removes the NiSkinInstance and NiSkinData objects and causes this geometry to stop behaving as a skin.

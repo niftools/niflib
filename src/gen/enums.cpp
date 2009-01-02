@@ -1267,4 +1267,25 @@ ostream & operator<<( ostream & out, BSShaderFlags const & val ) {
 	}
 }
 
+
+//--BSPartFlag--//
+
+void NifStream( BSPartFlag & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = BSPartFlag(temp);
+}
+
+void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BSPartFlag const & val ) {
+	switch ( val ) {
+		case PF_EDITOR_VISIBLE: return out << "PF_EDITOR_VISIBLE";
+		case PF_EDITOR_VISIBLE_2: return out << "PF_EDITOR_VISIBLE_2";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
 }

@@ -591,7 +591,51 @@ void NiSkinPartition::SetStrip( int partition, int index, const vector<unsigned 
 }
 
 vector<Triangle> NiSkinPartition::GetTriangles( int partition ) const {
-   return skinPartitionBlocks[partition].triangles;
+   const SkinPartition&part = skinPartitionBlocks[partition];
+   if ( part.numStrips == 0 && !part.triangles.empty())
+      return part.triangles;
+
+   // Use Strips
+
+   //Create a vector to hold the triangles
+   vector<Triangle> triangles;
+   int n = 0; // Current triangle
+
+   //Cycle through all strips
+   vector< vector<unsigned short> >::const_iterator it;
+   Triangle t;
+   for (it = part.strips.begin(); it != part.strips.end(); ++it ) {
+      //The first three values in the strip are the first triangle
+      t.Set( (*it)[0], (*it)[1], (*it)[2] );
+
+      //Only add triangles to the list if none of the vertices match
+      if ( t[0] != t[1] && t[0] != t[2] && t[1] != t[2] ) {
+         triangles.push_back(t);
+      }
+
+      //Move to the next triangle
+      ++n;
+
+      //The remaining triangles use the previous two indices as their first two indices.
+      for( unsigned int i = 3; i < it->size(); ++i ) {
+         //Odd numbered triangles need to be reversed to keep the vertices in counter-clockwise order
+         if ( i % 2 == 0 ) {
+            t.Set( (*it)[i - 2], (*it)[i - 1], (*it)[i] );
+         } else {
+            t.Set( (*it)[i], (*it)[i - 1], (*it)[i - 2] );
+         }
+
+         //Only add triangles to the list if none of the vertices match
+         if ( t[0] != t[1] && t[0] != t[2] && t[1] != t[2] ) {
+            triangles.push_back(t);
+         }
+
+         //Move to the next triangle
+         ++n;
+      }
+   }
+
+   return triangles;
 }
 
 void NiSkinPartition::SetTriangles( int partition, const vector<Triangle> & in ) {
@@ -753,7 +797,7 @@ size_t indexOf(I begin, I end, const V& val) {
 }
 
 
-NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex ) {
+NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, int* faceMap ) {
    NiSkinInstanceRef skinInst = shape->GetSkinInstance();
    if ( skinInst == NULL ) {
       throw runtime_error( "You must bind a skin before setting generating skin partitions.  No NiSkinInstance found." );
@@ -953,6 +997,42 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
    //   qWarning() << "removed" << cnt << "bone influences";
 
    PartitionList& parts = skinPartitionBlocks;
+
+   bool merge = true;
+   // Use Explicit face mapping
+   if (faceMap) {
+      Triangles::iterator it = triangles.begin();
+      for (int idx = 0, n = triangles.size(); idx<n; ++idx ){
+         int partIdx = faceMap[idx];
+         if (partIdx >= 0)
+         {
+            Triangle & tri = *it;
+
+            // Ensure enough partitions
+            while ( partIdx >= int(parts.size()) )
+               parts.push_back( SkinPartition() );
+
+            SkinPartition& part = parts[partIdx];
+            BoneList tribones;
+            for ( int c = 0; c < 3; c++ ) {
+               BoneWeightList& bws = weights[tri[c]];
+               for (BoneWeightList::iterator bw = bws.begin(); bw != bws.end(); ++bw) {
+                  if ( tribones.end() == find(tribones.begin(), tribones.end(), (*bw).first ) )
+                     tribones.push_back( (*bw).first );
+               }
+            }
+            mergeBones( part.bones, tribones );
+            part.triangles.push_back( tri );
+            it = triangles.erase(it); // delete triangle so it is not use later
+         }
+         else
+         {
+            ++it;
+         }
+      }
+      merge = false; // when explicit mapping enabled, no merging is allowed
+   }
+
    // split the triangles into partitions
    while ( ! triangles.empty() ) {
 
@@ -986,21 +1066,20 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
 
    // merge partitions
 
-   bool merged;
-   do
+   while (merge)
    {
-      merged = false;
+      merge = false;
       // Working backwards through this list minimizes numbers of swaps
-      //for ( int p2 = int(parts.size()-1); p2 >= 0  && ! merged; --p2 )
+      //for ( int p2 = int(parts.size()-1); p2 >= 0  && ! merge; --p2 )
       //{
       //   Partition& part2 = parts[p2];
-      //   for ( int p1 = int(p2-1); p1 >= 0 && ! merged; --p1 )
+      //   for ( int p1 = int(p2-1); p1 >= 0 && ! merge; --p1 )
       //   {
       //      Partition& part1 = parts[p1];
-      for ( int p1 = 0; p1 < int(parts.size()) && ! merged; p1++ )
+      for ( int p1 = 0; p1 < int(parts.size()) && ! merge; p1++ )
       {
          Partition& part1 = parts[p1];
-         for ( int p2 = p1+1; p2 < int(parts.size()) && ! merged; p2++ )
+         for ( int p2 = p1+1; p2 < int(parts.size()) && ! merge; p2++ )
          {
             Partition& part2 = parts[p2];
             BoneList mergedBones = part1.bones;
@@ -1011,12 +1090,11 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
                part1.bones = mergedBones;
                part1.triangles.insert(part1.triangles.end(), (*p2i).triangles.begin(), (*p2i).triangles.end());
                parts.erase(p2i);
-               merged = true;
+               merge = true;
             }
          }
       }
    }
-   while ( merged );
 
    //qWarning() << parts.size() << "partitions";
 

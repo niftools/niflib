@@ -23,8 +23,8 @@ struct BodyPartList {
 	NIFLIB_API BodyPartList( const BodyPartList & src );
 	/*! Copy Operator */
 	NIFLIB_API BodyPartList & operator=( const BodyPartList & src );
-	/*! Unknown */
-	unsigned short unknownFlag;
+	/*! Flags related to the Body Partition */
+	BSPartFlag partFlag;
 	/*! Body Part Index */
 	BSDismemberBodyPartType bodyPart;
 };

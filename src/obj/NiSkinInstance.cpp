@@ -246,9 +246,9 @@ Ref<NiNode> NiSkinInstance::GetSkeletonRoot() const {
 	return skeletonRoot;
 }
 
-NiSkinInstance::NiSkinInstance( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes ) {
+void NiSkinInstance::BindSkin( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes ) {
 	//Call normal constructor
-	NiSkinInstance();
+	//NiSkinInstance();
 
 	//Ensure that all bones are below the skeleton root node on the scene graph
 	for ( unsigned int i = 0; i < bone_nodes.size(); ++i ) {

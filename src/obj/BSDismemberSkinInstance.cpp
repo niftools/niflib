@@ -50,7 +50,7 @@ void BSDismemberSkinInstance::Read( istream& in, list<unsigned int> & link_stack
 	NifStream( numPartitions, in, info );
 	partitions.resize(numPartitions);
 	for (unsigned int i1 = 0; i1 < partitions.size(); i1++) {
-		NifStream( partitions[i1].unknownFlag, in, info );
+		NifStream( partitions[i1].partFlag, in, info );
 		NifStream( partitions[i1].bodyPart, in, info );
 	};
 
@@ -66,7 +66,7 @@ void BSDismemberSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigne
 	numPartitions = (int)(partitions.size());
 	NifStream( numPartitions, out, info );
 	for (unsigned int i1 = 0; i1 < partitions.size(); i1++) {
-		NifStream( partitions[i1].unknownFlag, out, info );
+		NifStream( partitions[i1].partFlag, out, info );
 		NifStream( partitions[i1].bodyPart, out, info );
 	};
 
@@ -89,7 +89,7 @@ std::string BSDismemberSkinInstance::asString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Unknown Flag:  " << partitions[i1].unknownFlag << endl;
+		out << "    Part Flag:  " << partitions[i1].partFlag << endl;
 		out << "    Body Part:  " << partitions[i1].bodyPart << endl;
 	};
 	return out.str();
@@ -115,4 +115,13 @@ std::list<NiObjectRef> BSDismemberSkinInstance::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+vector<BodyPartList > BSDismemberSkinInstance::GetPartitions() const {
+   return partitions;
+}
+
+void BSDismemberSkinInstance::SetPartitions( const vector<BodyPartList >& value ) {
+   partitions = value;
+}
+
 //--END CUSTOM CODE--//

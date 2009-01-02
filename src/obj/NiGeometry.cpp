@@ -239,7 +239,16 @@ Ref<NiSkinInstance> NiGeometry::GetSkinInstance() const {
 	return skinInstance;
 }
 
-void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
+void NiGeometry::BindSkin( vector< Ref<NiNode> >& bone_nodes ) {
+   BindSkinWith(bone_nodes, NULL);
+}
+
+void NiGeometry::BindSkinWith( vector< Ref<NiNode> >& bone_nodes,  NiObject * (*SkinInstConstructor)())
+{
+   if (SkinInstConstructor == NULL) {
+      SkinInstConstructor = NiSkinInstance::Create;      
+   }
+
 	//Ensure skin is not aleady bound
 	if ( skinInstance != 0 ) {
 		throw runtime_error("You have attempted to re-bind a skin that is already bound.  Unbind it first.");
@@ -268,7 +277,12 @@ void NiGeometry::BindSkin( vector< Ref<NiNode> > bone_nodes ) {
 	}
 
 	//Create a skin instance using the bone and root data
-	skinInstance = new NiSkinInstance( skeleton_root, bone_nodes );
+   skinInstance = DynamicCast<NiSkinInstance>( SkinInstConstructor() );
+   if (skinInstance == NULL) {
+      throw runtime_error("Failed to construct NiSkinInstance");
+   }
+
+	skinInstance->BindSkin( skeleton_root, bone_nodes );
 
 	//Create a NiSkinData object based on this mesh
 	skinInstance->SetSkinData( new NiSkinData( this ) );
@@ -291,7 +305,7 @@ void NiGeometry::ApplySkinOffset() {
 	list<NiNodeRef> ancestors;
 	ancestors = ListAncestors( this );
 
-	//Propogate transforms on ancestors below skeleton root
+	//Propagate transforms on ancestors below skeleton root
 	bool below_root = false;
 
 	for ( list<NiNodeRef>::iterator it = ancestors.begin(); it != ancestors.end(); ++it ) {

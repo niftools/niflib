@@ -258,5 +258,11 @@ void NifStream( MtlFlags const & val, ostream& out, const NifInfo & info = NifIn
 void NifStream( BSShaderFlags & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( BSShaderFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+
+//---BSPartFlag---//
+
+void NifStream( BSPartFlag & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 }
 #endif

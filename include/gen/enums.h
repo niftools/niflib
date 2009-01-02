@@ -692,5 +692,16 @@ enum BSShaderFlags {
 
 ostream & operator<<( ostream & out, BSShaderFlags const & val );
 
+/*!
+ * Editor flags for the Body Partitions. Its unclear difference between
+ * PF_EDITOR_VISIBLE and PF_EDITOR_VISIBLE_2.
+ */
+enum BSPartFlag {
+	PF_EDITOR_VISIBLE = 1, /*!< Visible in Editor */
+	PF_EDITOR_VISIBLE_2 = 256, /*!< Visible in Editor */
+};
+
+ostream & operator<<( ostream & out, BSPartFlag const & val );
+
 }
 #endif

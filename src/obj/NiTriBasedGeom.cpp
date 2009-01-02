@@ -107,12 +107,12 @@ void NiTriBasedGeom::ClearHardareSkinInfo() {
 }
 
 
-void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, int max_bones_per_vertex /*= INT_MAX*/ ) {
+void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, int max_bones_per_vertex /*= INT_MAX*/, int* face2PartMap /*= NULL*/ ) {
    NiSkinPartitionRef skinPart; 
    if ( max_bones_per_partition == 0 ) //old method
       skinPart = new NiSkinPartition( this );
    else
-      skinPart = new NiSkinPartition( this, max_bones_per_partition, max_bones_per_vertex );
+      skinPart = new NiSkinPartition( this, max_bones_per_partition, max_bones_per_vertex, face2PartMap );
 
    // Set the partition info in both places and it will be handled when exported.
    NiSkinInstanceRef skinInst = GetSkinInstance();

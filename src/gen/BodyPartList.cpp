@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-BodyPartList::BodyPartList() : unknownFlag((unsigned short)0) {};
+BodyPartList::BodyPartList() : partFlag((BSPartFlag)1) {};
 
 //Copy Constructor
 BodyPartList::BodyPartList( const BodyPartList & src ) {
@@ -18,7 +18,7 @@ BodyPartList::BodyPartList( const BodyPartList & src ) {
 
 //Copy Operator
 BodyPartList & BodyPartList::operator=( const BodyPartList & src ) {
-	this->unknownFlag = src.unknownFlag;
+	this->partFlag = src.partFlag;
 	this->bodyPart = src.bodyPart;
 	return *this;
 };

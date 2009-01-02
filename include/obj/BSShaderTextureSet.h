@@ -20,7 +20,7 @@ namespace Niflib {
 class BSShaderTextureSet;
 typedef Ref<BSShaderTextureSet> BSShaderTextureSetRef;
 
-/*! Bethesda-specific node. */
+/*! Bethesda-specific Texture Set. */
 class BSShaderTextureSet : public NiObject {
 public:
 	/*! Constructor */
@@ -76,7 +76,15 @@ public:
 protected:
 	/*! Number of Textures */
 	mutable int numTextures;
-	/*! Textures */
+	/*!
+	 * Textures.
+	 *         0: Diffuse
+	 *         1: Normal/Gloss
+	 *         2: Environment Mask
+	 *         3: Glow/Skin/Hair
+	 *         4: Height
+	 *         5: Environment
+	 */
 	vector<string > textures;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
