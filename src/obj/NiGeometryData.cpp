@@ -565,4 +565,37 @@ void NiGeometryData::SetBound(Vector3 const & center, float radius)
 	this->radius = radius;
 }
 
+
+byte NiGeometryData::GetTspaceFlag() const {
+   return tspaceFlag;
+}
+
+void NiGeometryData::SetTspaceFlag( byte value ) {
+   tspaceFlag = value;
+}
+
+bool NiGeometryData::GetHasNormals() const {
+   return hasNormals;
+}
+
+void NiGeometryData::SetHasNormals( bool value ) {
+   hasNormals = value;
+}
+
+vector<Vector3 > NiGeometryData::GetBinormals() const {
+   return binormals;
+}
+
+void NiGeometryData::SetBinormals( const vector<Vector3 >& value ) {
+   binormals = value;
+}
+
+vector<Vector3 > NiGeometryData::GetTangents() const {
+   return tangents;
+}
+
+void NiGeometryData::SetTangents( const vector<Vector3 >& value ) {
+   tangents = value;
+}
+
 //--END CUSTOM CODE--//

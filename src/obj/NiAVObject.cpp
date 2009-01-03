@@ -23,7 +23,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiAVObject::TYPE("NiAVObject", &NiObjectNET::TYPE );
 
-NiAVObject::NiAVObject() : flags((unsigned short)0), unknownShort1((unsigned short)0), scale(1.0f), numProperties((unsigned int)0), unknown2((byte)0), hasBoundingBox(false), collisionObject(NULL) {
+NiAVObject::NiAVObject() : flags((unsigned short)0), unknownShort1((unsigned short)8), scale(1.0f), numProperties((unsigned int)0), unknown2((byte)0), hasBoundingBox(false), collisionObject(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	parent = NULL;

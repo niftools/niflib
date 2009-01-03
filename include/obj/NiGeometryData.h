@@ -197,11 +197,47 @@ public:
 
 	// Consistency Flags
 	// \return The current value.
-	ConsistencyType GetConsistencyFlags() const;
+	NIFLIB_API ConsistencyType GetConsistencyFlags() const;
 
 	// Consistency Flags
 	// \param[in] value The new value.
-	void SetConsistencyFlags( const ConsistencyType & value );
+	NIFLIB_API void SetConsistencyFlags( const ConsistencyType & value );
+
+   // Methods for saving binormals and tangents saved in upper byte.
+   // \return The current value.
+   NIFLIB_API byte GetTspaceFlag() const;
+
+   // Methods for saving binormals and tangents saved in upper byte.
+   // \param[in] value The new value.
+   NIFLIB_API void SetTspaceFlag( byte value );
+
+   // Do we have lighting normals? These are essential for proper lighting: if not
+   // present, the model will only be influenced by ambient light.
+   // \return The current value.
+   NIFLIB_API bool GetHasNormals() const;
+
+   // Do we have lighting normals? These are essential for proper lighting: if not
+   // present, the model will only be influenced by ambient light.
+   // \param[in] value The new value.
+   NIFLIB_API void SetHasNormals( bool value );
+
+   // Unknown. Binormal & tangents? has_normals must be set as well for this field to
+   // be present.
+   // \return The current value.
+   NIFLIB_API vector<Vector3 > GetBinormals() const;
+
+   // Unknown. Binormal & tangents? has_normals must be set as well for this field to
+   // be present.
+   // \param[in] value The new value.
+   NIFLIB_API void SetBinormals( const vector<Vector3 >& value );
+
+   // Unknown. Binormal & tangents?
+   // \return The current value.
+   NIFLIB_API vector<Vector3 > GetTangents() const;
+
+   // Unknown. Binormal & tangents?
+   // \param[in] value The new value.
+   NIFLIB_API void SetTangents( const vector<Vector3 >& value );
 
 	//--END CUSTOM CODE--//
 protected:

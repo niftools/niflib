@@ -74,7 +74,7 @@ storage UnpackField( storage src, size_t lshift, size_t num_bits ) {
 		mask |= (1 << i);
 	}
 
-	return (storage)(( src & mask) << lshift);
+	return (storage)(( src & mask) >> lshift);
 }
 
 template <class storage, class T>
