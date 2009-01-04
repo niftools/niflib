@@ -153,6 +153,18 @@ public:
 	 */
 	NIFLIB_API bool IsSkin();
 
+   // Active Material.
+   // \return The current value.
+   NIFLIB_API int GetActiveMaterial() const;
+
+   // Active Material.
+   // \param[in] value The new value.
+   NIFLIB_API void SetActiveMaterial( int value );
+
+   // Shader.
+   // \return The current value.
+   NIFLIB_API bool HasShader() const;
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Data index (NiTriShapeData/NiTriStripData). */

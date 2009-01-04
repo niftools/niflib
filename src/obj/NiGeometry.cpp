@@ -24,7 +24,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometry::TYPE("NiGeometry", &NiAVObject::TYPE );
 
-NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)-1), hasShader(false), unknownInteger((int)0), unknownByte((byte)255), dirtyFlag(false) {
+NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)0), hasShader(false), unknownInteger((int)0), unknownByte((byte)255), dirtyFlag(false) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -540,5 +540,18 @@ void NiGeometry::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 
 	skinData->SetBoneWeights( bone_index, n, center, radius );
 }
+
+int NiGeometry::GetActiveMaterial() const {
+   return activeMaterial;
+}
+
+void NiGeometry::SetActiveMaterial( int value ) {
+   activeMaterial = value;
+}
+
+bool NiGeometry::HasShader() const {
+   return hasShader;
+}
+
 
 //--END CUSTOM CODE--//
