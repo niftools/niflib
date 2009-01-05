@@ -156,7 +156,7 @@ public:
 protected:
    friend class NiTriBasedGeom;
    NiSkinPartition(Ref<NiTriBasedGeom> shape);
-   NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, int *faceMap);
+   NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, bool bStrippify, int *faceMap);
 
    void SetNumPartitions( int value );
    void SetWeightsPerVertex( int partition, unsigned short value );

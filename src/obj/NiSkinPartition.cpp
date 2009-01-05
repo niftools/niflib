@@ -644,7 +644,7 @@ void NiSkinPartition::SetTriangles( int partition, const vector<Triangle> & in )
    }
    SkinPartition& part = skinPartitionBlocks[partition];
    part.triangles = in;
-   part.hasFaces = (in.size() > 0) ? false : (part.strips.size() != 0);
+   part.hasFaces = (in.size() > 0) ? true : (part.strips.size() != 0);
    part.numTriangles = (unsigned int)(in.size()) * 3;
 }
 
@@ -797,7 +797,7 @@ size_t indexOf(I begin, I end, const V& val) {
 }
 
 
-NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, int* faceMap ) {
+NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, bool bStrippify, int* faceMap ) {
    NiSkinInstanceRef skinInst = shape->GetSkinInstance();
    if ( skinInst == NULL ) {
       throw runtime_error( "You must bind a skin before setting generating skin partitions.  No NiSkinInstance found." );
@@ -1132,11 +1132,18 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       EnableVertexBoneIndices(p, true);
 
       // strippify the triangles
-      NiTriStripsDataRef data = new NiTriStripsData(triangles, true);
-      int nstrips = data->GetStripCount();
-      SetStripCount( p, nstrips );
-      for ( int i=0; i<nstrips; ++i ) {
-         SetStrip(p, i, data->GetStrip(i));
+      if (bStrippify)
+      {
+         NiTriStripsDataRef data = new NiTriStripsData(triangles, true);
+         int nstrips = data->GetStripCount();
+         SetStripCount( p, nstrips );
+         for ( int i=0; i<nstrips; ++i ) {
+            SetStrip(p, i, data->GetStrip(i));
+         }
+      }
+      else
+      {
+         SetTriangles(p, triangles);
       }
 
       //// Special case for pre-stripped data
