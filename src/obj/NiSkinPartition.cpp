@@ -24,6 +24,7 @@ using namespace Niflib;
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <functional>
 
 typedef std::vector<float> WeightList;
 typedef std::vector<unsigned short> BoneList;
@@ -797,6 +798,48 @@ size_t indexOf(I begin, I end, const V& val) {
 }
 
 
+namespace std
+{
+   template<>
+   struct less<Triangle> : public binary_function<Triangle, Triangle, bool>
+   {
+      bool operator()(const Triangle& s1, const Triangle& s2) const{
+         int d = 0;
+         if (d == 0) d = (s1[0] - s2[0]);
+         if (d == 0) d = (s1[1] - s2[1]);
+         if (d == 0) d = (s1[2] - s2[2]);
+         return d < 0; 
+      }
+   };
+   template<>
+   struct less<BoneWeight> : public binary_function<BoneWeight, BoneWeight, bool>
+   {
+      bool operator()(const BoneWeight& lhs, const BoneWeight& rhs) {
+         if (lhs.second == 0.0) {
+            if (rhs.second == 0.0) {
+               return rhs.first < lhs.first;
+            } else {
+               return true;
+            }
+            return false;
+         } else if ( rhs.second == lhs.second ) {
+            return lhs.first < rhs.first;
+         } else {
+            return rhs.second < lhs.second;
+         }
+      }
+   };
+}
+
+inline void rotate(Triangle &t)
+{
+   if (t[1] < t[0] && t[1] < t[2]) {
+      t.Set( t[1], t[2], t[0] );
+   } else if (t[2] < t[0]) {
+      t.Set( t[2], t[0], t[1] );
+   }
+}
+
 NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, bool bStrippify, int* faceMap ) {
    NiSkinInstanceRef skinInst = shape->GetSkinInstance();
    if ( skinInst == NULL ) {
@@ -823,7 +866,8 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       throw runtime_error( "Attempted to generate a skin partition on a mesh with no triangles." );
    }
 
-   weights.resize( verts.size() );
+   int numVerts = int(verts.size());
+   weights.resize( numVerts );
    int numBones = skinData->GetBoneCount();
    for ( int bone = 0; bone < numBones; bone++ )
    {
@@ -856,19 +900,16 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       for ( vector< BoneWeightList >::iterator it = weights.begin(); it != weights.end(); ++it )
       {
          BoneWeightList & lst = *it;
-         if ( int(lst.size()) > maxBonesPerVertex )
+         sort(lst.begin(), lst.end(), std::less<BoneWeight>());
+         int n = int(lst.size());
+         if ( n > maxBonesPerVertex )
+         {
             c++;
 
-         while ( int(lst.size()) > maxBonesPerVertex ) {
-            int j = 0;
-            float weight = lst.front().second;
-            for ( int i = 0; i < int(lst.size()); i++ )
-            {
-               if ( lst[i].second < weight )
-                  j = i;
-            }
-            BoneWeightList::iterator jit = lst.begin() + j;
-            lst.erase( jit );
+            BoneWeightList::iterator itr = lst.begin();
+            std::advance(itr, n);
+            while ( itr != lst.end() )
+               itr = lst.erase( itr );
          }
 
          float totalWeight = 0;
@@ -1004,31 +1045,27 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       Triangles::iterator it = triangles.begin();
       for (int idx = 0, n = triangles.size(); idx<n; ++idx ){
          int partIdx = faceMap[idx];
-         if (partIdx >= 0)
-         {
-            Triangle & tri = *it;
+         if (partIdx < 0)
+            partIdx = 0;
 
-            // Ensure enough partitions
-            while ( partIdx >= int(parts.size()) )
-               parts.push_back( SkinPartition() );
+         Triangle & tri = *it;
 
-            SkinPartition& part = parts[partIdx];
-            BoneList tribones;
-            for ( int c = 0; c < 3; c++ ) {
-               BoneWeightList& bws = weights[tri[c]];
-               for (BoneWeightList::iterator bw = bws.begin(); bw != bws.end(); ++bw) {
-                  if ( tribones.end() == find(tribones.begin(), tribones.end(), (*bw).first ) )
-                     tribones.push_back( (*bw).first );
-               }
+         // Ensure enough partitions
+         while ( partIdx >= int(parts.size()) )
+            parts.push_back( SkinPartition() );
+
+         SkinPartition& part = parts[partIdx];
+         BoneList tribones;
+         for ( int c = 0; c < 3; c++ ) {
+            BoneWeightList& bws = weights[tri[c]];
+            for (BoneWeightList::iterator bw = bws.begin(); bw != bws.end(); ++bw) {
+               if ( tribones.end() == find(tribones.begin(), tribones.end(), (*bw).first ) )
+                  tribones.push_back( (*bw).first );
             }
-            mergeBones( part.bones, tribones );
-            part.triangles.push_back( tri );
-            it = triangles.erase(it); // delete triangle so it is not use later
          }
-         else
-         {
-            ++it;
-         }
+         mergeBones( part.bones, tribones );
+         part.triangles.push_back( tri );
+         it = triangles.erase(it); // delete triangle so it is not use later
       }
       merge = false; // when explicit mapping enabled, no merging is allowed
    }
@@ -1109,13 +1146,33 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       Triangles& triangles = part.triangles;
 
       vector<unsigned short>& vertices = part.vertexMap;
+
+      // Create the vertex map
+
+      int idx = 0;
+      vector<int> vidx(numVerts, -1);
+      for( Triangles::iterator tri = triangles.begin(); tri !=  triangles.end(); ++tri) {
+         for ( int t = 0; t < 3; t++ ) {
+            int v = (*tri)[t];
+            if ( vidx[v] < 0)
+               vidx[v] = idx++;
+         }
+      }
+      vertices.assign(idx, -1);
+      for (int i = 0; i < numVerts; ++i) {
+         int v = vidx[i];
+         if (v >= 0) {
+            vertices[v] = i;
+         }
+      }
+
       for( Triangles::iterator tri = triangles.begin(); tri !=  triangles.end(); ++tri) {
          for ( int t = 0; t < 3; t++ ) {
             if ( vertices.end() == find(vertices.begin(), vertices.end(), (*tri)[t] ) )
                vertices.push_back( (*tri)[t] );
          }
       }
-      sort( vertices.begin(), vertices.end() );
+
       part.numVertices = int(vertices.size());
       part.hasVertexMap = true;
 
@@ -1178,6 +1235,7 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       // fill in vertex weights and bones
       for (size_t v = 0; v < vertices.size(); ++v) {
          BoneWeightList& bwl = weights[vertices[v]];
+         sort(bwl.begin(), bwl.end(), std::less<BoneWeight>());
          for ( int b = 0; b < maxBones; b++ ) {
             part.boneIndices[v][b] = (int(bwl.size()) > b) ? (int)indexOf(bones.begin(), bones.end(), bwl[b].first) : 0 ;
             part.vertexWeights[v][b] = (int(bwl.size()) > b ? bwl[b].second : 0.0f);

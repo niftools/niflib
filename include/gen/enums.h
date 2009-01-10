@@ -639,21 +639,6 @@ enum EmitFrom {
 
 ostream & operator<<( ostream & out, EmitFrom const & val );
 
-enum MtlFlags {
-	MTL_WIRE = 1, /*!< Wire */
-	MTL_TWO_SIDED = 2, /*!< Two Sided */
-	MTL_FACEMAP = 4, /*!< Facemap */
-	MTL_FACETED = 8, /*!< Faceted */
-	MTL_ADDITIVE = 16, /*!< Additive */
-	MTL_SUBTRACTIVE = 32, /*!< Subtractive */
-	MTL_CRY_SHADER = 64, /*!< Cry Shader */
-	MTL_PHYSICALIZE = 128, /*!< Physicalize */
-	MTL_ADDITIVE_DECAL = 256, /*!< Additive Decal */
-	MTL_USE_GLOSSINESS = 512, /*!< Use Glossiness */
-};
-
-ostream & operator<<( ostream & out, MtlFlags const & val );
-
 /*! Shader Property Flags */
 enum BSShaderFlags {
 	SF_ZBUFFER_TEST = 1, /*!< ZBuffer Test (1=on) */
@@ -692,13 +677,10 @@ enum BSShaderFlags {
 
 ostream & operator<<( ostream & out, BSShaderFlags const & val );
 
-/*!
- * Editor flags for the Body Partitions. Its unclear difference between
- * PF_EDITOR_VISIBLE and PF_EDITOR_VISIBLE_2.
- */
+/*! Editor flags for the Body Partitions. */
 enum BSPartFlag {
 	PF_EDITOR_VISIBLE = 1, /*!< Visible in Editor */
-	PF_EDITOR_VISIBLE_2 = 256, /*!< Visible in Editor */
+	PF_START_NET_BONESET = 256, /*!< Start a new shared boneset.  It is expected this BoneSet and the following sets in the Skin Partition will have the same bones. */
 };
 
 ostream & operator<<( ostream & out, BSPartFlag const & val );

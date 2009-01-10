@@ -20,7 +20,7 @@ DecalVectorArray::DecalVectorArray( const DecalVectorArray & src ) {
 DecalVectorArray & DecalVectorArray::operator=( const DecalVectorArray & src ) {
 	this->numVectors = src.numVectors;
 	this->points = src.points;
-	this->vector = src.vector;
+	this->normals = src.normals;
 	return *this;
 };
 

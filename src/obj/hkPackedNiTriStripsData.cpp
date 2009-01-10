@@ -48,7 +48,7 @@ void hkPackedNiTriStripsData::Read( istream& in, list<unsigned int> & link_stack
 	triangles.resize(numTriangles);
 	for (unsigned int i1 = 0; i1 < triangles.size(); i1++) {
 		NifStream( triangles[i1].triangle, in, info );
-		NifStream( triangles[i1].weldingInformation_, in, info );
+		NifStream( triangles[i1].weldingInfo, in, info );
 		if ( info.version <= 0x14000005 ) {
 			NifStream( triangles[i1].normal, in, info );
 		};
@@ -88,7 +88,7 @@ void hkPackedNiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigne
 	NifStream( numTriangles, out, info );
 	for (unsigned int i1 = 0; i1 < triangles.size(); i1++) {
 		NifStream( triangles[i1].triangle, out, info );
-		NifStream( triangles[i1].weldingInformation_, out, info );
+		NifStream( triangles[i1].weldingInfo, out, info );
 		if ( info.version <= 0x14000005 ) {
 			NifStream( triangles[i1].normal, out, info );
 		};
@@ -133,7 +133,7 @@ std::string hkPackedNiTriStripsData::asString( bool verbose ) const {
 			break;
 		};
 		out << "    Triangle:  " << triangles[i1].triangle << endl;
-		out << "    Welding Information?:  " << triangles[i1].weldingInformation_ << endl;
+		out << "    Welding Info:  " << triangles[i1].weldingInfo << endl;
 		out << "    Normal:  " << triangles[i1].normal << endl;
 	};
 	out << "  Num Vertices:  " << numVertices << endl;

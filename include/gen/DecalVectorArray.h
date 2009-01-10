@@ -28,7 +28,7 @@ struct DecalVectorArray {
 	/*! Vector XYZ coords */
 	vector<Vector3 > points;
 	/*! Vector Normals */
-	vector<Vector3 > vector;
+	vector<Vector3 > normals;
 };
 
 }

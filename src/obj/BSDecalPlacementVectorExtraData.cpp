@@ -56,9 +56,9 @@ void BSDecalPlacementVectorExtraData::Read( istream& in, list<unsigned int> & li
 		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].points.size(); i2++) {
 			NifStream( vectorBlocks[i1].points[i2], in, info );
 		};
-		vectorBlocks[i1].vector.resize(vectorBlocks[i1].numVectors);
-		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].vector.size(); i2++) {
-			NifStream( vectorBlocks[i1].vector[i2], in, info );
+		vectorBlocks[i1].normals.resize(vectorBlocks[i1].numVectors);
+		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].normals.size(); i2++) {
+			NifStream( vectorBlocks[i1].normals[i2], in, info );
 		};
 	};
 
@@ -82,8 +82,8 @@ void BSDecalPlacementVectorExtraData::Write( ostream& out, const map<NiObjectRef
 		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].points.size(); i2++) {
 			NifStream( vectorBlocks[i1].points[i2], out, info );
 		};
-		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].vector.size(); i2++) {
-			NifStream( vectorBlocks[i1].vector[i2], out, info );
+		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].normals.size(); i2++) {
+			NifStream( vectorBlocks[i1].normals[i2], out, info );
 		};
 	};
 
@@ -124,7 +124,7 @@ std::string BSDecalPlacementVectorExtraData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].vector.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < vectorBlocks[i1].normals.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -132,7 +132,7 @@ std::string BSDecalPlacementVectorExtraData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Vector[" << i2 << "]:  " << vectorBlocks[i1].vector[i2] << endl;
+			out << "      Normals[" << i2 << "]:  " << vectorBlocks[i1].normals[i2] << endl;
 			array_output_count++;
 		};
 	};

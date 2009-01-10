@@ -78,12 +78,12 @@ protected:
 	mutable int numTextures;
 	/*!
 	 * Textures.
-	 *         0: Diffuse
-	 *         1: Normal/Gloss
-	 *         2: Environment Mask
-	 *         3: Glow/Skin/Hair
-	 *         4: Height
-	 *         5: Environment
+	 *             0: Diffuse
+	 *             1: Normal/Gloss
+	 *             2: Environment Mask
+	 *             3: Glow/Skin/Hair
+	 *             4: Height
+	 *             5: Environment
 	 */
 	vector<string > textures;
 public:

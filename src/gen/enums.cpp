@@ -1188,35 +1188,6 @@ ostream & operator<<( ostream & out, EmitFrom const & val ) {
 }
 
 
-//--MtlFlags--//
-
-void NifStream( MtlFlags & val, istream& in, const NifInfo & info ) {
-	unsigned int temp;
-	NifStream( temp, in, info );
-	val = MtlFlags(temp);
-}
-
-void NifStream( MtlFlags const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (unsigned int)(val), out, info );
-}
-
-ostream & operator<<( ostream & out, MtlFlags const & val ) {
-	switch ( val ) {
-		case MTL_WIRE: return out << "MTL_WIRE";
-		case MTL_TWO_SIDED: return out << "MTL_TWO_SIDED";
-		case MTL_FACEMAP: return out << "MTL_FACEMAP";
-		case MTL_FACETED: return out << "MTL_FACETED";
-		case MTL_ADDITIVE: return out << "MTL_ADDITIVE";
-		case MTL_SUBTRACTIVE: return out << "MTL_SUBTRACTIVE";
-		case MTL_CRY_SHADER: return out << "MTL_CRY_SHADER";
-		case MTL_PHYSICALIZE: return out << "MTL_PHYSICALIZE";
-		case MTL_ADDITIVE_DECAL: return out << "MTL_ADDITIVE_DECAL";
-		case MTL_USE_GLOSSINESS: return out << "MTL_USE_GLOSSINESS";
-		default: return out << "Invalid Value! - " << (unsigned int)(val);
-	}
-}
-
-
 //--BSShaderFlags--//
 
 void NifStream( BSShaderFlags & val, istream& in, const NifInfo & info ) {
@@ -1283,7 +1254,7 @@ void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info ) {
 ostream & operator<<( ostream & out, BSPartFlag const & val ) {
 	switch ( val ) {
 		case PF_EDITOR_VISIBLE: return out << "PF_EDITOR_VISIBLE";
-		case PF_EDITOR_VISIBLE_2: return out << "PF_EDITOR_VISIBLE_2";
+		case PF_START_NET_BONESET: return out << "PF_START_NET_BONESET";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
