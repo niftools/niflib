@@ -900,7 +900,6 @@ NiSkinPartition::NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerParti
       for ( vector< BoneWeightList >::iterator it = weights.begin(); it != weights.end(); ++it )
       {
          BoneWeightList & lst = *it;
-         sort(lst.begin(), lst.end(), std::less<BoneWeight>());
          int n = int(lst.size());
          if ( n > maxBonesPerVertex )
          {

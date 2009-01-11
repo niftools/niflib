@@ -443,6 +443,9 @@ vector<int> NiGeometryData::GetVertexIndices() const {
 void NiGeometryData::SetUVSetCount(int n) {
 	uvSets.resize(n);
 	hasUv = ( uvSets.size() != 0 );
+   for (unsigned int i = 0; i < uvSets.size(); ++i ) {
+      uvSets[i].resize( vertices.size() );
+   }
 }
 
 //--Setters--//
