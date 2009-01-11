@@ -497,8 +497,12 @@ enum TexType {
 	GLOSS_MAP = 3, /*!< Allows the specularity (glossyness) of an object to differ across its surface. */
 	GLOW_MAP = 4, /*!< Creates a glowing effect.  Basically an incandescence map. */
 	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */
-	DECAL_0_MAP = 6, /*!< For placing images on the object like stickers. */
-	DECAL_1_MAP = 7, /*!< For placing images on the object like stickers. */
+	NORMAL_MAP = 6, /*!< Used to make the object appear to have more detail than it really does. */
+	UNKNOWN2_MAP = 7, /*!< Unknown map. */
+	DECAL_0_MAP = 8, /*!< For placing images on the object like stickers. */
+	DECAL_1_MAP = 9, /*!< For placing images on the object like stickers. */
+	DECAL_2_MAP = 10, /*!< For placing images on the object like stickers. */
+	DECAL_3_MAP = 11, /*!< For placing images on the object like stickers. */
 };
 
 ostream & operator<<( ostream & out, TexType const & val );

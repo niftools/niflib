@@ -1573,6 +1573,7 @@ void NiTexturingProperty::SetTextureCount( int new_count ) {
 			ClearTexture(i);
 		}
 	}
+	textureCount = new_count;
 }
 
 void NiTexturingProperty::SetShaderTextureCount( int new_count ) {
@@ -1614,6 +1615,14 @@ void NiTexturingProperty::SetTexture( int n, TexDesc & new_val ) {
 			hasBumpMapTexture = true;
 			bumpMapTexture = new_val;
 			break;
+		case NORMAL_MAP:
+			hasNormalTexture = true;
+			normalTexture = new_val;
+			break;
+		case UNKNOWN2_MAP:
+			hasUnknown2Texture = true;
+			unknown2Texture = new_val;
+			break;
 		case DECAL_0_MAP:
 			hasDecal0Texture = true;
 			decal0Texture = new_val;
@@ -1621,6 +1630,14 @@ void NiTexturingProperty::SetTexture( int n, TexDesc & new_val ) {
 		case DECAL_1_MAP:
 			hasDecal1Texture = true;
 			decal1Texture = new_val;
+			break;
+		case DECAL_2_MAP:
+			hasDecal2Texture = true;
+			decal2Texture = new_val;
+			break;
+		case DECAL_3_MAP:
+			hasDecal3Texture = true;
+			decal3Texture = new_val;
 			break;
 	};
 }

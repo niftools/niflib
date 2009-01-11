@@ -879,8 +879,12 @@ ostream & operator<<( ostream & out, TexType const & val ) {
 		case GLOSS_MAP: return out << "GLOSS_MAP";
 		case GLOW_MAP: return out << "GLOW_MAP";
 		case BUMP_MAP: return out << "BUMP_MAP";
+		case NORMAL_MAP: return out << "NORMAL_MAP";
+		case UNKNOWN2_MAP: return out << "UNKNOWN2_MAP";
 		case DECAL_0_MAP: return out << "DECAL_0_MAP";
 		case DECAL_1_MAP: return out << "DECAL_1_MAP";
+		case DECAL_2_MAP: return out << "DECAL_2_MAP";
+		case DECAL_3_MAP: return out << "DECAL_3_MAP";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
