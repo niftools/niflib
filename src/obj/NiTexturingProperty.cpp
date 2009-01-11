@@ -1528,10 +1528,18 @@ TexDesc NiTexturingProperty::GetTexture( int n ) const {
 			return glowTexture;
 		case BUMP_MAP:
 			return bumpMapTexture;
+      case NORMAL_MAP:
+         return normalTexture;
+      case UNKNOWN2_MAP:
+         return unknown2Texture;
 		case DECAL_0_MAP:
 			return decal0Texture;
 		case DECAL_1_MAP:
 			return decal1Texture;
+      case DECAL_2_MAP:
+         return decal2Texture;
+      case DECAL_3_MAP:
+         return decal3Texture;
 	};
 
 	//If we get here, an invalid texture was requested.
@@ -1573,7 +1581,7 @@ void NiTexturingProperty::SetTextureCount( int new_count ) {
 			ClearTexture(i);
 		}
 	}
-	textureCount = new_count;
+   textureCount = new_count;
 }
 
 void NiTexturingProperty::SetShaderTextureCount( int new_count ) {
@@ -1615,14 +1623,14 @@ void NiTexturingProperty::SetTexture( int n, TexDesc & new_val ) {
 			hasBumpMapTexture = true;
 			bumpMapTexture = new_val;
 			break;
-		case NORMAL_MAP:
-			hasNormalTexture = true;
-			normalTexture = new_val;
-			break;
-		case UNKNOWN2_MAP:
-			hasUnknown2Texture = true;
-			unknown2Texture = new_val;
-			break;
+      case NORMAL_MAP:
+         hasNormalTexture = true;
+         normalTexture = new_val;
+         break;
+      case UNKNOWN2_MAP:
+         hasUnknown2Texture = true;
+         unknown2Texture = new_val;
+         break;
 		case DECAL_0_MAP:
 			hasDecal0Texture = true;
 			decal0Texture = new_val;
@@ -1631,14 +1639,14 @@ void NiTexturingProperty::SetTexture( int n, TexDesc & new_val ) {
 			hasDecal1Texture = true;
 			decal1Texture = new_val;
 			break;
-		case DECAL_2_MAP:
-			hasDecal2Texture = true;
-			decal2Texture = new_val;
-			break;
-		case DECAL_3_MAP:
-			hasDecal3Texture = true;
-			decal3Texture = new_val;
-			break;
+      case DECAL_2_MAP:
+         hasDecal2Texture = true;
+         decal2Texture = new_val;
+         break;
+      case DECAL_3_MAP:
+         hasDecal3Texture = true;
+         decal3Texture = new_val;
+         break;
 	};
 }
 
@@ -1666,10 +1674,18 @@ bool NiTexturingProperty::HasTexture( int n ) const {
 			return hasGlowTexture;
 		case BUMP_MAP:
 			return hasBumpMapTexture;
+      case NORMAL_MAP:
+         return hasNormalTexture;
+      case UNKNOWN2_MAP:
+         return hasUnknown2Texture;
 		case DECAL_0_MAP:
 			return hasDecal0Texture;
 		case DECAL_1_MAP:
 			return hasDecal1Texture;
+      case DECAL_2_MAP:
+         return hasDecal2Texture;
+      case DECAL_3_MAP:
+         return hasDecal3Texture;
 		default:
 			throw runtime_error("You have specified an invalid texture type.");
 	};
@@ -1701,6 +1717,14 @@ void NiTexturingProperty::ClearTexture( int n ) {
 			hasBumpMapTexture = false;
 			bumpMapTexture.source = NULL;
 			break;
+      case NORMAL_MAP:
+         hasNormalTexture = false;
+         normalTexture.source = NULL;
+         break;
+      case UNKNOWN2_MAP:
+         hasUnknown2Texture = false;
+         unknown2Texture.source = NULL;
+         break;
 		case DECAL_0_MAP:
 			hasDecal0Texture = false;
 			decal0Texture.source = NULL;
@@ -1709,6 +1733,14 @@ void NiTexturingProperty::ClearTexture( int n ) {
 			hasDecal1Texture = false;
 			decal1Texture.source = NULL;
 			break;
+      case DECAL_2_MAP:
+         hasDecal2Texture = false;
+         decal2Texture.source = NULL;
+         break;
+      case DECAL_3_MAP:
+         hasDecal3Texture = false;
+         decal3Texture.source = NULL;
+         break;
 	};
 }
 
