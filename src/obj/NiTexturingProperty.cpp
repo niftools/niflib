@@ -1496,16 +1496,21 @@ void NiTexturingProperty::SetApplyMode( ApplyMode new_val ) {
 
 int NiTexturingProperty::GetTextureCount() const {
 	//TODO:  Create a built in type for this array of textures so it can be a real array again?
-	int count = 0;
-	if ( hasBaseTexture ) { count++; }
-	if ( hasBumpMapTexture ) { count++; }
-	if ( hasDarkTexture ) { count++; }
-	if ( hasDecal0Texture ) { count++; }
-	if ( hasDecal1Texture ) { count++; }
-	if ( hasDetailTexture ) { count++; }
-	if ( hasGlossTexture ) { count++; }
-	if ( hasGlowTexture ) { count++; }
-	return count;
+	//int count = 0;
+	//if ( hasBaseTexture ) { count++; }
+	//if ( hasBumpMapTexture ) { count++; }
+	//if ( hasDarkTexture ) { count++; }
+	//if ( hasDecal0Texture ) { count++; }
+	//if ( hasDecal1Texture ) { count++; }
+	//if ( hasDetailTexture ) { count++; }
+	//if ( hasGlossTexture ) { count++; }
+	//if ( hasGlowTexture ) { count++; }
+ //  if ( hasNormalTexture ) { count++; }
+ //  if ( hasUnknown2Texture ) { count++; }
+ //  if ( hasDecal2Texture ) { count++; }
+ //  if ( hasDecal3Texture ) { count++; }
+	//return count;
+   return textureCount;
 }
 
 int NiTexturingProperty::GetShaderTextureCount() const {
@@ -1576,11 +1581,11 @@ void NiTexturingProperty::SetBumpMapMatrix( Matrix22 & new_val ) {
 
 void NiTexturingProperty::SetTextureCount( int new_count ) {
 
-	if ( new_count < int(textureCount) ) {
-		for ( int i = int(textureCount); i > new_count; --i ) {
-			ClearTexture(i);
-		}
-	}
+	//if ( new_count < int(textureCount) ) {
+	//	for ( int i = int(textureCount); i > new_count; --i ) {
+	//		ClearTexture(i);
+	//	}
+	//}
    textureCount = new_count;
 }
 
