@@ -440,6 +440,14 @@ vector<int> NiGeometryData::GetVertexIndices() const {
 	return vertexIndices;
 }
 
+int NiGeometryData::GetUVSetIndex(int maxMapChannel) const
+{
+	if (uvSetMap.size() == 0) return -1;
+	map<int,int>::const_iterator it = uvSetMap.find(maxMapChannel);
+	if (it == uvSetMap.end()) return -1;
+	return (*it).second;
+}
+
 void NiGeometryData::SetUVSetCount(int n) {
 	uvSets.resize(n);
 	hasUv = ( uvSets.size() != 0 );
@@ -530,6 +538,10 @@ void NiGeometryData::SetVertexIndices( const vector<int> & in ) {
 	if (in.size() != vertices.size() && in.size() != 0 )
 		throw runtime_error("Vector size must equal Vertex Count or zero.");
 	vertexIndices = in;
+}
+
+void NiGeometryData::SetUVSetMap( const std::map<int, int> & in ) {
+	uvSetMap = in;
 }
 
 

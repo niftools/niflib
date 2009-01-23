@@ -61,6 +61,9 @@ public:
 protected:
 	/*! The mesh vertex indices. */
 	vector<int > vertexIndices;
+
+	/*! The mapping between Nif & Max UV sets. */
+	std::map<int, int>  uvSetMap; // first = Max index, second = Nif index
 public:
 
 	//--Counts--//
@@ -145,10 +148,17 @@ public:
 	
 	/*! 
 	 * Used to retrive the vertex indices used by this mesh.  The size of the vector will be the same as the vertex count retrieved with the IShapeData::GetVertexIndexCount function.
-	 * \return A vector cntaining the vertex indices used by this mesh.
+	 * \return A vector containing the vertex indices used by this mesh.
 	 * \sa IShapeData::SetVertexIndices, IShapeData::GetVertexIndexCount, IShapeData::SetVertexIndexCount.
 	 */
 	NIFLIB_API vector<int> GetVertexIndices() const;
+
+	/*! 
+	 * Used to retrive the the NIF index corresponding to the Max map channel. If there isn't one, -1 is returned.
+	 * \param maxMapChannel The max map channel of the desired UV set.
+	 * \return A int representing the NIF index of the UV se used.
+	 */
+	NIFLIB_API int GetUVSetIndex(int maxMapChannel) const;
 
 	//--Setters--//
 
@@ -187,6 +197,12 @@ public:
 	 * \sa IShapeData::GetVertexIndices, IShapeData::GetVertexIndexCount
 	 */
 	NIFLIB_API virtual void SetVertexIndices( const vector<int> & in );
+
+	/*! 
+	 * Used to set the UV set mapping data used by this mesh.  This info maps the Max map channel to the index used in the NIF.
+	 * \param in A map of UV set indices; first is the Max map channel and the second is the index used in the Nif mesh.
+	 */
+	NIFLIB_API virtual void SetUVSetMap( const std::map<int, int> & in );
 
 	/*!
 	 * Used to apply a transformation directly to all the vertices and normals in
