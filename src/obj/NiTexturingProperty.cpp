@@ -1666,34 +1666,35 @@ void NiTexturingProperty::SetShaderTexture( int n, TexDesc & new_val ) {
 }
 
 bool NiTexturingProperty::HasTexture( int n ) const {
-	switch (n) {
-		case BASE_MAP:
-			return hasBaseTexture;
-		case DARK_MAP:
-			return hasDarkTexture;
-		case DETAIL_MAP:
-			return hasDetailTexture;
-		case GLOSS_MAP:
-			return hasGlossTexture;
-		case GLOW_MAP:
-			return hasGlowTexture;
-		case BUMP_MAP:
-			return hasBumpMapTexture;
+   switch (n) {
+      case BASE_MAP:
+         return hasBaseTexture;
+      case DARK_MAP:
+         return hasDarkTexture;
+      case DETAIL_MAP:
+         return hasDetailTexture;
+      case GLOSS_MAP:
+         return hasGlossTexture;
+      case GLOW_MAP:
+         return hasGlowTexture;
+      case BUMP_MAP:
+         return hasBumpMapTexture;
       case NORMAL_MAP:
          return hasNormalTexture;
       case UNKNOWN2_MAP:
          return hasUnknown2Texture;
-		case DECAL_0_MAP:
-			return hasDecal0Texture;
-		case DECAL_1_MAP:
-			return hasDecal1Texture;
+      case DECAL_0_MAP:
+         return hasDecal0Texture;
+      case DECAL_1_MAP:
+         return hasDecal1Texture;
       case DECAL_2_MAP:
          return hasDecal2Texture;
       case DECAL_3_MAP:
          return hasDecal3Texture;
-		default:
-			throw runtime_error("You have specified an invalid texture type.");
-	};
+      default:
+         return false;
+         //throw runtime_error("You have specified an invalid texture type.");
+   };
 }
 
 void NiTexturingProperty::ClearTexture( int n ) {
