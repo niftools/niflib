@@ -24,7 +24,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometry::TYPE("NiGeometry", &NiAVObject::TYPE );
 
-NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)0), hasShader(false), unknownInteger((int)0), unknownByte((byte)255), dirtyFlag(false) {
+NiGeometry::NiGeometry() : data(NULL), skinInstance(NULL), numMaterials((unsigned int)0), activeMaterial((int)0), hasShader(false), unknownInteger((int)0), unknownByte((byte)255), unknownInteger2((int)0), dirtyFlag(false) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -75,6 +75,9 @@ void NiGeometry::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	};
 	if ( info.userVersion == 1 ) {
 		NifStream( unknownByte, in, info );
+	};
+	if ( ( info.version >= 0x0A040001 ) && ( info.version <= 0x0A040001 ) ) {
+		NifStream( unknownInteger2, in, info );
 	};
 	if ( info.version >= 0x14020007 ) {
 		NifStream( dirtyFlag, in, info );
@@ -130,6 +133,9 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	if ( info.userVersion == 1 ) {
 		NifStream( unknownByte, out, info );
 	};
+	if ( ( info.version >= 0x0A040001 ) && ( info.version <= 0x0A040001 ) ) {
+		NifStream( unknownInteger2, out, info );
+	};
 	if ( info.version >= 0x14020007 ) {
 		NifStream( dirtyFlag, out, info );
 	};
@@ -180,6 +186,7 @@ std::string NiGeometry::asString( bool verbose ) const {
 		out << "    Unknown Integer:  " << unknownInteger << endl;
 	};
 	out << "  Unknown Byte:  " << unknownByte << endl;
+	out << "  Unknown Integer 2:  " << unknownInteger2 << endl;
 	out << "  Dirty Flag:  " << dirtyFlag << endl;
 	return out.str();
 

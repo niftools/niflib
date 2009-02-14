@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysSpawnModifier::TYPE("NiPSysSpawnModifier", &NiPSysModifier::TYPE );
 
-NiPSysSpawnModifier::NiPSysSpawnModifier() : numSpawnGenerations((unsigned short)0), percentageSpawned(0.0f), minNumToSpawn((unsigned short)0), maxNumToSpawn((unsigned short)0), spawnSpeedChaos(0.0f), spawnDirChaos(0.0f), lifeSpan(0.0f), lifeSpanVariation(0.0f) {
+NiPSysSpawnModifier::NiPSysSpawnModifier() : numSpawnGenerations((unsigned short)0), percentageSpawned(0.0f), minNumToSpawn((unsigned short)0), maxNumToSpawn((unsigned short)0), spawnSpeedChaos(0.0f), spawnDirChaos(0.0f), lifeSpan(0.0f), lifeSpanVariation(0.0f), unknownInt((int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -50,6 +50,9 @@ void NiPSysSpawnModifier::Read( istream& in, list<unsigned int> & link_stack, co
 	NifStream( spawnDirChaos, in, info );
 	NifStream( lifeSpan, in, info );
 	NifStream( lifeSpanVariation, in, info );
+	if ( ( info.version >= 0x0A040001 ) && ( info.version <= 0x0A040001 ) ) {
+		NifStream( unknownInt, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -68,6 +71,9 @@ void NiPSysSpawnModifier::Write( ostream& out, const map<NiObjectRef,unsigned in
 	NifStream( spawnDirChaos, out, info );
 	NifStream( lifeSpan, out, info );
 	NifStream( lifeSpanVariation, out, info );
+	if ( ( info.version >= 0x0A040001 ) && ( info.version <= 0x0A040001 ) ) {
+		NifStream( unknownInt, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -88,6 +94,7 @@ std::string NiPSysSpawnModifier::asString( bool verbose ) const {
 	out << "  Spawn Dir Chaos:  " << spawnDirChaos << endl;
 	out << "  Life Span:  " << lifeSpan << endl;
 	out << "  Life Span Variation:  " << lifeSpanVariation << endl;
+	out << "  Unknown int:  " << unknownInt << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

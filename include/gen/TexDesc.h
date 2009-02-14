@@ -37,9 +37,17 @@ struct TexDesc {
 	unsigned short flags;
 	/*! The texture coordinate set in NiGeometryData that this texture slot will use. */
 	unsigned int uvSet;
-	/*! 0? */
+	/*!
+	 * PS2 only; from the Freedom Force docs, "L values can range from 0 to 3 and are
+	 * used to specify how fast a texture gets blurry".
+	 */
 	short ps2L;
-	/*! -75? */
+	/*!
+	 * PS2 only; from the Freedom Force docs, "The K value is used as an offset into
+	 * the mipmap levels and can range from -2047 to 2047. Positive values push the
+	 * mipmap towards being blurry and negative values make the mipmap sharper." -75
+	 * for most v4.0.0.2 meshes.
+	 */
 	short ps2K;
 	/*! Unknown, 0 or 0x0101? */
 	unsigned short unknown1;

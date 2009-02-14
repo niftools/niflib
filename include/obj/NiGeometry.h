@@ -187,6 +187,8 @@ protected:
 	int unknownInteger;
 	/*! Cyanide extension (only in version 10.2.0.0?). */
 	byte unknownByte;
+	/*! Unknown. */
+	int unknownInteger2;
 	/*! Dirty Flag? */
 	bool dirtyFlag;
 public:

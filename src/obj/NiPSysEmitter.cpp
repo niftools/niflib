@@ -50,7 +50,7 @@ void NiPSysEmitter::Read( istream& in, list<unsigned int> & link_stack, const Ni
 	NifStream( planarAngleVariation, in, info );
 	NifStream( initialColor, in, info );
 	NifStream( initialRadius, in, info );
-	if ( info.version >= 0x14000004 ) {
+	if ( info.version >= 0x0A040001 ) {
 		NifStream( radiusVariation, in, info );
 	};
 	NifStream( lifeSpan, in, info );
@@ -73,7 +73,7 @@ void NiPSysEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 	NifStream( planarAngleVariation, out, info );
 	NifStream( initialColor, out, info );
 	NifStream( initialRadius, out, info );
-	if ( info.version >= 0x14000004 ) {
+	if ( info.version >= 0x0A040001 ) {
 		NifStream( radiusVariation, out, info );
 	};
 	NifStream( lifeSpan, out, info );

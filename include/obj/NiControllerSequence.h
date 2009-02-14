@@ -274,6 +274,8 @@ protected:
 	float unknownFloat2;
 	/*! Unknown. */
 	byte unknownByte;
+	/*! Unknown. */
+	int unknownInt2;
 	/*! Refers to NiControllerManager which references this object, if any. */
 	NiControllerManager * manager;
 	/*! Name of target node Controller acts on. */

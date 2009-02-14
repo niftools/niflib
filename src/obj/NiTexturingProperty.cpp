@@ -94,7 +94,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( baseTexture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( baseTexture.ps2L, in, info );
 			NifStream( baseTexture.ps2K, in, info );
 		};
@@ -126,7 +126,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( darkTexture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( darkTexture.ps2L, in, info );
 			NifStream( darkTexture.ps2K, in, info );
 		};
@@ -158,7 +158,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( detailTexture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( detailTexture.ps2L, in, info );
 			NifStream( detailTexture.ps2K, in, info );
 		};
@@ -190,7 +190,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( glossTexture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( glossTexture.ps2L, in, info );
 			NifStream( glossTexture.ps2K, in, info );
 		};
@@ -222,7 +222,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( glowTexture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( glowTexture.ps2L, in, info );
 			NifStream( glowTexture.ps2K, in, info );
 		};
@@ -254,7 +254,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( bumpMapTexture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( bumpMapTexture.ps2L, in, info );
 			NifStream( bumpMapTexture.ps2K, in, info );
 		};
@@ -290,7 +290,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 			if ( info.version <= 0x14000005 ) {
 				NifStream( normalTexture.uvSet, in, info );
 			};
-			if ( info.version <= 0x0A020000 ) {
+			if ( info.version <= 0x0A040001 ) {
 				NifStream( normalTexture.ps2L, in, info );
 				NifStream( normalTexture.ps2K, in, info );
 			};
@@ -322,7 +322,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 			if ( info.version <= 0x14000005 ) {
 				NifStream( unknown2Texture.uvSet, in, info );
 			};
-			if ( info.version <= 0x0A020000 ) {
+			if ( info.version <= 0x0A040001 ) {
 				NifStream( unknown2Texture.ps2L, in, info );
 				NifStream( unknown2Texture.ps2K, in, info );
 			};
@@ -358,7 +358,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal0Texture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal0Texture.ps2L, in, info );
 			NifStream( decal0Texture.ps2K, in, info );
 		};
@@ -399,7 +399,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal1Texture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal1Texture.ps2L, in, info );
 			NifStream( decal1Texture.ps2K, in, info );
 		};
@@ -440,7 +440,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal2Texture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal2Texture.ps2L, in, info );
 			NifStream( decal2Texture.ps2K, in, info );
 		};
@@ -481,7 +481,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal3Texture.uvSet, in, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal3Texture.ps2L, in, info );
 			NifStream( decal3Texture.ps2K, in, info );
 		};
@@ -517,7 +517,7 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 				if ( info.version <= 0x14000005 ) {
 					NifStream( shaderTextures[i2].textureData.uvSet, in, info );
 				};
-				if ( info.version <= 0x0A020000 ) {
+				if ( info.version <= 0x0A040001 ) {
 					NifStream( shaderTextures[i2].textureData.ps2L, in, info );
 					NifStream( shaderTextures[i2].textureData.ps2K, in, info );
 				};
@@ -580,7 +580,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( baseTexture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( baseTexture.ps2L, out, info );
 			NifStream( baseTexture.ps2K, out, info );
 		};
@@ -619,7 +619,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( darkTexture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( darkTexture.ps2L, out, info );
 			NifStream( darkTexture.ps2K, out, info );
 		};
@@ -658,7 +658,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( detailTexture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( detailTexture.ps2L, out, info );
 			NifStream( detailTexture.ps2K, out, info );
 		};
@@ -697,7 +697,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( glossTexture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( glossTexture.ps2L, out, info );
 			NifStream( glossTexture.ps2K, out, info );
 		};
@@ -736,7 +736,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( glowTexture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( glowTexture.ps2L, out, info );
 			NifStream( glowTexture.ps2K, out, info );
 		};
@@ -775,7 +775,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( bumpMapTexture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( bumpMapTexture.ps2L, out, info );
 			NifStream( bumpMapTexture.ps2K, out, info );
 		};
@@ -818,7 +818,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 			if ( info.version <= 0x14000005 ) {
 				NifStream( normalTexture.uvSet, out, info );
 			};
-			if ( info.version <= 0x0A020000 ) {
+			if ( info.version <= 0x0A040001 ) {
 				NifStream( normalTexture.ps2L, out, info );
 				NifStream( normalTexture.ps2K, out, info );
 			};
@@ -857,7 +857,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 			if ( info.version <= 0x14000005 ) {
 				NifStream( unknown2Texture.uvSet, out, info );
 			};
-			if ( info.version <= 0x0A020000 ) {
+			if ( info.version <= 0x0A040001 ) {
 				NifStream( unknown2Texture.ps2L, out, info );
 				NifStream( unknown2Texture.ps2K, out, info );
 			};
@@ -900,7 +900,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal0Texture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal0Texture.ps2L, out, info );
 			NifStream( decal0Texture.ps2K, out, info );
 		};
@@ -948,7 +948,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal1Texture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal1Texture.ps2L, out, info );
 			NifStream( decal1Texture.ps2K, out, info );
 		};
@@ -996,7 +996,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal2Texture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal2Texture.ps2L, out, info );
 			NifStream( decal2Texture.ps2K, out, info );
 		};
@@ -1044,7 +1044,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 		if ( info.version <= 0x14000005 ) {
 			NifStream( decal3Texture.uvSet, out, info );
 		};
-		if ( info.version <= 0x0A020000 ) {
+		if ( info.version <= 0x0A040001 ) {
 			NifStream( decal3Texture.ps2L, out, info );
 			NifStream( decal3Texture.ps2K, out, info );
 		};
@@ -1086,7 +1086,7 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				if ( info.version <= 0x14000005 ) {
 					NifStream( shaderTextures[i2].textureData.uvSet, out, info );
 				};
-				if ( info.version <= 0x0A020000 ) {
+				if ( info.version <= 0x0A040001 ) {
 					NifStream( shaderTextures[i2].textureData.ps2L, out, info );
 					NifStream( shaderTextures[i2].textureData.ps2K, out, info );
 				};

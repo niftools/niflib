@@ -47,7 +47,7 @@ void NiPSysData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		particleDescriptions.resize(numVertices);
 		for (unsigned int i2 = 0; i2 < particleDescriptions.size(); i2++) {
 			NifStream( particleDescriptions[i2].translation, in, info );
-			if ( info.version <= 0x0A020000 ) {
+			if ( info.version <= 0x0A040001 ) {
 				for (unsigned int i4 = 0; i4 < 3; i4++) {
 					NifStream( particleDescriptions[i2].unknownFloats1[i4], in, info );
 				};
@@ -84,7 +84,7 @@ void NiPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
 		for (unsigned int i2 = 0; i2 < particleDescriptions.size(); i2++) {
 			NifStream( particleDescriptions[i2].translation, out, info );
-			if ( info.version <= 0x0A020000 ) {
+			if ( info.version <= 0x0A040001 ) {
 				for (unsigned int i4 = 0; i4 < 3; i4++) {
 					NifStream( particleDescriptions[i2].unknownFloats1[i4], out, info );
 				};
