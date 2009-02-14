@@ -358,4 +358,36 @@ std::list<NiObjectRef> NiSequence::GetRefs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+string NiSequence::GetName() const {
+   return name;
+}
+
+void NiSequence::SetName( const string & value ) {
+   name = value;
+}
+
+string NiSequence::GetTextKeysName() const {
+   return textKeysName;
+}
+
+void NiSequence::SetTextKeysName( const string & value ) {
+   textKeysName = value;
+}
+
+Ref<NiTextKeyExtraData > NiSequence::GetTextKeys() const {
+   return textKeys;
+}
+
+void NiSequence::SetTextKeys( Ref<NiTextKeyExtraData > value ) {
+   textKeys = value;
+}
+
+vector<ControllerLink > NiSequence::GetControlledBlocks() const {
+   return controlledBlocks;
+}
+
+void NiSequence::SetControlledBlocks( const vector<ControllerLink >& value ) {
+   controlledBlocks = value;
+}
+
 //--END CUSTOM CODE--//

@@ -28,6 +28,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/obj/NiTransformInterpolator.h"
 #include "../include/obj/NiTransformController.h"
 #include "../include/obj/NiTransformData.h"
+#include "../include/obj/NiMultiTargetTransformController.h"
 #include "../include/obj/NiStringExtraData.h"
 #include "../include/obj/NiExtraData.h"
 #include "../include/obj/bhkRigidBody.h"
@@ -797,7 +798,37 @@ static void SplitNifTree( NiObject* root_object, NiObjectRef& xnif_root, list<Ni
 				}
 				mgr->ClearSequences();
 			}
-		} else {
+      } else if (kf_type == KF_FFVT3R) {
+
+         // Construct the Nif file without transform controllers ...
+         xnif_root = CloneNifTree( root_object, info.version, info.userVersion );
+
+         // Delete all NiMultiTargetTransformController
+         list<NiObjectRef> nodes = GetAllObjectsByType( xnif_root, NiMultiTargetTransformController::TYPE );
+         for ( list<NiObjectRef>::iterator it = nodes.begin(); it != nodes.end(); ++it) {
+            if ( NiMultiTargetTransformControllerRef ctrl = DynamicCast<NiMultiTargetTransformController>(*it) ) {
+               if (NiNodeRef target = DynamicCast<NiNode>(ctrl->GetTarget())) {
+                  target->RemoveController(ctrl);
+               }
+            }
+         }
+
+         list<NiObjectRef> mgrs = GetAllObjectsByType( xnif_root, NiControllerManager::TYPE );
+         for ( list<NiObjectRef>::iterator it = mgrs.begin(); it != mgrs.end(); ++it) {
+            NiControllerManagerRef mgr = DynamicCast<NiControllerManager>(*it);
+            if ( mgr == NULL ) {
+               continue;
+            }
+            NiObjectNETRef target = mgr->GetTarget();
+            target->RemoveController( StaticCast<NiTimeController>(mgr) );
+            vector<NiControllerSequenceRef> seqs = mgr->GetControllerSequences();
+            for (vector<NiControllerSequenceRef>::iterator itr = seqs.begin(); itr != seqs.end(); ++itr) {
+               xkf_roots.push_back( StaticCast<NiObject>(*itr) );
+            }
+            mgr->ClearSequences();
+         }
+
+      } else {
 			throw runtime_error("KF splitting for the requested game is not yet implemented.");
 		}
 	} else {
@@ -839,6 +870,26 @@ void WriteFileGroup( string const & file_name, NiObject * root_object, const Nif
       list<NiObjectRef> xkf_roots;
       Kfm kfm; // dummy
 	  SplitNifTree( root_object, xnif_root, xkf_roots, kfm, kf_type, info );
+      if ( export_files == EXPORT_NIF || export_files == EXPORT_NIF_KF || export_files == EXPORT_NIF_KF_MULTI ) {
+         WriteNifTree( file_name_path + file_name_base + ".nif", xnif_root, info );
+      }
+      if ( export_files == EXPORT_NIF_KF || export_files == EXPORT_KF ) {
+         WriteNifTree( file_name_path + file_name_base + ".kf", xkf_roots, info );
+      } else if ( export_files == EXPORT_NIF_KF_MULTI || export_files == EXPORT_KF_MULTI ) {
+         for ( list<NiObjectRef>::iterator it = xkf_roots.begin(); it != xkf_roots.end(); ++it ) {
+            NiControllerSequenceRef seq = DynamicCast<NiControllerSequence>(*it);
+            if (seq == NULL)
+               continue;
+            string path = file_name_path + file_name_base + "_" + CreateFileName(seq->GetTargetName()) + "_" + CreateFileName(seq->GetName()) + ".kf";
+            WriteNifTree( path, StaticCast<NiObject>(seq), info );
+         }         
+      }
+   } else if (kf_type == KF_FFVT3R) {
+
+      NiObjectRef xnif_root;
+      list<NiObjectRef> xkf_roots;
+      Kfm kfm; // dummy
+      SplitNifTree( root_object, xnif_root, xkf_roots, kfm, kf_type, info );
       if ( export_files == EXPORT_NIF || export_files == EXPORT_NIF_KF || export_files == EXPORT_NIF_KF_MULTI ) {
          WriteNifTree( file_name_path + file_name_base + ".nif", xnif_root, info );
       }

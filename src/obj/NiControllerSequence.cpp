@@ -339,7 +339,9 @@ void NiControllerSequence::SetControllerData(const vector<ControllerLink>& value
 
 
 Ref<NiTextKeyExtraData> NiControllerSequence::GetTextKeyExtraData() const {
-	return textKeys;
+   if (textKeys != NULL)
+	   return textKeys;
+   return NiSequence::GetTextKeys();
 }
 
 

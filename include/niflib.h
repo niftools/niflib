@@ -72,7 +72,8 @@ class NiControllerSequence;
 enum NifGame {
 	KF_MW = 0, /*!< keyframe files: NiSequenceStreamHelper header, .kf extension */
 	KF_DAOC = 1, /*!< keyframe files: NiNode header, .kfa extension */
-	KF_CIV4 = 2 /*!< keyframe files: NiControllerSequence header, .kf extension */
+	KF_CIV4 = 2, /*!< keyframe files: NiControllerSequence header, .kf extension */
+   KF_FFVT3R = 3, /*!< keyframe files: NiControllerSequence header, .kf extension */
 };
 
 /*! Export options. */

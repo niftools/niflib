@@ -59,6 +59,45 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+   // Name of this object. This is also the name of the action associated with this
+   // file. For instance, if the original NIF file is called "demon.nif" and this
+   // animation file contains an attack sequence, then the file would be called
+   // "demon_attack1.kf" and this field would contain the string "attack1".
+   // \return The current value.
+   string GetName() const;
+
+   // Name of this object. This is also the name of the action associated with this
+   // file. For instance, if the original NIF file is called "demon.nif" and this
+   // animation file contains an attack sequence, then the file would be called
+   // "demon_attack1.kf" and this field would contain the string "attack1".
+   // \param[in] value The new value.
+   void SetName( const string & value );
+
+   // Name of following referenced NiTextKeyExtraData class.
+   // \return The current value.
+   string GetTextKeysName() const;
+
+   // Name of following referenced NiTextKeyExtraData class.
+   // \param[in] value The new value.
+   void SetTextKeysName( const string & value );
+
+   // Link to NiTextKeyExtraData.
+   // \return The current value.
+   Ref<NiTextKeyExtraData > GetTextKeys() const;
+
+   // Link to NiTextKeyExtraData.
+   // \param[in] value The new value.
+   void SetTextKeys( Ref<NiTextKeyExtraData > value );
+
+   // Refers to controlled objects.
+   // \return The current value.
+   vector<ControllerLink > GetControlledBlocks() const;
+
+   // Refers to controlled objects.
+   // \param[in] value The new value.
+   void SetControlledBlocks( const vector<ControllerLink >& value );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*!
