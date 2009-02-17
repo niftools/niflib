@@ -270,7 +270,7 @@ void NiTriBasedGeom::UpdateTangentSpace(int method) {
 		}
 	}
 
-   if ( !niTriGeomData->GetHasNormals() && (niTriGeomData->GetTspaceFlag() & 0xF0) == 0 )
+   if ( (niTriGeomData->GetTspaceFlag() & 0xF0) == 0 )
    {
       // generate the byte data
       size_t vCount = verts.size();
