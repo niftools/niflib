@@ -815,15 +815,10 @@ namespace std
    struct less<BoneWeight> : public binary_function<BoneWeight, BoneWeight, bool>
    {
       bool operator()(const BoneWeight& lhs, const BoneWeight& rhs) {
-         if (lhs.second == 0.0) {
-            if (rhs.second == 0.0) {
-               return rhs.first < lhs.first;
-            } else {
-               return true;
-            }
-            return false;
-         } else if ( rhs.second == lhs.second ) {
+         if ( lhs.second == rhs.second ) {
             return lhs.first < rhs.first;
+         } else if (lhs.second == 0.0) {
+            return false;
          } else {
             return rhs.second < lhs.second;
          }
