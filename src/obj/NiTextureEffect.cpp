@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureEffect::TYPE("NiTextureEffect", &NiDynamicEffect::TYPE );
 
-NiTextureEffect::NiTextureEffect() : textureType((EffectType)2), coordinateGenerationType((CoordGenType)2), image(NULL), sourceTexture(NULL), clippingPlane((byte)0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
+NiTextureEffect::NiTextureEffect() : textureFiltering((TexFilterMode)FILTER_TRILERP), textureClamping((TexClampMode)WRAP_S_WRAP_T), textureType((EffectType)EFFECT_ENVIRONMENT_MAP), coordinateGenerationType((CoordGenType)CG_SPHERE_MAP), image(NULL), sourceTexture(NULL), clippingPlane((byte)0), unknownVector(1.0, 0.0, 0.0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

@@ -46,7 +46,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTexturingProperty::TYPE("NiTexturingProperty", &NiProperty::TYPE );
 
-NiTexturingProperty::NiTexturingProperty() : flags((unsigned short)0), applyMode((ApplyMode)2), textureCount((unsigned int)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasNormalTexture(false), hasUnknown2Texture(false), unknown2Float(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), hasDecal2Texture(false), hasDecal3Texture(false), numShaderTextures((unsigned int)0) {
+NiTexturingProperty::NiTexturingProperty() : flags((unsigned short)0), applyMode((ApplyMode)APPLY_MODULATE), textureCount((unsigned int)7), hasBaseTexture(false), hasDarkTexture(false), hasDetailTexture(false), hasGlossTexture(false), hasGlowTexture(false), hasBumpMapTexture(false), bumpMapLumaScale(0.0f), bumpMapLumaOffset(0.0f), hasNormalTexture(false), hasUnknown2Texture(false), unknown2Float(0.0f), hasDecal0Texture(false), hasDecal1Texture(false), hasDecal2Texture(false), hasDecal3Texture(false), numShaderTextures((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSShaderProperty::TYPE("BSShaderProperty", &NiProperty::TYPE );
 
-BSShaderProperty::BSShaderProperty() : flags((unsigned short)1), shaderType((BSShaderType)1), shaderFlags((BSShaderFlags)0x82000000), unknownInt2((int)1), envmapScale(1.0f) {
+BSShaderProperty::BSShaderProperty() : flags((unsigned short)1), shaderType((BSShaderType)SHADER_DEFAULT), shaderFlags((BSShaderFlags)0x82000000), unknownInt2((int)1), envmapScale(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

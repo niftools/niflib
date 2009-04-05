@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkWorldObject::TYPE("bhkWorldObject", &bhkSerializable::TYPE );
 
-bhkWorldObject::bhkWorldObject() : shape(NULL), layer((OblivionLayer)1), colFilter((byte)0), unknownShort((unsigned short)0) {
+bhkWorldObject::bhkWorldObject() : shape(NULL), layer((OblivionLayer)OL_STATIC), colFilter((byte)0), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

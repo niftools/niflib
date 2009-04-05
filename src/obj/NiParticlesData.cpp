@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticlesData::TYPE("NiParticlesData", &NiObject::TYPE );
 
-NiParticlesData::NiParticlesData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL), numParticles((unsigned short)0), hasRadii(false), numActive((unsigned short)0), hasSizes1((int)0), hasSizes(false), hasRotations1(false), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
+NiParticlesData::NiParticlesData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL), numParticles((unsigned short)0), hasRadii(false), numActive((unsigned short)0), hasSizes1((int)0), hasSizes(false), hasRotations1(false), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

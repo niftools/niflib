@@ -136,7 +136,7 @@ protected:
 	IndexString fileName;
 	/*! Unknown. */
 	Ref<NiObject > unknownLink;
-	/*! Unknown. */
+	/*! Unknown. Seems to be set if Pixel Data is present? */
 	byte unknownByte;
 	/*! Pixel data object index. NiPixelData or NiPersistentSrcTextureRendererData */
 	Ref<ATextureRenderData > pixelData;

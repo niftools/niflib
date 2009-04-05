@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiZBufferProperty::TYPE("NiZBufferProperty", &NiProperty::TYPE );
 
-NiZBufferProperty::NiZBufferProperty() : flags((unsigned short)3), function((CompareMode)3) {
+NiZBufferProperty::NiZBufferProperty() : flags((unsigned short)3), function((CompareMode)TEST_LESS_EQUAL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

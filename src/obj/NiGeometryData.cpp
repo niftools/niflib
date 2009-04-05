@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : unknownId((int)0), numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)0), additionalData(NULL) {
+NiGeometryData::NiGeometryData() : unknownId((int)0), numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

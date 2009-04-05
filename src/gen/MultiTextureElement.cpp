@@ -10,7 +10,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-MultiTextureElement::MultiTextureElement() : hasImage(false), image(NULL), clamp_((TexClampMode)3), filter_((TexFilterMode)2), uvSet_((unsigned int)1), ps2L((short)0), ps2K((short)-75), unknownShort3((short)0) {};
+MultiTextureElement::MultiTextureElement() : hasImage(false), image(NULL), clamp_((TexClampMode)WRAP_S_WRAP_T), filter_((TexFilterMode)FILTER_TRILERP), uvSet_((unsigned int)1), ps2L((short)0), ps2K((short)-75), unknownShort3((short)0) {};
 
 //Copy Constructor
 MultiTextureElement::MultiTextureElement( const MultiTextureElement & src ) {
