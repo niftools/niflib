@@ -49,6 +49,10 @@ void NiVertexColorProperty::Read( istream& in, list<unsigned int> & link_stack, 
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
+	if ( info.version > 0x14000005 ) {
+		lightingMode = (LightMode)UnpackField( flags, 3, 1);
+		vertexMode = (VertMode)UnpackField( flags, 4, 2);
+	}
 	//--END CUSTOM CODE--//
 }
 
