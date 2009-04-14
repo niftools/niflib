@@ -253,4 +253,14 @@ void hkPackedNiTriStripsData::SetVertices( const vector<Vector3> & in ) {
 	vertices = in;
 }
 
+vector<OblivionSubShape> hkPackedNiTriStripsData::GetSubShapes() const {
+	return subShapes;
+}
+
+void hkPackedNiTriStripsData::SetSubShapes( vector<OblivionSubShape>& value ) {
+	numSubShapes = value.size();
+	subShapes = value;
+}
+
+
 //--END CUSTOM CODE--//

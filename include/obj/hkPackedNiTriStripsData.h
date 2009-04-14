@@ -109,6 +109,18 @@ public:
 	*/
 	NIFLIB_API virtual void SetVertices( const vector<Vector3> & in );
 
+	/*!
+	* Retrieves the subshape data object used by this geometry node, if any.
+	* \return The subshape data object.
+	*/
+	NIFLIB_API vector<OblivionSubShape> GetSubShapes() const;
+
+	/*!
+	* Sets the subshape data object used by this geometry node. 
+	* \param[in] value The subshape data.
+	*/
+	NIFLIB_API void SetSubShapes( vector<OblivionSubShape>& value );	
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of triangles? */
