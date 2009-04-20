@@ -15,8 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiTimeController.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiFloatInterpolator;
 class BSFrustumFOVController;
 typedef Ref<BSFrustumFOVController> BSFrustumFOVControllerRef;
 
@@ -57,8 +62,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	int unknownInt1;
+	/*! Frustrum field of view animation interpolater and data. */
+	Ref<NiFloatInterpolator > interpolator;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

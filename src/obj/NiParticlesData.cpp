@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticlesData::TYPE("NiParticlesData", &NiObject::TYPE );
 
-NiParticlesData::NiParticlesData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL), numParticles((unsigned short)0), hasRadii(false), numActive((unsigned short)0), hasSizes1((int)0), hasSizes(false), hasRotations1(false), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
+NiParticlesData::NiParticlesData() : numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL), numParticles((unsigned short)0), particleRadius(0.0f), hasRadii(false), numActive((unsigned short)0), hasSizes(false), hasRotations(false), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -124,7 +124,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 		NifStream( numParticles, in, info );
 	};
 	if ( info.version <= 0x0A000100 ) {
-		NifStream( radius, in, info );
+		NifStream( particleRadius, in, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( hasRadii, in, info );
@@ -138,14 +138,9 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 		};
 	};
 	NifStream( numActive, in, info );
-	if ( info.version <= 0x04000002 ) {
-		NifStream( hasSizes1, in, info );
-	};
-	if ( info.version >= 0x0401000C ) {
-		NifStream( hasSizes, in, info );
-	};
+	NifStream( hasSizes, in, info );
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
-		if ( ((hasSizes != 0) || (hasSizes1 != 0)) ) {
+		if ( (hasSizes != 0) ) {
 			sizes.resize(numVertices);
 			for (unsigned int i3 = 0; i3 < sizes.size(); i3++) {
 				NifStream( sizes[i3], in, info );
@@ -153,13 +148,13 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
-		NifStream( hasRotations1, in, info );
+		NifStream( hasRotations, in, info );
 	};
 	if ( ( info.version >= 0x0A000100 ) && ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) ) {
-		if ( (hasRotations1 != 0) ) {
-			rotations1.resize(numVertices);
-			for (unsigned int i3 = 0; i3 < rotations1.size(); i3++) {
-				NifStream( rotations1[i3], in, info );
+		if ( (hasRotations != 0) ) {
+			rotations.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < rotations.size(); i3++) {
+				NifStream( rotations[i3], in, info );
 			};
 		};
 	};
@@ -188,7 +183,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
 		NifStream( hasUnknownStuff1, in, info );
 		NifStream( numUnknownStuff1, in, info );
-		if ( (hasUnknownStuff1 >= 1) ) {
+		if ( (hasUnknownStuff1 != 0) ) {
 			unknownStuff1.resize(numUnknownStuff1);
 			for (unsigned int i3 = 0; i3 < unknownStuff1.size(); i3++) {
 				NifStream( unknownStuff1[i3], in, info );
@@ -288,7 +283,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		NifStream( numParticles, out, info );
 	};
 	if ( info.version <= 0x0A000100 ) {
-		NifStream( radius, out, info );
+		NifStream( particleRadius, out, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( hasRadii, out, info );
@@ -301,26 +296,21 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		};
 	};
 	NifStream( numActive, out, info );
-	if ( info.version <= 0x04000002 ) {
-		NifStream( hasSizes1, out, info );
-	};
-	if ( info.version >= 0x0401000C ) {
-		NifStream( hasSizes, out, info );
-	};
+	NifStream( hasSizes, out, info );
 	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
-		if ( ((hasSizes != 0) || (hasSizes1 != 0)) ) {
+		if ( (hasSizes != 0) ) {
 			for (unsigned int i3 = 0; i3 < sizes.size(); i3++) {
 				NifStream( sizes[i3], out, info );
 			};
 		};
 	};
 	if ( info.version >= 0x0A000100 ) {
-		NifStream( hasRotations1, out, info );
+		NifStream( hasRotations, out, info );
 	};
 	if ( ( info.version >= 0x0A000100 ) && ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) ) {
-		if ( (hasRotations1 != 0) ) {
-			for (unsigned int i3 = 0; i3 < rotations1.size(); i3++) {
-				NifStream( rotations1[i3], out, info );
+		if ( (hasRotations != 0) ) {
+			for (unsigned int i3 = 0; i3 < rotations.size(); i3++) {
+				NifStream( rotations[i3], out, info );
 			};
 		};
 	};
@@ -347,7 +337,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
 		NifStream( hasUnknownStuff1, out, info );
 		NifStream( numUnknownStuff1, out, info );
-		if ( (hasUnknownStuff1 >= 1) ) {
+		if ( (hasUnknownStuff1 != 0) ) {
 			for (unsigned int i3 = 0; i3 < unknownStuff1.size(); i3++) {
 				NifStream( unknownStuff1[i3], out, info );
 			};
@@ -465,6 +455,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 	out << "  Consistency Flags:  " << consistencyFlags << endl;
 	out << "  Additional Data:  " << additionalData << endl;
 	out << "  Num Particles:  " << numParticles << endl;
+	out << "  Particle Radius:  " << particleRadius << endl;
 	out << "  Has Radii:  " << hasRadii << endl;
 	if ( (hasRadii != 0) ) {
 		array_output_count = 0;
@@ -481,9 +472,8 @@ std::string NiParticlesData::asString( bool verbose ) const {
 		};
 	};
 	out << "  Num Active:  " << numActive << endl;
-	out << "  Has Sizes 1:  " << hasSizes1 << endl;
 	out << "  Has Sizes:  " << hasSizes << endl;
-	if ( ((hasSizes != 0) || (hasSizes1 != 0)) ) {
+	if ( (hasSizes != 0) ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < sizes.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -497,10 +487,10 @@ std::string NiParticlesData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	out << "  Has Rotations 1:  " << hasRotations1 << endl;
-	if ( (hasRotations1 != 0) ) {
+	out << "  Has Rotations:  " << hasRotations << endl;
+	if ( (hasRotations != 0) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < rotations1.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < rotations.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -508,7 +498,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Rotations 1[" << i2 << "]:  " << rotations1[i2] << endl;
+			out << "      Rotations[" << i2 << "]:  " << rotations[i2] << endl;
 			array_output_count++;
 		};
 	};
@@ -544,7 +534,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 	};
 	out << "  Has Unknown Stuff 1:  " << hasUnknownStuff1 << endl;
 	out << "  Num Unknown Stuff 1:  " << numUnknownStuff1 << endl;
-	if ( (hasUnknownStuff1 >= 1) ) {
+	if ( (hasUnknownStuff1 != 0) ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < unknownStuff1.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

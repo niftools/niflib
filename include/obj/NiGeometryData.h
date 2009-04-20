@@ -257,8 +257,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown identifier. Always 0 */
-	int unknownId;
+	/*! Unknown identifier. Always 0. */
+	int unknownInt;
 	/*! Number of vertices. For NiPSysData this is max particles. */
 	mutable unsigned short numVertices;
 	/*! Used with NiCollision objects when OBB or TRI is set. */

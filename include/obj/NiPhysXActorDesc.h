@@ -21,6 +21,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
+class NiPhysXBodyDesc;
 class NiPhysXShapeDesc;
 class NiObject;
 class NiPhysXActorDesc;
@@ -74,7 +75,7 @@ protected:
 	/*! Unknown */
 	Quaternion unknownQuat3;
 	/*! Unknown */
-	int unknownInt3;
+	Ref<NiPhysXBodyDesc > unknownRef0;
 	/*! Unknown */
 	float unknownInt4;
 	/*! Unknown */

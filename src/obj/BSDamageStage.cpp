@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSDamageStage::TYPE("BSDamageStage", &NiNode::TYPE );
 
-BSDamageStage::BSDamageStage() : unknownByte1((byte)0), unknownShort1((short)0) {
+BSDamageStage::BSDamageStage() : unknownByte1((byte)0), unknownShort2((short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -47,7 +47,7 @@ void BSDamageStage::Read( istream& in, list<unsigned int> & link_stack, const Ni
 
 	NiNode::Read( in, link_stack, info );
 	NifStream( unknownByte1, in, info );
-	NifStream( unknownShort1, in, info );
+	NifStream( unknownShort2, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -61,7 +61,7 @@ void BSDamageStage::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 
 	NiNode::Write( out, link_map, info );
 	NifStream( unknownByte1, out, info );
-	NifStream( unknownShort1, out, info );
+	NifStream( unknownShort2, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -76,8 +76,8 @@ std::string BSDamageStage::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiNode::asString();
-	out << "  Unknown byte 1:  " << unknownByte1 << endl;
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

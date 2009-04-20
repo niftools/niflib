@@ -14,14 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiObject.h"
+#include "BSMultiBoundData.h"
 namespace Niflib {
 
 class BSMultiBoundAABB;
 typedef Ref<BSMultiBoundAABB> BSMultiBoundAABBRef;
 
 /*! Bethesda-specific node. */
-class BSMultiBoundAABB : public NiObject {
+class BSMultiBoundAABB : public BSMultiBoundData {
 public:
 	/*! Constructor */
 	NIFLIB_API BSMultiBoundAABB();

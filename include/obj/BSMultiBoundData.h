@@ -7,32 +7,27 @@ All rights reserved.  Please see niflib.h for license. */
 // the next update.                                                          //
 //-----------------------------------NOTICE----------------------------------//
 
-#ifndef _BSMULTIBOUND_H_
-#define _BSMULTIBOUND_H_
+#ifndef _BSMULTIBOUNDDATA_H_
+#define _BSMULTIBOUNDDATA_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
 
 //--END CUSTOM CODE--//
 
 #include "NiObject.h"
-
-// Include structures
-#include "../Ref.h"
 namespace Niflib {
 
-// Forward define of referenced NIF objects
 class BSMultiBoundData;
-class BSMultiBound;
-typedef Ref<BSMultiBound> BSMultiBoundRef;
+typedef Ref<BSMultiBoundData> BSMultiBoundDataRef;
 
-/*! Bethesda-specific node. */
-class BSMultiBound : public NiObject {
+/*! Abstract base type for bounding data. */
+class BSMultiBoundData : public NiObject {
 public:
 	/*! Constructor */
-	NIFLIB_API BSMultiBound();
+	NIFLIB_API BSMultiBoundData();
 
 	/*! Destructor */
-	NIFLIB_API virtual ~BSMultiBound();
+	NIFLIB_API virtual ~BSMultiBoundData();
 
 	/*!
 	 * A constant value which uniquly identifies objects of this type.
@@ -61,9 +56,6 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
-protected:
-	/*! Unknown. */
-	Ref<BSMultiBoundData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

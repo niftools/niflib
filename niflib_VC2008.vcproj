@@ -913,6 +913,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\src\obj\BSMultiBoundData.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\src\obj\BSMultiBoundNode.cpp"
 					>
 				</File>
@@ -2272,6 +2276,10 @@
 					RelativePath=".\src\gen\UnionBV.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\src\gen\UnknownMatrix1.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="NvTriStrip"
@@ -2624,6 +2632,10 @@
 				</File>
 				<File
 					RelativePath=".\include\obj\BSMultiBoundAABB.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\obj\BSMultiBoundData.h"
 					>
 				</File>
 				<File
@@ -3988,6 +4000,10 @@
 				</File>
 				<File
 					RelativePath=".\include\gen\UnionBV.h"
+					>
+				</File>
+				<File
+					RelativePath=".\include\gen\UnknownMatrix1.h"
 					>
 				</File>
 			</Filter>

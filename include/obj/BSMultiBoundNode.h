@@ -15,8 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiNode.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class BSMultiBound;
 class BSMultiBoundNode;
 typedef Ref<BSMultiBoundNode> BSMultiBoundNodeRef;
 
@@ -57,8 +62,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown Flag */
-	int unknownInt1;
+	/*! Unknown. */
+	Ref<BSMultiBound > multiBound;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

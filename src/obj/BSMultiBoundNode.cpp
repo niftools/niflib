@@ -15,12 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSMultiBoundNode.h"
+#include "../../include/obj/BSMultiBound.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSMultiBoundNode::TYPE("BSMultiBoundNode", &NiNode::TYPE );
 
-BSMultiBoundNode::BSMultiBoundNode() : unknownInt1((int)0) {
+BSMultiBoundNode::BSMultiBoundNode() : multiBound(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,8 +46,10 @@ void BSMultiBoundNode::Read( istream& in, list<unsigned int> & link_stack, const
 
 	//--END CUSTOM CODE--//
 
+	unsigned int block_num;
 	NiNode::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -59,7 +62,15 @@ void BSMultiBoundNode::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	//--END CUSTOM CODE--//
 
 	NiNode::Write( out, link_map, info );
-	NifStream( unknownInt1, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*multiBound), out, info );
+	} else {
+		if ( multiBound != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(multiBound) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -74,7 +85,7 @@ std::string BSMultiBoundNode::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiNode::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Multi Bound:  " << multiBound << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -88,6 +99,7 @@ void BSMultiBoundNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	//--END CUSTOM CODE--//
 
 	NiNode::FixLinks( objects, link_stack, info );
+	multiBound = FixLink<BSMultiBound>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -97,6 +109,8 @@ void BSMultiBoundNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 std::list<NiObjectRef> BSMultiBoundNode::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiNode::GetRefs();
+	if ( multiBound != NULL )
+		refs.push_back(StaticCast<NiObject>(multiBound));
 	return refs;
 }
 

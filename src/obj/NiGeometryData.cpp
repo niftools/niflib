@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : unknownId((int)0), numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
+NiGeometryData::NiGeometryData() : unknownInt((int)0), numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -45,7 +45,7 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
 	if ( info.version >= 0x0A020000 ) {
-		NifStream( unknownId, in, info );
+		NifStream( unknownInt, in, info );
 	};
 	NifStream( numVertices, in, info );
 	if ( info.version >= 0x0A010000 ) {
@@ -136,7 +136,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	numUvSets = (byte)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	if ( info.version >= 0x0A020000 ) {
-		NifStream( unknownId, out, info );
+		NifStream( unknownInt, out, info );
 	};
 	NifStream( numVertices, out, info );
 	if ( info.version >= 0x0A010000 ) {
@@ -226,7 +226,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	out << NiObject::asString();
 	numUvSets = (byte)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
-	out << "  Unknown ID:  " << unknownId << endl;
+	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	out << "  Keep Flags:  " << keepFlags << endl;
 	out << "  Compress Flags:  " << compressFlags << endl;

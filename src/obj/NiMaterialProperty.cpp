@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiMaterialProperty::TYPE("NiMaterialProperty", &NiProperty::TYPE );
 
-NiMaterialProperty::NiMaterialProperty() : flags((unsigned short)0), glossiness(0.0f), alpha(0.0f), emitmulti(0.0f) {
+NiMaterialProperty::NiMaterialProperty() : flags((unsigned short)0), glossiness(0.0f), alpha(0.0f), emitMulti(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -54,7 +54,7 @@ void NiMaterialProperty::Read( istream& in, list<unsigned int> & link_stack, con
 	NifStream( glossiness, in, info );
 	NifStream( alpha, in, info );
 	if ( ((info.version == 0x14020007) && ((info.userVersion == 11) && (info.userVersion2 > 21))) ) {
-		NifStream( emitmulti, in, info );
+		NifStream( emitMulti, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -78,7 +78,7 @@ void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,unsigned int
 	NifStream( glossiness, out, info );
 	NifStream( alpha, out, info );
 	if ( ((info.version == 0x14020007) && ((info.userVersion == 11) && (info.userVersion2 > 21))) ) {
-		NifStream( emitmulti, out, info );
+		NifStream( emitMulti, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -99,7 +99,7 @@ std::string NiMaterialProperty::asString( bool verbose ) const {
 	out << "  Emissive Color:  " << emissiveColor << endl;
 	out << "  Glossiness:  " << glossiness << endl;
 	out << "  Alpha:  " << alpha << endl;
-	out << "  EmitMulti:  " << emitmulti << endl;
+	out << "  Emit Multi:  " << emitMulti << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -96,7 +96,13 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Property flags. */
+	/*!
+	 * Property flags. Appears to be unused until 20.1.0.3.
+	 * 
+	 *             Bits 0-2: Unknown
+	 *             Bit 3: Lighting Mode?
+	 *             Bits 4-5: Vertex Mode?
+	 */
 	unsigned short flags;
 	/*!
 	 * Determines how vertex and material colors are mixed.

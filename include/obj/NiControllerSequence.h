@@ -268,10 +268,10 @@ protected:
 	float frequency;
 	/*! The controller sequence start time? */
 	float startTime;
-	/*! The controller sequence stop time? */
-	float stopTime;
 	/*! Unknown. */
 	float unknownFloat2;
+	/*! The controller sequence stop time? */
+	float stopTime;
 	/*! Unknown. */
 	byte unknownByte;
 	/*! Unknown. */
@@ -286,6 +286,8 @@ protected:
 	short unknownShort1;
 	/*! Unknown */
 	short unknownShort2;
+	/*! Unknown, found in Lazeska .KFs (seems to be 64) */
+	unsigned int unknownInt3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

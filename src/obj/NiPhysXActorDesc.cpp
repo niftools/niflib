@@ -15,6 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPhysXActorDesc.h"
+#include "../../include/obj/NiPhysXBodyDesc.h"
 #include "../../include/obj/NiPhysXShapeDesc.h"
 #include "../../include/obj/NiObject.h"
 using namespace Niflib;
@@ -22,7 +23,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPhysXActorDesc::TYPE("NiPhysXActorDesc", &NiObject::TYPE );
 
-NiPhysXActorDesc::NiPhysXActorDesc() : unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), unknownInt4(0.0f), unknownInt5((int)0), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((int)0), shapeDescription(NULL), unknownRef1(NULL), unknownRef2(NULL) {
+NiPhysXActorDesc::NiPhysXActorDesc() : unknownInt1((int)0), unknownInt2((int)0), unknownRef0(NULL), unknownInt4(0.0f), unknownInt5((int)0), unknownByte1((byte)0), unknownByte2((byte)0), unknownInt6((int)0), shapeDescription(NULL), unknownRef1(NULL), unknownRef2(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -54,7 +55,8 @@ void NiPhysXActorDesc::Read( istream& in, list<unsigned int> & link_stack, const
 	NifStream( unknownQuat1, in, info );
 	NifStream( unknownQuat2, in, info );
 	NifStream( unknownQuat3, in, info );
-	NifStream( unknownInt3, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 	NifStream( unknownInt4, in, info );
 	NifStream( unknownInt5, in, info );
 	NifStream( unknownByte1, in, info );
@@ -89,7 +91,15 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( unknownQuat1, out, info );
 	NifStream( unknownQuat2, out, info );
 	NifStream( unknownQuat3, out, info );
-	NifStream( unknownInt3, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*unknownRef0), out, info );
+	} else {
+		if ( unknownRef0 != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(unknownRef0) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 	NifStream( unknownInt4, out, info );
 	NifStream( unknownInt5, out, info );
 	NifStream( unknownByte1, out, info );
@@ -153,7 +163,7 @@ std::string NiPhysXActorDesc::asString( bool verbose ) const {
 	out << "  Unknown Quat 1:  " << unknownQuat1 << endl;
 	out << "  Unknown Quat 2:  " << unknownQuat2 << endl;
 	out << "  Unknown Quat 3:  " << unknownQuat3 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Unknown Ref 0:  " << unknownRef0 << endl;
 	out << "  Unknown Int 4:  " << unknownInt4 << endl;
 	out << "  Unknown Int 5:  " << unknownInt5 << endl;
 	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
@@ -187,6 +197,7 @@ void NiPhysXActorDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
+	unknownRef0 = FixLink<NiPhysXBodyDesc>( objects, link_stack, info );
 	shapeDescription = FixLink<NiPhysXShapeDesc>( objects, link_stack, info );
 	unknownRef1 = FixLink<NiObject>( objects, link_stack, info );
 	unknownRef2 = FixLink<NiObject>( objects, link_stack, info );
@@ -202,6 +213,8 @@ void NiPhysXActorDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 std::list<NiObjectRef> NiPhysXActorDesc::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
+	if ( unknownRef0 != NULL )
+		refs.push_back(StaticCast<NiObject>(unknownRef0));
 	if ( shapeDescription != NULL )
 		refs.push_back(StaticCast<NiObject>(shapeDescription));
 	if ( unknownRef1 != NULL )

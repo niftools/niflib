@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSShaderPPLightingProperty::TYPE("BSShaderPPLightingProperty", &BSShaderLightingProperty::TYPE );
 
-BSShaderPPLightingProperty::BSShaderPPLightingProperty() : textureSet(NULL), unknownFloat2(0.0f), refractionPeriod((int)0.0), unknownFloat4(4.0f), unknownFloat5(1.0f) {
+BSShaderPPLightingProperty::BSShaderPPLightingProperty() : textureSet(NULL), unknownFloat2(0.0f), refractionPeriod((int)0), unknownFloat4(4.0f), unknownFloat5(1.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

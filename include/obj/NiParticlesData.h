@@ -134,6 +134,8 @@ protected:
 	Ref<NiAdditionalGeometryData > additionalData;
 	/*! The maximum number of particles (matches the number of vertices). */
 	unsigned short numParticles;
+	/*! The particles' size. */
+	float particleRadius;
 	/*! Is the particle size array present? */
 	bool hasRadii;
 	/*! The individual particel sizes. */
@@ -143,16 +145,14 @@ protected:
 	 * the number of valid entries in the following arrays.
 	 */
 	unsigned short numActive;
-	/*! Unknown */
-	int hasSizes1;
-	/*! Unknown */
+	/*! Is the particle size array present? */
 	bool hasSizes;
-	/*! Unknown */
+	/*! The individual particel sizes. */
 	vector<float > sizes;
 	/*! Is the particle rotation array present? */
-	bool hasRotations1;
+	bool hasRotations;
 	/*! The individual particle rotations. */
-	vector<Quaternion > rotations1;
+	vector<Quaternion > rotations;
 	/*! Are the angles of rotation present? */
 	bool hasRotationAngles;
 	/*! Angles of rotation */

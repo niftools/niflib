@@ -15,12 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSMultiBound.h"
+#include "../../include/obj/BSMultiBoundData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSMultiBound::TYPE("BSMultiBound", &NiObject::TYPE );
 
-BSMultiBound::BSMultiBound() : unknownInt1((int)0) {
+BSMultiBound::BSMultiBound() : data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,8 +46,10 @@ void BSMultiBound::Read( istream& in, list<unsigned int> & link_stack, const Nif
 
 	//--END CUSTOM CODE--//
 
+	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -59,7 +62,15 @@ void BSMultiBound::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	NifStream( unknownInt1, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		NifStream( (unsigned int)&(*data), out, info );
+	} else {
+		if ( data != NULL ) {
+			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -74,7 +85,7 @@ std::string BSMultiBound::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Data:  " << data << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -88,6 +99,7 @@ void BSMultiBound::FixLinks( const map<unsigned int,NiObjectRef> & objects, list
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, info );
+	data = FixLink<BSMultiBoundData>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -97,6 +109,8 @@ void BSMultiBound::FixLinks( const map<unsigned int,NiObjectRef> & objects, list
 std::list<NiObjectRef> BSMultiBound::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiObject::GetRefs();
+	if ( data != NULL )
+		refs.push_back(StaticCast<NiObject>(data));
 	return refs;
 }
 

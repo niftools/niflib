@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSMultiBoundSphere::TYPE("BSMultiBoundSphere", &NiObject::TYPE );
+const Type BSMultiBoundSphere::TYPE("BSMultiBoundSphere", &BSMultiBoundData::TYPE );
 
 BSMultiBoundSphere::BSMultiBoundSphere() : unknownInt1((int)0), unknownInt2((int)0), unknownInt3((int)0), radius(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -45,7 +45,7 @@ void BSMultiBoundSphere::Read( istream& in, list<unsigned int> & link_stack, con
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Read( in, link_stack, info );
+	BSMultiBoundData::Read( in, link_stack, info );
 	NifStream( unknownInt1, in, info );
 	NifStream( unknownInt2, in, info );
 	NifStream( unknownInt3, in, info );
@@ -61,7 +61,7 @@ void BSMultiBoundSphere::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	BSMultiBoundData::Write( out, link_map, info );
 	NifStream( unknownInt1, out, info );
 	NifStream( unknownInt2, out, info );
 	NifStream( unknownInt3, out, info );
@@ -79,7 +79,7 @@ std::string BSMultiBoundSphere::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiObject::asString();
+	out << BSMultiBoundData::asString();
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
@@ -96,7 +96,7 @@ void BSMultiBoundSphere::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	BSMultiBoundData::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -105,7 +105,7 @@ void BSMultiBoundSphere::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 std::list<NiObjectRef> BSMultiBoundSphere::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiObject::GetRefs();
+	refs = BSMultiBoundData::GetRefs();
 	return refs;
 }
 

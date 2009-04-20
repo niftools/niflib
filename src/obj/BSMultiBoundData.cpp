@@ -14,70 +14,64 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/FixLink.h"
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
-#include "../../include/obj/BSBlastNode.h"
+#include "../../include/obj/BSMultiBoundData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSBlastNode::TYPE("BSBlastNode", &NiNode::TYPE );
+const Type BSMultiBoundData::TYPE("BSMultiBoundData", &NiObject::TYPE );
 
-BSBlastNode::BSBlastNode() : unknownByte1((byte)0), unknownShort2((short)0) {
+BSMultiBoundData::BSMultiBoundData() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 }
 
-BSBlastNode::~BSBlastNode() {
+BSMultiBoundData::~BSMultiBoundData() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 }
 
-const Type & BSBlastNode::GetType() const {
+const Type & BSMultiBoundData::GetType() const {
 	return TYPE;
 }
 
-NiObject * BSBlastNode::Create() {
-	return new BSBlastNode;
+NiObject * BSMultiBoundData::Create() {
+	return new BSMultiBoundData;
 }
 
-void BSBlastNode::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
+void BSMultiBoundData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-READ CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiNode::Read( in, link_stack, info );
-	NifStream( unknownByte1, in, info );
-	NifStream( unknownShort2, in, info );
+	NiObject::Read( in, link_stack, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 }
 
-void BSBlastNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void BSMultiBoundData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiNode::Write( out, link_map, info );
-	NifStream( unknownByte1, out, info );
-	NifStream( unknownShort2, out, info );
+	NiObject::Write( out, link_map, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 }
 
-std::string BSBlastNode::asString( bool verbose ) const {
+std::string BSMultiBoundData::asString( bool verbose ) const {
 	//--BEGIN PRE-STRING CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiNode::asString();
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
+	out << NiObject::asString();
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -85,21 +79,21 @@ std::string BSBlastNode::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void BSBlastNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void BSMultiBoundData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiNode::FixLinks( objects, link_stack, info );
+	NiObject::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 }
 
-std::list<NiObjectRef> BSBlastNode::GetRefs() const {
+std::list<NiObjectRef> BSMultiBoundData::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiNode::GetRefs();
+	refs = NiObject::GetRefs();
 	return refs;
 }
 

@@ -18,7 +18,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSMultiBoundAABB::TYPE("BSMultiBoundAABB", &NiObject::TYPE );
+const Type BSMultiBoundAABB::TYPE("BSMultiBoundAABB", &BSMultiBoundData::TYPE );
 
 BSMultiBoundAABB::BSMultiBoundAABB() {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -45,7 +45,7 @@ void BSMultiBoundAABB::Read( istream& in, list<unsigned int> & link_stack, const
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Read( in, link_stack, info );
+	BSMultiBoundData::Read( in, link_stack, info );
 	for (unsigned int i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownFloats1[i1], in, info );
 	};
@@ -60,7 +60,7 @@ void BSMultiBoundAABB::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	BSMultiBoundData::Write( out, link_map, info );
 	for (unsigned int i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownFloats1[i1], out, info );
 	};
@@ -77,7 +77,7 @@ std::string BSMultiBoundAABB::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiObject::asString();
+	out << BSMultiBoundData::asString();
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 6; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -102,7 +102,7 @@ void BSMultiBoundAABB::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	BSMultiBoundData::FixLinks( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -111,7 +111,7 @@ void BSMultiBoundAABB::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 
 std::list<NiObjectRef> BSMultiBoundAABB::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiObject::GetRefs();
+	refs = BSMultiBoundData::GetRefs();
 	return refs;
 }
 
