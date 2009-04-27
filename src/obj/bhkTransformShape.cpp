@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkTransformShape::TYPE("bhkTransformShape", &bhkShape::TYPE );
 
-bhkTransformShape::bhkTransformShape() : shape(NULL), unknownFloat1(0.0f) {
+bhkTransformShape::bhkTransformShape() : shape(NULL), material((HavokMaterial)0), unknownFloat1(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPoint3InterpController::TYPE("NiPoint3InterpController", &NiSingleInterpController::TYPE );
 
-NiPoint3InterpController::NiPoint3InterpController() : data(NULL) {
+NiPoint3InterpController::NiPoint3InterpController() : targetColor((TargetColor)0), data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

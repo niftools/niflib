@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiFlipController::TYPE("NiFlipController", &NiFloatInterpController::TYPE );
 
-NiFlipController::NiFlipController() : textureSlot((unsigned int)0), unknownInt2((unsigned int)0), delta(0.0f), numSources((unsigned int)0) {
+NiFlipController::NiFlipController() : textureSlot((TexType)0), unknownInt2((unsigned int)0), delta(0.0f), numSources((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

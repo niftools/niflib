@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysBombModifier::TYPE("NiPSysBombModifier", &NiPSysModifier::TYPE );
 
-NiPSysBombModifier::NiPSysBombModifier() : bombObject(NULL), decay(0.0f), deltaV(0.0f) {
+NiPSysBombModifier::NiPSysBombModifier() : bombObject(NULL), decay(0.0f), deltaV(0.0f), decayType((DecayType)0), symmetryType((SymmetryType)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

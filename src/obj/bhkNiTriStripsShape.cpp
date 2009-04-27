@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkNiTriStripsShape::TYPE("bhkNiTriStripsShape", &bhkShapeCollection::TYPE );
 
-bhkNiTriStripsShape::bhkNiTriStripsShape() : unknownFloat1(0.1f), unknownInt1((unsigned int)0x004ABE60), unknownInt2((unsigned int)1), scale(1.0, 1.0, 1.0), unknownInt3((unsigned int)0), numStripsData((unsigned int)0), numDataLayers((unsigned int)0) {
+bhkNiTriStripsShape::bhkNiTriStripsShape() : material((HavokMaterial)0), unknownFloat1(0.1f), unknownInt1((unsigned int)0x004ABE60), unknownInt2((unsigned int)1), scale(1.0, 1.0, 1.0), unknownInt3((unsigned int)0), numStripsData((unsigned int)0), numDataLayers((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

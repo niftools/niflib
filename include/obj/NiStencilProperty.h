@@ -82,13 +82,13 @@ public:
 	 * Used to get the current stencil buffer comparison function.  This function determines whether a particular pixel will be drawn based on the contents of the stencil buffer at that location.
 	 * \return The current stencil buffer comparison function.
 	 */
-	NIFLIB_API CompareMode GetStencilFunction() const;
+	NIFLIB_API StencilCompareMode GetStencilFunction() const;
 
 	/*!
 	 * Used to set the current stencil buffer comparison function.  This function determines whether a particular pixel will be drawn based on the contents of the stencil buffer at that location.
 	 * \param[in] value The new stencil buffer comparison function.
 	 */
-	NIFLIB_API void SetStencilFunction( CompareMode value );
+	NIFLIB_API void SetStencilFunction( StencilCompareMode value );
 
 	/*!
 	 * Used to get the current reference value used in the stencil test.  This is the value that the stencil function compares against to determine whether a pixel is drawn.
@@ -168,8 +168,8 @@ protected:
 	unsigned short flags;
 	/*! Enables or disables the stencil test. */
 	byte stencilEnabled;
-	/*! Selects the compare mode function. */
-	CompareMode stencilFunction;
+	/*! Selects the compare mode function (see: glStencilFunc). */
+	StencilCompareMode stencilFunction;
 	/*! Unknown.  Default is 0. */
 	unsigned int stencilRef;
 	/*! A bit mask. The default is 0xffffffff. */

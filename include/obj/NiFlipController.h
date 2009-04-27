@@ -62,7 +62,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Target texture slot (0=base, 4=glow). */
-	unsigned int textureSlot;
+	TexType textureSlot;
 	/*! 0? */
 	unsigned int unknownInt2;
 	/*!

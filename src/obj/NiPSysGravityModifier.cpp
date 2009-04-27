@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysGravityModifier::TYPE("NiPSysGravityModifier", &NiPSysModifier::TYPE );
 
-NiPSysGravityModifier::NiPSysGravityModifier() : gravityObject(NULL), decay(0.0f), strength(0.0f), turbulence(0.0f), turbulenceScale(1.0f), unknownByte((byte)0) {
+NiPSysGravityModifier::NiPSysGravityModifier() : gravityObject(NULL), decay(0.0f), strength(0.0f), forceType((ForceType)0), turbulence(0.0f), turbulenceScale(1.0f), unknownByte((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

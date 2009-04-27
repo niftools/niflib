@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkConvexListShape::TYPE("bhkConvexListShape", &bhkShape::TYPE );
 
-bhkConvexListShape::bhkConvexListShape() : numSubShapes((unsigned int)0), unknownFloats(6,(float)0.0,(float)0.0,(float)-0.0,(float)0.0,(float)0.0,(float)-0.0), unknownByte1((byte)0), unknownFloat1(0.0f) {
+bhkConvexListShape::bhkConvexListShape() : numSubShapes((unsigned int)0), material((HavokMaterial)0), unknownFloats(6,(float)0.0,(float)0.0,(float)-0.0,(float)0.0,(float)0.0,(float)-0.0), unknownByte1((byte)0), unknownFloat1(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

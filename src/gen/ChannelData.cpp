@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-ChannelData::ChannelData() : bitsPerChannel((byte)0), unknownByte1((byte)0) {};
+ChannelData::ChannelData() : type((ChannelType)0), convention((ChannelConvention)0), bitsPerChannel((byte)0), unknownByte1((byte)0) {};
 
 //Copy Constructor
 ChannelData::ChannelData( const ChannelData & src ) {

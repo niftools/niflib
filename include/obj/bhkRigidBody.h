@@ -301,11 +301,11 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown. */
+	/*! Unknown. Could be 2 shorts corresponding to Unknown 7 Shorts[1] and [2]. */
 	int unknownInt1;
 	/*! Unknown. */
 	int unknownInt2;
-	/*! Unknown. */
+	/*! Unknown. Could be 3 floats. */
 	array<3,int > unknown3Ints;
 	/*! The collision response. See hkResponseType for hkpWorld default implementations. */
 	hkResponseType collisionResponse_;

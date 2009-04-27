@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkSphereRepShape::TYPE("bhkSphereRepShape", &bhkShape::TYPE );
 
-bhkSphereRepShape::bhkSphereRepShape() : radius(0.0f) {
+bhkSphereRepShape::bhkSphereRepShape() : material((HavokMaterial)0), radius(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

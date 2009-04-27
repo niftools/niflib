@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-Morph::Morph() : numKeys((unsigned int)0), unknownInt((unsigned int)0) {};
+Morph::Morph() : numKeys((unsigned int)0), interpolation((KeyType)0), unknownInt((unsigned int)0) {};
 
 //Copy Constructor
 Morph::Morph( const Morph & src ) {

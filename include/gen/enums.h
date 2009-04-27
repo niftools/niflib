@@ -96,19 +96,12 @@ enum HavokMaterial {
 
 ostream & operator<<( ostream & out, HavokMaterial const & val );
 
-/*! This enum contains the options for doing z buffer or stecil buffer tests. */
-enum CompareMode {
-	TEST_NEVER = 0, /*!< Test will allways return false. Nothing is drawn at all. */
-	TEST_LESS = 1, /*!< The test will only succeed if the pixel is nearer than the previous pixel. */
-	TEST_EQUAL = 2, /*!< Test will only succeed if the z value of the pixel to be drawn is equal to the value of the previous drawn pixel. */
-	TEST_LESS_EQUAL = 3, /*!< Test will succeed if the z value of the pixel to be drawn is smaller than or equal to the value in the Z Buffer. */
-	TEST_GREATER = 4, /*!< Opposite of TEST_LESS. */
-	TEST_NOT_EQUAL = 5, /*!< Test will succeed if the z value of the pixel to be drawn is NOT equal to the value of the previously drawn pixel. */
-	TEST_GREATER_EQUAL = 6, /*!< Opposite of TEST_LESS_EQUAL. */
-	TEST_ALWAYS = 7, /*!< Test will allways succeed. The Z Buffer value is ignored. */
+enum EndianType {
+	ENDIAN_BIG = 0, /*!< The numbers are stored in big endian format, such as those used by PowerPC Mac processors. */
+	ENDIAN_LITTLE = 1, /*!< The numbers are stored in little endian format, such as those used by Intel and AMD x86 processors. */
 };
 
-ostream & operator<<( ostream & out, CompareMode const & val );
+ostream & operator<<( ostream & out, EndianType const & val );
 
 /*!
  * Controls the way the a particle mesh emitter determines the starting speed and
@@ -121,6 +114,20 @@ enum VelocityType {
 };
 
 ostream & operator<<( ostream & out, VelocityType const & val );
+
+/*! This enum contains the options for doing stencil buffer tests. */
+enum StencilCompareMode {
+	TEST_NEVER = 0, /*!< Test will allways return false. Nothing is drawn at all. */
+	TEST_LESS = 1, /*!< The test will only succeed if the pixel is nearer than the previous pixel. */
+	TEST_EQUAL = 2, /*!< Test will only succeed if the z value of the pixel to be drawn is equal to the value of the previous drawn pixel. */
+	TEST_LESS_EQUAL = 3, /*!< Test will succeed if the z value of the pixel to be drawn is smaller than or equal to the value in the Stencil Buffer. */
+	TEST_GREATER = 4, /*!< Opposite of TEST_LESS. */
+	TEST_NOT_EQUAL = 5, /*!< Test will succeed if the z value of the pixel to be drawn is NOT equal to the value of the previously drawn pixel. */
+	TEST_GREATER_EQUAL = 6, /*!< Opposite of TEST_LESS_EQUAL. */
+	TEST_ALWAYS = 7, /*!< Test will allways succeed. The Stencil Buffer value is ignored. */
+};
+
+ostream & operator<<( ostream & out, StencilCompareMode const & val );
 
 /*!
  * Specifies the availiable texture filter modes.  That is, the way pixels within a
@@ -476,6 +483,20 @@ enum BillboardMode {
 
 ostream & operator<<( ostream & out, BillboardMode const & val );
 
+/*! This enum contains the options for doing z buffer tests. */
+enum ZCompareMode {
+	ZCOMP_ALWAYS = 0, /*!< Test will allways succeed. The Z Buffer value is ignored. */
+	ZCOMP_LESS = 1, /*!< The test will only succeed if the pixel is nearer than the previous pixel. */
+	ZCOMP_EQUAL = 2, /*!< Test will only succeed if the z value of the pixel to be drawn is equal to the value of the previous drawn pixel. */
+	ZCOMP_LESS_EQUAL = 3, /*!< Test will succeed if the z value of the pixel to be drawn is smaller than or equal to the value in the Z Buffer. */
+	ZCOMP_GREATER = 4, /*!< Opposite of TEST_LESS. */
+	ZCOMP_NOT_EQUAL = 5, /*!< Test will succeed if the z value of the pixel to be drawn is NOT equal to the value of the previously drawn pixel. */
+	ZCOMP_GREATER_EQUAL = 6, /*!< Opposite of TEST_LESS_EQUAL. */
+	ZCOMP_NEVER = 7, /*!< Test will allways return false. Nothing is drawn at all. */
+};
+
+ostream & operator<<( ostream & out, ZCompareMode const & val );
+
 /*!
  * Used by NiPoint3InterpControllers to select which type of color in the
  * controlled object that will be animated.
@@ -577,13 +598,6 @@ enum MotionQuality {
 };
 
 ostream & operator<<( ostream & out, MotionQuality const & val );
-
-enum EndianType {
-	ENDIAN_BIG = 0, /*!< The numbers are stored in big endian format, such as those used by PowerPC Mac processors. */
-	ENDIAN_LITTLE = 1, /*!< The numbers are stored in little endian format, such as those used by Intel and AMD x86 processors. */
-};
-
-ostream & operator<<( ostream & out, EndianType const & val );
 
 enum PropagationMode {
 	PROPAGATE_ON_SUCCESS = 0, /*!< On Success */

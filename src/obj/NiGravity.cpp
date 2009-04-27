@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGravity::TYPE("NiGravity", &NiParticleModifier::TYPE );
 
-NiGravity::NiGravity() : unknownFloat1(0.0f), force(0.0f) {
+NiGravity::NiGravity() : unknownFloat1(0.0f), force(0.0f), type((FieldType)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

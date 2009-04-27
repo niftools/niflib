@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureTransformController::TYPE("NiTextureTransformController", &NiFloatInterpController::TYPE );
 
-NiTextureTransformController::NiTextureTransformController() : unknown2((byte)0), data(NULL) {
+NiTextureTransformController::NiTextureTransformController() : unknown2((byte)0), textureSlot((TexType)0), operation((TexTransform)0), data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

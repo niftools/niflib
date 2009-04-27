@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysMeshEmitter::TYPE("NiPSysMeshEmitter", &NiPSysEmitter::TYPE );
 
-NiPSysMeshEmitter::NiPSysMeshEmitter() : numEmitterMeshes((unsigned int)0) {
+NiPSysMeshEmitter::NiPSysMeshEmitter() : numEmitterMeshes((unsigned int)0), initialVelocityType((VelocityType)0), emissionType((EmitFrom)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-BoundingVolume::BoundingVolume() {};
+BoundingVolume::BoundingVolume() : collisionType((BoundVolumeType)0) {};
 
 //Copy Constructor
 BoundingVolume::BoundingVolume( const BoundingVolume & src ) {

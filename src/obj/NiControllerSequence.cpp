@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiControllerSequence::TYPE("NiControllerSequence", &NiSequence::TYPE );
 
-NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), unknownFloat2(0.0f), stopTime(0.0f), unknownByte((byte)0), unknownInt2((int)0), manager(NULL), stringPalette(NULL), unknownShort1((short)0), unknownShort2((short)0), unknownInt3((unsigned int)0) {
+NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), cycleType((CycleType)0), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), unknownFloat2(0.0f), stopTime(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL), unknownShort1((short)0), unknownShort2((short)0), unknownInt3((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -63,7 +63,7 @@ void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, c
 		NifStream( frequency, in, info );
 		NifStream( startTime, in, info );
 	};
-	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A040001 ) ) {
 		NifStream( unknownFloat2, in, info );
 	};
 	if ( info.version >= 0x0A01006A ) {
@@ -71,9 +71,6 @@ void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, c
 	};
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 		NifStream( unknownByte, in, info );
-	};
-	if ( ( info.version >= 0x0A040001 ) && ( info.version <= 0x0A040001 ) ) {
-		NifStream( unknownInt2, in, info );
 	};
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( block_num, in, info );
@@ -90,7 +87,7 @@ void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, c
 	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
 		NifStream( unknownShort2, in, info );
 	};
-	if ( info.version >= 0x14030009 ) {
+	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) ) {
 		NifStream( unknownInt3, in, info );
 	};
 
@@ -123,7 +120,7 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 		NifStream( frequency, out, info );
 		NifStream( startTime, out, info );
 	};
-	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) ) {
+	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A040001 ) ) {
 		NifStream( unknownFloat2, out, info );
 	};
 	if ( info.version >= 0x0A01006A ) {
@@ -131,9 +128,6 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 	};
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 		NifStream( unknownByte, out, info );
-	};
-	if ( ( info.version >= 0x0A040001 ) && ( info.version <= 0x0A040001 ) ) {
-		NifStream( unknownInt2, out, info );
 	};
 	if ( info.version >= 0x0A01006A ) {
 		if ( info.version < VER_3_3_0_13 ) {
@@ -164,7 +158,7 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
 		NifStream( unknownShort2, out, info );
 	};
-	if ( info.version >= 0x14030009 ) {
+	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) ) {
 		NifStream( unknownInt3, out, info );
 	};
 
@@ -188,7 +182,6 @@ std::string NiControllerSequence::asString( bool verbose ) const {
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	out << "  Stop Time:  " << stopTime << endl;
 	out << "  Unknown Byte:  " << unknownByte << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Manager:  " << manager << endl;
 	out << "  Target Name:  " << targetName << endl;
 	out << "  String Palette:  " << stringPalette << endl;

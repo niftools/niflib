@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBillboardNode::TYPE("NiBillboardNode", &NiNode::TYPE );
 
-NiBillboardNode::NiBillboardNode() {
+NiBillboardNode::NiBillboardNode() : billboardMode((BillboardMode)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

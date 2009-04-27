@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticleBomb::TYPE("NiParticleBomb", &NiParticleModifier::TYPE );
 
-NiParticleBomb::NiParticleBomb() : decay_(0.0f), duration_(0.0f), deltav_(0.0f), start_(0.0f) {
+NiParticleBomb::NiParticleBomb() : decay_(0.0f), duration_(0.0f), deltav_(0.0f), start_(0.0f), decayType_((DecayType)0), symmetryType_((SymmetryType)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiRawImageData::TYPE("NiRawImageData", &NiObject::TYPE );
 
-NiRawImageData::NiRawImageData() : width((unsigned int)0), height((unsigned int)0) {
+NiRawImageData::NiRawImageData() : width((unsigned int)0), height((unsigned int)0), imageType((ImageType)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

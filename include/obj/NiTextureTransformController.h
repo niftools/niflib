@@ -24,7 +24,10 @@ class NiFloatData;
 class NiTextureTransformController;
 typedef Ref<NiTextureTransformController> NiTextureTransformControllerRef;
 
-/*! Texture transformation controller. */
+/*!
+ * Texture transformation controller. The target texture slot should have "Has
+ * Texture Transform" enabled.
+ */
 class NiTextureTransformController : public NiFloatInterpController {
 public:
 	/*! Constructor */

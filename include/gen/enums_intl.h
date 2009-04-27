@@ -42,17 +42,20 @@ void NifStream( TexTransform const & val, ostream& out, const NifInfo & info = N
 void NifStream( HavokMaterial & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( HavokMaterial const & val, ostream& out, const NifInfo & info = NifInfo() );
 
-
-//---CompareMode---//
-
-void NifStream( CompareMode & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( CompareMode const & val, ostream& out, const NifInfo & info = NifInfo() );
+void NifStream( EndianType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( EndianType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---VelocityType---//
 
 void NifStream( VelocityType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( VelocityType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---StencilCompareMode---//
+
+void NifStream( StencilCompareMode & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( StencilCompareMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---TexFilterMode---//
@@ -169,6 +172,12 @@ void NifStream( BillboardMode & val, istream& in, const NifInfo & info = NifInfo
 void NifStream( BillboardMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---ZCompareMode---//
+
+void NifStream( ZCompareMode & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( ZCompareMode const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---TargetColor---//
 
 void NifStream( TargetColor & val, istream& in, const NifInfo & info = NifInfo() );
@@ -212,9 +221,6 @@ void NifStream( TexClampMode const & val, ostream& out, const NifInfo & info = N
 
 void NifStream( MotionQuality & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( MotionQuality const & val, ostream& out, const NifInfo & info = NifInfo() );
-
-void NifStream( EndianType & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( EndianType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 void NifStream( PropagationMode & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( PropagationMode const & val, ostream& out, const NifInfo & info = NifInfo() );

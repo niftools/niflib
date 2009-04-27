@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkListShape::TYPE("bhkListShape", &bhkShapeCollection::TYPE );
 
-bhkListShape::bhkListShape() : numSubShapes((unsigned int)0), numUnknownInts((unsigned int)0) {
+bhkListShape::bhkListShape() : numSubShapes((unsigned int)0), material((HavokMaterial)0), numUnknownInts((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

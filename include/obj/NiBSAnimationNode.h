@@ -21,7 +21,7 @@ typedef Ref<NiBSAnimationNode> NiBSAnimationNodeRef;
 
 /*!
  * Bethesda-specific extension of Node with animation properties stored in the
- * flags.
+ * flags, often 42?
  */
 class NiBSAnimationNode : public NiNode {
 public:

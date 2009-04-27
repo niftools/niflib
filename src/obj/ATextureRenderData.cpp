@@ -23,7 +23,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type ATextureRenderData::TYPE("ATextureRenderData", &NiObject::TYPE );
 
-ATextureRenderData::ATextureRenderData() : redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((byte)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), unknownByte1((byte)0), palette(NULL), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
+ATextureRenderData::ATextureRenderData() : pixelFormat((PixelFormat)0), redMask((unsigned int)0), greenMask((unsigned int)0), blueMask((unsigned int)0), alphaMask((unsigned int)0), bitsPerPixel((byte)0), unknownInt((unsigned int)0), unknownInt2((int)0), unknownInt3((unsigned int)0), flags((byte)0), unknownInt4((unsigned int)0), unknownByte1((byte)0), palette(NULL), numMipmaps((unsigned int)0), bytesPerPixel((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiStencilProperty::TYPE("NiStencilProperty", &NiProperty::TYPE );
 
-NiStencilProperty::NiStencilProperty() : flags((unsigned short)0), stencilEnabled((byte)0), stencilRef((unsigned int)0), stencilMask((unsigned int)4294967295), drawMode((FaceDrawMode)DRAW_BOTH) {
+NiStencilProperty::NiStencilProperty() : flags((unsigned short)0), stencilEnabled((byte)0), stencilFunction((StencilCompareMode)0), stencilRef((unsigned int)0), stencilMask((unsigned int)4294967295), failAction((StencilAction)0), zFailAction((StencilAction)0), passAction((StencilAction)0), drawMode((FaceDrawMode)DRAW_BOTH) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -149,11 +149,11 @@ void NiStencilProperty::SetStencilState(bool value) {
    stencilEnabled = value;
 }
 
-CompareMode NiStencilProperty::GetStencilFunction() const {
+StencilCompareMode NiStencilProperty::GetStencilFunction() const {
    return stencilFunction;
 }
 
-void NiStencilProperty::SetStencilFunction(CompareMode value) {
+void NiStencilProperty::SetStencilFunction(StencilCompareMode value) {
    stencilFunction = value;
 }
 

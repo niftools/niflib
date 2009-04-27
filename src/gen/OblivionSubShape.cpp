@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-OblivionSubShape::OblivionSubShape() : colFilter((byte)0), unknownShort((unsigned short)0), numVertices((unsigned int)0) {};
+OblivionSubShape::OblivionSubShape() : layer((OblivionLayer)0), colFilter((byte)0), unknownShort((unsigned short)0), numVertices((unsigned int)0), material((HavokMaterial)0) {};
 
 //Copy Constructor
 OblivionSubShape::OblivionSubShape( const OblivionSubShape & src ) {

@@ -182,28 +182,22 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 }
 
 
-//--CompareMode--//
+//--EndianType--//
 
-void NifStream( CompareMode & val, istream& in, const NifInfo & info ) {
-	unsigned int temp;
+void NifStream( EndianType & val, istream& in, const NifInfo & info ) {
+	byte temp;
 	NifStream( temp, in, info );
-	val = CompareMode(temp);
+	val = EndianType(temp);
 }
 
-void NifStream( CompareMode const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (unsigned int)(val), out, info );
+void NifStream( EndianType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
 }
 
-ostream & operator<<( ostream & out, CompareMode const & val ) {
+ostream & operator<<( ostream & out, EndianType const & val ) {
 	switch ( val ) {
-		case TEST_NEVER: return out << "TEST_NEVER";
-		case TEST_LESS: return out << "TEST_LESS";
-		case TEST_EQUAL: return out << "TEST_EQUAL";
-		case TEST_LESS_EQUAL: return out << "TEST_LESS_EQUAL";
-		case TEST_GREATER: return out << "TEST_GREATER";
-		case TEST_NOT_EQUAL: return out << "TEST_NOT_EQUAL";
-		case TEST_GREATER_EQUAL: return out << "TEST_GREATER_EQUAL";
-		case TEST_ALWAYS: return out << "TEST_ALWAYS";
+		case ENDIAN_BIG: return out << "ENDIAN_BIG";
+		case ENDIAN_LITTLE: return out << "ENDIAN_LITTLE";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -226,6 +220,33 @@ ostream & operator<<( ostream & out, VelocityType const & val ) {
 		case VELOCITY_USE_NORMALS: return out << "VELOCITY_USE_NORMALS";
 		case VELOCITY_USE_RANDOM: return out << "VELOCITY_USE_RANDOM";
 		case VELOCITY_USE_DIRECTION: return out << "VELOCITY_USE_DIRECTION";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--StencilCompareMode--//
+
+void NifStream( StencilCompareMode & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = StencilCompareMode(temp);
+}
+
+void NifStream( StencilCompareMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, StencilCompareMode const & val ) {
+	switch ( val ) {
+		case TEST_NEVER: return out << "TEST_NEVER";
+		case TEST_LESS: return out << "TEST_LESS";
+		case TEST_EQUAL: return out << "TEST_EQUAL";
+		case TEST_LESS_EQUAL: return out << "TEST_LESS_EQUAL";
+		case TEST_GREATER: return out << "TEST_GREATER";
+		case TEST_NOT_EQUAL: return out << "TEST_NOT_EQUAL";
+		case TEST_GREATER_EQUAL: return out << "TEST_GREATER_EQUAL";
+		case TEST_ALWAYS: return out << "TEST_ALWAYS";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -836,6 +857,33 @@ ostream & operator<<( ostream & out, BillboardMode const & val ) {
 }
 
 
+//--ZCompareMode--//
+
+void NifStream( ZCompareMode & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = ZCompareMode(temp);
+}
+
+void NifStream( ZCompareMode const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, ZCompareMode const & val ) {
+	switch ( val ) {
+		case ZCOMP_ALWAYS: return out << "ZCOMP_ALWAYS";
+		case ZCOMP_LESS: return out << "ZCOMP_LESS";
+		case ZCOMP_EQUAL: return out << "ZCOMP_EQUAL";
+		case ZCOMP_LESS_EQUAL: return out << "ZCOMP_LESS_EQUAL";
+		case ZCOMP_GREATER: return out << "ZCOMP_GREATER";
+		case ZCOMP_NOT_EQUAL: return out << "ZCOMP_NOT_EQUAL";
+		case ZCOMP_GREATER_EQUAL: return out << "ZCOMP_GREATER_EQUAL";
+		case ZCOMP_NEVER: return out << "ZCOMP_NEVER";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--TargetColor--//
 
 void NifStream( TargetColor & val, istream& in, const NifInfo & info ) {
@@ -1029,27 +1077,6 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 		case MO_QUAL_USER: return out << "MO_QUAL_USER";
 		case MO_QUAL_CHARACTER: return out << "MO_QUAL_CHARACTER";
 		case MO_QUAL_KEYFRAMED_REPORT: return out << "MO_QUAL_KEYFRAMED_REPORT";
-		default: return out << "Invalid Value! - " << (unsigned int)(val);
-	}
-}
-
-
-//--EndianType--//
-
-void NifStream( EndianType & val, istream& in, const NifInfo & info ) {
-	byte temp;
-	NifStream( temp, in, info );
-	val = EndianType(temp);
-}
-
-void NifStream( EndianType const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (byte)(val), out, info );
-}
-
-ostream & operator<<( ostream & out, EndianType const & val ) {
-	switch ( val ) {
-		case ENDIAN_BIG: return out << "ENDIAN_BIG";
-		case ENDIAN_LITTLE: return out << "ENDIAN_LITTLE";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiVertexColorProperty::TYPE("NiVertexColorProperty", &NiProperty::TYPE );
 
-NiVertexColorProperty::NiVertexColorProperty() : flags((unsigned short)0) {
+NiVertexColorProperty::NiVertexColorProperty() : flags((unsigned short)0), vertexMode((VertMode)0), lightingMode((LightMode)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }

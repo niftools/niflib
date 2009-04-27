@@ -59,9 +59,8 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!
-	 * Four UV data groups.  Perhaps the first two control x and y.
-	 *             The existence of the second two is a guess - there are always two
-	 * zero values following the first two in all official files.
+	 * Four UV data groups. Appear to be U translation, V translation, U
+	 * scaling/tiling, V scaling/tiling.
 	 */
 	array<4,KeyGroup<float > > uvGroups;
 public:

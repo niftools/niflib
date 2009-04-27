@@ -274,8 +274,6 @@ protected:
 	float stopTime;
 	/*! Unknown. */
 	byte unknownByte;
-	/*! Unknown. */
-	int unknownInt2;
 	/*! Refers to NiControllerManager which references this object, if any. */
 	NiControllerManager * manager;
 	/*! Name of target node Controller acts on. */
@@ -286,7 +284,10 @@ protected:
 	short unknownShort1;
 	/*! Unknown */
 	short unknownShort2;
-	/*! Unknown, found in Lazeska .KFs (seems to be 64) */
+	/*!
+	 * Unknown, found in some Lazeska .KFs (seems to be 64 when present). Conditions
+	 * are unknown.
+	 */
 	unsigned int unknownInt3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

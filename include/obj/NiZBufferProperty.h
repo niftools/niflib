@@ -70,13 +70,13 @@ public:
 	 * Used to get the current depth buffer (Z-Buffer) test function, which determine whether a pixel is drawn based on the value of the depth buffer at the same location.
 	 * \return The current depth buffer test function.
 	 */
-	NIFLIB_API CompareMode GetDepthFunction() const;
+	NIFLIB_API ZCompareMode GetDepthFunction() const;
 
 	/*!
 	 * Used to set the depth buffer (Z-Buffer) test function, which determine whether a pixel is drawn based on the value of the depth buffer at the same location.
 	 * \param[in] value The new depth buffer test function.
 	 */
-	NIFLIB_API void SetDepthFunction(CompareMode value);
+	NIFLIB_API void SetDepthFunction(ZCompareMode value);
 
 	//--END CUSTOM CODE--//
 protected:
@@ -87,7 +87,7 @@ protected:
 	 */
 	unsigned short flags;
 	/*! Z-Test function (see: glDepthFunc). In Flags from 20.1.0.3 on. */
-	CompareMode function;
+	ZCompareMode function;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
