@@ -177,6 +177,7 @@ OBJ_FILES = \
             src/obj/BSMaterialEmittanceMultController.o \
             src/obj/BSMultiBound.o \
             src/obj/BSMultiBoundAABB.o \
+            src/obj/BSMultiBoundData.o \
             src/obj/BSMultiBoundNode.o \
             src/obj/BSMultiBoundSphere.o \
             src/obj/BSOrderedNode.o \
@@ -391,6 +392,7 @@ OBJ_FILES = \
             src/obj/NiPSysSpawnModifier.o \
             src/obj/NiPSysSphereEmitter.o \
             src/obj/NiPSysSphericalCollider.o \
+            src/obj/NiPSysTrailEmitter.o \
             src/obj/NiPSysTurbulenceFieldModifier.o \
             src/obj/NiPSysUpdateCtlr.o \
             src/obj/NiPSysVolumeEmitter.o \

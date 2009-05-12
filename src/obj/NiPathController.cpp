@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPathController::TYPE("NiPathController", &NiTimeController::TYPE );
 
-NiPathController::NiPathController() : unknownShort2((unsigned short)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0), unknownShort((unsigned short)0), posData(NULL), floatData(NULL) {
+NiPathController::NiPathController() : unknownShort2((unsigned short)0), unknownInt1((unsigned int)0), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownShort((unsigned short)0), posData(NULL), floatData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -49,8 +49,8 @@ void NiPathController::Read( istream& in, list<unsigned int> & link_stack, const
 		NifStream( unknownShort2, in, info );
 	};
 	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownInt3, in, info );
+	NifStream( unknownFloat2, in, info );
+	NifStream( unknownFloat3, in, info );
 	NifStream( unknownShort, in, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
@@ -70,8 +70,8 @@ void NiPathController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		NifStream( unknownShort2, out, info );
 	};
 	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownInt3, out, info );
+	NifStream( unknownFloat2, out, info );
+	NifStream( unknownFloat3, out, info );
 	NifStream( unknownShort, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
 		NifStream( (unsigned int)&(*posData), out, info );
@@ -105,8 +105,8 @@ std::string NiPathController::asString( bool verbose ) const {
 	out << NiTimeController::asString();
 	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Pos Data:  " << posData << endl;
 	out << "  Float Data:  " << floatData << endl;

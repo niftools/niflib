@@ -43,9 +43,9 @@ void NiVisData::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 
 	NiObject::Read( in, link_stack, info );
 	NifStream( numVisKeys, in, info );
-	visKeys.resize(numVisKeys);
-	for (unsigned int i1 = 0; i1 < visKeys.size(); i1++) {
-		NifStream( visKeys[i1], in, info, 1 );
+	keys.resize(numVisKeys);
+	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {
+		NifStream( keys[i1], in, info, 1 );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -57,10 +57,10 @@ void NiVisData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	numVisKeys = (unsigned int)(visKeys.size());
+	numVisKeys = (unsigned int)(keys.size());
 	NifStream( numVisKeys, out, info );
-	for (unsigned int i1 = 0; i1 < visKeys.size(); i1++) {
-		NifStream( visKeys[i1], out, info, 1 );
+	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {
+		NifStream( keys[i1], out, info, 1 );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -74,10 +74,10 @@ std::string NiVisData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numVisKeys = (unsigned int)(visKeys.size());
+	numVisKeys = (unsigned int)(keys.size());
 	out << "  Num Vis Keys:  " << numVisKeys << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < visKeys.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
@@ -85,7 +85,7 @@ std::string NiVisData::asString( bool verbose ) const {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			break;
 		};
-		out << "    Vis Keys[" << i1 << "]:  " << visKeys[i1] << endl;
+		out << "    Keys[" << i1 << "]:  " << keys[i1] << endl;
 		array_output_count++;
 	};
 	return out.str();
@@ -113,15 +113,15 @@ std::list<NiObjectRef> NiVisData::GetRefs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 vector< Key<unsigned char> > NiVisData::GetKeys() const {
-	return visKeys;
+	return keys;
 }
 
 void NiVisData::SetKeys( vector< Key<unsigned char> > const & keys ) {
-	visKeys = keys;
+	this->keys = keys;
 }
 
 void NiVisData::NormalizeKeys( float phase, float frequency ) {
-	NormalizeKeyVector( this->visKeys, phase, frequency );
+	NormalizeKeyVector( this->keys, phase, frequency );
 }
 
 //--END CUSTOM CODE--//

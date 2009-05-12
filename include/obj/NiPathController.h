@@ -92,10 +92,10 @@ protected:
 	unsigned short unknownShort2;
 	/*! Unknown, always 1? */
 	unsigned int unknownInt1;
-	/*! Unknown, often 0? Could be a float? */
-	unsigned int unknownInt2;
-	/*! Unknown, often 0? Could be a float? */
-	unsigned int unknownInt3;
+	/*! Unknown, often 0? */
+	float unknownFloat2;
+	/*! Unknown, often 0? */
+	float unknownFloat3;
 	/*! Unknown, always 0? */
 	unsigned short unknownShort;
 	/*! Path controller data index (position data). ? */
