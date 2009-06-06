@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiVisData::TYPE("NiVisData", &NiObject::TYPE );
 
-NiVisData::NiVisData() : numVisKeys((unsigned int)0) {
+NiVisData::NiVisData() : numKeys((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,8 +42,8 @@ void NiVisData::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 	//--END CUSTOM CODE--//
 
 	NiObject::Read( in, link_stack, info );
-	NifStream( numVisKeys, in, info );
-	keys.resize(numVisKeys);
+	NifStream( numKeys, in, info );
+	keys.resize(numKeys);
 	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {
 		NifStream( keys[i1], in, info, 1 );
 	};
@@ -57,8 +57,8 @@ void NiVisData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, info );
-	numVisKeys = (unsigned int)(keys.size());
-	NifStream( numVisKeys, out, info );
+	numKeys = (unsigned int)(keys.size());
+	NifStream( numKeys, out, info );
 	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {
 		NifStream( keys[i1], out, info, 1 );
 	};
@@ -74,8 +74,8 @@ std::string NiVisData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numVisKeys = (unsigned int)(keys.size());
-	out << "  Num Vis Keys:  " << numVisKeys << endl;
+	numKeys = (unsigned int)(keys.size());
+	out << "  Num Keys:  " << numKeys << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

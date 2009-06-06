@@ -175,9 +175,9 @@ protected:
 	mutable unsigned int numMaterials;
 	/*! Unknown string.  Shader? */
 	vector<IndexString > materialName;
-	/*! Unknown integer. */
-	vector<unsigned int > materialExtraData;
-	/*! Active Material. */
+	/*! Unknown integer; often -1. (Is this a link, array index?) */
+	vector<int > materialExtraData;
+	/*! Active Material; often -1. (Is this a link, array index?) */
 	int activeMaterial;
 	/*! Shader. */
 	bool hasShader;

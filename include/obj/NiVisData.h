@@ -83,7 +83,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! The number of visibility keys that follow. */
-	mutable unsigned int numVisKeys;
+	mutable unsigned int numKeys;
 	/*! The visibility keys. */
 	vector<Key<byte > > keys;
 public:
