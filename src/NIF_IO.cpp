@@ -190,12 +190,13 @@ void WritePtr32( void * val, ostream& out ){
   WriteUInt( (unsigned int)val, out );
 #else
   // 64 bit
-  typedef union intpoint {
+  union intpoint_t {
     void *ptr;
-    unsigned int id1;
-    unsigned int id2;
-  };
-  intpoint ptr;
+    struct {
+      unsigned int id1;
+      unsigned int id2;
+    };
+  } ptr;
   ptr.ptr = val;
   // xor the two parts
   // (maybe a more advanced hash function would be better, experience will tell)
