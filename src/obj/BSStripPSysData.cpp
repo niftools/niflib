@@ -78,7 +78,6 @@ std::string BSStripPSysData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysData::asString();
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
 	out << "  Unknown byte 1:  " << unknownByte1 << endl;

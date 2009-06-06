@@ -62,7 +62,6 @@ std::string NiAutoNormalParticlesData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiParticlesData::asString();
 	return out.str();
 

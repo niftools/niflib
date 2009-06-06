@@ -70,7 +70,6 @@ std::string NiLines::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTriBasedGeom::asString();
 	return out.str();
 

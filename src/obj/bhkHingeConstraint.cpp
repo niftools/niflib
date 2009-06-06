@@ -111,7 +111,6 @@ std::string bhkHingeConstraint::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
 	out << "  Pivot A:  " << hinge.pivotA << endl;
 	out << "  Perp2 Axle In A1:  " << hinge.perp2AxleInA1 << endl;

@@ -171,7 +171,6 @@ std::string NiControllerSequence::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiSequence::asString();
 	out << "  Weight:  " << weight << endl;
 	out << "  Text Keys:  " << textKeys << endl;

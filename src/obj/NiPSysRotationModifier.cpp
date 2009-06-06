@@ -80,7 +80,6 @@ std::string NiPSysRotationModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Initial Rotation Speed:  " << initialRotationSpeed << endl;
 	out << "  Initial Rotation Speed Variation:  " << initialRotationSpeedVariation << endl;

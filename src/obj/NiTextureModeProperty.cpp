@@ -72,7 +72,6 @@ std::string NiTextureModeProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  PS2 L:  " << ps2L << endl;

@@ -62,7 +62,6 @@ std::string BSPSysArrayEmitter::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysVolumeEmitter::asString();
 	return out.str();
 

@@ -72,7 +72,6 @@ std::string TileShaderProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << BSShaderLightingProperty::asString();
 	out << "  File Name:  " << fileName << endl;
 	return out.str();

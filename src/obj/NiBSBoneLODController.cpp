@@ -62,7 +62,6 @@ std::string NiBSBoneLODController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBoneLODController::asString();
 	return out.str();
 

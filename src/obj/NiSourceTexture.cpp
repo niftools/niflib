@@ -147,7 +147,6 @@ std::string NiSourceTexture::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTexture::asString();
 	out << "  Use External:  " << useExternal << endl;
 	if ( (useExternal == 1) ) {

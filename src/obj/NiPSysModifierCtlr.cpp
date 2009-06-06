@@ -64,7 +64,6 @@ std::string NiPSysModifierCtlr::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiSingleInterpController::asString();
 	out << "  Modifier Name:  " << modifierName << endl;
 	return out.str();

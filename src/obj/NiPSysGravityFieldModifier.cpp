@@ -72,7 +72,6 @@ std::string NiPSysGravityFieldModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysFieldModifier::asString();
 	out << "  Direction:  " << direction << endl;
 	return out.str();

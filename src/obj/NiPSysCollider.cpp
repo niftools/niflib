@@ -116,7 +116,6 @@ std::string NiPSysCollider::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Bounce:  " << bounce << endl;
 	out << "  Spawn on Collide:  " << spawnOnCollide << endl;

@@ -64,7 +64,6 @@ std::string NiBSplineBasisData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Num Control Points:  " << numControlPoints << endl;
 	return out.str();

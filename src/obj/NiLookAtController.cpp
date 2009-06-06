@@ -81,7 +81,6 @@ std::string NiLookAtController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown1:  " << unknown1 << endl;
 	out << "  Look At Node:  " << lookAtNode << endl;

@@ -66,7 +66,6 @@ std::string NiBlendInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Unknown Int:  " << unknownInt << endl;

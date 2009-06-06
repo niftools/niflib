@@ -107,7 +107,6 @@ std::string BSPSysMultiTargetEmitterCtlr::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifierCtlr::asString();
 	out << "  Data:  " << data << endl;
 	out << "  Visibility Interpolator:  " << visibilityInterpolator << endl;

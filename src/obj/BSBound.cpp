@@ -66,7 +66,6 @@ std::string BSBound::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Center:  " << center << endl;
 	out << "  Dimensions:  " << dimensions << endl;

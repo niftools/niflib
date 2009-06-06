@@ -70,7 +70,6 @@ std::string Lighting30ShaderProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << BSShaderPPLightingProperty::asString();
 	return out.str();
 

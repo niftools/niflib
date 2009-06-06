@@ -77,7 +77,6 @@ std::string NiBoolInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiKeyBasedInterpolator::asString();
 	out << "  Bool Value:  " << boolValue << endl;
 	out << "  Data:  " << data << endl;

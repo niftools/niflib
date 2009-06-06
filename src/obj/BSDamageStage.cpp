@@ -74,7 +74,6 @@ std::string BSDamageStage::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiNode::asString();
 	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Unknown Short 2:  " << unknownShort2 << endl;

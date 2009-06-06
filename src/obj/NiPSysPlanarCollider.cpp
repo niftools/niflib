@@ -70,7 +70,6 @@ std::string NiPSysPlanarCollider::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysCollider::asString();
 	out << "  Width:  " << width << endl;
 	out << "  Height:  " << height << endl;

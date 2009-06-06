@@ -80,7 +80,6 @@ std::string NiBSplineTransformInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBSplineInterpolator::asString();
 	out << "  Translation:  " << translation << endl;
 	out << "  Rotation:  " << rotation << endl;

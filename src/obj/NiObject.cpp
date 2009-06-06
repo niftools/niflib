@@ -66,7 +66,6 @@ std::string NiObject::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

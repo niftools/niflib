@@ -62,7 +62,6 @@ std::string NiBlendTransformInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	return out.str();
 

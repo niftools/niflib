@@ -84,7 +84,6 @@ std::string NiPSysAirFieldModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysFieldModifier::asString();
 	out << "  Direction:  " << direction << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;

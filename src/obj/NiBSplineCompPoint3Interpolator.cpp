@@ -62,7 +62,6 @@ std::string NiBSplineCompPoint3Interpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBSplinePoint3Interpolator::asString();
 	return out.str();
 

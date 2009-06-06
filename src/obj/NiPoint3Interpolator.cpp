@@ -77,7 +77,6 @@ std::string NiPoint3Interpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiKeyBasedInterpolator::asString();
 	out << "  Point 3 Value:  " << point3Value << endl;
 	out << "  Data:  " << data << endl;

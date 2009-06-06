@@ -77,7 +77,6 @@ std::string bhkNiCollisionObject::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiCollisionObject::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Body:  " << body << endl;

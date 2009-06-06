@@ -66,7 +66,6 @@ std::string NiPSysCylinderEmitter::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysVolumeEmitter::asString();
 	out << "  Radius:  " << radius << endl;
 	out << "  Height:  " << height << endl;

@@ -76,7 +76,6 @@ std::string SkyShaderProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << BSShaderProperty::asString();
 	out << "  Unknown Int 4:  " << unknownInt4 << endl;
 	out << "  File Name:  " << fileName << endl;

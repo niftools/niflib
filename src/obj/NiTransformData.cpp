@@ -62,7 +62,6 @@ std::string NiTransformData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiKeyframeData::asString();
 	return out.str();
 

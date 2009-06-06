@@ -79,7 +79,6 @@ std::string NiPSysModifierActiveCtlr::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifierBoolCtlr::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();

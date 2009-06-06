@@ -123,7 +123,6 @@ std::string NiCamera::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiAVObject::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Frustum Left:  " << frustumLeft << endl;

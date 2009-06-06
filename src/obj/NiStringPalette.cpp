@@ -67,7 +67,6 @@ std::string NiStringPalette::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Palette:  " << palette.palette << endl;
 	out << "  Length:  " << palette.length << endl;

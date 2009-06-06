@@ -62,7 +62,6 @@ std::string bhkBvTreeShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkShape::asString();
 	return out.str();
 

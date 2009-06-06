@@ -229,7 +229,6 @@ std::string bhkMalleableConstraint::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
 	out << "  Type:  " << type << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;

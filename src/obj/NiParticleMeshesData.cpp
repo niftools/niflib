@@ -75,7 +75,6 @@ std::string NiParticleMeshesData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiRotatingParticlesData::asString();
 	out << "  Unknown Link 2:  " << unknownLink2 << endl;
 	return out.str();

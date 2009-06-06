@@ -84,7 +84,6 @@ std::string NiSphericalCollider::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiParticleModifier::asString();
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;

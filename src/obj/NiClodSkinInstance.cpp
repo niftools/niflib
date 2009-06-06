@@ -62,7 +62,6 @@ std::string NiClodSkinInstance::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiSkinInstance::asString();
 	return out.str();
 

@@ -62,7 +62,6 @@ std::string NiPSysUpdateCtlr::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
 	return out.str();
 

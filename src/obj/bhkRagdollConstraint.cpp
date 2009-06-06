@@ -131,7 +131,6 @@ std::string bhkRagdollConstraint::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
 	out << "  Pivot A:  " << ragdoll.pivotA << endl;
 	out << "  Plane A:  " << ragdoll.planeA << endl;

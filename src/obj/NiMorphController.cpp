@@ -70,7 +70,6 @@ std::string NiMorphController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiInterpController::asString();
 	return out.str();
 

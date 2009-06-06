@@ -70,7 +70,6 @@ std::string NiScreenElements::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTriShape::asString();
 	return out.str();
 

@@ -83,7 +83,6 @@ std::string NiMorpherController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiInterpController::asString();
 	out << "  Data:  " << data << endl;
 	return out.str();

@@ -67,7 +67,6 @@ std::string bhkSphereRepShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkShape::asString();
 	out << "  Material:  " << material << endl;
 	out << "  Radius:  " << radius << endl;

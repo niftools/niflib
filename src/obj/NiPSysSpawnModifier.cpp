@@ -84,7 +84,6 @@ std::string NiPSysSpawnModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Num Spawn Generations:  " << numSpawnGenerations << endl;
 	out << "  Percentage Spawned:  " << percentageSpawned << endl;

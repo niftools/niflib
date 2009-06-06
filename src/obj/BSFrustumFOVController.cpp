@@ -83,7 +83,6 @@ std::string BSFrustumFOVController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Interpolator:  " << interpolator << endl;
 	return out.str();

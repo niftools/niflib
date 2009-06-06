@@ -64,7 +64,6 @@ std::string NiIntegerExtraData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
 	out << "  Integer Data:  " << integerData << endl;
 	return out.str();

@@ -76,7 +76,6 @@ std::string NiPSysGrowFadeModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Grow Time:  " << growTime << endl;
 	out << "  Grow Generation:  " << growGeneration << endl;

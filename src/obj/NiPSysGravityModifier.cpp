@@ -93,7 +93,6 @@ std::string NiPSysGravityModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Gravity Object:  " << gravityObject << endl;
 	out << "  Gravity Axis:  " << gravityAxis << endl;

@@ -75,7 +75,6 @@ std::string NiCollisionObject::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	out << "  Target:  " << target << endl;
 	return out.str();

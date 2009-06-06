@@ -81,7 +81,6 @@ std::string NiBSplineCompTransformInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBSplineTransformInterpolator::asString();
 	out << "  Translation Bias:  " << translationBias << endl;
 	out << "  Translation Multiplier:  " << translationMultiplier << endl;

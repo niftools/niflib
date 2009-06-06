@@ -81,7 +81,6 @@ std::string bhkWorldObject::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkSerializable::asString();
 	out << "  Shape:  " << shape << endl;
 	out << "  Layer:  " << layer << endl;

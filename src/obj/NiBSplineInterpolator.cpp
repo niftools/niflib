@@ -91,7 +91,6 @@ std::string NiBSplineInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiInterpolator::asString();
 	out << "  Start Time:  " << startTime << endl;
 	out << "  Stop Time:  " << stopTime << endl;

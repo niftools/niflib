@@ -62,7 +62,6 @@ std::string bhkEntity::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkWorldObject::asString();
 	return out.str();
 

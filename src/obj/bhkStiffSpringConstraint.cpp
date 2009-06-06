@@ -68,7 +68,6 @@ std::string bhkStiffSpringConstraint::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << bhkConstraint::asString();
 	out << "  Pivot A:  " << pivotA << endl;
 	out << "  Pivot B:  " << pivotB << endl;

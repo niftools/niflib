@@ -77,7 +77,6 @@ std::string NiUVController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiTimeController::asString();
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  Data:  " << data << endl;

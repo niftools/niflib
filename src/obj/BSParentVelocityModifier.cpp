@@ -64,7 +64,6 @@ std::string BSParentVelocityModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysModifier::asString();
 	out << "  Damping:  " << damping << endl;
 	return out.str();

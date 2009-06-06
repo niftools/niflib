@@ -72,7 +72,6 @@ std::string TallGrassShaderProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << BSShaderProperty::asString();
 	out << "  File Name:  " << fileName << endl;
 	return out.str();

@@ -70,7 +70,6 @@ std::string NiLight::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiDynamicEffect::asString();
 	out << "  Dimmer:  " << dimmer << endl;
 	out << "  Ambient Color:  " << ambientColor << endl;

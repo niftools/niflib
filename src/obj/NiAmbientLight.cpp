@@ -62,7 +62,6 @@ std::string NiAmbientLight::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiLight::asString();
 	return out.str();
 

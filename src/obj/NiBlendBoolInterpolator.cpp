@@ -64,7 +64,6 @@ std::string NiBlendBoolInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBlendInterpolator::asString();
 	out << "  Bool Value:  " << boolValue << endl;
 	return out.str();

@@ -62,7 +62,6 @@ std::string NiBoolTimelineInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiBoolInterpolator::asString();
 	return out.str();
 

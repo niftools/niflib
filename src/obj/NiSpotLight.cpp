@@ -72,7 +72,6 @@ std::string NiSpotLight::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPointLight::asString();
 	out << "  Cutoff Angle:  " << cutoffAngle << endl;
 	out << "  Unknown Float:  " << unknownFloat << endl;

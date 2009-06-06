@@ -74,7 +74,6 @@ std::string NiPSysDragFieldModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiPSysFieldModifier::asString();
 	out << "  Use Direction?:  " << useDirection_ << endl;
 	out << "  Direction:  " << direction << endl;

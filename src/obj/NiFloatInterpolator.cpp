@@ -77,7 +77,6 @@ std::string NiFloatInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiKeyBasedInterpolator::asString();
 	out << "  Float Value:  " << floatValue << endl;
 	out << "  Data:  " << data << endl;

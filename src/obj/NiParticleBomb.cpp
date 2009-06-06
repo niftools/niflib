@@ -82,7 +82,6 @@ std::string NiParticleBomb::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiParticleModifier::asString();
 	out << "  Decay?:  " << decay_ << endl;
 	out << "  Duration?:  " << duration_ << endl;

@@ -70,7 +70,6 @@ std::string BSStripParticleSystem::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiParticleSystem::asString();
 	return out.str();
 

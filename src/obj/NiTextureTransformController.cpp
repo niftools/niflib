@@ -86,7 +86,6 @@ std::string NiTextureTransformController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiFloatInterpController::asString();
 	out << "  Unknown2:  " << unknown2 << endl;
 	out << "  Texture Slot:  " << textureSlot << endl;

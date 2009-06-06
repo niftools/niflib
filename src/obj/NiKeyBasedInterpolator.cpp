@@ -62,7 +62,6 @@ std::string NiKeyBasedInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiInterpolator::asString();
 	return out.str();
 
