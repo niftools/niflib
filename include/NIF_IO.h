@@ -37,6 +37,7 @@ bool ReadBool( istream &in, unsigned int version );
 //-- Write Utility Functions --//
 void WriteInt( int val, ostream& out );
 void WriteUInt( unsigned int val, ostream& out );
+void WritePtr32( void * val, ostream& out );
 void WriteUShort( unsigned short val, ostream& out );
 void WriteShort( short val, ostream& out );
 void WriteByte( byte val, ostream& out );

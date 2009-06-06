@@ -63,7 +63,7 @@ void BSMultiBoundNode::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 
 	NiNode::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*multiBound), out, info );
+		WritePtr32( &(*multiBound), out );
 	} else {
 		if ( multiBound != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(multiBound) )->second, out, info );

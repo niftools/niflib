@@ -92,7 +92,7 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( unknownQuat2, out, info );
 	NifStream( unknownQuat3, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownRef0), out, info );
+		WritePtr32( &(*unknownRef0), out );
 	} else {
 		if ( unknownRef0 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownRef0) )->second, out, info );
@@ -106,7 +106,7 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( unknownByte2, out, info );
 	NifStream( unknownInt6, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*shapeDescription), out, info );
+		WritePtr32( &(*shapeDescription), out );
 	} else {
 		if ( shapeDescription != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(shapeDescription) )->second, out, info );
@@ -115,7 +115,7 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownRef1), out, info );
+		WritePtr32( &(*unknownRef1), out );
 	} else {
 		if ( unknownRef1 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownRef1) )->second, out, info );
@@ -124,7 +124,7 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownRef2), out, info );
+		WritePtr32( &(*unknownRef2), out );
 	} else {
 		if ( unknownRef2 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownRef2) )->second, out, info );
@@ -134,7 +134,7 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	}
 	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*unknownRefs3[i1]), out, info );
+			WritePtr32( &(*unknownRefs3[i1]), out );
 		} else {
 			if ( unknownRefs3[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(unknownRefs3[i1]) )->second, out, info );

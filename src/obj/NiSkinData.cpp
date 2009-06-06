@@ -103,7 +103,7 @@ void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	NifStream( numBones, out, info );
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*skinPartition), out, info );
+			WritePtr32( &(*skinPartition), out );
 		} else {
 			if ( skinPartition != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );

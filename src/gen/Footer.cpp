@@ -45,7 +45,7 @@ void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 		NifStream( numRoots, out, info );
 		for (unsigned int i2 = 0; i2 < roots.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*roots[i2]), out, info );
+				WritePtr32( &(*roots[i2]), out );
 			} else {
 				if ( roots[i2] != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(roots[i2]) )->second, out, info );

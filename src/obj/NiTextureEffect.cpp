@@ -87,7 +87,7 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( coordinateGenerationType, out, info );
 	if ( info.version <= 0x03010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*image), out, info );
+			WritePtr32( &(*image), out );
 		} else {
 			if ( image != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(image) )->second, out, info );
@@ -98,7 +98,7 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	};
 	if ( info.version >= 0x04000000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*sourceTexture), out, info );
+			WritePtr32( &(*sourceTexture), out );
 		} else {
 			if ( sourceTexture != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, info );

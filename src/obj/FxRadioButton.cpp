@@ -69,7 +69,7 @@ void FxRadioButton::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 	NifStream( numButtons, out, info );
 	for (unsigned int i1 = 0; i1 < buttons.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*buttons[i1]), out, info );
+			WritePtr32( &(*buttons[i1]), out );
 		} else {
 			if ( buttons[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(buttons[i1]) )->second, out, info );

@@ -500,8 +500,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 			//Write Object Type
 			WriteString( objects[i]->GetType().GetTypeName() , out );
 			//Write pointer number of object
-			WriteUInt( (unsigned int)&(*objects[i]), out );
-
+			WritePtr32( &(*objects[i]), out );
 			
 		} else if (version < 0x05000001) {
 			//Write Object Type

@@ -76,7 +76,7 @@ void bhkConvexListShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	NifStream( numSubShapes, out, info );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*subShapes[i1]), out, info );
+			WritePtr32( &(*subShapes[i1]), out );
 		} else {
 			if ( subShapes[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(subShapes[i1]) )->second, out, info );

@@ -87,7 +87,7 @@ void Ni3dsAnimationNode::Write( ostream& out, const map<NiObjectRef,unsigned int
 		};
 		NifStream( unknownShort, out, info );
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*child), out, info );
+			WritePtr32( &(*child), out );
 		} else {
 			if ( child != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(child) )->second, out, info );

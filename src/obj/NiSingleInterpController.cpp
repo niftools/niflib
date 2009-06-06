@@ -61,7 +61,7 @@ void NiSingleInterpController::Write( ostream& out, const map<NiObjectRef,unsign
 	NiInterpController::Write( out, link_map, info );
 	if ( info.version >= 0x0A020000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*interpolator), out, info );
+			WritePtr32( &(*interpolator), out );
 		} else {
 			if ( interpolator != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, info );

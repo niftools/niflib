@@ -67,7 +67,7 @@ void NiPSysMeshEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	NifStream( numEmitterMeshes, out, info );
 	for (unsigned int i1 = 0; i1 < emitterMeshes.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*emitterMeshes[i1]), out, info );
+			WritePtr32( &(*emitterMeshes[i1]), out );
 		} else {
 			if ( emitterMeshes[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(emitterMeshes[i1]) )->second, out, info );

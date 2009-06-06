@@ -57,7 +57,7 @@ void NiPSysColliderManager::Write( ostream& out, const map<NiObjectRef,unsigned 
 
 	NiPSysModifier::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*collider), out, info );
+		WritePtr32( &(*collider), out );
 	} else {
 		if ( collider != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(collider) )->second, out, info );

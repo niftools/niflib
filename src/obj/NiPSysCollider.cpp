@@ -71,7 +71,7 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	NifStream( spawnOnCollide, out, info );
 	NifStream( dieOnCollide, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*spawnModifier), out, info );
+		WritePtr32( &(*spawnModifier), out );
 	} else {
 		if ( spawnModifier != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, info );
@@ -80,7 +80,7 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*parent), out, info );
+		WritePtr32( &(*parent), out );
 	} else {
 		if ( parent != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );
@@ -89,7 +89,7 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*nextCollider), out, info );
+		WritePtr32( &(*nextCollider), out );
 	} else {
 		if ( nextCollider != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(nextCollider) )->second, out, info );
@@ -98,7 +98,7 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*colliderObject), out, info );
+		WritePtr32( &(*colliderObject), out );
 	} else {
 		if ( colliderObject != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(colliderObject) )->second, out, info );

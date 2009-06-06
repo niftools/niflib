@@ -122,7 +122,7 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	NifStream( numProperties, out, info );
 	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*properties[i1]), out, info );
+			WritePtr32( &(*properties[i1]), out );
 		} else {
 			if ( properties[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(properties[i1]) )->second, out, info );
@@ -148,7 +148,7 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	};
 	if ( info.version >= 0x0A000100 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*collisionObject), out, info );
+			WritePtr32( &(*collisionObject), out );
 		} else {
 			if ( collisionObject != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(collisionObject) )->second, out, info );

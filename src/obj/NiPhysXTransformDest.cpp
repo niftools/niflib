@@ -67,7 +67,7 @@ void NiPhysXTransformDest::Write( ostream& out, const map<NiObjectRef,unsigned i
 	NifStream( unknownByte1, out, info );
 	NifStream( unknownByte2, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*node), out, info );
+		WritePtr32( &(*node), out );
 	} else {
 		if ( node != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(node) )->second, out, info );

@@ -203,7 +203,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	};
 	if ( info.version >= 0x14000004 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*additionalData), out, info );
+			WritePtr32( &(*additionalData), out );
 		} else {
 			if ( additionalData != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(additionalData) )->second, out, info );

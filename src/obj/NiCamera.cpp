@@ -98,7 +98,7 @@ void NiCamera::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_m
 	NifStream( viewportBottom, out, info );
 	NifStream( lodAdjust, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownLink), out, info );
+		WritePtr32( &(*unknownLink), out );
 	} else {
 		if ( unknownLink != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );

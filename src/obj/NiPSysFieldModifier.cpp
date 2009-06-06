@@ -67,7 +67,7 @@ void NiPSysFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned in
 
 	NiPSysModifier::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*fieldObject), out, info );
+		WritePtr32( &(*fieldObject), out );
 	} else {
 		if ( fieldObject != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(fieldObject) )->second, out, info );

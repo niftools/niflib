@@ -67,7 +67,7 @@ void NiParticleModifier::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	NiObject::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*nextModifier), out, info );
+		WritePtr32( &(*nextModifier), out );
 	} else {
 		if ( nextModifier != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(nextModifier) )->second, out, info );
@@ -77,7 +77,7 @@ void NiParticleModifier::Write( ostream& out, const map<NiObjectRef,unsigned int
 	}
 	if ( info.version >= 0x04000002 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*controller), out, info );
+			WritePtr32( &(*controller), out );
 		} else {
 			if ( controller != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );

@@ -89,7 +89,7 @@ void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	if ( info.version >= 0x04000000 ) {
 		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*sources[i2]), out, info );
+				WritePtr32( &(*sources[i2]), out );
 			} else {
 				if ( sources[i2] != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(sources[i2]) )->second, out, info );
@@ -102,7 +102,7 @@ void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	if ( info.version <= 0x03010000 ) {
 		for (unsigned int i2 = 0; i2 < images.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*images[i2]), out, info );
+				WritePtr32( &(*images[i2]), out );
 			} else {
 				if ( images[i2] != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(images[i2]) )->second, out, info );

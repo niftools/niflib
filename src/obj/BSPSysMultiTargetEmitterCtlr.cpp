@@ -73,7 +73,7 @@ void BSPSysMultiTargetEmitterCtlr::Write( ostream& out, const map<NiObjectRef,un
 	NiPSysModifierCtlr::Write( out, link_map, info );
 	if ( info.version <= 0x0A010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*data), out, info );
+			WritePtr32( &(*data), out );
 		} else {
 			if ( data != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
@@ -84,7 +84,7 @@ void BSPSysMultiTargetEmitterCtlr::Write( ostream& out, const map<NiObjectRef,un
 	};
 	if ( info.version >= 0x0A020000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*visibilityInterpolator), out, info );
+			WritePtr32( &(*visibilityInterpolator), out );
 		} else {
 			if ( visibilityInterpolator != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(visibilityInterpolator) )->second, out, info );

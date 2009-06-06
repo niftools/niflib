@@ -85,7 +85,7 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	NiObject::Write( out, link_map, info );
 	numBones = (unsigned int)(bones.size());
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*data), out, info );
+		WritePtr32( &(*data), out );
 	} else {
 		if ( data != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
@@ -95,7 +95,7 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	}
 	if ( info.version >= 0x0A020000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*skinPartition), out, info );
+			WritePtr32( &(*skinPartition), out );
 		} else {
 			if ( skinPartition != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
@@ -105,7 +105,7 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		}
 	};
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*skeletonRoot), out, info );
+		WritePtr32( &(*skeletonRoot), out );
 	} else {
 		if ( skeletonRoot != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(skeletonRoot) )->second, out, info );
@@ -116,7 +116,7 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	NifStream( numBones, out, info );
 	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*bones[i1]), out, info );
+			WritePtr32( &(*bones[i1]), out );
 		} else {
 			if ( bones[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, info );

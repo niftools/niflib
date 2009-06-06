@@ -96,7 +96,7 @@ void NiSourceTexture::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	if ( info.version >= 0x0A010000 ) {
 		if ( (useExternal == 1) ) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*unknownLink), out, info );
+				WritePtr32( &(*unknownLink), out );
 			} else {
 				if ( unknownLink != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
@@ -118,7 +118,7 @@ void NiSourceTexture::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	};
 	if ( (useExternal == 0) ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*pixelData), out, info );
+			WritePtr32( &(*pixelData), out );
 		} else {
 			if ( pixelData != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(pixelData) )->second, out, info );

@@ -65,7 +65,7 @@ void NiExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	};
 	if ( info.version <= 0x04020200 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*nextExtraData), out, info );
+			WritePtr32( &(*nextExtraData), out );
 		} else {
 			if ( nextExtraData != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(nextExtraData) )->second, out, info );

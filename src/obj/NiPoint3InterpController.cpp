@@ -66,7 +66,7 @@ void NiPoint3InterpController::Write( ostream& out, const map<NiObjectRef,unsign
 	};
 	if ( info.version <= 0x0A010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*data), out, info );
+			WritePtr32( &(*data), out );
 		} else {
 			if ( data != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );

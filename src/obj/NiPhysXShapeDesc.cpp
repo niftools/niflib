@@ -103,7 +103,7 @@ void NiPhysXShapeDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		};
 	};
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*meshDescription), out, info );
+		WritePtr32( &(*meshDescription), out );
 	} else {
 		if ( meshDescription != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(meshDescription) )->second, out, info );

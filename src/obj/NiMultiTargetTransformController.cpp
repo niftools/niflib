@@ -65,7 +65,7 @@ void NiMultiTargetTransformController::Write( ostream& out, const map<NiObjectRe
 	NifStream( numExtraTargets, out, info );
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*extraTargets[i1]), out, info );
+			WritePtr32( &(*extraTargets[i1]), out );
 		} else {
 			if ( extraTargets[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(extraTargets[i1]) )->second, out, info );

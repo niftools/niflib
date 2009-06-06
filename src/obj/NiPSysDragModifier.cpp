@@ -61,7 +61,7 @@ void NiPSysDragModifier::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	NiPSysModifier::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*parent), out, info );
+		WritePtr32( &(*parent), out );
 	} else {
 		if ( parent != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );

@@ -71,7 +71,7 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 	NiInterpolator::Write( out, link_map, info );
 	NifStream( unknownShort, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*lookAt), out, info );
+		WritePtr32( &(*lookAt), out );
 	} else {
 		if ( lookAt != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(lookAt) )->second, out, info );
@@ -84,7 +84,7 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 	NifStream( rotation, out, info );
 	NifStream( scale, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownLink1), out, info );
+		WritePtr32( &(*unknownLink1), out );
 	} else {
 		if ( unknownLink1 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
@@ -93,7 +93,7 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownLink2), out, info );
+		WritePtr32( &(*unknownLink2), out );
 	} else {
 		if ( unknownLink2 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
@@ -102,7 +102,7 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*unknownLink3), out, info );
+		WritePtr32( &(*unknownLink3), out );
 	} else {
 		if ( unknownLink3 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(unknownLink3) )->second, out, info );

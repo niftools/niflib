@@ -91,7 +91,7 @@ void NiPhysXPropDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( numDests, out, info );
 	for (unsigned int i1 = 0; i1 < actorDescs.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*actorDescs[i1]), out, info );
+			WritePtr32( &(*actorDescs[i1]), out );
 		} else {
 			if ( actorDescs[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(actorDescs[i1]) )->second, out, info );
@@ -103,7 +103,7 @@ void NiPhysXPropDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( numJoints, out, info );
 	for (unsigned int i1 = 0; i1 < jointDescs.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*jointDescs[i1]), out, info );
+			WritePtr32( &(*jointDescs[i1]), out );
 		} else {
 			if ( jointDescs[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(jointDescs[i1]) )->second, out, info );
@@ -118,7 +118,7 @@ void NiPhysXPropDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		NifStream( materialDescs[i1].number, out, info );
 		NifStream( materialDescs[i1].unknownByte1, out, info );
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*materialDescs[i1].materialDesc), out, info );
+			WritePtr32( &(*materialDescs[i1].materialDesc), out );
 		} else {
 			if ( materialDescs[i1].materialDesc != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(materialDescs[i1].materialDesc) )->second, out, info );

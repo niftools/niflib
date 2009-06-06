@@ -79,7 +79,7 @@ void NiEnvMappedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 	NifStream( numChildren, out, info );
 	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*children[i1]), out, info );
+			WritePtr32( &(*children[i1]), out );
 		} else {
 			if ( children[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(children[i1]) )->second, out, info );
@@ -89,7 +89,7 @@ void NiEnvMappedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 		}
 	};
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*child2), out, info );
+		WritePtr32( &(*child2), out );
 	} else {
 		if ( child2 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(child2) )->second, out, info );
@@ -98,7 +98,7 @@ void NiEnvMappedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*child3), out, info );
+		WritePtr32( &(*child3), out );
 	} else {
 		if ( child3 != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(child3) )->second, out, info );

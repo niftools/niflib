@@ -64,7 +64,7 @@ void NiPSysMeshUpdateModifier::Write( ostream& out, const map<NiObjectRef,unsign
 	NifStream( numMeshes, out, info );
 	for (unsigned int i1 = 0; i1 < meshes.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*meshes[i1]), out, info );
+			WritePtr32( &(*meshes[i1]), out );
 		} else {
 			if ( meshes[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(meshes[i1]) )->second, out, info );

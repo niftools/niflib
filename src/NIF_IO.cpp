@@ -184,6 +184,25 @@ void WriteUInt( unsigned int val, ostream& out ){
 	out.write( (char*)&val, 4 );
 }
 
+void WritePtr32( void * val, ostream& out ){
+#if __SIZEOF_POINTER__ == 4
+  // 32 bit
+  WriteUInt( (unsigned int)val, out );
+#else
+  // 64 bit
+  typedef union intpoint {
+    void *ptr;
+    unsigned int id1;
+    unsigned int id2;
+  };
+  intpoint ptr;
+  ptr.ptr = val;
+  // xor the two parts
+  // (maybe a more advanced hash function would be better, experience will tell)
+  WriteUInt(ptr.id1 ^ ptr.id2, out);
+#endif
+}
+
 void WriteUShort( unsigned short val, ostream& out ){
 
 	out.write( (char*)&val, 2 );

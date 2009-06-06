@@ -60,7 +60,7 @@ void NiPSysVolumeEmitter::Write( ostream& out, const map<NiObjectRef,unsigned in
 	NiPSysEmitter::Write( out, link_map, info );
 	if ( info.version >= 0x0A010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*emitterObject), out, info );
+			WritePtr32( &(*emitterObject), out );
 		} else {
 			if ( emitterObject != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(emitterObject) )->second, out, info );

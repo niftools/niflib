@@ -103,7 +103,7 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( weight, out, info );
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*textKeys), out, info );
+			WritePtr32( &(*textKeys), out );
 		} else {
 			if ( textKeys != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
@@ -131,7 +131,7 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 	};
 	if ( info.version >= 0x0A01006A ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*manager), out, info );
+			WritePtr32( &(*manager), out );
 		} else {
 			if ( manager != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(manager) )->second, out, info );
@@ -143,7 +143,7 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 	};
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*stringPalette), out, info );
+			WritePtr32( &(*stringPalette), out );
 		} else {
 			if ( stringPalette != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(stringPalette) )->second, out, info );

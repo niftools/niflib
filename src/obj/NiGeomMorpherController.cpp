@@ -119,7 +119,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 		NifStream( unknown2, out, info );
 	};
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*data), out, info );
+		WritePtr32( &(*data), out );
 	} else {
 		if ( data != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
@@ -134,7 +134,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020006 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*interpolators[i2]), out, info );
+				WritePtr32( &(*interpolators[i2]), out );
 			} else {
 				if ( interpolators[i2] != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(interpolators[i2]) )->second, out, info );
@@ -147,7 +147,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	if ( info.version >= 0x14020007 ) {
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*interpolatorWeights[i2].interpolator), out, info );
+				WritePtr32( &(*interpolatorWeights[i2].interpolator), out );
 			} else {
 				if ( interpolatorWeights[i2].interpolator != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(interpolatorWeights[i2].interpolator) )->second, out, info );

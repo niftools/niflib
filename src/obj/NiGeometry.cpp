@@ -94,7 +94,7 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	NiAVObject::Write( out, link_map, info );
 	numMaterials = (unsigned int)(materialName.size());
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*data), out, info );
+		WritePtr32( &(*data), out );
 	} else {
 		if ( data != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
@@ -104,7 +104,7 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	}
 	if ( info.version >= 0x0303000D ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*skinInstance), out, info );
+			WritePtr32( &(*skinInstance), out );
 		} else {
 			if ( skinInstance != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(skinInstance) )->second, out, info );

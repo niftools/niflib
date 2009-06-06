@@ -66,7 +66,7 @@ void NiPSysGravityModifier::Write( ostream& out, const map<NiObjectRef,unsigned 
 
 	NiPSysModifier::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*gravityObject), out, info );
+		WritePtr32( &(*gravityObject), out );
 	} else {
 		if ( gravityObject != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(gravityObject) )->second, out, info );

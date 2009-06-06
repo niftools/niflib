@@ -69,7 +69,7 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	bhkBvTreeShape::Write( out, link_map, info );
 	moppDataSize = (unsigned int)(moppData.size());
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*shape), out, info );
+		WritePtr32( &(*shape), out );
 	} else {
 		if ( shape != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(shape) )->second, out, info );

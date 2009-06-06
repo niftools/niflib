@@ -104,7 +104,7 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 		NifStream( nodeGroups[i1].numNodes, out, info );
 		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*nodeGroups[i1].nodes[i2]), out, info );
+				WritePtr32( &(*nodeGroups[i1].nodes[i2]), out );
 			} else {
 				if ( nodeGroups[i1].nodes[i2] != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(nodeGroups[i1].nodes[i2]) )->second, out, info );
@@ -121,7 +121,7 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 			NifStream( shapeGroups1[i2].numLinkPairs, out, info );
 			for (unsigned int i3 = 0; i3 < shapeGroups1[i2].linkPairs.size(); i3++) {
 				if ( info.version < VER_3_3_0_13 ) {
-					NifStream( (unsigned int)&(*shapeGroups1[i2].linkPairs[i3].shape), out, info );
+					WritePtr32( &(*shapeGroups1[i2].linkPairs[i3].shape), out );
 				} else {
 					if ( shapeGroups1[i2].linkPairs[i3].shape != NULL ) {
 						NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].shape) )->second, out, info );
@@ -130,7 +130,7 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 					}
 				}
 				if ( info.version < VER_3_3_0_13 ) {
-					NifStream( (unsigned int)&(*shapeGroups1[i2].linkPairs[i3].skinInstance), out, info );
+					WritePtr32( &(*shapeGroups1[i2].linkPairs[i3].skinInstance), out );
 				} else {
 					if ( shapeGroups1[i2].linkPairs[i3].skinInstance != NULL ) {
 						NifStream( link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].skinInstance) )->second, out, info );
@@ -143,7 +143,7 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 		NifStream( numShapeGroups2, out, info );
 		for (unsigned int i2 = 0; i2 < shapeGroups2.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*shapeGroups2[i2]), out, info );
+				WritePtr32( &(*shapeGroups2[i2]), out );
 			} else {
 				if ( shapeGroups2[i2] != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(shapeGroups2[i2]) )->second, out, info );

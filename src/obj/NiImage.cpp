@@ -72,7 +72,7 @@ void NiImage::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_ma
 	};
 	if ( (external == 0) ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*imageData), out, info );
+			WritePtr32( &(*imageData), out );
 		} else {
 			if ( imageData != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(imageData) )->second, out, info );

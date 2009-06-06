@@ -63,7 +63,7 @@ void NiLookAtController::Write( ostream& out, const map<NiObjectRef,unsigned int
 		NifStream( unknown1, out, info );
 	};
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*lookAtNode), out, info );
+		WritePtr32( &(*lookAtNode), out );
 	} else {
 		if ( lookAtNode != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(lookAtNode) )->second, out, info );

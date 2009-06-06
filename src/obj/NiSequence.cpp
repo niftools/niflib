@@ -145,7 +145,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	if ( info.version <= 0x0A010000 ) {
 		NifStream( textKeysName, out, info );
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*textKeys), out, info );
+			WritePtr32( &(*textKeys), out );
 		} else {
 			if ( textKeys != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
@@ -162,7 +162,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		if ( info.version <= 0x0A010000 ) {
 			NifStream( controlledBlocks[i1].targetName, out, info );
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*controlledBlocks[i1].controller), out, info );
+				WritePtr32( &(*controlledBlocks[i1].controller), out );
 			} else {
 				if ( controlledBlocks[i1].controller != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, info );
@@ -173,7 +173,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		};
 		if ( info.version >= 0x0A01006A ) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*controlledBlocks[i1].interpolator), out, info );
+				WritePtr32( &(*controlledBlocks[i1].interpolator), out );
 			} else {
 				if ( controlledBlocks[i1].interpolator != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].interpolator) )->second, out, info );
@@ -182,7 +182,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 				}
 			}
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*controlledBlocks[i1].controller), out, info );
+				WritePtr32( &(*controlledBlocks[i1].controller), out );
 			} else {
 				if ( controlledBlocks[i1].controller != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) )->second, out, info );
@@ -193,7 +193,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*controlledBlocks[i1].unknownLink2), out, info );
+				WritePtr32( &(*controlledBlocks[i1].unknownLink2), out );
 			} else {
 				if ( controlledBlocks[i1].unknownLink2 != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].unknownLink2) )->second, out, info );
@@ -208,7 +208,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 			if ( info.version < VER_3_3_0_13 ) {
-				NifStream( (unsigned int)&(*controlledBlocks[i1].stringPalette), out, info );
+				WritePtr32( &(*controlledBlocks[i1].stringPalette), out );
 			} else {
 				if ( controlledBlocks[i1].stringPalette != NULL ) {
 					NifStream( link_map.find( StaticCast<NiObject>(controlledBlocks[i1].stringPalette) )->second, out, info );

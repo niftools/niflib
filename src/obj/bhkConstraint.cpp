@@ -65,7 +65,7 @@ void bhkConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 	NifStream( numEntities, out, info );
 	for (unsigned int i1 = 0; i1 < entities.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*entities[i1]), out, info );
+			WritePtr32( &(*entities[i1]), out );
 		} else {
 			if ( entities[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(entities[i1]) )->second, out, info );

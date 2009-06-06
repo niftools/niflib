@@ -74,7 +74,7 @@ void NiPathController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( unknownFloat3, out, info );
 	NifStream( unknownShort, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*posData), out, info );
+		WritePtr32( &(*posData), out );
 	} else {
 		if ( posData != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(posData) )->second, out, info );
@@ -83,7 +83,7 @@ void NiPathController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*floatData), out, info );
+		WritePtr32( &(*floatData), out );
 	} else {
 		if ( floatData != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(floatData) )->second, out, info );

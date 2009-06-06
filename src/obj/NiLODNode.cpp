@@ -93,7 +93,7 @@ void NiLODNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 	};
 	if ( info.version >= 0x0A010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*lodLevelData), out, info );
+			WritePtr32( &(*lodLevelData), out );
 		} else {
 			if ( lodLevelData != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(lodLevelData) )->second, out, info );

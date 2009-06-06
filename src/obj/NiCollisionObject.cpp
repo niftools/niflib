@@ -57,7 +57,7 @@ void NiCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned int>
 
 	NiObject::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*target), out, info );
+		WritePtr32( &(*target), out );
 	} else {
 		if ( target != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );

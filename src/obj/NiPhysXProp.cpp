@@ -84,7 +84,7 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	NifStream( unknownInt1, out, info );
 	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*unknownRefs1[i1]), out, info );
+			WritePtr32( &(*unknownRefs1[i1]), out );
 		} else {
 			if ( unknownRefs1[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(unknownRefs1[i1]) )->second, out, info );
@@ -96,7 +96,7 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	NifStream( numDests, out, info );
 	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*transformDests[i1]), out, info );
+			WritePtr32( &(*transformDests[i1]), out );
 		} else {
 			if ( transformDests[i1] != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(transformDests[i1]) )->second, out, info );
@@ -107,7 +107,7 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 	};
 	NifStream( unknownByte, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*propDescription), out, info );
+		WritePtr32( &(*propDescription), out );
 	} else {
 		if ( propDescription != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(propDescription) )->second, out, info );

@@ -69,7 +69,7 @@ void NiTimeController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 
 	NiObject::Write( out, link_map, info );
 	if ( info.version < VER_3_3_0_13 ) {
-		NifStream( (unsigned int)&(*nextController), out, info );
+		WritePtr32( &(*nextController), out );
 	} else {
 		if ( nextController != NULL ) {
 			NifStream( link_map.find( StaticCast<NiObject>(nextController) )->second, out, info );
@@ -84,7 +84,7 @@ void NiTimeController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( stopTime, out, info );
 	if ( info.version >= 0x0303000D ) {
 		if ( info.version < VER_3_3_0_13 ) {
-			NifStream( (unsigned int)&(*target), out, info );
+			WritePtr32( &(*target), out );
 		} else {
 			if ( target != NULL ) {
 				NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
