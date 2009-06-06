@@ -408,10 +408,6 @@ void NifStream( HeaderString const & val, ostream& out, const NifInfo & info ) {
 	}
 
 	header_string << FormatVersionString(info.version);
-
-	char * byte_ver = (char*)&(info.version);
-	int int_ver[4] = { byte_ver[3], byte_ver[2], byte_ver[1], byte_ver[0] };
-
 	out << header_string.str() << "\n";
 };
 
@@ -830,6 +826,8 @@ std::streampos NifStreamBuf::seekoff(std::streamoff offset, std::ios_base::seekd
 	case std::ios_base::end:
 		pos = size - offset;
 		return (pos >= 0 && pos < size) ? (streampos(-1)) : pos;		
+        default:
+	        return streampos(-1);
 	}
 	return streampos(-1);
 }

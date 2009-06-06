@@ -422,8 +422,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 		types[it->second] = it->first;
 	}
 
-	unsigned version = info.version;
-	unsigned user_version = info.userVersion;
+        unsigned int version = info.version;
 
 	//--Write Header--//
 	Header header;
@@ -454,7 +453,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 	}
 
 	// Set object sizes and accumulate string types
-	if (header.version >= VER_20_1_0_3)
+	if (version >= VER_20_1_0_3)
 	{
 		// Zero string information
 		header.maxStringLength = 0;

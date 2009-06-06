@@ -207,8 +207,6 @@ void Inertia::CalcMassPropertiesPolyhedron(const vector<Vector3>& vertices,
     Matrix33 covariance_canonical(	2.0f, 1.0f, 1.0f, 
 									1.0f, 2.0f, 1.0f, 
 									1.0f, 1.0f, 2.0f );
-    float covariance_correction = 1.0f/120.0f;
-
     vector<Matrix44> covariances;
     vector<float> masses;
     vector<Vector3> centers;

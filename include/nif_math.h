@@ -18,7 +18,7 @@ namespace Niflib {
 #endif
 
 #ifndef _countof
-#define _countof(x) ((sizeof (x))/(sizeof((x)[0])))
+#define _countof(x) (int)((sizeof (x))/(sizeof((x)[0])))
 #endif
 
 //Forward declarations
