@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 10.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Niflib", "niflib_VC2008.vcproj", "{19FD8EE6-79CC-4BAC-9744-D9573BE47C7E}"
 EndProject
