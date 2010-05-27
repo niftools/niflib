@@ -621,7 +621,7 @@ struct Matrix33 {
 	/*! Returns a quaternion representation of the rotation stored in this matrix. 
 	 * \return A quaternion with an equivalent rotation to the one stored in this matrix.
 	 */
-	NIFLIB_API Quaternion AsQuaternion();
+	NIFLIB_API Quaternion AsQuaternion() const;
 
 	/*! Calculates the determinant of this matrix.
 	 * \return The determinant of this matrix.

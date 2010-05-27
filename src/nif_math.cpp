@@ -298,14 +298,14 @@ Matrix33::Matrix33() {
 	*this = Matrix33::IDENTITY;
 }
 
-Quaternion Matrix33::AsQuaternion() {
+Quaternion Matrix33::AsQuaternion() const {
 	Quaternion quat;
 	float tr, s, q[4];
 	int i, j, k;
 
 	int nxt[3] = {1, 2, 0};
 
-	Matrix33 & m = *this;
+	const Matrix33 & m = *this;
 
 	// compute the trace of the matrix
 	tr = m[0][0] + m[1][1] + m[2][2];
