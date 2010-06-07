@@ -45,6 +45,33 @@ struct TexCoord {
 	/*! Default constructor	*/
 	NIFLIB_API TexCoord() : u(0.0f), v(0.0f) {}
 
+	NIFLIB_API TexCoord operator+(const TexCoord& rhs) const
+	{
+		TexCoord ret;
+		ret = *this;
+		ret.u += rhs.u;
+		ret.v += rhs.v;
+		return ret;
+	}
+
+	NIFLIB_API TexCoord operator-(const TexCoord& rhs) const
+	{
+		TexCoord ret;
+		ret = *this;
+		ret.u -= rhs.u;
+		ret.v -= rhs.v;
+		return ret;
+	}
+
+	NIFLIB_API TexCoord operator*(const float rhs) const
+	{
+		TexCoord ret;
+		ret = *this;
+		ret.u *= rhs;
+		ret.v *= rhs;
+		return ret;
+	}
+
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] u The value to set U to.
 	 * \param[in] v The value to set V to.
@@ -957,6 +984,28 @@ struct Color4 {
 	float g; /*!< The green component of this color.  Should be between 0.0f and 1.0f. */ 
 	float b; /*!< The blue component of this color.  Should be between 0.0f and 1.0f. */ 
 	float a; /*!< The alpha translucency component of this color.  Should be between 0.0f and 1.0f. */ 
+
+	NIFLIB_API Color4 operator+(const Color4& rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r += rhs.r;
+		ret.g += rhs.g;
+		ret.b += rhs.b;
+		ret.a += rhs.a;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator*(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r *= rhs;
+		ret.g *= rhs;
+		ret.b *= rhs;
+		ret.a *= rhs;
+		return ret;
+	}
 
 	/*! Default constructor */
 	NIFLIB_API Color4() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}

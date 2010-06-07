@@ -635,4 +635,5 @@
 ==Version 0.7.3==
 
  * AsQuaternion is now a const member function (contributed by Dragongeo2).
+ * Some math operators for TexCoord and Color4 (contributed by Dragongeo2).
 
