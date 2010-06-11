@@ -1,0 +1,3 @@
+[submodule "qhull"]
+	path = qhull
+	url = git://gitorious.org/qhull/qhull.git
