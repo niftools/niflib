@@ -328,7 +328,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib.dll"
-				Version="0.7.2"
+				Version="0.7.3"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				ImportLibrary="lib/niflib_dll.lib"
@@ -403,7 +403,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib_x64.dll"
-				Version="0.7.2"
+				Version="0.7.3"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				ImportLibrary="lib/niflib_dll.lib"
@@ -479,7 +479,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib_debug.dll"
-				Version="0.7.2"
+				Version="0.7.3"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -556,7 +556,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="bin\niflib_debug_x64.dll"
-				Version="0.7.2"
+				Version="0.7.3"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				ImportLibrary="lib/niflib_dll_debug.lib"

@@ -631,3 +631,7 @@
    class.  This allows users of the library to register new NIF object or
    overwrite exiting ones without recompiling the library.
  * Restored some missing function implementations.
+
+==Version 0.7.3==
+
+ * AsQuaternion is now a const member function.
