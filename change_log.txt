@@ -634,4 +634,5 @@
 
 ==Version 0.7.3==
 
- * AsQuaternion is now a const member function.
+ * AsQuaternion is now a const member function (contributed by Dragongeo2).
+
