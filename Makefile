@@ -27,7 +27,7 @@ DEBUGGING	=
 # Example: -march=k8 would generate enhancements for the k8 family (opterons and some athlons).or -march=pentium4 for a pentium4
 # For more info read this: http://gcc.gnu.org/onlinedocs/gcc-4.1.1/gcc/i386-and-x86_002d64-Options.html#i386-and-x86_002d64-Options
 #
-CFLAGS 		= -O2 -Wall $(DEBUGGING) -Iinclude -D BUILDING_NIFLIB_DLL -fPIC
+CFLAGS 		= -O2 -Wall $(DEBUGGING) -Iinclude -D BUILDING_NIFLIB_DLL -fPIC -ggdb
 CXXFLAGS	= $(CFLAGS)
 #IT should find the libs used, but if it doesn't specify here. Ex: -lm for libm.so.<whatever>
 LIBS		=
