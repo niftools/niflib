@@ -83,12 +83,72 @@ struct array {
 		for ( size_t i = 0; i < size; ++i )
 			data[i] = T();
 	}
+// XXX ellipsis does not work when T = float
+// XXX see for instance http://support.microsoft.com/kb/71424
+/*
 	array(size_t n, ...) {
 		va_list argptr;
 		va_start(argptr, n);
 		for ( size_t i = 0; i < n && i < size; ++i )
 			data[i] = va_arg( argptr, T );
 		for ( size_t i = n; i < size; ++i )
+			data[i] = T();
+	}
+*/
+	array(size_t n, T t0) {
+		data[0] = t0;
+		for ( size_t i = 1; i < size; ++i )
+			data[i] = T();
+	}
+	array(size_t n, T t0, T t1) {
+		data[0] = t0;
+		data[1] = t1;
+		for ( size_t i = 2; i < size; ++i )
+			data[i] = T();
+	}
+	array(size_t n, T t0, T t1, T t2) {
+		data[0] = t0;
+		data[1] = t1;
+		data[2] = t2;
+		for ( size_t i = 3; i < size; ++i )
+			data[i] = T();
+	}
+	array(size_t n, T t0, T t1, T t2, T t3) {
+		data[0] = t0;
+		data[1] = t1;
+		data[2] = t2;
+		data[3] = t3;
+		for ( size_t i = 4; i < size; ++i )
+			data[i] = T();
+	}
+	array(size_t n, T t0, T t1, T t2, T t3, T t4) {
+		data[0] = t0;
+		data[1] = t1;
+		data[2] = t2;
+		data[3] = t3;
+		data[4] = t4;
+		for ( size_t i = 5; i < size; ++i )
+			data[i] = T();
+	}
+	array(size_t n, T t0, T t1, T t2, T t3, T t4, T t5) {
+		data[0] = t0;
+		data[1] = t1;
+		data[2] = t2;
+		data[3] = t3;
+		data[4] = t4;
+		data[5] = t5;
+		for ( size_t i = 6; i < size; ++i )
+			data[i] = T();
+	}
+  array(size_t n, T t0, T t1, T t2, T t3, T t4, T t5, T t6) {
+		data[0] = t0;
+		data[1] = t1;
+		data[2] = t2;
+		data[3] = t3;
+		data[4] = t4;
+		data[5] = t5;
+		data[6] = t6;
+		for ( size_t i = 7; i < size; ++i )
 			data[i] = T();
 	}
 	~array() {}
