@@ -23,9 +23,9 @@ public:
 	NIFLIB_API bool IsSameType ( const Type & compare_to ) const;
 	NIFLIB_API bool IsDerivedType ( const Type & compare_to ) const;
 	NIFLIB_API bool operator<( const Type & compare_to ) const;
+	const Type * base_type;
 private:
 	string name;
-	const Type * base_type;
 };
 
 }
