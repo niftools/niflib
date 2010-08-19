@@ -318,6 +318,9 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		//Add object to list
 		obj_list.push_back(new_obj);
 
+		//Store block number
+		new_obj->internal_block_number = index;
+
 		// Ending position of block in stream
 		std::streampos endobjpos = in.tellg();
 
