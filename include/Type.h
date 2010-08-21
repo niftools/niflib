@@ -24,8 +24,10 @@ public:
 	NIFLIB_API bool IsDerivedType ( const Type & compare_to ) const;
 	NIFLIB_API bool operator<( const Type & compare_to ) const;
 	const Type * base_type;
+	const int internal_type_number;
 private:
 	string name;
+	static int num_types;
 };
 
 }

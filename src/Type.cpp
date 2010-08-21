@@ -4,7 +4,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/Type.h"
 using namespace Niflib;
 
-Type::Type (const string & type_name, const Type * par_type ) : name(type_name), base_type(par_type) {} 
+int Type::num_types = 0;
+
+Type::Type (const string & type_name, const Type * par_type ) : name(type_name), base_type(par_type), internal_type_number(num_types++) {} 
 
 Type::~Type() {}
 
