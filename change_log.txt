@@ -640,3 +640,4 @@
  * Store block number in NiObject when reading a nif file (requested by DragoonWraith).
  * Added cmake build script.
  * GetTexture() now returns a TexDesc reference (requested by DragoonWraith).
+ * Type::Create() method (requested by DragoonWraith).

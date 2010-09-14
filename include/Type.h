@@ -10,6 +10,9 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace std;
 namespace Niflib {
 
+// forward declaration
+class NiObject;
+
 /**
  * Run Time Type Information Class
  */
@@ -23,6 +26,7 @@ public:
 	NIFLIB_API bool IsSameType ( const Type & compare_to ) const;
 	NIFLIB_API bool IsDerivedType ( const Type & compare_to ) const;
 	NIFLIB_API bool operator<( const Type & compare_to ) const;
+        NIFLIB_API NiObject * Create() const;
 	const Type * base_type;
 private:
 	string name;
