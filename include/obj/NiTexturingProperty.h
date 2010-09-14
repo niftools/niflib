@@ -105,7 +105,7 @@ public:
 	 * \param n The slot number of the texture to get the texture description of.  This is a positive zero based index that must be less than the value returned by NiTexturingProperty::GetTextureCount.
 	 * \sa NiTexturingProperty::SetTexture, TexType
 	 */
-	NIFLIB_API TexDesc GetTexture( int n ) const;
+	NIFLIB_API TexDesc & GetTexture( int n );
 
 	/*! 
 	 * Checks whether a particular texture type is being used

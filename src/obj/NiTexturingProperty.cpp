@@ -1517,7 +1517,7 @@ int NiTexturingProperty::GetShaderTextureCount() const {
 	return int(shaderTextures.size());
 }
 
-TexDesc NiTexturingProperty::GetTexture( int n ) const {
+TexDesc & NiTexturingProperty::GetTexture( int n ) {
 	//TODO:  Create a built in type for this array of textures so it can be a real array again?
 	//Copy the values to the right texture
 	switch (n) {

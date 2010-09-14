@@ -636,4 +636,7 @@
 
  * AsQuaternion is now a const member function (contributed by Dragongeo2).
  * Some math operators for TexCoord and Color4 (contributed by Dragongeo2).
-
+ * Make base_type field public (requested by DragoonWraith).
+ * Store block number in NiObject when reading a nif file (requested by DragoonWraith).
+ * Added cmake build script.
+ * GetTexture() now returns a TexDesc reference (requested by DragoonWraith).
