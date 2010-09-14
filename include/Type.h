@@ -11,7 +11,7 @@ using namespace std;
 namespace Niflib {
 
 /**
- * Run Time Type Inforamtion Class
+ * Run Time Type Information Class
  */
 class Type {
 public:
