@@ -228,11 +228,6 @@ void NiNode::RemoveChild( Ref<NiAVObject> obj ) {
 	//Search child list for the one to remove
 	for ( vector< NiAVObjectRef >::iterator it = children.begin(); it != children.end(); ) {
 		if ( *it == obj ) {
-			//Ensure that this child is not a skin influence
-			NiNodeRef niNode = DynamicCast<NiNode>((*it));
-			if ( niNode != NULL && niNode->IsSkinInfluence() == true ) {
-				throw runtime_error("You cannot remove a node child that is a skin influence.  Detatch the skin first.");
-			}
 			(*it)->SetParent(NULL);
 			it = children.erase( it );
 		} else {
