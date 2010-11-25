@@ -3,6 +3,7 @@ project(niflib)
 
 include_directories("include")
 
+# set to STATIC for static library build
 add_library(niflib SHARED
 src/RefObject.cpp
 src/kfm.cpp
