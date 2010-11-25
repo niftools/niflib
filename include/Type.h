@@ -28,8 +28,10 @@ public:
 	NIFLIB_API bool operator<( const Type & compare_to ) const;
         NIFLIB_API NiObject * Create() const;
 	const Type * base_type;
+	const int internal_type_number;
 private:
 	string name;
+	static int num_types;
 };
 
 }
