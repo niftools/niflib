@@ -71,12 +71,14 @@ public:
 
 	/*!
 	 * Removes an AV Object child from this node.  This is a sub-leaf in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
+	 * The caller is responsible that the child is no longer weakly linked elsewhere, for instance, as a skin influence.
 	 * \param[in] obj The AV Object to remove as a child from this node.
 	 */
 	NIFLIB_API void RemoveChild( Ref<NiAVObject> obj );
 
 	/*!
 	 * Removes all AV Object children from this node.  These are a sub-leafs in the scene graph contained in a NIF file.  Each AV Object can only be the child of one node.
+	 * The caller is responsible that no child is still weakly linked elsewhere, for instance, as a skin influence.
 	 */
 	NIFLIB_API void ClearChildren();
 
