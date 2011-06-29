@@ -110,6 +110,12 @@ std::list<NiObjectRef> NiBSplineCompTransformInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSplineCompTransformInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBSplineTransformInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiBSplineCompTransformInterpolator::GetTranslateBias() const {

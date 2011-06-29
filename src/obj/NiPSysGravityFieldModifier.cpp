@@ -99,6 +99,12 @@ std::list<NiObjectRef> NiPSysGravityFieldModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysGravityFieldModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysFieldModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

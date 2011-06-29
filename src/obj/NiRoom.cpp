@@ -238,6 +238,24 @@ std::list<NiObjectRef> NiRoom::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiRoom::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	for (unsigned int i1 = 0; i1 < inPortals.size(); i1++) {
+		if ( inPortals[i1] != NULL )
+			ptrs.push_back((NiObject *)(inPortals[i1]));
+	};
+	for (unsigned int i1 = 0; i1 < portals2.size(); i1++) {
+		if ( portals2[i1] != NULL )
+			ptrs.push_back((NiObject *)(portals2[i1]));
+	};
+	for (unsigned int i1 = 0; i1 < items.size(); i1++) {
+		if ( items[i1] != NULL )
+			ptrs.push_back((NiObject *)(items[i1]));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

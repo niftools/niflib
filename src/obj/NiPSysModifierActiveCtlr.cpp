@@ -108,5 +108,11 @@ std::list<NiObjectRef> NiPSysModifierActiveCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysModifierActiveCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierBoolCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

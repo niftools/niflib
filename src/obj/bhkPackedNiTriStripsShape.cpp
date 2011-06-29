@@ -168,6 +168,12 @@ std::list<NiObjectRef> bhkPackedNiTriStripsShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkPackedNiTriStripsShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShapeCollection::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 Ref<hkPackedNiTriStripsData> bhkPackedNiTriStripsShape::GetData() const {
 	return data;

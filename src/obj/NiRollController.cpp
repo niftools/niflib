@@ -102,5 +102,11 @@ std::list<NiObjectRef> NiRollController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiRollController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSingleInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

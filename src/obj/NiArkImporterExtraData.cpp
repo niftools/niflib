@@ -146,6 +146,12 @@ std::list<NiObjectRef> NiArkImporterExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiArkImporterExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

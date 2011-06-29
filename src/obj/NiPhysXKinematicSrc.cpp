@@ -119,6 +119,12 @@ std::list<NiObjectRef> NiPhysXKinematicSrc::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPhysXKinematicSrc::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

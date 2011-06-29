@@ -117,6 +117,12 @@ std::list<NiObjectRef> NiTextKeyExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTextKeyExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector< Key<string> > NiTextKeyExtraData::GetKeys() const {

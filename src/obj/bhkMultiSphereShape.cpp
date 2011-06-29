@@ -116,6 +116,12 @@ std::list<NiObjectRef> bhkMultiSphereShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkMultiSphereShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkSphereRepShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<SphereBV > bhkMultiSphereShape::GetSpheres() const {

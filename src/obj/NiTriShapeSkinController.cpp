@@ -178,5 +178,15 @@ std::list<NiObjectRef> NiTriShapeSkinController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTriShapeSkinController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {
+		if ( bones[i1] != NULL )
+			ptrs.push_back((NiObject *)(bones[i1]));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

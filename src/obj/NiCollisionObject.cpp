@@ -100,6 +100,14 @@ std::list<NiObjectRef> NiCollisionObject::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiCollisionObject::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	if ( target != NULL )
+		ptrs.push_back((NiObject *)(target));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiAVObject> NiCollisionObject::GetTarget() const {

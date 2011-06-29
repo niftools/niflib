@@ -91,5 +91,11 @@ std::list<NiObjectRef> NiParticleGrowFade::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiParticleGrowFade::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

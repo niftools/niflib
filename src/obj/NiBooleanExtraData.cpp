@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiBooleanExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBooleanExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiBooleanExtraData::GetData() const {

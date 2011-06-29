@@ -109,6 +109,12 @@ std::list<NiObjectRef> NiBSplineTransformInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSplineTransformInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBSplineInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 Vector3 NiBSplineTransformInterpolator::GetTranslation() const {
 	return translation;

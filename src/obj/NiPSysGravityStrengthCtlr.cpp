@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiPSysGravityStrengthCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysGravityStrengthCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierFloatCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

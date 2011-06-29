@@ -96,6 +96,12 @@ std::list<NiObjectRef> Lighting30ShaderProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> Lighting30ShaderProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = BSShaderPPLightingProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

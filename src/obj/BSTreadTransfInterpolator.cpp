@@ -157,6 +157,12 @@ std::list<NiObjectRef> BSTreadTransfInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSTreadTransfInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

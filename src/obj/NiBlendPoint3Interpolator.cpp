@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiBlendPoint3Interpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBlendPoint3Interpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBlendInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiBlendPoint3Interpolator::GetPointValue() const {

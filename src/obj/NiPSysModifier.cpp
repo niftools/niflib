@@ -109,5 +109,13 @@ std::list<NiObjectRef> NiPSysModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	if ( target != NULL )
+		ptrs.push_back((NiObject *)(target));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

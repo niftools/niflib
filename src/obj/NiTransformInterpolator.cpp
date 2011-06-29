@@ -134,6 +134,12 @@ std::list<NiObjectRef> NiTransformInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTransformInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyBasedInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiTransformInterpolator::GetTranslation() const {

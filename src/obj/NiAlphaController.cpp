@@ -109,6 +109,12 @@ std::list<NiObjectRef> NiAlphaController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiAlphaController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiFloatInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiFloatData> NiAlphaController::GetData() const {

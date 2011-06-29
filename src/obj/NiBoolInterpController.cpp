@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiBoolInterpController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBoolInterpController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSingleInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

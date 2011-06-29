@@ -134,6 +134,12 @@ std::list<NiObjectRef> NiBSplineData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSplineData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<float> NiBSplineData::GetFloatControlPoints() const 

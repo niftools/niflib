@@ -90,6 +90,12 @@ std::list<NiObjectRef> NiTriBasedGeom::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTriBasedGeom::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiGeometry::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiTriBasedGeom::ClearHardareSkinInfo() {

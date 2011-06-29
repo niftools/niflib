@@ -105,6 +105,12 @@ std::list<NiObjectRef> NiFloatInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiFloatInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyBasedInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiFloatInterpolator::GetFloatValue() const {

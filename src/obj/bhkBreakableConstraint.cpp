@@ -118,6 +118,12 @@ std::list<NiObjectRef> bhkBreakableConstraint::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkBreakableConstraint::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConstraint::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

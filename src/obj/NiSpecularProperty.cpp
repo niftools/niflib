@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiSpecularProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSpecularProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiSpecularProperty::GetSpecularState() const {

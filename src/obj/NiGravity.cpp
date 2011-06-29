@@ -104,5 +104,11 @@ std::list<NiObjectRef> NiGravity::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiGravity::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

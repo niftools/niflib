@@ -89,6 +89,11 @@ std::list<NiObjectRef> NiObject::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiObject::GetPtrs() const {
+	list<NiObject *> ptrs;
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {

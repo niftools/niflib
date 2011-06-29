@@ -85,5 +85,11 @@ std::list<NiObjectRef> bhkSerializable::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkSerializable::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkRefObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

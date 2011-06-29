@@ -196,6 +196,16 @@ std::list<NiObjectRef> NiNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
+	};
+	for (unsigned int i1 = 0; i1 < effects.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiNode::AddChild( Ref<NiAVObject> obj ) {

@@ -109,5 +109,11 @@ std::list<NiObjectRef> NiLookAtController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLookAtController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

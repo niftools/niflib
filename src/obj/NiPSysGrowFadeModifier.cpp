@@ -104,5 +104,11 @@ std::list<NiObjectRef> NiPSysGrowFadeModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysGrowFadeModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

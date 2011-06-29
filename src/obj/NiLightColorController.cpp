@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiLightColorController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLightColorController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPoint3InterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

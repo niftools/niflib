@@ -118,6 +118,12 @@ std::list<NiObjectRef> NiTextureTransformController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTextureTransformController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiFloatInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 TexType NiTextureTransformController::GetTargetTextureSlot() {

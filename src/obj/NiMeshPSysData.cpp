@@ -137,5 +137,11 @@ std::list<NiObjectRef> NiMeshPSysData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiMeshPSysData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

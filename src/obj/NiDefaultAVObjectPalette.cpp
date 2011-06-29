@@ -129,6 +129,16 @@ std::list<NiObjectRef> NiDefaultAVObjectPalette::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiDefaultAVObjectPalette::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObjectPalette::GetPtrs();
+	for (unsigned int i1 = 0; i1 < objs.size(); i1++) {
+		if ( objs[i1].avObject != NULL )
+			ptrs.push_back((NiObject *)(objs[i1].avObject));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<Ref<NiAVObject> > NiDefaultAVObjectPalette::GetObjs() const {

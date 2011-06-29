@@ -110,6 +110,12 @@ std::list<NiObjectRef> NiVisData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiVisData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector< Key<unsigned char> > NiVisData::GetKeys() const {

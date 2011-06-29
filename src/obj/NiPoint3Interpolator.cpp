@@ -105,6 +105,12 @@ std::list<NiObjectRef> NiPoint3Interpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPoint3Interpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyBasedInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiPoint3Interpolator::GetPoint3Value() const {

@@ -102,6 +102,12 @@ std::list<NiObjectRef> NiArkShaderExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiArkShaderExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

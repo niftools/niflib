@@ -184,6 +184,12 @@ std::list<NiObjectRef> NiTriStripsData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTriStripsData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriBasedGeomData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 NiTriStripsData::NiTriStripsData(const vector<Triangle> &tris, bool nvtristrips) {

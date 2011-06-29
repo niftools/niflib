@@ -164,6 +164,12 @@ std::list<NiObjectRef> NiLookAtInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLookAtInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiNode> NiLookAtInterpolator::GetLookAt() const {

@@ -130,6 +130,12 @@ std::list<NiObjectRef> NiStencilProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiStencilProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiStencilProperty::GetFlags() const {

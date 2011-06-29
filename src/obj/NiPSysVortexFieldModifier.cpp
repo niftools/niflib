@@ -99,6 +99,12 @@ std::list<NiObjectRef> NiPSysVortexFieldModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysVortexFieldModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysFieldModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

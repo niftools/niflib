@@ -387,5 +387,13 @@ std::list<NiObjectRef> NiParticleSystemController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiParticleSystemController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	if ( emitter != NULL )
+		ptrs.push_back((NiObject *)(emitter));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -98,6 +98,12 @@ std::list<NiObjectRef> NiSpotLight::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSpotLight::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPointLight::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiSpotLight::GetCutoffAngle() const {

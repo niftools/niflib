@@ -105,6 +105,12 @@ std::list<NiObjectRef> SkyShaderProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> SkyShaderProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = BSShaderProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string SkyShaderProperty::GetFileName() const {

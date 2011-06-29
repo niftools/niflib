@@ -88,5 +88,11 @@ std::list<NiObjectRef> NiPSysModifierCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysModifierCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSingleInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

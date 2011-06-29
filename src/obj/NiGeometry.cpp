@@ -218,6 +218,12 @@ std::list<NiObjectRef> NiGeometry::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiGeometry::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiGeometryData> NiGeometry::GetData() const {

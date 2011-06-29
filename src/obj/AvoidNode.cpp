@@ -85,5 +85,11 @@ std::list<NiObjectRef> AvoidNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> AvoidNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

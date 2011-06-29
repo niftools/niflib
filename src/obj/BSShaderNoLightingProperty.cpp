@@ -115,6 +115,12 @@ std::list<NiObjectRef> BSShaderNoLightingProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSShaderNoLightingProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = BSShaderLightingProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string BSShaderNoLightingProperty::GetFileName() const {

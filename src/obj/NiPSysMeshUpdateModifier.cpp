@@ -128,5 +128,13 @@ std::list<NiObjectRef> NiPSysMeshUpdateModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysMeshUpdateModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	for (unsigned int i1 = 0; i1 < meshes.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

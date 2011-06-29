@@ -111,6 +111,12 @@ std::list<NiObjectRef> NiBinaryExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBinaryExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<byte> NiBinaryExtraData::GetData() const {

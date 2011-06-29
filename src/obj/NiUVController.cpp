@@ -105,6 +105,12 @@ std::list<NiObjectRef> NiUVController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiUVController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiUVData> NiUVController::GetData() const {

@@ -85,5 +85,11 @@ std::list<NiObjectRef> BSXFlags::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSXFlags::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiIntegerExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

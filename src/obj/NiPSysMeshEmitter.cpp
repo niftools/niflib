@@ -137,5 +137,13 @@ std::list<NiObjectRef> NiPSysMeshEmitter::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysMeshEmitter::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysEmitter::GetPtrs();
+	for (unsigned int i1 = 0; i1 < emitterMeshes.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

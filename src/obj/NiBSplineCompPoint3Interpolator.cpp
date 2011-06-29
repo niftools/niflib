@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiBSplineCompPoint3Interpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSplineCompPoint3Interpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBSplinePoint3Interpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

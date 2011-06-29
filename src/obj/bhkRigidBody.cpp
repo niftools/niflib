@@ -280,6 +280,14 @@ std::list<NiObjectRef> bhkRigidBody::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkRigidBody::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkEntity::GetPtrs();
+	for (unsigned int i1 = 0; i1 < constraints.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 OblivionLayer bhkRigidBody::GetLayerCopy() const {

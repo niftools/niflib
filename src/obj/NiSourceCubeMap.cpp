@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiSourceCubeMap::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSourceCubeMap::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSourceTexture::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

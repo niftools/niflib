@@ -177,6 +177,14 @@ std::list<NiObjectRef> NiDynamicEffect::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiDynamicEffect::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < affectedNodes.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiDynamicEffect::GetSwitchState() const {

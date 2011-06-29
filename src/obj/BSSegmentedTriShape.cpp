@@ -124,6 +124,12 @@ std::list<NiObjectRef> BSSegmentedTriShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSSegmentedTriShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

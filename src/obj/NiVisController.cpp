@@ -108,6 +108,12 @@ std::list<NiObjectRef> NiVisController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiVisController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBoolInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiVisData> NiVisController::GetData() const {

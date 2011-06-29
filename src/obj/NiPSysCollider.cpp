@@ -154,5 +154,15 @@ std::list<NiObjectRef> NiPSysCollider::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysCollider::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	if ( parent != NULL )
+		ptrs.push_back((NiObject *)(parent));
+	if ( colliderObject != NULL )
+		ptrs.push_back((NiObject *)(colliderObject));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

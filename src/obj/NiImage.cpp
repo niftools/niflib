@@ -132,6 +132,12 @@ std::list<NiObjectRef> NiImage::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiImage::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiImage::IsTextureExternal() const {

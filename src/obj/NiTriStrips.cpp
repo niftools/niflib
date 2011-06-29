@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiTriStrips::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTriStrips::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriBasedGeom::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

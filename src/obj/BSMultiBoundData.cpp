@@ -96,6 +96,12 @@ std::list<NiObjectRef> BSMultiBoundData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSMultiBoundData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

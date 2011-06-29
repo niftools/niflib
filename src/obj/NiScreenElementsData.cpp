@@ -164,6 +164,12 @@ std::list<NiObjectRef> NiScreenElementsData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiScreenElementsData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriShapeData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

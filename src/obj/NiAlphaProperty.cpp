@@ -91,6 +91,12 @@ std::list<NiObjectRef> NiAlphaProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiAlphaProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiAlphaProperty::GetFlags() const {

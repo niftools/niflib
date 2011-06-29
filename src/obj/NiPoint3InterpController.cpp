@@ -115,6 +115,12 @@ std::list<NiObjectRef> NiPoint3InterpController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPoint3InterpController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSingleInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiPosData > NiPoint3InterpController::GetData() const {

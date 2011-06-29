@@ -94,5 +94,11 @@ std::list<NiObjectRef> NiParticleRotation::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiParticleRotation::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

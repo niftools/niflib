@@ -253,6 +253,12 @@ std::list<NiObjectRef> NiKeyframeData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiKeyframeData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiKeyframeData::NormalizeKeys( float phase, float frequency ) {

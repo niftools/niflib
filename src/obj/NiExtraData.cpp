@@ -114,6 +114,12 @@ std::list<NiObjectRef> NiExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string NiExtraData::GetName() {

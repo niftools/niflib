@@ -116,6 +116,12 @@ std::list<NiObjectRef> BSFurnitureMarker::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSFurnitureMarker::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<FurniturePosition> BSFurnitureMarker::GetFurniturePositions() const {

@@ -94,6 +94,12 @@ std::list<NiObjectRef> NiPointLight::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPointLight::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiLight::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiPointLight::GetConstantAttenuation() const {

@@ -174,6 +174,12 @@ std::list<NiObjectRef> NiTextureEffect::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTextureEffect::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiDynamicEffect::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Matrix33 NiTextureEffect::GetModelProjectionMatrix() const {

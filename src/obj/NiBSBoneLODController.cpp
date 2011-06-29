@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiBSBoneLODController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSBoneLODController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBoneLODController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiFloatInterpController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiFloatInterpController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSingleInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

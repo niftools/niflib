@@ -230,6 +230,18 @@ std::list<NiObjectRef> NiPhysXPropDesc::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPhysXPropDesc::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < actorDescs.size(); i1++) {
+	};
+	for (unsigned int i1 = 0; i1 < jointDescs.size(); i1++) {
+	};
+	for (unsigned int i1 = 0; i1 < materialDescs.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

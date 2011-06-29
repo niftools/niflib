@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiClod::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiClod::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriBasedGeom::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

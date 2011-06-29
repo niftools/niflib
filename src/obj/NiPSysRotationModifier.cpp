@@ -110,5 +110,11 @@ std::list<NiObjectRef> NiPSysRotationModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysRotationModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

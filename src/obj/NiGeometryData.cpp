@@ -349,6 +349,12 @@ std::list<NiObjectRef> NiGeometryData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiGeometryData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 // Calculate bounding sphere using minimum-volume axis-align bounding box.  Its fast but not a very good fit.

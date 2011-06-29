@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiBlendTransformInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBlendTransformInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBlendInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

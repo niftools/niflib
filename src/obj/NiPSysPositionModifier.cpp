@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiPSysPositionModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysPositionModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

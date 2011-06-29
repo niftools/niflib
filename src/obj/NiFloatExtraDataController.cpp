@@ -139,5 +139,11 @@ std::list<NiObjectRef> NiFloatExtraDataController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiFloatExtraDataController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraDataController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

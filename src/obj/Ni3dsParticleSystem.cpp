@@ -115,6 +115,12 @@ std::list<NiObjectRef> Ni3dsParticleSystem::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> Ni3dsParticleSystem::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

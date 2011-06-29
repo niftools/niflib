@@ -134,5 +134,15 @@ std::list<NiObjectRef> FxRadioButton::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> FxRadioButton::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = FxWidget::GetPtrs();
+	for (unsigned int i1 = 0; i1 < buttons.size(); i1++) {
+		if ( buttons[i1] != NULL )
+			ptrs.push_back((NiObject *)(buttons[i1]));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

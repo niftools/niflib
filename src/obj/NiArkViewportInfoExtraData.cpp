@@ -115,6 +115,12 @@ std::list<NiObjectRef> NiArkViewportInfoExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiArkViewportInfoExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

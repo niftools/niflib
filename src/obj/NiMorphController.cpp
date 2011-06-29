@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiMorphController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiMorphController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

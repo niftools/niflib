@@ -85,5 +85,11 @@ std::list<NiObjectRef> BSPSysArrayEmitter::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSPSysArrayEmitter::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysVolumeEmitter::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -151,6 +151,18 @@ std::list<NiObjectRef> NiRoomGroup::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiRoomGroup::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	if ( shellLink != NULL )
+		ptrs.push_back((NiObject *)(shellLink));
+	for (unsigned int i1 = 0; i1 < rooms.size(); i1++) {
+		if ( rooms[i1] != NULL )
+			ptrs.push_back((NiObject *)(rooms[i1]));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

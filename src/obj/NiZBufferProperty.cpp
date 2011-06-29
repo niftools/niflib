@@ -95,6 +95,12 @@ std::list<NiObjectRef> NiZBufferProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiZBufferProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiZBufferProperty::GetFlags() const {

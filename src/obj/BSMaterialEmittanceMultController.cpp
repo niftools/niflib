@@ -96,6 +96,12 @@ std::list<NiObjectRef> BSMaterialEmittanceMultController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSMaterialEmittanceMultController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiFloatInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

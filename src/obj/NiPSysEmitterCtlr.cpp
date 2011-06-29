@@ -130,6 +130,12 @@ std::list<NiObjectRef> NiPSysEmitterCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysEmitterCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiPSysEmitterCtlrData > NiPSysEmitterCtlr::GetData() const {

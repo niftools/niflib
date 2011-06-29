@@ -85,6 +85,12 @@ std::list<NiObjectRef> bhkConvexTransformShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkConvexTransformShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkTransformShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 void bhkConvexTransformShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {

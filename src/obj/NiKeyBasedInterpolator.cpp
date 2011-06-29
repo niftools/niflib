@@ -85,6 +85,12 @@ std::list<NiObjectRef> NiKeyBasedInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiKeyBasedInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiKeyBasedInterpolator::NormalizeKeys( float phase, float frequency ) {

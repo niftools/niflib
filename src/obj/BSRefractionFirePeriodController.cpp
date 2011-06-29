@@ -96,6 +96,12 @@ std::list<NiObjectRef> BSRefractionFirePeriodController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSRefractionFirePeriodController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

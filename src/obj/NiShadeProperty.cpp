@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiShadeProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiShadeProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiShadeProperty::GetFlags() const {

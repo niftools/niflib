@@ -133,6 +133,12 @@ std::list<NiObjectRef> BSPSysSimpleColorModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSPSysSimpleColorModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

@@ -88,5 +88,11 @@ std::list<NiObjectRef> bhkBlendController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkBlendController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

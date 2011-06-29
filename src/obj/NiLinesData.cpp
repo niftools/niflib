@@ -123,6 +123,12 @@ std::list<NiObjectRef> NiLinesData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLinesData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiGeometryData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

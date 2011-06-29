@@ -153,6 +153,12 @@ std::list<NiObjectRef> bhkConvexVerticesShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkConvexVerticesShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConvexShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 vector<Vector3> bhkConvexVerticesShape::GetNormals() const {
 	//Remove any bad triangles

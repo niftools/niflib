@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObjectNET::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

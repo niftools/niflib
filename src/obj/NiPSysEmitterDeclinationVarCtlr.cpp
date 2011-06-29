@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiPSysEmitterDeclinationVarCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysEmitterDeclinationVarCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierFloatCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

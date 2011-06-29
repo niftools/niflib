@@ -121,6 +121,12 @@ std::list<NiObjectRef> BSShaderTextureSet::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSShaderTextureSet::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<string > BSShaderTextureSet::GetTextures() const {

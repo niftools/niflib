@@ -147,5 +147,11 @@ std::list<NiObjectRef> NiPlanarCollider::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPlanarCollider::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

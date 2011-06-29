@@ -322,5 +322,11 @@ std::list<NiObjectRef> bhkMalleableConstraint::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkMalleableConstraint::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConstraint::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

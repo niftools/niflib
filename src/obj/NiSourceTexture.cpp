@@ -197,6 +197,12 @@ std::list<NiObjectRef> NiSourceTexture::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSourceTexture::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTexture::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiSourceTexture::IsTextureExternal() const {

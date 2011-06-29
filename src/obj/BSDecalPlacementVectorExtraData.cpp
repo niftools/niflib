@@ -161,6 +161,12 @@ std::list<NiObjectRef> BSDecalPlacementVectorExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSDecalPlacementVectorExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

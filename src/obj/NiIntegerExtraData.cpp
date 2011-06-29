@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiIntegerExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiIntegerExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned int NiIntegerExtraData::GetData() const {

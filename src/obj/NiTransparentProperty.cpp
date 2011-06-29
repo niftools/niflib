@@ -115,6 +115,12 @@ std::list<NiObjectRef> NiTransparentProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTransparentProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

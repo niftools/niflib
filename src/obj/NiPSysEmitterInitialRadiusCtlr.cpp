@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiPSysEmitterInitialRadiusCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysEmitterInitialRadiusCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierFloatCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

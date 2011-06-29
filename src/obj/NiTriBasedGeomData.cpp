@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiTriBasedGeomData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTriBasedGeomData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiGeometryData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiTriBasedGeomData::SetTriangles( const vector<Triangle> & in ) {

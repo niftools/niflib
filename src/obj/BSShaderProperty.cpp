@@ -111,6 +111,12 @@ std::list<NiObjectRef> BSShaderProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSShaderProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short BSShaderProperty::GetFlags() const {

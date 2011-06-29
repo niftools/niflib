@@ -137,6 +137,12 @@ std::list<NiObjectRef> NiArkAnimationExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiArkAnimationExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

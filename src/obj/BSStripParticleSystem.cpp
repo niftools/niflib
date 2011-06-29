@@ -96,6 +96,12 @@ std::list<NiObjectRef> BSStripParticleSystem::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSStripParticleSystem::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleSystem::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

@@ -85,6 +85,12 @@ std::list<NiObjectRef> NiBoolTimelineInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBoolTimelineInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBoolInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

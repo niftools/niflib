@@ -190,5 +190,11 @@ std::list<NiObjectRef> Ni3dsAnimationNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> Ni3dsAnimationNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

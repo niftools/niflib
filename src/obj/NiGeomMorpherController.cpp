@@ -260,6 +260,16 @@ std::list<NiObjectRef> NiGeomMorpherController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiGeomMorpherController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpController::GetPtrs();
+	for (unsigned int i1 = 0; i1 < interpolators.size(); i1++) {
+	};
+	for (unsigned int i1 = 0; i1 < interpolatorWeights.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiGeomMorpherController::NormalizeKeys() {

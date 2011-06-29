@@ -113,6 +113,12 @@ std::list<NiObjectRef> BSFrustumFOVController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSFrustumFOVController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

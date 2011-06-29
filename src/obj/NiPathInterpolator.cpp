@@ -133,6 +133,12 @@ std::list<NiObjectRef> NiPathInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPathInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyBasedInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiPosData > NiPathInterpolator::GetPosData() const {

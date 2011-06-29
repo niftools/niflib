@@ -102,6 +102,12 @@ std::list<NiObjectRef> BSDebrisNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSDebrisNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

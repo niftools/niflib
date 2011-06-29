@@ -112,5 +112,13 @@ std::list<NiObjectRef> NiPSysDragModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysDragModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	if ( parent != NULL )
+		ptrs.push_back((NiObject *)(parent));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

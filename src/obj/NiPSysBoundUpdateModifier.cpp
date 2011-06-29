@@ -88,5 +88,11 @@ std::list<NiObjectRef> NiPSysBoundUpdateModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysBoundUpdateModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

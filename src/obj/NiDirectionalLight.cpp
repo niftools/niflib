@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiDirectionalLight::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiDirectionalLight::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiLight::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiAutoNormalParticles::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiAutoNormalParticles::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticles::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

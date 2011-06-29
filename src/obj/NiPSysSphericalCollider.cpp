@@ -88,5 +88,11 @@ std::list<NiObjectRef> NiPSysSphericalCollider::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysSphericalCollider::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysCollider::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

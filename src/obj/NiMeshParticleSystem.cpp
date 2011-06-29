@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiMeshParticleSystem::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiMeshParticleSystem::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleSystem::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -119,6 +119,12 @@ std::list<NiObjectRef> NiPhysXD6JointDesc::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPhysXD6JointDesc::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

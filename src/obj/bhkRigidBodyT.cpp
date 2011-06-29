@@ -85,5 +85,11 @@ std::list<NiObjectRef> bhkRigidBodyT::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkRigidBodyT::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkRigidBody::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

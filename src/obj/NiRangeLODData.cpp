@@ -135,6 +135,12 @@ std::list<NiObjectRef> NiRangeLODData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiRangeLODData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiLODData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiRangeLODData::GetLODCenter() const {

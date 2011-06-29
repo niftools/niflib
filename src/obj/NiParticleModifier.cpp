@@ -132,6 +132,14 @@ std::list<NiObjectRef> NiParticleModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiParticleModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	if ( controller != NULL )
+		ptrs.push_back((NiObject *)(controller));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

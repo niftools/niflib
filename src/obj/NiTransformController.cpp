@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiTransformController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTransformController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyframeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

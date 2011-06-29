@@ -144,6 +144,12 @@ std::list<NiObjectRef> NiPixelData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPixelData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = ATextureRenderData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 int NiPixelData::GetHeight() const {

@@ -102,5 +102,11 @@ std::list<NiObjectRef> NiPSysColorModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysColorModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

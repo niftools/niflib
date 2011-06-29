@@ -118,5 +118,11 @@ std::list<NiObjectRef> NiRotatingParticlesData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiRotatingParticlesData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticlesData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

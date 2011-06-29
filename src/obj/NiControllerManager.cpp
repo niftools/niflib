@@ -148,6 +148,14 @@ std::list<NiObjectRef> NiControllerManager::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiControllerManager::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	for (unsigned int i1 = 0; i1 < controllerSequences.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiControllerManager::GetCumulative() const {

@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiScreenElements::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiScreenElements::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

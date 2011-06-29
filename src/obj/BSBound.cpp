@@ -91,6 +91,12 @@ std::list<NiObjectRef> BSBound::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSBound::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 BSBound::GetCenter() const {

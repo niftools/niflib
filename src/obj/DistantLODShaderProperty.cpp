@@ -96,6 +96,12 @@ std::list<NiObjectRef> DistantLODShaderProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> DistantLODShaderProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = BSShaderProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

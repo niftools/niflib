@@ -200,5 +200,11 @@ std::list<NiObjectRef> NiCollisionData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiCollisionData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiCollisionObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

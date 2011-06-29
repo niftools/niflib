@@ -92,6 +92,12 @@ std::list<NiObjectRef> bhkSphereRepShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkSphereRepShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 HavokMaterial bhkSphereRepShape::GetMaterial() const {

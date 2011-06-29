@@ -85,6 +85,12 @@ std::list<NiObjectRef> bhkShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkSerializable::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void bhkShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)

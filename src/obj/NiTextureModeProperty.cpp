@@ -98,5 +98,11 @@ std::list<NiObjectRef> NiTextureModeProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTextureModeProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

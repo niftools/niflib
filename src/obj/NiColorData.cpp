@@ -120,6 +120,12 @@ std::list<NiObjectRef> NiColorData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiColorData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 KeyType NiColorData::GetKeyType() const {

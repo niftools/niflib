@@ -114,6 +114,12 @@ std::list<NiObjectRef> BSDismemberSkinInstance::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSDismemberSkinInstance::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSkinInstance::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<BodyPartList > BSDismemberSkinInstance::GetPartitions() const {

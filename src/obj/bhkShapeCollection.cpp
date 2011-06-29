@@ -85,5 +85,11 @@ std::list<NiObjectRef> bhkShapeCollection::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkShapeCollection::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

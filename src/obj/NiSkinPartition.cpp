@@ -440,6 +440,12 @@ std::list<NiObjectRef> NiSkinPartition::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSkinPartition::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 int NiSkinPartition::GetNumPartitions() const {

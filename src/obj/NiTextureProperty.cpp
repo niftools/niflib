@@ -115,6 +115,12 @@ std::list<NiObjectRef> NiTextureProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTextureProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiImage> NiTextureProperty::GetImage() const {

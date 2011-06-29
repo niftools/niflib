@@ -185,6 +185,12 @@ std::list<NiObjectRef> hkPackedNiTriStripsData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> hkPackedNiTriStripsData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShapeCollection::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<Triangle> hkPackedNiTriStripsData::GetTriangles() const {

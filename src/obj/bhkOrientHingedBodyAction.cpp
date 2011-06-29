@@ -115,6 +115,12 @@ std::list<NiObjectRef> bhkOrientHingedBodyAction::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkOrientHingedBodyAction::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkSerializable::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

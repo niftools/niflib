@@ -174,6 +174,14 @@ std::list<NiObjectRef> bhkListShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkListShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShapeCollection::GetPtrs();
+	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 HavokMaterial bhkListShape::GetMaterial() const {

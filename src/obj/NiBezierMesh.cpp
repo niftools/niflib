@@ -230,6 +230,14 @@ std::list<NiObjectRef> NiBezierMesh::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBezierMesh::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < bezierTriangle.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

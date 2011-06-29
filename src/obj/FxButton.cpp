@@ -85,5 +85,11 @@ std::list<NiObjectRef> FxButton::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> FxButton::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = FxWidget::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

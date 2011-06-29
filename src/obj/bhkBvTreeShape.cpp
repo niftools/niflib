@@ -85,6 +85,12 @@ std::list<NiObjectRef> bhkBvTreeShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkBvTreeShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 void bhkBvTreeShape::CalcMassProperties( float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia )
 {

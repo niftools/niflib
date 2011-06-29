@@ -102,5 +102,11 @@ std::list<NiObjectRef> BSKeyframeController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSKeyframeController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyframeController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

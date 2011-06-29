@@ -120,6 +120,12 @@ std::list<NiObjectRef> NiBoolData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBoolData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 KeyType NiBoolData::GetKeyType() const {

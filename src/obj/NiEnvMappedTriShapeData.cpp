@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiEnvMappedTriShapeData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiEnvMappedTriShapeData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriShapeData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

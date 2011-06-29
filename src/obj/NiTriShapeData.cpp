@@ -180,6 +180,12 @@ std::list<NiObjectRef> NiTriShapeData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTriShapeData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriBasedGeomData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 NiTriShapeData::NiTriShapeData(const vector<Triangle> &tris) {

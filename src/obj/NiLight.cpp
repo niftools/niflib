@@ -97,6 +97,12 @@ std::list<NiObjectRef> NiLight::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLight::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiDynamicEffect::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiLight::GetDimmer() const {

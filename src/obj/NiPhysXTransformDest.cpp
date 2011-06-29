@@ -117,6 +117,14 @@ std::list<NiObjectRef> NiPhysXTransformDest::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPhysXTransformDest::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	if ( node != NULL )
+		ptrs.push_back((NiObject *)(node));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

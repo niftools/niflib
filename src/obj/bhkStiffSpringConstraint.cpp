@@ -94,5 +94,11 @@ std::list<NiObjectRef> bhkStiffSpringConstraint::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkStiffSpringConstraint::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConstraint::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiPSysFieldMagnitudeCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysFieldMagnitudeCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierFloatCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

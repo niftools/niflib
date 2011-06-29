@@ -142,6 +142,14 @@ std::list<NiObjectRef> BSMasterParticleSystem::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSMasterParticleSystem::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	for (unsigned int i1 = 0; i1 < particleSystems.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiSequenceStreamHelper::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSequenceStreamHelper::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObjectNET::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

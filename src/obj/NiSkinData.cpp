@@ -207,6 +207,12 @@ std::list<NiObjectRef> NiSkinData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSkinData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned int NiSkinData::GetBoneCount() const {

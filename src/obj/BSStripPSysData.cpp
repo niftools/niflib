@@ -108,6 +108,12 @@ std::list<NiObjectRef> BSStripPSysData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSStripPSysData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

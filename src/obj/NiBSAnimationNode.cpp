@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiBSAnimationNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSAnimationNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

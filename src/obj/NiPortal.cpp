@@ -142,6 +142,14 @@ std::list<NiObjectRef> NiPortal::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPortal::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObject::GetPtrs();
+	if ( target != NULL )
+		ptrs.push_back((NiObject *)(target));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

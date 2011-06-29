@@ -201,6 +201,18 @@ std::list<NiObjectRef> NiSkinInstance::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSkinInstance::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	if ( skeletonRoot != NULL )
+		ptrs.push_back((NiObject *)(skeletonRoot));
+	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {
+		if ( bones[i1] != NULL )
+			ptrs.push_back((NiObject *)(bones[i1]));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector< Ref<NiNode> > NiSkinInstance::GetBones() const {

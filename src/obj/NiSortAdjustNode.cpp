@@ -106,6 +106,12 @@ std::list<NiObjectRef> NiSortAdjustNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSortAdjustNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

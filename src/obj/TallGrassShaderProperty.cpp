@@ -99,6 +99,12 @@ std::list<NiObjectRef> TallGrassShaderProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> TallGrassShaderProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = BSShaderProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string TallGrassShaderProperty::GetFileName() const {

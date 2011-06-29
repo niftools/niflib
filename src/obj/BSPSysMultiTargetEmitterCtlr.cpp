@@ -147,6 +147,12 @@ std::list<NiObjectRef> BSPSysMultiTargetEmitterCtlr::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSPSysMultiTargetEmitterCtlr::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifierCtlr::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

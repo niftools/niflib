@@ -105,5 +105,11 @@ std::list<NiObjectRef> NiBinaryVoxelExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBinaryVoxelExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

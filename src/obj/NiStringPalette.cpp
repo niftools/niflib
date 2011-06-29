@@ -92,6 +92,12 @@ std::list<NiObjectRef> NiStringPalette::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiStringPalette::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string NiStringPalette::GetPaletteString() const {

@@ -124,6 +124,12 @@ std::list<NiObjectRef> NiBSplineInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSplineInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiBSplineInterpolator::GetStartTime() const {

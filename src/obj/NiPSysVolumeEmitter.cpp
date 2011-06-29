@@ -106,5 +106,13 @@ std::list<NiObjectRef> NiPSysVolumeEmitter::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysVolumeEmitter::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysEmitter::GetPtrs();
+	if ( emitterObject != NULL )
+		ptrs.push_back((NiObject *)(emitterObject));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

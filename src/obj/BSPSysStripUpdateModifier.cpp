@@ -99,6 +99,12 @@ std::list<NiObjectRef> BSPSysStripUpdateModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSPSysStripUpdateModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

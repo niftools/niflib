@@ -99,6 +99,12 @@ std::list<NiObjectRef> BSAnimNotes::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSAnimNotes::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

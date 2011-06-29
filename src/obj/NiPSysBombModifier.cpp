@@ -115,5 +115,13 @@ std::list<NiObjectRef> NiPSysBombModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysBombModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	if ( bombObject != NULL )
+		ptrs.push_back((NiObject *)(bombObject));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

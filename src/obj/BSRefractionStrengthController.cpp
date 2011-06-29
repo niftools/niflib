@@ -96,6 +96,12 @@ std::list<NiObjectRef> BSRefractionStrengthController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSRefractionStrengthController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiFloatInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

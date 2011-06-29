@@ -125,5 +125,13 @@ std::list<NiObjectRef> NiPSysGravityModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysGravityModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysModifier::GetPtrs();
+	if ( gravityObject != NULL )
+		ptrs.push_back((NiObject *)(gravityObject));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

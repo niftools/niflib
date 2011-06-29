@@ -116,6 +116,12 @@ std::list<NiObjectRef> NiPalette::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPalette::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<Color4> NiPalette::GetPalette() const {

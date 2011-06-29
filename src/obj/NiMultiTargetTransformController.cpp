@@ -127,6 +127,16 @@ std::list<NiObjectRef> NiMultiTargetTransformController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiMultiTargetTransformController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpController::GetPtrs();
+	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
+		if ( extraTargets[i1] != NULL )
+			ptrs.push_back((NiObject *)(extraTargets[i1]));
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<NiAVObjectRef> NiMultiTargetTransformController::GetExtraTargets() const {

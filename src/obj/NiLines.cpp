@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiLines::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLines::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTriBasedGeom::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

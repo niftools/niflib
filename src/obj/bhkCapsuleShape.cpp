@@ -117,6 +117,12 @@ std::list<NiObjectRef> bhkCapsuleShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkCapsuleShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConvexShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float bhkCapsuleShape::GetRadius() const {

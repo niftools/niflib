@@ -117,6 +117,12 @@ std::list<NiObjectRef> NiPSysAirFieldModifier::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysAirFieldModifier::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysFieldModifier::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

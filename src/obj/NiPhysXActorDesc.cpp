@@ -228,6 +228,14 @@ std::list<NiObjectRef> NiPhysXActorDesc::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPhysXActorDesc::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

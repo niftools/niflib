@@ -105,6 +105,12 @@ std::list<NiObjectRef> bhkNiCollisionObject::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkNiCollisionObject::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiCollisionObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiObject > bhkNiCollisionObject::GetBody() const {

@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiBSPArrayController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSPArrayController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticleSystemController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

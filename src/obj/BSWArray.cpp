@@ -121,6 +121,12 @@ std::list<NiObjectRef> BSWArray::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSWArray::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

@@ -168,6 +168,12 @@ std::list<NiObjectRef> Ni3dsAlphaAnimator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> Ni3dsAlphaAnimator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

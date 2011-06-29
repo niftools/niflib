@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiBlendFloatInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBlendFloatInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBlendInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiBlendFloatInterpolator::GetFloatValue() const {

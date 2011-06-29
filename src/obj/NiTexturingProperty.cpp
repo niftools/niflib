@@ -1484,6 +1484,14 @@ std::list<NiObjectRef> NiTexturingProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiTexturingProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	for (unsigned int i1 = 0; i1 < shaderTextures.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 ApplyMode NiTexturingProperty::GetApplyMode() const {

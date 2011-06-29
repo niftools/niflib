@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiColorExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiColorExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Color4 NiColorExtraData::GetData() const {

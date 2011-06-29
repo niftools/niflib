@@ -166,5 +166,11 @@ std::list<NiObjectRef> bhkLimitedHingeConstraint::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkLimitedHingeConstraint::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConstraint::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

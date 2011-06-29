@@ -170,5 +170,13 @@ std::list<NiObjectRef> NiMultiTextureProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiMultiTextureProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	for (unsigned int i1 = 0; i1 < 5; i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

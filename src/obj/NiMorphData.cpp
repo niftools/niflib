@@ -180,6 +180,12 @@ std::list<NiObjectRef> NiMorphData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiMorphData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 void NiMorphData::NormalizeKeys( float phase, float frequency ) {

@@ -113,6 +113,12 @@ std::list<NiObjectRef> NiVertWeightsExtraData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiVertWeightsExtraData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiExtraData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 vector<float> NiVertWeightsExtraData::GetData() const {

@@ -85,5 +85,11 @@ std::list<NiObjectRef> bhkPhantom::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkPhantom::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkWorldObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

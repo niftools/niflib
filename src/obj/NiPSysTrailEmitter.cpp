@@ -129,6 +129,12 @@ std::list<NiObjectRef> NiPSysTrailEmitter::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysTrailEmitter::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysEmitter::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

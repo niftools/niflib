@@ -121,6 +121,12 @@ std::list<NiObjectRef> NiPhysXMaterialDesc::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPhysXMaterialDesc::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

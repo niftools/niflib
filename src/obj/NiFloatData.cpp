@@ -120,6 +120,12 @@ std::list<NiObjectRef> NiFloatData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiFloatData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 KeyType NiFloatData::GetKeyType() const {

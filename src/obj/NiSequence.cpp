@@ -357,6 +357,14 @@ std::list<NiObjectRef> NiSequence::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSequence::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 string NiSequence::GetName() const {
    return name;

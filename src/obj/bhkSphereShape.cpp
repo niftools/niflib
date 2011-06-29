@@ -86,6 +86,12 @@ std::list<NiObjectRef> bhkSphereShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkSphereShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConvexShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float bhkSphereShape::GetRadius() const {

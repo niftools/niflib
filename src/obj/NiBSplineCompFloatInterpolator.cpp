@@ -100,6 +100,12 @@ std::list<NiObjectRef> NiBSplineCompFloatInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBSplineCompFloatInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiBSplineFloatInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiBSplineCompFloatInterpolator::GetBase() const {

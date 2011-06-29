@@ -94,6 +94,12 @@ std::list<NiObjectRef> NiFogProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiFogProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiFogProperty::GetFlags() const {

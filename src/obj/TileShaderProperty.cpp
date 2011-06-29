@@ -99,6 +99,12 @@ std::list<NiObjectRef> TileShaderProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> TileShaderProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = BSShaderLightingProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string TileShaderProperty::GetFileName() const {

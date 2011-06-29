@@ -102,6 +102,12 @@ std::list<NiObjectRef> BSDamageStage::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSDamageStage::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

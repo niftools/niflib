@@ -97,5 +97,11 @@ std::list<NiObjectRef> NiPSysPlanarCollider::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPSysPlanarCollider::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiPSysCollider::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

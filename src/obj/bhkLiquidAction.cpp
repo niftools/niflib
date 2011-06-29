@@ -117,6 +117,12 @@ std::list<NiObjectRef> bhkLiquidAction::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkLiquidAction::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkSerializable::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

@@ -276,6 +276,26 @@ std::list<NiObjectRef> NiBoneLODController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBoneLODController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiTimeController::GetPtrs();
+	for (unsigned int i1 = 0; i1 < nodeGroups.size(); i1++) {
+		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
+			if ( nodeGroups[i1].nodes[i2] != NULL )
+				ptrs.push_back((NiObject *)(nodeGroups[i1].nodes[i2]));
+		};
+	};
+	for (unsigned int i1 = 0; i1 < shapeGroups1.size(); i1++) {
+		for (unsigned int i2 = 0; i2 < shapeGroups1[i1].linkPairs.size(); i2++) {
+			if ( shapeGroups1[i1].linkPairs[i2].shape != NULL )
+				ptrs.push_back((NiObject *)(shapeGroups1[i1].linkPairs[i2].shape));
+		};
+	};
+	for (unsigned int i1 = 0; i1 < shapeGroups2.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 /*!

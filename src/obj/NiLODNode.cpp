@@ -166,6 +166,12 @@ std::list<NiObjectRef> NiLODNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLODNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSwitchNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiLODNode::GetLODCenter() const {

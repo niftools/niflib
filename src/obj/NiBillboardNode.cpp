@@ -92,6 +92,12 @@ std::list<NiObjectRef> NiBillboardNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBillboardNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 BillboardMode NiBillboardNode::GetBillboardMode() const {

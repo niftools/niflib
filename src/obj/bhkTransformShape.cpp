@@ -130,6 +130,12 @@ std::list<NiObjectRef> bhkTransformShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkTransformShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<bhkShape > bhkTransformShape::GetShape() const {

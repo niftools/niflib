@@ -169,6 +169,12 @@ std::list<NiObjectRef> NiBezierTriangle4::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBezierTriangle4::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

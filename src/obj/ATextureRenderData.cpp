@@ -262,6 +262,12 @@ std::list<NiObjectRef> ATextureRenderData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> ATextureRenderData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

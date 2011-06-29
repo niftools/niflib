@@ -96,6 +96,12 @@ std::list<NiObjectRef> NiLightIntensityController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiLightIntensityController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiFloatInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

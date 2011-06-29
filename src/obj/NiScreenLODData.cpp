@@ -122,6 +122,12 @@ std::list<NiObjectRef> NiScreenLODData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiScreenLODData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiLODData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 NiScreenLODData::GetBoundCenter() const {

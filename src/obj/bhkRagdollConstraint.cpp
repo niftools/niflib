@@ -184,5 +184,11 @@ std::list<NiObjectRef> bhkRagdollConstraint::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkRagdollConstraint::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConstraint::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -85,5 +85,11 @@ std::list<NiObjectRef> NiClodSkinInstance::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiClodSkinInstance::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSkinInstance::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

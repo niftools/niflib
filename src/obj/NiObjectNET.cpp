@@ -210,6 +210,14 @@ std::list<NiObjectRef> NiObjectNET::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiObjectNET::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	for (unsigned int i1 = 0; i1 < extraDataList.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 string NiObjectNET::GetName() {

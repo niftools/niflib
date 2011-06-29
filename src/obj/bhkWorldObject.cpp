@@ -111,6 +111,12 @@ std::list<NiObjectRef> bhkWorldObject::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkWorldObject::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkSerializable::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<bhkShape > bhkWorldObject::GetShape() const {

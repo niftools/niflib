@@ -95,5 +95,11 @@ std::list<NiObjectRef> NiSwitchNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSwitchNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -137,5 +137,13 @@ std::list<NiObjectRef> NiParticleSystem::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiParticleSystem::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiParticles::GetPtrs();
+	for (unsigned int i1 = 0; i1 < modifiers.size(); i1++) {
+	};
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

@@ -139,6 +139,12 @@ std::list<NiObjectRef> NiPersistentSrcTextureRendererData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiPersistentSrcTextureRendererData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = ATextureRenderData::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

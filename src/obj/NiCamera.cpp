@@ -166,6 +166,12 @@ std::list<NiObjectRef> NiCamera::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiCamera::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiAVObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 float NiCamera::GetFrustumLeft() const {

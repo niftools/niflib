@@ -220,6 +220,14 @@ std::list<NiObjectRef> NiControllerSequence::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiControllerSequence::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSequence::GetPtrs();
+	if ( manager != NULL )
+		ptrs.push_back((NiObject *)(manager));
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 NiControllerManager * NiControllerSequence::GetParent() const { 

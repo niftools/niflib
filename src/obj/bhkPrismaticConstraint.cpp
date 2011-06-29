@@ -132,5 +132,11 @@ std::list<NiObjectRef> bhkPrismaticConstraint::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkPrismaticConstraint::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConstraint::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 //--END CUSTOM CODE--//

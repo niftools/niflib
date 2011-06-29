@@ -145,6 +145,12 @@ std::list<NiObjectRef> bhkMoppBvTreeShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkMoppBvTreeShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkBvTreeShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<bhkShape > bhkMoppBvTreeShape::GetShape() const {

@@ -102,6 +102,12 @@ std::list<NiObjectRef> BSOrderedNode::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> BSOrderedNode::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiNode::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

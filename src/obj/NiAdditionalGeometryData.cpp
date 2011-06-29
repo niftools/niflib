@@ -245,6 +245,12 @@ std::list<NiObjectRef> NiAdditionalGeometryData::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiAdditionalGeometryData::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiObject::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 //--END CUSTOM CODE--//

@@ -109,6 +109,12 @@ std::list<NiObjectRef> NiSingleInterpController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiSingleInterpController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiInterpolator > NiSingleInterpController::GetInterpolator() const {

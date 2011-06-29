@@ -88,6 +88,12 @@ std::list<NiObjectRef> NiWireframeProperty::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiWireframeProperty::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiProperty::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 unsigned short NiWireframeProperty::GetFlags() const {

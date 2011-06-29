@@ -108,6 +108,12 @@ std::list<NiObjectRef> NiKeyframeController::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiKeyframeController::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiSingleInterpController::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Ref<NiKeyframeData> NiKeyframeController::GetData() const {

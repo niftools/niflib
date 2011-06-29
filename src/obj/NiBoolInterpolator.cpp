@@ -105,6 +105,12 @@ std::list<NiObjectRef> NiBoolInterpolator::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> NiBoolInterpolator::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = NiKeyBasedInterpolator::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiBoolInterpolator::GetBoolValue() const {

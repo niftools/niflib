@@ -111,6 +111,12 @@ std::list<NiObjectRef> bhkBoxShape::GetRefs() const {
 	return refs;
 }
 
+std::list<NiObject *> bhkBoxShape::GetPtrs() const {
+	list<NiObject *> ptrs;
+	ptrs = bhkConvexShape::GetPtrs();
+	return ptrs;
+}
+
 //--BEGIN MISC CUSTOM CODE--//
 
 Vector3 bhkBoxShape::GetDimensions() const {
