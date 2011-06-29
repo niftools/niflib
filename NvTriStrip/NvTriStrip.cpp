@@ -2,6 +2,7 @@
 #include "NvTriStripObjects.h"
 #include "NvTriStrip.h"
 #include <string.h> // memset
+#include <cstddef> // NULL
 
 using namespace NvTriStrip;
 

@@ -18,7 +18,7 @@
 namespace triangle_stripper
 {
 
-	typedef size_t index;
+	typedef std::size_t index;
 	typedef std::vector<index> indices;
 
 	enum primitive_type
