@@ -78,6 +78,11 @@ public:
 	 */
 	NIFLIB_API Ref<NiObject> Clone( unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
 	
+public:
+	/*! Block number in the nif file. Only set when you read
+            blocks from the file. */
+	int internal_block_number;
+
 	//--END CUSTOM CODE--//
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
@@ -88,10 +93,6 @@ public:
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info );
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual list<NiObjectRef> GetRefs() const;
-
-	/*! Block number in the nif file. Only set when you read
-            blocks from the file. */
-	int internal_block_number;
 };
 
 //--BEGIN FILE FOOT CUSTOM CODE--//
