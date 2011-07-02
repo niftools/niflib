@@ -428,3 +428,7 @@ TriStripper/policy.cpp
 
 set_target_properties(niflib
 PROPERTIES DEFINE_SYMBOL BUILDING_NIFLIB_DLL)
+
+# build the tests, this needs boost
+enable_testing()
+add_subdirectory(test)
