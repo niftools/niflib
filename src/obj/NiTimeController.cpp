@@ -86,12 +86,18 @@ void NiTimeController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		if ( info.version < VER_3_3_0_13 ) {
 			WritePtr32( &(*target), out );
 		} else {
-			if ( target != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(target) )->second, out, info );
-			} else {
-				NifStream( 0xFFFFFFFF, out, info );
-			}
-		}
+                  if ( target != NULL ) {
+                    map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(target) );
+                    if (it != link_map.end()) {
+                      NifStream( it->second, out, info );
+                    } else {
+                      //std::cerr << "warning: referenced block not in tree; omitting" << std::endl;
+                      NifStream( 0xFFFFFFFF, out, info );
+                    }
+                  } else {
+                    NifStream( 0xFFFFFFFF, out, info );
+                  }
+                }
 	};
 	if ( info.version <= 0x03010000 ) {
 		NifStream( unknownInteger, out, info );
