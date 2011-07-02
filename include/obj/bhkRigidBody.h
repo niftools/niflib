@@ -290,6 +290,26 @@ public:
 	// \param[in] value The new value.
 	NIFLIB_API void SetSolverDeactivation( const SolverDeactivation & value );
 
+	/*!
+	 * Adds a constraint to this bhkRigidBody.
+	 */
+	NIFLIB_API void AddConstraint( bhkSerializable * obj );
+
+	/*!
+	 * Removes a constraint from this bhkRigidBody.
+	 */
+	NIFLIB_API void RemoveConstraint( bhkSerializable * obj );
+
+	/*!
+	 * Removes all constraints from this bhkRigidBody.
+	 */
+	NIFLIB_API void ClearConstraints();
+
+	/*!
+	 * Retrieves all the constraints attached to this bhkRigidBody.
+	 */
+	NIFLIB_API vector< Ref<bhkSerializable> > GetConstraints() const;
+
 	// Apply scale factor <scale> on data.
 	// \param[in] scale Factor to scale by
 	NIFLIB_API void ApplyScale(float scale);

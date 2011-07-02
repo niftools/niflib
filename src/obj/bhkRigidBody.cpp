@@ -447,6 +447,28 @@ void bhkRigidBody::SetSolverDeactivation( const SolverDeactivation & value ) {
 	solverDeactivation = value;
 }
 
+void bhkRigidBody::AddConstraint( bhkSerializable * obj ) {
+   constraints.push_back( obj );
+}
+
+void bhkRigidBody::RemoveConstraint( bhkSerializable * obj ) {
+   //Search Effect list for the one to remove
+   for ( vector< bhkSerializableRef >::iterator it = constraints.begin(); it != constraints.end(); ) {
+      if ( *it == obj ) {
+         it = constraints.erase( it );
+      } else {
+         ++it;
+      }
+   }
+}
+
+void bhkRigidBody::ClearConstraints() {
+   constraints.clear();
+}
+
+vector< Ref<bhkSerializable> > bhkRigidBody::GetConstraints() const {
+   return constraints;
+}
 
 
 // Apply scale factor <scale> on data.
