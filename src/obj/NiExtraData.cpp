@@ -68,7 +68,12 @@ void NiExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			WritePtr32( &(*nextExtraData), out );
 		} else {
 			if ( nextExtraData != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(nextExtraData) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(nextExtraData) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

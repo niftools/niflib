@@ -97,7 +97,12 @@ void NiArkTextureExtraData::Write( ostream& out, const map<NiObjectRef,unsigned 
 			WritePtr32( &(*textures[i1].texturingProperty), out );
 		} else {
 			if ( textures[i1].texturingProperty != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(textures[i1].texturingProperty) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(textures[i1].texturingProperty) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

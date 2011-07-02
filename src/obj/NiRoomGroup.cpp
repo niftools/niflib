@@ -74,7 +74,12 @@ void NiRoomGroup::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		WritePtr32( &(*shellLink), out );
 	} else {
 		if ( shellLink != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(shellLink) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(shellLink) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -85,7 +90,12 @@ void NiRoomGroup::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			WritePtr32( &(*rooms[i1]), out );
 		} else {
 			if ( rooms[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(rooms[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(rooms[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

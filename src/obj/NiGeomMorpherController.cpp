@@ -122,7 +122,12 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 		WritePtr32( &(*data), out );
 	} else {
 		if ( data != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -137,7 +142,12 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 				WritePtr32( &(*interpolators[i2]), out );
 			} else {
 				if ( interpolators[i2] != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(interpolators[i2]) )->second, out, info );
+					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(interpolators[i2]) );
+					if (it != link_map.end()) {
+						NifStream( it->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
 				}
@@ -150,7 +160,12 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 				WritePtr32( &(*interpolatorWeights[i2].interpolator), out );
 			} else {
 				if ( interpolatorWeights[i2].interpolator != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(interpolatorWeights[i2].interpolator) )->second, out, info );
+					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(interpolatorWeights[i2].interpolator) );
+					if (it != link_map.end()) {
+						NifStream( it->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
 				}

@@ -98,7 +98,12 @@ void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 			WritePtr32( &(*inPortals[i1]), out );
 		} else {
 			if ( inPortals[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(inPortals[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(inPortals[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -110,7 +115,12 @@ void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 			WritePtr32( &(*portals2[i1]), out );
 		} else {
 			if ( portals2[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(portals2[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(portals2[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -122,7 +132,12 @@ void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 			WritePtr32( &(*items[i1]), out );
 		} else {
 			if ( items[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(items[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(items[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

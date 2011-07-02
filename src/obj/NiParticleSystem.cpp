@@ -72,7 +72,12 @@ void NiParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 				WritePtr32( &(*modifiers[i2]), out );
 			} else {
 				if ( modifiers[i2] != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(modifiers[i2]) )->second, out, info );
+					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(modifiers[i2]) );
+					if (it != link_map.end()) {
+						NifStream( it->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
 				}

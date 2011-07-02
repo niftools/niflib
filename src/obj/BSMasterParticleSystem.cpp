@@ -75,7 +75,12 @@ void BSMasterParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned
 			WritePtr32( &(*particleSystems[i1]), out );
 		} else {
 			if ( particleSystems[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(particleSystems[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(particleSystems[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

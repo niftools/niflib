@@ -176,7 +176,12 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 		WritePtr32( &(*emitter), out );
 	} else {
 		if ( emitter != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(emitter) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(emitter) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -196,7 +201,12 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 			WritePtr32( &(*particleLink), out );
 		} else {
 			if ( particleLink != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(particleLink) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(particleLink) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -221,7 +231,12 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 			WritePtr32( &(*unknownLink), out );
 		} else {
 			if ( unknownLink != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -231,7 +246,12 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 		WritePtr32( &(*particleExtra), out );
 	} else {
 		if ( particleExtra != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(particleExtra) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(particleExtra) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -240,7 +260,12 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 		WritePtr32( &(*unknownLink2), out );
 	} else {
 		if ( unknownLink2 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink2) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -253,7 +278,12 @@ void NiParticleSystemController::Write( ostream& out, const map<NiObjectRef,unsi
 			WritePtr32( &(*colorData), out );
 		} else {
 			if ( colorData != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(colorData) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(colorData) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

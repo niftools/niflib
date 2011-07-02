@@ -65,7 +65,12 @@ void NiPSysBombModifier::Write( ostream& out, const map<NiObjectRef,unsigned int
 		WritePtr32( &(*bombObject), out );
 	} else {
 		if ( bombObject != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(bombObject) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(bombObject) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

@@ -74,7 +74,12 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*spawnModifier), out );
 	} else {
 		if ( spawnModifier != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(spawnModifier) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -83,7 +88,12 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*parent), out );
 	} else {
 		if ( parent != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(parent) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(parent) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -92,7 +102,12 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*nextCollider), out );
 	} else {
 		if ( nextCollider != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(nextCollider) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(nextCollider) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -101,7 +116,12 @@ void NiPSysCollider::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*colliderObject), out );
 	} else {
 		if ( colliderObject != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(colliderObject) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(colliderObject) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

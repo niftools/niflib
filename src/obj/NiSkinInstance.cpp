@@ -88,7 +88,12 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*data), out );
 	} else {
 		if ( data != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -98,7 +103,12 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			WritePtr32( &(*skinPartition), out );
 		} else {
 			if ( skinPartition != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(skinPartition) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(skinPartition) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -108,7 +118,12 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*skeletonRoot), out );
 	} else {
 		if ( skeletonRoot != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(skeletonRoot) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(skeletonRoot) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -119,7 +134,12 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			WritePtr32( &(*bones[i1]), out );
 		} else {
 			if ( bones[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(bones[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(bones[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

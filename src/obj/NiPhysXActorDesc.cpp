@@ -95,7 +95,12 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		WritePtr32( &(*unknownRef0), out );
 	} else {
 		if ( unknownRef0 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownRef0) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownRef0) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -109,7 +114,12 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		WritePtr32( &(*shapeDescription), out );
 	} else {
 		if ( shapeDescription != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(shapeDescription) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(shapeDescription) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -118,7 +128,12 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		WritePtr32( &(*unknownRef1), out );
 	} else {
 		if ( unknownRef1 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownRef1) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownRef1) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -127,7 +142,12 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 		WritePtr32( &(*unknownRef2), out );
 	} else {
 		if ( unknownRef2 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownRef2) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownRef2) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -137,7 +157,12 @@ void NiPhysXActorDesc::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 			WritePtr32( &(*unknownRefs3[i1]), out );
 		} else {
 			if ( unknownRefs3[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(unknownRefs3[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownRefs3[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

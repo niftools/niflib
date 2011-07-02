@@ -125,7 +125,12 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			WritePtr32( &(*properties[i1]), out );
 		} else {
 			if ( properties[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(properties[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(properties[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -151,7 +156,12 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			WritePtr32( &(*collisionObject), out );
 		} else {
 			if ( collisionObject != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(collisionObject) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(collisionObject) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

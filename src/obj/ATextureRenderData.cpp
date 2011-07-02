@@ -147,7 +147,12 @@ void ATextureRenderData::Write( ostream& out, const map<NiObjectRef,unsigned int
 		WritePtr32( &(*palette), out );
 	} else {
 		if ( palette != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(palette) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(palette) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

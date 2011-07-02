@@ -97,7 +97,12 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 		WritePtr32( &(*data), out );
 	} else {
 		if ( data != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(data) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -107,7 +112,12 @@ void NiGeometry::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			WritePtr32( &(*skinInstance), out );
 		} else {
 			if ( skinInstance != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(skinInstance) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(skinInstance) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

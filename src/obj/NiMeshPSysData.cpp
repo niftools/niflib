@@ -78,7 +78,12 @@ void NiMeshPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		WritePtr32( &(*unknownNode), out );
 	} else {
 		if ( unknownNode != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownNode) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownNode) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

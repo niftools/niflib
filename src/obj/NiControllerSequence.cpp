@@ -106,7 +106,12 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 			WritePtr32( &(*textKeys), out );
 		} else {
 			if ( textKeys != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(textKeys) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(textKeys) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -134,7 +139,12 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 			WritePtr32( &(*manager), out );
 		} else {
 			if ( manager != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(manager) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(manager) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -146,7 +156,12 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 			WritePtr32( &(*stringPalette), out );
 		} else {
 			if ( stringPalette != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(stringPalette) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(stringPalette) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

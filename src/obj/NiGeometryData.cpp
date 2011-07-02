@@ -206,7 +206,12 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			WritePtr32( &(*additionalData), out );
 		} else {
 			if ( additionalData != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(additionalData) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(additionalData) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

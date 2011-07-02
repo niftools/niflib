@@ -62,7 +62,12 @@ void bhkNiCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned i
 		WritePtr32( &(*body), out );
 	} else {
 		if ( body != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(body) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(body) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

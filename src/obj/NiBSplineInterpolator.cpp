@@ -67,7 +67,12 @@ void NiBSplineInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned 
 		WritePtr32( &(*splineData), out );
 	} else {
 		if ( splineData != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(splineData) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(splineData) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -76,7 +81,12 @@ void NiBSplineInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned 
 		WritePtr32( &(*basisData), out );
 	} else {
 		if ( basisData != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(basisData) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(basisData) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

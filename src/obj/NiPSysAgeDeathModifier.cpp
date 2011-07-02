@@ -62,7 +62,12 @@ void NiPSysAgeDeathModifier::Write( ostream& out, const map<NiObjectRef,unsigned
 		WritePtr32( &(*spawnModifier), out );
 	} else {
 		if ( spawnModifier != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(spawnModifier) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(spawnModifier) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

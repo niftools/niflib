@@ -101,7 +101,12 @@ void NiCamera::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_m
 		WritePtr32( &(*unknownLink), out );
 	} else {
 		if ( unknownLink != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

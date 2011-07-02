@@ -74,7 +74,12 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 		WritePtr32( &(*lookAt), out );
 	} else {
 		if ( lookAt != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(lookAt) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(lookAt) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -87,7 +92,12 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 		WritePtr32( &(*unknownLink1), out );
 	} else {
 		if ( unknownLink1 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink1) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink1) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -96,7 +106,12 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 		WritePtr32( &(*unknownLink2), out );
 	} else {
 		if ( unknownLink2 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink2) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -105,7 +120,12 @@ void NiLookAtInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned i
 		WritePtr32( &(*unknownLink3), out );
 	} else {
 		if ( unknownLink3 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink3) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink3) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

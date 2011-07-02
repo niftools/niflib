@@ -95,7 +95,12 @@ void bhkNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 			WritePtr32( &(*stripsData[i1]), out );
 		} else {
 			if ( stripsData[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(stripsData[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(stripsData[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

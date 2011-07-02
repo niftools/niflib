@@ -102,7 +102,12 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			WritePtr32( &(*extraData), out );
 		} else {
 			if ( extraData != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(extraData) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(extraData) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -115,7 +120,12 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 				WritePtr32( &(*extraDataList[i2]), out );
 			} else {
 				if ( extraDataList[i2] != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(extraDataList[i2]) )->second, out, info );
+					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(extraDataList[i2]) );
+					if (it != link_map.end()) {
+						NifStream( it->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
 				}
@@ -127,7 +137,12 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			WritePtr32( &(*controller), out );
 		} else {
 			if ( controller != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(controller) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(controller) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

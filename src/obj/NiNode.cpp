@@ -91,7 +91,12 @@ void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 			WritePtr32( &(*children[i1]), out );
 		} else {
 			if ( children[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(children[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(children[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -103,7 +108,12 @@ void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 			WritePtr32( &(*effects[i1]), out );
 		} else {
 			if ( effects[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(effects[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(effects[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

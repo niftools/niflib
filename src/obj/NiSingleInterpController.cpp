@@ -64,7 +64,12 @@ void NiSingleInterpController::Write( ostream& out, const map<NiObjectRef,unsign
 			WritePtr32( &(*interpolator), out );
 		} else {
 			if ( interpolator != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(interpolator) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(interpolator) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

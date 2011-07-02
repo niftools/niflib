@@ -74,7 +74,12 @@ void BSShaderPPLightingProperty::Write( ostream& out, const map<NiObjectRef,unsi
 		WritePtr32( &(*textureSet), out );
 	} else {
 		if ( textureSet != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(textureSet) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(textureSet) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

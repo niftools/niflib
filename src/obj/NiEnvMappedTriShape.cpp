@@ -82,7 +82,12 @@ void NiEnvMappedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 			WritePtr32( &(*children[i1]), out );
 		} else {
 			if ( children[i1] != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(children[i1]) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(children[i1]) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -92,7 +97,12 @@ void NiEnvMappedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 		WritePtr32( &(*child2), out );
 	} else {
 		if ( child2 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(child2) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(child2) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
@@ -101,7 +111,12 @@ void NiEnvMappedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 		WritePtr32( &(*child3), out );
 	} else {
 		if ( child3 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(child3) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(child3) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

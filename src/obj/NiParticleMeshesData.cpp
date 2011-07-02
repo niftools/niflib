@@ -60,7 +60,12 @@ void NiParticleMeshesData::Write( ostream& out, const map<NiObjectRef,unsigned i
 		WritePtr32( &(*unknownLink2), out );
 	} else {
 		if ( unknownLink2 != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(unknownLink2) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownLink2) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}

@@ -90,7 +90,12 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			WritePtr32( &(*image), out );
 		} else {
 			if ( image != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(image) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(image) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}
@@ -101,7 +106,12 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			WritePtr32( &(*sourceTexture), out );
 		} else {
 			if ( sourceTexture != NULL ) {
-				NifStream( link_map.find( StaticCast<NiObject>(sourceTexture) )->second, out, info );
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(sourceTexture) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
 			}

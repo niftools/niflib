@@ -48,7 +48,12 @@ void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 				WritePtr32( &(*roots[i2]), out );
 			} else {
 				if ( roots[i2] != NULL ) {
-					NifStream( link_map.find( StaticCast<NiObject>(roots[i2]) )->second, out, info );
+					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(roots[i2]) );
+					if (it != link_map.end()) {
+						NifStream( it->second, out, info );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
 				}

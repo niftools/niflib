@@ -60,7 +60,12 @@ void NiParticleColorModifier::Write( ostream& out, const map<NiObjectRef,unsigne
 		WritePtr32( &(*colorData), out );
 	} else {
 		if ( colorData != NULL ) {
-			NifStream( link_map.find( StaticCast<NiObject>(colorData) )->second, out, info );
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(colorData) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
 		}
