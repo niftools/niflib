@@ -92,7 +92,7 @@ public:
 	NIFLIB_API Ref<NiSkinPartition> GetSkinPartition() const;
 
 	/*!
-	 * This constructor is called by NiTriBasedGeom when it creates a new skin
+	 * This constructor is called by NiGeometry when it creates a new skin
 	 * instance using the BindSkin function.
 	 */
 	NIFLIB_HIDDEN void BindSkin( NiNode * skeleton_root, vector< Ref<NiNode> > bone_nodes );
