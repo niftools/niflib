@@ -55,6 +55,27 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Adds an entity to this bhkConstraint.
+	 */
+	NIFLIB_API void AddEntity( bhkEntity * obj );
+
+	/*!
+	 * Removes an entity from this bhkConstraint.
+	 */
+	NIFLIB_API void RemoveEntity( bhkEntity * obj );
+
+	/*!
+	 * Removes all entities from this bhkConstraint.
+	 */
+	NIFLIB_API void ClearEntities();
+
+	/*!
+	 * Retrieves all the entities attached to this bhkConstraint.
+	 */
+	NIFLIB_API vector< bhkEntity * > GetEntities() const;
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Number of bodies affected by this constraint. */

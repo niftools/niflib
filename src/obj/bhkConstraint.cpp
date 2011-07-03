@@ -145,4 +145,28 @@ std::list<NiObject *> bhkConstraint::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+void bhkConstraint::AddEntity( bhkEntity * obj ) {
+   entities.push_back( obj );
+}
+
+void bhkConstraint::RemoveEntity( bhkEntity * obj ) {
+   //Search Effect list for the one to remove
+   for ( vector< bhkEntity * >::iterator it = entities.begin(); it != entities.end(); ) {
+      if ( *it == obj ) {
+         it = entities.erase( it );
+      } else {
+         ++it;
+      }
+   }
+}
+
+void bhkConstraint::ClearEntities() {
+   entities.clear();
+}
+
+vector< bhkEntity * > bhkConstraint::GetEntities() const {
+   return entities;
+}
+
 //--END CUSTOM CODE--//

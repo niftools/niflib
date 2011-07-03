@@ -31,8 +31,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/obj/NiMultiTargetTransformController.h"
 #include "../include/obj/NiStringExtraData.h"
 #include "../include/obj/NiExtraData.h"
-#include "../include/obj/bhkRigidBody.h"
-#include "../include/obj/bhkCollisionObject.h"
+#include "../include/obj/bhkConstraint.h"
 #include "../include/gen/Header.h"
 #include "../include/gen/Footer.h"
 
@@ -43,7 +42,8 @@ bool g_objects_registered = false;
 void RegisterObjects();
 
 //Utility Functions
-void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse = false );
+bool BlockChildBeforeParent( NiObject * root );
+void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map );
 NiObjectRef FindRoot( vector<NiObjectRef> const & objects );
 NiObjectRef GetObjectByType( NiObject * root, const Type & type );
 
@@ -577,50 +577,62 @@ void WriteNifTree( ostream & out, NiObject * root, const NifInfo & info ) {
    WriteNifTree( out, roots, info );
 }
 
-void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map, bool reverse ) {
-	//Ensure that this object has not already been visited
+// Determine whether block comes before its parent or not, depending on the block type.
+// return: 'True' if child should come first, 'False' otherwise.
+bool BlockChildBeforeParent( NiObject * root ) {
+	Type *t = (Type*)&(root->GetType());
+	return (t->IsDerivedType(bhkRefObject::TYPE) && !t->IsDerivedType(bhkConstraint::TYPE));
+}
+
+// This is a helper function for write to set up the list of all blocks,
+// the block index map, and the block type map.
+void EnumerateObjects( NiObject * root, map<Type*,unsigned int> & type_map, map<NiObjectRef, unsigned int> & link_map ) {
+	// Ensure that this object has not already been visited
 	if ( link_map.find( root ) != link_map.end() ) {
 		//This object has already been visited.  Return.
 		return;
 	}
 
-	//Add this object type to the map if it isn't there already
-	if ( type_map.find( (Type*)&(root->GetType()) ) == type_map.end() ) {
-		//The type has not yet been registered, so register it
-		unsigned int n = type_map.size();
-		type_map[ (Type*)&(root->GetType()) ] = n;
+	list<NiObjectRef> links = root->GetRefs();
+	Type *t = (Type*)&(root->GetType());
+
+	// special case: add bhkConstraint entities before bhkConstraint
+	// (these are actually links, not refs)
+	if ( t->IsDerivedType(bhkConstraint::TYPE) ) {
+		vector< bhkEntity * > entities = ((bhkConstraint *)root)->GetEntities();
+		for ( vector< bhkEntity * >::iterator it = entities.begin(); it != entities.end(); ++it ) {
+			if ( *it != NULL ) {
+				EnumerateObjects( (NiObject*)(*it), type_map, link_map );
+			}
+		}
 	}
 
-   // Oblivion has very rigid requirements about object ordering and the bhkRigidBody 
-   //   must be after its children. Hopefully this can be removed and replaced with 
-   //   a more generic mechanism in the future.
-	Type *t = (Type*)&(root->GetType());
-   if (  reverse
-      || t->IsDerivedType(bhkRigidBody::TYPE) 
-      || t->IsDerivedType(bhkCollisionObject::TYPE)
-      )
-   {
-      reverse = true;
-   }
+	// Call this function on all links of this object
+	// add children that come before the block
+	for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
+		if ( *it != NULL && BlockChildBeforeParent(*it) ) {
+			EnumerateObjects( *it, type_map, link_map );
+		}
+	}
 
-   // If reverse is set then add the link after children otherwise add it before
-   if (!reverse) {
-      unsigned int n = link_map.size();
-      link_map[root] = n;
-   }
+	// Add this object type to the map if it isn't there already
+	// TODO: add support for NiDataStreams
+	if ( type_map.find(t) == type_map.end() ) {
+		//The type has not yet been registered, so register it
+		unsigned int n = type_map.size();
+		type_map[t] = n;
+	}
 
-   //Call this function on all links of this object	
-   list<NiObjectRef> links = root->GetRefs();
-   for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
-      if ( *it != NULL ) {
-         EnumerateObjects( *it, type_map, link_map, reverse );
-      }
-   }
+	// add the block
+	unsigned int n = link_map.size();
+	link_map[root] = n;
 
-   if (reverse) {
-      unsigned int n = link_map.size();
-      link_map[root] = n;
-   }
+	// add children that come after the block
+	for ( list<NiObjectRef>::iterator it = links.begin(); it != links.end(); ++it ) {
+		if ( *it != NULL && !BlockChildBeforeParent(*it) ) {
+			EnumerateObjects( *it, type_map, link_map );
+		}
+	}
 }
 
 //TODO: Should this be returning an object of a derived type too?
