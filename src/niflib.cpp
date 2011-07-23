@@ -364,12 +364,6 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 		throw runtime_error( errStream.str() );
 	}
 	
-	//This should fail, and trigger the in.eof() flag
-	ReadByte( in ); 
-	if ( ! in.eof() ) {
-		throw runtime_error("End of file not reached.  This NIF may be corrupt or improperly supported.");
-	}
-
 #ifdef DEBUG_LINK_PHASE
 	cout << "Link Stack:" << endl;
 	list<unsigned int>::iterator it;
