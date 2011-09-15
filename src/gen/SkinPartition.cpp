@@ -41,4 +41,22 @@ SkinPartition & SkinPartition::operator=( const SkinPartition & src ) {
 SkinPartition::~SkinPartition() {};
 
 //--BEGIN MISC CUSTOM CODE--//
+
+unsigned short SkinPartition::numTrianglesCalc() const {
+	int len = 0;
+	if (numStrips == 0) {
+		len = triangles.size();
+	} else {
+		for (vector<unsigned short>::iterator itr = stripLengths.begin(); itr != stripLengths.end(); ++itr) {
+			len += ((*itr) - 2);
+		}
+	};
+	// ensure proper unsigned short range
+	if (len < 0)
+		len = 0;
+	if (len > 65535)
+		len = 65535; // or raise runtime error?
+	return len;
+};
+
 //--END CUSTOM CODE--//

@@ -66,6 +66,8 @@ struct SkinPartition {
 	/*! Bone indices, they index into 'Bones'. */
 	vector< vector<byte > > boneIndices;
 	//--BEGIN MISC CUSTOM CODE--//
+	/*! Calculate proper value of numTriangles field. */
+	unsigned short numTrianglesCalc() const;
 	//--END CUSTOM CODE--//
 };
 

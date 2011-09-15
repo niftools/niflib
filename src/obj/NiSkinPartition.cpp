@@ -586,15 +586,8 @@ void NiSkinPartition::SetStrip( int partition, int index, const vector<unsigned 
    SkinPartition& part = skinPartitionBlocks[partition];
    part.strips[index] = in;
    part.stripLengths[index] = (unsigned short)(in.size());
-
-   int len = 0;
-   for (vector<unsigned short>::iterator itr = part.stripLengths.begin(); itr != part.stripLengths.end(); ++itr) {
-      len += ((*itr) - 2);
-   }
-   if (len < 0)
-      len = 0;
-   part.numTriangles = len;
-   part.triangles.resize(len);
+   part.numTriangles = part.numTrianglesCalc();
+   part.triangles.clear();
 }
 
 vector<Triangle> NiSkinPartition::GetTriangles( int partition ) const {
