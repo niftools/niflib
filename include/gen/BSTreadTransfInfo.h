@@ -29,6 +29,8 @@ struct BSTreadTransfInfo {
 	float unknownFloat1;
 	/*! Data */
 	array<2,BSTreadTransfSubInfo > data;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

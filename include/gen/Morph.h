@@ -38,6 +38,8 @@ struct Morph {
 	unsigned int unknownInt;
 	/*! Morph vectors. */
 	vector<Vector3 > vectors;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

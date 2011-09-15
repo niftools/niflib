@@ -27,6 +27,8 @@ struct SkinWeight {
 	unsigned short index;
 	/*! The vertex weight - between 0.0 and 1.0 */
 	float weight;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -62,6 +62,8 @@ struct HingeDescriptor {
 	byte unknownByte2;
 	/*! Unknown */
 	byte unknownByte3;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

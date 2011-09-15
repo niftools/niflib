@@ -30,3 +30,6 @@ UnionBV & UnionBV::operator=( const UnionBV & src ) {
 
 //Destructor
 UnionBV::~UnionBV() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

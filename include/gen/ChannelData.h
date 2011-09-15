@@ -31,6 +31,8 @@ struct ChannelData {
 	byte bitsPerChannel;
 	/*! Unknown */
 	byte unknownByte1;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

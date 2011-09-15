@@ -32,3 +32,6 @@ MultiTextureElement & MultiTextureElement::operator=( const MultiTextureElement 
 
 //Destructor
 MultiTextureElement::~MultiTextureElement() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

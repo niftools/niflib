@@ -27,6 +27,8 @@ struct SphereBV {
 	Vector3 center;
 	/*! The sphere's radius. */
 	float radius;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -75,6 +75,8 @@ struct Header {
 	NIFLIB_HIDDEN NifInfo Read( istream& in );
 	NIFLIB_HIDDEN void Write( ostream& out, const NifInfo & info = NifInfo() ) const;
 	NIFLIB_HIDDEN string asString( bool verbose = false ) const;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -29,3 +29,6 @@ ParticleDesc & ParticleDesc::operator=( const ParticleDesc & src ) {
 
 //Destructor
 ParticleDesc::~ParticleDesc() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

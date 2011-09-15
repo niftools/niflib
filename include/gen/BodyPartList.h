@@ -27,6 +27,8 @@ struct BodyPartList {
 	BSPartFlag partFlag;
 	/*! Body Part Index */
 	BSDismemberBodyPartType bodyPart;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

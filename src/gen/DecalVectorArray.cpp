@@ -26,3 +26,6 @@ DecalVectorArray & DecalVectorArray::operator=( const DecalVectorArray & src ) {
 
 //Destructor
 DecalVectorArray::~DecalVectorArray() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

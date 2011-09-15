@@ -26,3 +26,6 @@ hkTriangle & hkTriangle::operator=( const hkTriangle & src ) {
 
 //Destructor
 hkTriangle::~hkTriangle() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

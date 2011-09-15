@@ -103,6 +103,8 @@ struct ControllerLink {
 	 * particle system controllers). Usually, -1.
 	 */
 	unsigned int variable2Offset;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

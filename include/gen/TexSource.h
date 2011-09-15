@@ -45,6 +45,8 @@ struct TexSource {
 	byte unknownByte;
 	/*! Pixel data object index. */
 	Ref<NiPixelData > pixelData;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

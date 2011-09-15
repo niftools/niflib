@@ -31,6 +31,8 @@ struct MorphWeight {
 	Ref<NiInterpolator > interpolator;
 	/*! Weight */
 	float weight_;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -25,3 +25,6 @@ BodyPartList & BodyPartList::operator=( const BodyPartList & src ) {
 
 //Destructor
 BodyPartList::~BodyPartList() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

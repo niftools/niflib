@@ -81,3 +81,6 @@ string Footer::asString( bool verbose ) const {
 	};
 	return out.str();
 }
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

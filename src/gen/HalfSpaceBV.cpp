@@ -25,3 +25,6 @@ HalfSpaceBV & HalfSpaceBV::operator=( const HalfSpaceBV & src ) {
 
 //Destructor
 HalfSpaceBV::~HalfSpaceBV() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

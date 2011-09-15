@@ -43,6 +43,8 @@ struct MultiTextureElement {
 	short ps2K;
 	/*! Unknown.  Usually 0 but sometimes 257 */
 	short unknownShort3;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

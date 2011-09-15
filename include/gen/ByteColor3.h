@@ -29,6 +29,8 @@ struct ByteColor3 {
 	byte g;
 	/*! Blue color component. */
 	byte b;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

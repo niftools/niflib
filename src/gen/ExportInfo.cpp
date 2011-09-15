@@ -27,3 +27,6 @@ ExportInfo & ExportInfo::operator=( const ExportInfo & src ) {
 
 //Destructor
 ExportInfo::~ExportInfo() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

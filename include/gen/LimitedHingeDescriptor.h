@@ -53,6 +53,8 @@ struct LimitedHingeDescriptor {
 	float unknownFloat2;
 	/*! Unknown */
 	float unknownFloat3;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

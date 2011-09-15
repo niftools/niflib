@@ -33,3 +33,6 @@ UnknownMatrix1 & UnknownMatrix1::operator=( const UnknownMatrix1 & src ) {
 
 //Destructor
 UnknownMatrix1::~UnknownMatrix1() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

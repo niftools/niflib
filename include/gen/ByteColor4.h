@@ -31,6 +31,8 @@ struct ByteColor4 {
 	byte b;
 	/*! Alpha color component. */
 	byte a;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

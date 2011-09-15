@@ -65,6 +65,8 @@ struct SkinPartition {
 	byte hasBoneIndices;
 	/*! Bone indices, they index into 'Bones'. */
 	vector< vector<byte > > boneIndices;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

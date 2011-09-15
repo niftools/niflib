@@ -26,3 +26,6 @@ ByteMatrix & ByteMatrix::operator=( const ByteMatrix & src ) {
 
 //Destructor
 ByteMatrix::~ByteMatrix() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

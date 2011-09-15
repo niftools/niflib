@@ -27,3 +27,6 @@ QuaternionXYZW & QuaternionXYZW::operator=( const QuaternionXYZW & src ) {
 
 //Destructor
 QuaternionXYZW::~QuaternionXYZW() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

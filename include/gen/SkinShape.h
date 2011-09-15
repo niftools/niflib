@@ -32,6 +32,8 @@ struct SkinShape {
 	NiTriBasedGeom * shape;
 	/*! Skinning instance for the shape? */
 	Ref<NiSkinInstance > skinInstance;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

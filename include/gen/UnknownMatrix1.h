@@ -43,6 +43,8 @@ struct UnknownMatrix1 {
 	float m32;
 	/*! Unknown. */
 	float m33;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

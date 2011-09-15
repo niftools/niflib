@@ -29,6 +29,8 @@ struct DecalVectorArray {
 	vector<Vector3 > points;
 	/*! Vector Normals */
 	vector<Vector3 > normals;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

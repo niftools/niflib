@@ -33,6 +33,8 @@ struct physXMaterialRef {
 	byte unknownByte1;
 	/*! PhysX Material Description */
 	Ref<NiPhysXMaterialDesc > materialDesc;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

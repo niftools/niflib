@@ -25,3 +25,6 @@ SphereBV & SphereBV::operator=( const SphereBV & src ) {
 
 //Destructor
 SphereBV::~SphereBV() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

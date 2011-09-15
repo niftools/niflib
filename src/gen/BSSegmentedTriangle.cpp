@@ -26,3 +26,6 @@ BSSegmentedTriangle & BSSegmentedTriangle::operator=( const BSSegmentedTriangle 
 
 //Destructor
 BSSegmentedTriangle::~BSSegmentedTriangle() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

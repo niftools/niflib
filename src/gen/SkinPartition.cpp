@@ -39,3 +39,6 @@ SkinPartition & SkinPartition::operator=( const SkinPartition & src ) {
 
 //Destructor
 SkinPartition::~SkinPartition() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

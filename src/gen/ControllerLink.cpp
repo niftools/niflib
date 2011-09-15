@@ -44,3 +44,6 @@ ControllerLink & ControllerLink::operator=( const ControllerLink & src ) {
 
 //Destructor
 ControllerLink::~ControllerLink() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

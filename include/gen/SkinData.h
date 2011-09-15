@@ -45,6 +45,8 @@ struct SkinData {
 	mutable unsigned short numVertices;
 	/*! The vertex weights. */
 	vector<SkinWeight > vertexWeights;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

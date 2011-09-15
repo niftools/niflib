@@ -29,6 +29,8 @@ struct BoxBV {
 	array<3,Vector3 > axis;
 	/*! Extent */
 	array<3,float > extent;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

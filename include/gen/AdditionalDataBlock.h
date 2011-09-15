@@ -37,6 +37,8 @@ struct AdditionalDataBlock {
 	vector<int > dataSizes;
 	/*! Unknown */
 	vector< vector<byte > > data;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

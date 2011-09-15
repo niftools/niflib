@@ -29,6 +29,8 @@ struct UnionBV {
 	mutable unsigned int numBv;
 	/*! Bounding Volume. */
 	vector<BoundingVolume > boundingVolumes;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

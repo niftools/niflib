@@ -30,3 +30,6 @@ AdditionalDataInfo & AdditionalDataInfo::operator=( const AdditionalDataInfo & s
 
 //Destructor
 AdditionalDataInfo::~AdditionalDataInfo() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

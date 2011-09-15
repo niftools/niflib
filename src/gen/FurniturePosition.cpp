@@ -27,3 +27,6 @@ FurniturePosition & FurniturePosition::operator=( const FurniturePosition & src 
 
 //Destructor
 FurniturePosition::~FurniturePosition() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

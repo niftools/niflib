@@ -74,6 +74,8 @@ struct RagdollDescriptor {
 	float unknownFloat6;
 	/*! Unknown */
 	float unknownFloat7;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

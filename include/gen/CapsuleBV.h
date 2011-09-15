@@ -31,6 +31,8 @@ struct CapsuleBV {
 	float unknownFloat1;
 	/*! Unknown. */
 	float unknownFloat2;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -63,6 +63,8 @@ struct TexDesc {
 	unsigned int transformType_;
 	/*! The offset from the origin? */
 	TexCoord centerOffset;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -26,3 +26,6 @@ MorphWeight & MorphWeight::operator=( const MorphWeight & src ) {
 
 //Destructor
 MorphWeight::~MorphWeight() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

@@ -29,6 +29,8 @@ struct hkTriangle {
 	unsigned short weldingInfo;
 	/*! This is the triangle's normal. */
 	Vector3 normal;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -284,3 +284,6 @@ string Header::asString( bool verbose ) const {
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	return out.str();
 }
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

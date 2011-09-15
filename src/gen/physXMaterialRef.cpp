@@ -27,3 +27,6 @@ physXMaterialRef & physXMaterialRef::operator=( const physXMaterialRef & src ) {
 
 //Destructor
 physXMaterialRef::~physXMaterialRef() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

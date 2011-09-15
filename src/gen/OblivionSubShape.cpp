@@ -28,3 +28,6 @@ OblivionSubShape & OblivionSubShape::operator=( const OblivionSubShape & src ) {
 
 //Destructor
 OblivionSubShape::~OblivionSubShape() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

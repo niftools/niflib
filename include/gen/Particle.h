@@ -37,6 +37,8 @@ struct Particle {
 	unsigned short unknownShort;
 	/*! Particle/vertex index matches array index */
 	unsigned short vertexId;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

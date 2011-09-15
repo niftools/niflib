@@ -29,6 +29,8 @@ struct ByteMatrix {
 	mutable unsigned int dataSize2;
 	/*! The bytes which make up the array */
 	vector< vector<byte > > data;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

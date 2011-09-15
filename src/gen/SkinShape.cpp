@@ -27,3 +27,6 @@ SkinShape & SkinShape::operator=( const SkinShape & src ) {
 
 //Destructor
 SkinShape::~SkinShape() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

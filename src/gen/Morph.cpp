@@ -29,3 +29,6 @@ Morph & Morph::operator=( const Morph & src ) {
 
 //Destructor
 Morph::~Morph() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

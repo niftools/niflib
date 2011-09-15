@@ -41,3 +41,6 @@ HingeDescriptor & HingeDescriptor::operator=( const HingeDescriptor & src ) {
 
 //Destructor
 HingeDescriptor::~HingeDescriptor() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

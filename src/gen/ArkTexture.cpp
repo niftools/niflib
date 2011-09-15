@@ -29,3 +29,6 @@ ArkTexture & ArkTexture::operator=( const ArkTexture & src ) {
 
 //Destructor
 ArkTexture::~ArkTexture() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

@@ -32,3 +32,6 @@ SkinData & SkinData::operator=( const SkinData & src ) {
 
 //Destructor
 SkinData::~SkinData() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

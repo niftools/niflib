@@ -42,3 +42,6 @@ RagdollDescriptor & RagdollDescriptor::operator=( const RagdollDescriptor & src 
 
 //Destructor
 RagdollDescriptor::~RagdollDescriptor() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

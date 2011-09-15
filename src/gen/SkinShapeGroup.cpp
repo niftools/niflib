@@ -28,3 +28,6 @@ SkinShapeGroup & SkinShapeGroup::operator=( const SkinShapeGroup & src ) {
 
 //Destructor
 SkinShapeGroup::~SkinShapeGroup() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

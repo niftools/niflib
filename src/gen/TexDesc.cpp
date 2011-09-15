@@ -38,3 +38,6 @@ TexDesc & TexDesc::operator=( const TexDesc & src ) {
 
 //Destructor
 TexDesc::~TexDesc() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

@@ -27,6 +27,8 @@ struct HalfSpaceBV {
 	Vector3 normal;
 	/*! Center */
 	Vector3 center;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

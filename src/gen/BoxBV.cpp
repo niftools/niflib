@@ -26,3 +26,6 @@ BoxBV & BoxBV::operator=( const BoxBV & src ) {
 
 //Destructor
 BoxBV::~BoxBV() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

@@ -26,3 +26,6 @@ OblivionColFilter & OblivionColFilter::operator=( const OblivionColFilter & src 
 
 //Destructor
 OblivionColFilter::~OblivionColFilter() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

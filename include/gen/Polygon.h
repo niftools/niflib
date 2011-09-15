@@ -31,6 +31,8 @@ struct Polygon {
 	unsigned short numTriangles;
 	/*! Triangle offset in shape */
 	unsigned short triangleOffset;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

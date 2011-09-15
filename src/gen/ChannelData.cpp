@@ -27,3 +27,6 @@ ChannelData & ChannelData::operator=( const ChannelData & src ) {
 
 //Destructor
 ChannelData::~ChannelData() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

@@ -37,6 +37,8 @@ struct FurniturePosition {
 	 * Ref 1.
 	 */
 	byte positionRef2;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

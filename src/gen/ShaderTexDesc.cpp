@@ -28,3 +28,6 @@ ShaderTexDesc & ShaderTexDesc::operator=( const ShaderTexDesc & src ) {
 
 //Destructor
 ShaderTexDesc::~ShaderTexDesc() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

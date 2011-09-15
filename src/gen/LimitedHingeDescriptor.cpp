@@ -36,3 +36,6 @@ LimitedHingeDescriptor & LimitedHingeDescriptor::operator=( const LimitedHingeDe
 
 //Destructor
 LimitedHingeDescriptor::~LimitedHingeDescriptor() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

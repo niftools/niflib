@@ -37,6 +37,8 @@ struct AdditionalDataInfo {
 	int unknownInt1;
 	/*! Unknown */
 	byte unknownByte1;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

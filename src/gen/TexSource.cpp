@@ -30,3 +30,6 @@ TexSource & TexSource::operator=( const TexSource & src ) {
 
 //Destructor
 TexSource::~TexSource() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

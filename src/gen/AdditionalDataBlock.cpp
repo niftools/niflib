@@ -30,3 +30,6 @@ AdditionalDataBlock & AdditionalDataBlock::operator=( const AdditionalDataBlock 
 
 //Destructor
 AdditionalDataBlock::~AdditionalDataBlock() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

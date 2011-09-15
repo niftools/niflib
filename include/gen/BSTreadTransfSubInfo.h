@@ -39,6 +39,8 @@ struct BSTreadTransfSubInfo {
 	int unknownInt7;
 	/*! Unknown */
 	int unknownInt8;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

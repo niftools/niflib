@@ -22,6 +22,8 @@ struct RotationKeyArray {
 	KeyType keyType;
 	/*! The rotation keys. */
 	vector<Key<T > > keys;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

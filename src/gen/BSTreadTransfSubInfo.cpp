@@ -31,3 +31,6 @@ BSTreadTransfSubInfo & BSTreadTransfSubInfo::operator=( const BSTreadTransfSubIn
 
 //Destructor
 BSTreadTransfSubInfo::~BSTreadTransfSubInfo() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

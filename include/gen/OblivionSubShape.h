@@ -38,6 +38,8 @@ struct OblivionSubShape {
 	unsigned int numVertices;
 	/*! The material of the subshape. */
 	HavokMaterial material;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

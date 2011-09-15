@@ -35,6 +35,8 @@ struct ParticleDesc {
 	float unknownFloat3;
 	/*! Unknown. */
 	int unknownInt1;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

@@ -32,3 +32,6 @@ BoundingVolume & BoundingVolume::operator=( const BoundingVolume & src ) {
 
 //Destructor
 BoundingVolume::~BoundingVolume() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

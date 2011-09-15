@@ -31,6 +31,8 @@ struct ShaderTexDesc {
 	TexDesc textureData;
 	/*! Map Index */
 	unsigned int mapIndex;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }

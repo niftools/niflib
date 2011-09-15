@@ -27,3 +27,6 @@ Polygon & Polygon::operator=( const Polygon & src ) {
 
 //Destructor
 Polygon::~Polygon() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

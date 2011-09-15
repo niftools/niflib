@@ -27,3 +27,6 @@ CapsuleBV & CapsuleBV::operator=( const CapsuleBV & src ) {
 
 //Destructor
 CapsuleBV::~CapsuleBV() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

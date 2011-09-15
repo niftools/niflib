@@ -26,3 +26,6 @@ BSTreadTransfInfo & BSTreadTransfInfo::operator=( const BSTreadTransfInfo & src 
 
 //Destructor
 BSTreadTransfInfo::~BSTreadTransfInfo() {};
+
+//--BEGIN MISC CUSTOM CODE--//
+//--END CUSTOM CODE--//

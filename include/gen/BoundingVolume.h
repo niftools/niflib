@@ -38,6 +38,8 @@ struct BoundingVolume {
 	CapsuleBV capsule;
 	/*! Half Space */
 	HalfSpaceBV halfspace;
+	//--BEGIN MISC CUSTOM CODE--//
+	//--END CUSTOM CODE--//
 };
 
 }
