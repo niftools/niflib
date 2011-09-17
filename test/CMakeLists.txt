@@ -7,7 +7,8 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 foreach(TEST
         write_test
-        skinpart_test)
+        skinpart_test
+        ninode_test)
     add_executable(${TEST} ${TEST}.cpp)
     target_link_libraries(${TEST} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} niflib)
     add_test(niflib::${TEST} ${TEST})
