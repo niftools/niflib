@@ -124,4 +124,13 @@ BOOST_AUTO_TEST_CASE(skinpart_triangles_numtriangles_test)
   BOOST_CHECK_EQUAL(skinpart->skinPartitionBlocks[0].numTriangles, 1);
 }
 
+BOOST_AUTO_TEST_CASE(skinpart_setstripcount_numstrips)
+{
+  // create a simple skin partition
+  NiSkinPartitionRef skinpart = new NiSkinPartition;
+  skinpart->SetNumPartitions(1);
+  skinpart->SetStripCount(0, 3);
+  BOOST_CHECK_EQUAL(skinpart->skinPartitionBlocks[0].numStrips, 3);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
