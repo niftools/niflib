@@ -576,6 +576,7 @@ void NiSkinPartition::SetStripCount( int partition, int n ) {
    part.strips.resize(n);
    part.stripLengths.resize(n);
    part.hasFaces = (n!=0);
+   part.numStrips = n;
 }
 
 vector<unsigned short> NiSkinPartition::GetStrip( int partition, int index ) const {
