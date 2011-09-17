@@ -15,6 +15,45 @@ Version 0.7.3
 
 * Type::Create() method (requested by DragoonWraith).
 
+* Types now have an internal type number (requested by DragoonWraith).
+
+* Fixed RemoveChild for nifs that have their skin influence flag set
+  on NiNodes that aren't actually bone influences.
+
+* New GetPtrs() method, similar to GetRefs().
+
+* Fixed bug in link writing code.
+
+* Fixed various bugs relating to NiSkinPartition.numTriangles
+  (reported by DragoonWraith and gentle_sal).
+
+* Added AddEntity, RemoveEntity, ClearEntities, GetEntities to
+  bhkConstraint (contributed by LogicDragon).
+
+* Added AddConstraint, RemoveConstraint, ClearConstraints,
+  GetConstraints to bhkRigidBody (contributed by LogicDragon).
+
+* Fixed EnumerateObjects to write the correct block order (contributed
+  by LogicDragon).
+
+* Dropping eof check to allow reading multiple nifs from a single
+  stream (suggested by athile).
+
+* Small refactorings in code generator.
+
+* NiSkinPartition methods now raise an exception when passed an
+  invalid partition number.
+
+* Fixed NiSkinPartition.SetStripCount bug (see niftools issue
+  #3395587, reported by gentle_sal).
+
+* Provide defaults for the read values, and check for premature read
+  failures (contributed by gentle_sal, see niftools issue #3403926).
+
+* Added SetSkinFlag test.
+
+* Improved changelog formatting.
+
 Version 0.7.2
 =============
 
