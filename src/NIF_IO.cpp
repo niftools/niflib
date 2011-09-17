@@ -111,42 +111,54 @@ float SwapEndian( float in ) {
 
 int ReadInt( istream& in ){
 
-	int tmp;
+	int tmp = 0;
 	in.read( (char*)&tmp, 4 );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	return tmp;
 }
 
 unsigned int ReadUInt( istream& in ){
 
-	unsigned int tmp;
+	unsigned int tmp = 0;
 	in.read( (char*)&tmp, 4 );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	return tmp;
 }
 
 unsigned short ReadUShort( istream& in ){
 
-	unsigned short tmp;
+	unsigned short tmp = 0;
 	in.read( (char*)&tmp, 2 );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	return tmp;
 }
 
 short ReadShort( istream& in ){
 
-	short tmp;
+	short tmp = 0;
 	in.read( (char*)&tmp, 2 );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	return tmp;
 }
 
 byte ReadByte( istream& in ){
 
-	byte tmp;
+	byte tmp = 0;
 	in.read( (char*)&tmp, 1 );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	return tmp;
 }
 float ReadFloat( istream &in ){
 
-	float tmp;
+	float tmp = 0;
 	in.read( reinterpret_cast<char*>(&tmp), sizeof(tmp) );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	return tmp;
 }
 
@@ -157,7 +169,9 @@ string ReadString( istream &in ) {
 	    throw runtime_error("String too long. Not a NIF file or unsupported format?");
 	if ( len > 0 ) {
 	    out.resize(len);
-		in.read( (char*)&out[0], len );
+	    in.read( (char*)&out[0], len );
+	    if (in.fail())
+	      throw runtime_error("premature end of stream");
 	}
 	return out;
 }
@@ -435,6 +449,8 @@ void NifStream( ShortString & val, istream& in, const NifInfo & info ) {
 	byte len = ReadByte( in );
 	char * buffer = new char[len];
 	in.read( buffer, len );
+	if (in.fail())
+	  throw runtime_error("premature end of stream");
 	val.str = buffer;
 	delete [] buffer;
 };
