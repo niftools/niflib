@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE(skinpart_triangles_partnum_test)
   verts.push_back(Vector3(0, 1, 0));
   verts.push_back(Vector3(0, 0, 1));
   tris.push_back(Triangle(0, 1, 2));
-  BOOST_CHECK_THROW(skinpart->SetTriangles(5, tris), std::runtime_error);
+  BOOST_CHECK_THROW(skinpart->SetTriangles(5, tris), std::out_of_range);
   BOOST_CHECK_NO_THROW(skinpart->SetTriangles(0, tris));
 }
 

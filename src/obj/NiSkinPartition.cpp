@@ -642,10 +642,7 @@ void NiSkinPartition::SetTriangles( int partition, const vector<Triangle> & in )
    if ( in.size() > 65535 || in.size() < 0 ) {
       throw runtime_error("Invalid Triangle Count: must be between 0 and 65535.");
    }
-   if ( partition < 0  || partition >= numSkinPartitionBlocks) {
-      throw runtime_error("Invalid partition number.");
-   };
-   SkinPartition& part = skinPartitionBlocks[partition];
+   SkinPartition& part = skinPartitionBlocks.at(partition); // at throws, [] does not
    part.triangles = in;
    part.hasFaces = (in.size() > 0) ? true : (part.strips.size() != 0);
    part.numTriangles = (unsigned short)(in.size());
