@@ -54,6 +54,8 @@ Version 0.7.3
 
 * Improved changelog formatting.
 
+* Update to qhull 2011.1 (contributed by Cold Blood).
+
 Version 0.7.2
 =============
 
