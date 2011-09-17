@@ -94,4 +94,34 @@ BOOST_AUTO_TEST_CASE(write_skinpart_test)
   BOOST_CHECK_EQUAL(skinpart->skinPartitionBlocks[0].numTriangles, 1);
 }
 
+BOOST_AUTO_TEST_CASE(skinpart_triangles_partnum_test)
+{
+  // create a simple skin partition
+  NiSkinPartitionRef skinpart = new NiSkinPartition;
+  skinpart->SetNumPartitions(1);
+  vector<Vector3> verts;
+  vector<Triangle> tris;
+  verts.push_back(Vector3(0, 0, 0));
+  verts.push_back(Vector3(0, 1, 0));
+  verts.push_back(Vector3(0, 0, 1));
+  tris.push_back(Triangle(0, 1, 2));
+  BOOST_CHECK_THROW(skinpart->SetTriangles(5, tris), std::runtime_error);
+  BOOST_CHECK_NO_THROW(skinpart->SetTriangles(0, tris));
+}
+
+BOOST_AUTO_TEST_CASE(skinpart_triangles_numtriangles_test)
+{
+  // create a simple skin partition
+  NiSkinPartitionRef skinpart = new NiSkinPartition;
+  skinpart->SetNumPartitions(1);
+  vector<Vector3> verts;
+  vector<Triangle> tris;
+  verts.push_back(Vector3(0, 0, 0));
+  verts.push_back(Vector3(0, 1, 0));
+  verts.push_back(Vector3(0, 0, 1));
+  tris.push_back(Triangle(0, 1, 2));
+  skinpart->SetTriangles(0, tris);
+  BOOST_CHECK_EQUAL(skinpart->skinPartitionBlocks[0].numTriangles, 1);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
