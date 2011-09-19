@@ -32,7 +32,7 @@ NiSkinInstance::~NiSkinInstance() {
 
 	//Unflag any bones that were part of this skin instance
 	for ( unsigned int i = 0; i < bones.size(); ++i ) {
-		if (NULL != bones[i])
+		if (bones[i] != NULL)
 			bones[i]->SetSkinFlag(false);
 	}
 
@@ -308,7 +308,9 @@ void NiSkinInstance::BindSkin( NiNode * skeleton_root, vector< Ref<NiNode> > bon
 
 	//Flag any bones that are part of this skin instance
 	for ( unsigned int i = 0; i < bones.size(); ++i ) {
-		bones[i]->SetSkinFlag(true);
+		if ( bones[i] != NULL ) {
+			bones[i]->SetSkinFlag(true);
+		}
 	}
 
 	//Store skeleton root and inform it of this attachment
