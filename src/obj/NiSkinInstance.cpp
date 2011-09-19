@@ -203,7 +203,9 @@ void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 
 	//Ensure that bones have the flag set properly
 	for ( unsigned int i = 0; i < bones.size(); ++i ) {
-		bones[i]->SetSkinFlag(true);
+		if ( bones[i] != NULL ) {
+			bones[i]->SetSkinFlag(true);
+		}
 	}
 
 	//--END CUSTOM CODE--//

@@ -56,6 +56,8 @@ Version 0.7.3
 
 * Update to qhull 2011.1 (contributed by Cold Blood).
 
+* Fixed NiSkinInstance.FixLinks for NULL bones.
+
 Version 0.7.2
 =============
 
