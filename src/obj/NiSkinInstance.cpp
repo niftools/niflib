@@ -78,11 +78,11 @@ void NiSkinInstance::Read( istream& in, list<unsigned int> & link_stack, const N
 	//--END CUSTOM CODE--//
 }
 
-void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	numBones = (unsigned int)(bones.size());
 	if ( info.version < VER_3_3_0_13 ) {
 		WritePtr32( &(*data), out );
@@ -91,11 +91,14 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( data );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 	if ( info.version >= 0x0A020000 ) {
@@ -106,11 +109,14 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(skinPartition) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( skinPartition );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -121,11 +127,14 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(skeletonRoot) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( skeletonRoot );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 	NifStream( numBones, out, info );
@@ -137,11 +146,14 @@ void NiSkinInstance::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(bones[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( bones[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

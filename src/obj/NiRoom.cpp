@@ -78,12 +78,12 @@ void NiRoom::Read( istream& in, list<unsigned int> & link_stack, const NifInfo &
 	//--END CUSTOM CODE--//
 }
 
-void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiNode::Write( out, link_map, info );
+	NiNode::Write( out, link_map, missing_link_stack, info );
 	numItems = (int)(items.size());
 	numPortals2 = (int)(portals2.size());
 	numInPortals = (int)(inPortals.size());
@@ -101,11 +101,14 @@ void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(inPortals[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( inPortals[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -118,11 +121,14 @@ void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(portals2[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( portals2[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -135,11 +141,14 @@ void NiRoom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(items[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( items[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

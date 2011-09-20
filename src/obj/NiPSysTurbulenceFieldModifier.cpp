@@ -53,12 +53,12 @@ void NiPSysTurbulenceFieldModifier::Read( istream& in, list<unsigned int> & link
 	//--END CUSTOM CODE--//
 }
 
-void NiPSysTurbulenceFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPSysTurbulenceFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiPSysFieldModifier::Write( out, link_map, info );
+	NiPSysFieldModifier::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknownFloat2, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

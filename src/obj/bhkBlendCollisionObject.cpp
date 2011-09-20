@@ -49,11 +49,11 @@ void bhkBlendCollisionObject::Read( istream& in, list<unsigned int> & link_stack
 	//--END CUSTOM CODE--//
 }
 
-void bhkBlendCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkBlendCollisionObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkCollisionObject::Write( out, link_map, info );
+	bhkCollisionObject::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownFloat2, out, info );
 

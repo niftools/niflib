@@ -50,11 +50,11 @@ void NiParticleRotation::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void NiParticleRotation::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiParticleRotation::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiParticleModifier::Write( out, link_map, info );
+	NiParticleModifier::Write( out, link_map, missing_link_stack, info );
 	NifStream( randomInitialAxis_, out, info );
 	NifStream( initialAxis_, out, info );
 	NifStream( rotationSpeed_, out, info );

@@ -56,11 +56,11 @@ void bhkMultiSphereShape::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 }
 
-void bhkMultiSphereShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkMultiSphereShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkSphereRepShape::Write( out, link_map, info );
+	bhkSphereRepShape::Write( out, link_map, missing_link_stack, info );
 	numSpheres = (unsigned int)(spheres.size());
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownFloat2, out, info );

@@ -72,12 +72,12 @@ void NiPhysXProp::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	//--END CUSTOM CODE--//
 }
 
-void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiObjectNET::Write( out, link_map, info );
+	NiObjectNET::Write( out, link_map, missing_link_stack, info );
 	numDests = (int)(transformDests.size());
 	unknownInt1 = (unsigned int)(unknownRefs1.size());
 	NifStream( unknownFloat1, out, info );
@@ -90,11 +90,14 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknownRefs1[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( unknownRefs1[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -107,11 +110,14 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(transformDests[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( transformDests[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -123,11 +129,14 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(propDescription) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( propDescription );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 

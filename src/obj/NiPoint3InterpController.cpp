@@ -56,11 +56,11 @@ void NiPoint3InterpController::Read( istream& in, list<unsigned int> & link_stac
 	//--END CUSTOM CODE--//
 }
 
-void NiPoint3InterpController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPoint3InterpController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiSingleInterpController::Write( out, link_map, info );
+	NiSingleInterpController::Write( out, link_map, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( targetColor, out, info );
 	};
@@ -72,11 +72,14 @@ void NiPoint3InterpController::Write( ostream& out, const map<NiObjectRef,unsign
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( data );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

@@ -60,12 +60,12 @@ void BSSegmentedTriShape::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 }
 
-void BSSegmentedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void BSSegmentedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiTriShape::Write( out, link_map, info );
+	NiTriShape::Write( out, link_map, missing_link_stack, info );
 	numSegTriangles = (int)(segTriangles.size());
 	NifStream( numSegTriangles, out, info );
 	for (unsigned int i1 = 0; i1 < segTriangles.size(); i1++) {

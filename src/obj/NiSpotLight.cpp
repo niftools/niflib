@@ -52,11 +52,11 @@ void NiSpotLight::Read( istream& in, list<unsigned int> & link_stack, const NifI
 	//--END CUSTOM CODE--//
 }
 
-void NiSpotLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiSpotLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiPointLight::Write( out, link_map, info );
+	NiPointLight::Write( out, link_map, missing_link_stack, info );
 	NifStream( cutoffAngle, out, info );
 	if ( info.version >= 0x14020007 ) {
 		NifStream( unknownFloat, out, info );

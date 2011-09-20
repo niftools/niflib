@@ -73,11 +73,11 @@ void Ni3dsAnimationNode::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void Ni3dsAnimationNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void Ni3dsAnimationNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	count = (unsigned int)(unknownArray.size());
 	NifStream( name, out, info );
 	NifStream( hasData, out, info );
@@ -93,11 +93,14 @@ void Ni3dsAnimationNode::Write( ostream& out, const map<NiObjectRef,unsigned int
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(child) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( child );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		for (unsigned int i2 = 0; i2 < 12; i2++) {

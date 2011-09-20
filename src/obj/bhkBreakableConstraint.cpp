@@ -56,12 +56,12 @@ void bhkBreakableConstraint::Read( istream& in, list<unsigned int> & link_stack,
 	//--END CUSTOM CODE--//
 }
 
-void bhkBreakableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkBreakableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	bhkConstraint::Write( out, link_map, info );
+	bhkConstraint::Write( out, link_map, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < 41; i1++) {
 		NifStream( unknownInts1[i1], out, info );
 	};

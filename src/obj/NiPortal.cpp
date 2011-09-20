@@ -63,12 +63,12 @@ void NiPortal::Read( istream& in, list<unsigned int> & link_stack, const NifInfo
 	//--END CUSTOM CODE--//
 }
 
-void NiPortal::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPortal::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiAVObject::Write( out, link_map, info );
+	NiAVObject::Write( out, link_map, missing_link_stack, info );
 	numVertices = (unsigned short)(vertices.size());
 	NifStream( unknownFlags, out, info );
 	NifStream( unknownShort1, out, info );
@@ -83,11 +83,14 @@ void NiPortal::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_m
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(target) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( target );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 

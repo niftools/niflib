@@ -55,12 +55,12 @@ void SkyShaderProperty::Read( istream& in, list<unsigned int> & link_stack, cons
 	//--END CUSTOM CODE--//
 }
 
-void SkyShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void SkyShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	BSShaderProperty::Write( out, link_map, info );
+	BSShaderProperty::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknownInt4, out, info );
 	NifStream( fileName, out, info );
 	NifStream( unknownInt5, out, info );

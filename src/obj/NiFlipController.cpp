@@ -72,11 +72,11 @@ void NiFlipController::Read( istream& in, list<unsigned int> & link_stack, const
 	//--END CUSTOM CODE--//
 }
 
-void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiFloatInterpController::Write( out, link_map, info );
+	NiFloatInterpController::Write( out, link_map, missing_link_stack, info );
 	numSources = (unsigned int)(sources.size());
 	NifStream( textureSlot, out, info );
 	if ( ( info.version >= 0x04000000 ) && ( info.version <= 0x0A010000 ) ) {
@@ -95,11 +95,14 @@ void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(sources[i2]) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( sources[i2] );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};
@@ -113,11 +116,14 @@ void NiFlipController::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(images[i2]) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( images[i2] );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};

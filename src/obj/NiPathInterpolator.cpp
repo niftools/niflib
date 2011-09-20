@@ -59,11 +59,11 @@ void NiPathInterpolator::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void NiPathInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPathInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiKeyBasedInterpolator::Write( out, link_map, info );
+	NiKeyBasedInterpolator::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknownShort, out, info );
 	NifStream( unknownInt, out, info );
 	NifStream( unknownFloat1, out, info );
@@ -76,11 +76,14 @@ void NiPathInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(posData) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( posData );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 	if ( info.version < VER_3_3_0_13 ) {
@@ -90,11 +93,14 @@ void NiPathInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(floatData) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( floatData );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 

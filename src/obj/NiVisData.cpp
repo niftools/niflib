@@ -52,11 +52,11 @@ void NiVisData::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 	//--END CUSTOM CODE--//
 }
 
-void NiVisData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiVisData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	numKeys = (unsigned int)(keys.size());
 	NifStream( numKeys, out, info );
 	for (unsigned int i1 = 0; i1 < keys.size(); i1++) {

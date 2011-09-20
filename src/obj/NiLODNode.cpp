@@ -70,11 +70,11 @@ void NiLODNode::Read( istream& in, list<unsigned int> & link_stack, const NifInf
 	//--END CUSTOM CODE--//
 }
 
-void NiLODNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiLODNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiSwitchNode::Write( out, link_map, info );
+	NiSwitchNode::Write( out, link_map, missing_link_stack, info );
 	numLodLevels = (unsigned int)(lodLevels.size());
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A000100 ) ) {
 		NifStream( lodCenter, out, info );
@@ -99,11 +99,14 @@ void NiLODNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(lodLevelData) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( lodLevelData );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

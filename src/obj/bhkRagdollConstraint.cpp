@@ -82,11 +82,11 @@ void bhkRagdollConstraint::Read( istream& in, list<unsigned int> & link_stack, c
 	//--END CUSTOM CODE--//
 }
 
-void bhkRagdollConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkRagdollConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkConstraint::Write( out, link_map, info );
+	bhkConstraint::Write( out, link_map, missing_link_stack, info );
 	NifStream( ragdoll.pivotA, out, info );
 	NifStream( ragdoll.planeA, out, info );
 	NifStream( ragdoll.twistA, out, info );

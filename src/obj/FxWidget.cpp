@@ -51,11 +51,11 @@ void FxWidget::Read( istream& in, list<unsigned int> & link_stack, const NifInfo
 	//--END CUSTOM CODE--//
 }
 
-void FxWidget::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void FxWidget::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiNode::Write( out, link_map, info );
+	NiNode::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknown1, out, info );
 	for (unsigned int i1 = 0; i1 < 292; i1++) {
 		NifStream( unknown292Bytes[i1], out, info );

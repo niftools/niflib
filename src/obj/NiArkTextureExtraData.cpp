@@ -74,12 +74,12 @@ void NiArkTextureExtraData::Read( istream& in, list<unsigned int> & link_stack, 
 	//--END CUSTOM CODE--//
 }
 
-void NiArkTextureExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiArkTextureExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiExtraData::Write( out, link_map, info );
+	NiExtraData::Write( out, link_map, missing_link_stack, info );
 	numTextures = (int)(textures.size());
 	for (unsigned int i1 = 0; i1 < 2; i1++) {
 		NifStream( unknownInts1[i1], out, info );
@@ -100,11 +100,14 @@ void NiArkTextureExtraData::Write( ostream& out, const map<NiObjectRef,unsigned 
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(textures[i1].texturingProperty) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( textures[i1].texturingProperty );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		for (unsigned int i2 = 0; i2 < 9; i2++) {

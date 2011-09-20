@@ -59,12 +59,12 @@ void BSShaderNoLightingProperty::Read( istream& in, list<unsigned int> & link_st
 	//--END CUSTOM CODE--//
 }
 
-void BSShaderNoLightingProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void BSShaderNoLightingProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	BSShaderLightingProperty::Write( out, link_map, info );
+	BSShaderLightingProperty::Write( out, link_map, missing_link_stack, info );
 	NifStream( fileName, out, info );
 	if ( ((info.userVersion == 11) && (info.userVersion2 > 26)) ) {
 		NifStream( unknownFloat2, out, info );

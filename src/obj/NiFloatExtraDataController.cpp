@@ -60,11 +60,11 @@ void NiFloatExtraDataController::Read( istream& in, list<unsigned int> & link_st
 	//--END CUSTOM CODE--//
 }
 
-void NiFloatExtraDataController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiFloatExtraDataController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiExtraDataController::Write( out, link_map, info );
+	NiExtraDataController::Write( out, link_map, missing_link_stack, info );
 	numExtraBytes = (byte)(unknownExtraBytes.size());
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( controllerData, out, info );

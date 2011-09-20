@@ -48,11 +48,11 @@ void NiBlendFloatInterpolator::Read( istream& in, list<unsigned int> & link_stac
 	//--END CUSTOM CODE--//
 }
 
-void NiBlendFloatInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiBlendFloatInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiBlendInterpolator::Write( out, link_map, info );
+	NiBlendInterpolator::Write( out, link_map, missing_link_stack, info );
 	NifStream( floatValue, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

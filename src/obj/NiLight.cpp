@@ -51,11 +51,11 @@ void NiLight::Read( istream& in, list<unsigned int> & link_stack, const NifInfo 
 	//--END CUSTOM CODE--//
 }
 
-void NiLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiLight::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiDynamicEffect::Write( out, link_map, info );
+	NiDynamicEffect::Write( out, link_map, missing_link_stack, info );
 	NifStream( dimmer, out, info );
 	NifStream( ambientColor, out, info );
 	NifStream( diffuseColor, out, info );

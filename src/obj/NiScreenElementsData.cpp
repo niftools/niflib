@@ -71,12 +71,12 @@ void NiScreenElementsData::Read( istream& in, list<unsigned int> & link_stack, c
 	//--END CUSTOM CODE--//
 }
 
-void NiScreenElementsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiScreenElementsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiTriShapeData::Write( out, link_map, info );
+	NiTriShapeData::Write( out, link_map, missing_link_stack, info );
 	maxPolygons = (unsigned short)(polygons.size());
 	NifStream( maxPolygons, out, info );
 	for (unsigned int i1 = 0; i1 < polygons.size(); i1++) {

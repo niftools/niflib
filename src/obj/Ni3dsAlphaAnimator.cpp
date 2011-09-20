@@ -68,12 +68,12 @@ void Ni3dsAlphaAnimator::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void Ni3dsAlphaAnimator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void Ni3dsAlphaAnimator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	num2 = (unsigned int)((unknown2.size() > 0) ? unknown2[0].size() : 0);
 	num1 = (unsigned int)(unknown2.size());
 	for (unsigned int i1 = 0; i1 < 40; i1++) {
@@ -86,11 +86,14 @@ void Ni3dsAlphaAnimator::Write( ostream& out, const map<NiObjectRef,unsigned int
 			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(parent) );
 			if (it != link_map.end()) {
 				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( parent );
 			}
 		} else {
 			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
 		}
 	}
 	NifStream( num1, out, info );

@@ -53,12 +53,12 @@ void BSShaderLightingProperty::Read( istream& in, list<unsigned int> & link_stac
 	//--END CUSTOM CODE--//
 }
 
-void BSShaderLightingProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void BSShaderLightingProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	BSShaderProperty::Write( out, link_map, info );
+	BSShaderProperty::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknownInt3, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

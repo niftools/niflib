@@ -56,11 +56,11 @@ void NiRotatingParticlesData::Read( istream& in, list<unsigned int> & link_stack
 	//--END CUSTOM CODE--//
 }
 
-void NiRotatingParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiRotatingParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiParticlesData::Write( out, link_map, info );
+	NiParticlesData::Write( out, link_map, missing_link_stack, info );
 	if ( info.version <= 0x04020200 ) {
 		NifStream( hasRotations2, out, info );
 		if ( (hasRotations2 != 0) ) {

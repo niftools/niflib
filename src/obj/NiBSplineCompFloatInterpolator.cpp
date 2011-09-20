@@ -54,11 +54,11 @@ void NiBSplineCompFloatInterpolator::Read( istream& in, list<unsigned int> & lin
 	//--END CUSTOM CODE--//
 }
 
-void NiBSplineCompFloatInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiBSplineCompFloatInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiBSplineFloatInterpolator::Write( out, link_map, info );
+	NiBSplineFloatInterpolator::Write( out, link_map, missing_link_stack, info );
 	NifStream( base, out, info );
 	NifStream( offset, out, info );
 	NifStream( bias, out, info );

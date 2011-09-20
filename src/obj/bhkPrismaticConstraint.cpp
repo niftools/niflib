@@ -60,11 +60,11 @@ void bhkPrismaticConstraint::Read( istream& in, list<unsigned int> & link_stack,
 	//--END CUSTOM CODE--//
 }
 
-void bhkPrismaticConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkPrismaticConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkConstraint::Write( out, link_map, info );
+	bhkConstraint::Write( out, link_map, missing_link_stack, info );
 	NifStream( pivotA, out, info );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		NifStream( rotation[i1], out, info );

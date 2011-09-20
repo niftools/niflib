@@ -88,11 +88,11 @@ void NiTriStripsData::Read( istream& in, list<unsigned int> & link_stack, const 
 	//--END CUSTOM CODE--//
 }
 
-void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiTriStripsData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTriBasedGeomData::Write( out, link_map, info );
+	NiTriBasedGeomData::Write( out, link_map, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < points.size(); i1++)
 		stripLengths[i1] = (unsigned short)(points[i1].size());
 	numStrips = (unsigned short)(stripLengths.size());

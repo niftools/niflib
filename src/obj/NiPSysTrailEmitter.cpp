@@ -63,12 +63,12 @@ void NiPSysTrailEmitter::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void NiPSysTrailEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPSysTrailEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiPSysEmitter::Write( out, link_map, info );
+	NiPSysEmitter::Write( out, link_map, missing_link_stack, info );
 	NifStream( unknownInt1, out, info );
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownFloat2, out, info );

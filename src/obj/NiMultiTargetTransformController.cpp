@@ -56,11 +56,11 @@ void NiMultiTargetTransformController::Read( istream& in, list<unsigned int> & l
 	//--END CUSTOM CODE--//
 }
 
-void NiMultiTargetTransformController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiMultiTargetTransformController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiInterpController::Write( out, link_map, info );
+	NiInterpController::Write( out, link_map, missing_link_stack, info );
 	numExtraTargets = (unsigned short)(extraTargets.size());
 	NifStream( numExtraTargets, out, info );
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
@@ -71,11 +71,14 @@ void NiMultiTargetTransformController::Write( ostream& out, const map<NiObjectRe
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(extraTargets[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( extraTargets[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

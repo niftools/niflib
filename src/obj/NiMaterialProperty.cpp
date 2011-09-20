@@ -61,11 +61,11 @@ void NiMaterialProperty::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiProperty::Write( out, link_map, info );
+	NiProperty::Write( out, link_map, missing_link_stack, info );
 	if ( info.version <= 0x0A000102 ) {
 		NifStream( flags, out, info );
 	};

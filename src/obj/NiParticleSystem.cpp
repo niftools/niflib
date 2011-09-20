@@ -58,11 +58,11 @@ void NiParticleSystem::Read( istream& in, list<unsigned int> & link_stack, const
 	//--END CUSTOM CODE--//
 }
 
-void NiParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiParticles::Write( out, link_map, info );
+	NiParticles::Write( out, link_map, missing_link_stack, info );
 	numModifiers = (unsigned int)(modifiers.size());
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( worldSpace, out, info );
@@ -75,11 +75,14 @@ void NiParticleSystem::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(modifiers[i2]) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( modifiers[i2] );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};

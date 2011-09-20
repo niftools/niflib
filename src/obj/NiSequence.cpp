@@ -135,11 +135,11 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	//--END CUSTOM CODE--//
 }
 
-void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	numControlledBlocks = (unsigned int)(controlledBlocks.size());
 	NifStream( name, out, info );
 	if ( info.version <= 0x0A010000 ) {
@@ -151,11 +151,14 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(textKeys) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( textKeys );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -173,11 +176,14 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( controlledBlocks[i1].controller );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};
@@ -189,11 +195,14 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(controlledBlocks[i1].interpolator) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( controlledBlocks[i1].interpolator );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 			if ( info.version < VER_3_3_0_13 ) {
@@ -203,11 +212,14 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(controlledBlocks[i1].controller) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( controlledBlocks[i1].controller );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};
@@ -219,11 +231,14 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(controlledBlocks[i1].unknownLink2) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( controlledBlocks[i1].unknownLink2 );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 			NifStream( controlledBlocks[i1].unknownShort0, out, info );
@@ -239,11 +254,14 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(controlledBlocks[i1].stringPalette) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( controlledBlocks[i1].stringPalette );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};

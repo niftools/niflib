@@ -55,12 +55,12 @@ void bhkAabbPhantom::Read( istream& in, list<unsigned int> & link_stack, const N
 	//--END CUSTOM CODE--//
 }
 
-void bhkAabbPhantom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkAabbPhantom::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	bhkShapePhantom::Write( out, link_map, info );
+	bhkShapePhantom::Write( out, link_map, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < 15; i1++) {
 		NifStream( unknownInts1[i1], out, info );
 	};

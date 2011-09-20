@@ -58,11 +58,11 @@ void NiUVData::Read( istream& in, list<unsigned int> & link_stack, const NifInfo
 	//--END CUSTOM CODE--//
 }
 
-void NiUVData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiUVData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		uvGroups[i1].numKeys = (unsigned int)(uvGroups[i1].keys.size());
 		NifStream( uvGroups[i1].numKeys, out, info );

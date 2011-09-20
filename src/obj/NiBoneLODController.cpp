@@ -88,11 +88,11 @@ void NiBoneLODController::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 }
 
-void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::Write( out, link_map, info );
+	NiTimeController::Write( out, link_map, missing_link_stack, info );
 	numShapeGroups2 = (unsigned int)(shapeGroups2.size());
 	numShapeGroups = (unsigned int)(shapeGroups1.size());
 	numNodeGroups = (unsigned int)(nodeGroups.size());
@@ -110,11 +110,14 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(nodeGroups[i1].nodes[i2]) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( nodeGroups[i1].nodes[i2] );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};
@@ -132,11 +135,14 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 						map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].shape) );
 						if (it != link_map.end()) {
 							NifStream( it->second, out, info );
+							missing_link_stack.push_back( NULL );
 						} else {
 							NifStream( 0xFFFFFFFF, out, info );
+							missing_link_stack.push_back( shapeGroups1[i2].linkPairs[i3].shape );
 						}
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( NULL );
 					}
 				}
 				if ( info.version < VER_3_3_0_13 ) {
@@ -146,11 +152,14 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 						map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(shapeGroups1[i2].linkPairs[i3].skinInstance) );
 						if (it != link_map.end()) {
 							NifStream( it->second, out, info );
+							missing_link_stack.push_back( NULL );
 						} else {
 							NifStream( 0xFFFFFFFF, out, info );
+							missing_link_stack.push_back( shapeGroups1[i2].linkPairs[i3].skinInstance );
 						}
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( NULL );
 					}
 				}
 			};
@@ -164,11 +173,14 @@ void NiBoneLODController::Write( ostream& out, const map<NiObjectRef,unsigned in
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(shapeGroups2[i2]) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( shapeGroups2[i2] );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};

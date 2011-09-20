@@ -69,11 +69,11 @@ void NiClodData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	//--END CUSTOM CODE--//
 }
 
-void NiClodData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiClodData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTriBasedGeomData::Write( out, link_map, info );
+	NiTriBasedGeomData::Write( out, link_map, missing_link_stack, info );
 	unknownCount3 = (unsigned short)(unknownClodShorts3.size());
 	unknownCount2 = (unsigned short)(unknownClodShorts2.size());
 	unknownCount1 = (unsigned short)(unknownClodShorts1.size());

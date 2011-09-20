@@ -55,11 +55,11 @@ void bhkCapsuleShape::Read( istream& in, list<unsigned int> & link_stack, const 
 	//--END CUSTOM CODE--//
 }
 
-void bhkCapsuleShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkCapsuleShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkConvexShape::Write( out, link_map, info );
+	bhkConvexShape::Write( out, link_map, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
 		NifStream( unknown8Bytes[i1], out, info );
 	};

@@ -543,11 +543,11 @@ void NiTexturingProperty::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 }
 
-void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiProperty::Write( out, link_map, info );
+	NiProperty::Write( out, link_map, missing_link_stack, info );
 	numShaderTextures = (unsigned int)(shaderTextures.size());
 	if ( info.version <= 0x0A000102 ) {
 		NifStream( flags, out, info );
@@ -568,11 +568,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(baseTexture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( baseTexture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -612,11 +615,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(darkTexture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( darkTexture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -656,11 +662,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(detailTexture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( detailTexture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -700,11 +709,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(glossTexture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( glossTexture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -744,11 +756,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(glowTexture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( glowTexture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -788,11 +803,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(bumpMapTexture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( bumpMapTexture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -836,11 +854,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(normalTexture.source) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( normalTexture.source );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 			if ( info.version <= 0x14000005 ) {
@@ -880,11 +901,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(unknown2Texture.source) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( unknown2Texture.source );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 			if ( info.version <= 0x14000005 ) {
@@ -928,11 +952,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(decal0Texture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( decal0Texture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -981,11 +1008,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(decal1Texture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( decal1Texture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -1034,11 +1064,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(decal2Texture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( decal2Texture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -1087,11 +1120,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(decal3Texture.source) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( decal3Texture.source );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 		if ( info.version <= 0x14000005 ) {
@@ -1134,11 +1170,14 @@ void NiTexturingProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 						map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(shaderTextures[i2].textureData.source) );
 						if (it != link_map.end()) {
 							NifStream( it->second, out, info );
+							missing_link_stack.push_back( NULL );
 						} else {
 							NifStream( 0xFFFFFFFF, out, info );
+							missing_link_stack.push_back( shaderTextures[i2].textureData.source );
 						}
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( NULL );
 					}
 				}
 				if ( info.version <= 0x14000005 ) {

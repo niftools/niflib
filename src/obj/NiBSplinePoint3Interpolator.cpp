@@ -50,11 +50,11 @@ void NiBSplinePoint3Interpolator::Read( istream& in, list<unsigned int> & link_s
 	//--END CUSTOM CODE--//
 }
 
-void NiBSplinePoint3Interpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiBSplinePoint3Interpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiBSplineInterpolator::Write( out, link_map, info );
+	NiBSplineInterpolator::Write( out, link_map, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < 6; i1++) {
 		NifStream( unknownFloats[i1], out, info );
 	};

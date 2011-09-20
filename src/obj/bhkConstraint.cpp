@@ -56,11 +56,11 @@ void bhkConstraint::Read( istream& in, list<unsigned int> & link_stack, const Ni
 	//--END CUSTOM CODE--//
 }
 
-void bhkConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkSerializable::Write( out, link_map, info );
+	bhkSerializable::Write( out, link_map, missing_link_stack, info );
 	numEntities = (unsigned int)(entities.size());
 	NifStream( numEntities, out, info );
 	for (unsigned int i1 = 0; i1 < entities.size(); i1++) {
@@ -71,11 +71,14 @@ void bhkConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(entities[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( entities[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

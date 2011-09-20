@@ -59,12 +59,12 @@ void NiPSysAirFieldModifier::Read( istream& in, list<unsigned int> & link_stack,
 	//--END CUSTOM CODE--//
 }
 
-void NiPSysAirFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPSysAirFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiPSysFieldModifier::Write( out, link_map, info );
+	NiPSysFieldModifier::Write( out, link_map, missing_link_stack, info );
 	NifStream( direction, out, info );
 	NifStream( unknownFloat2, out, info );
 	NifStream( unknownFloat3, out, info );

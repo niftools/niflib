@@ -54,11 +54,11 @@ void NiAlphaController::Read( istream& in, list<unsigned int> & link_stack, cons
 	//--END CUSTOM CODE--//
 }
 
-void NiAlphaController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiAlphaController::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiFloatInterpController::Write( out, link_map, info );
+	NiFloatInterpController::Write( out, link_map, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
 			WritePtr32( &(*data), out );
@@ -67,11 +67,14 @@ void NiAlphaController::Write( ostream& out, const map<NiObjectRef,unsigned int>
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( data );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

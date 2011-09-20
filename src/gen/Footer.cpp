@@ -39,7 +39,7 @@ void Footer::Read( istream& in, list<unsigned int> & link_stack, const NifInfo &
 	};
 }
 
-void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	numRoots = (unsigned int)(roots.size());
 	if ( info.version >= 0x0303000D ) {
 		NifStream( numRoots, out, info );
@@ -51,11 +51,14 @@ void Footer::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(roots[i2]) );
 					if (it != link_map.end()) {
 						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
 					} else {
 						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( roots[i2] );
 					}
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
 				}
 			}
 		};

@@ -48,11 +48,11 @@ void NiPSysSphereEmitter::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 }
 
-void NiPSysSphereEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiPSysSphereEmitter::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiPSysVolumeEmitter::Write( out, link_map, info );
+	NiPSysVolumeEmitter::Write( out, link_map, missing_link_stack, info );
 	NifStream( radius, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//

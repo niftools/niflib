@@ -72,11 +72,11 @@ void bhkHingeConstraint::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 }
 
-void bhkHingeConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkHingeConstraint::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkConstraint::Write( out, link_map, info );
+	bhkConstraint::Write( out, link_map, missing_link_stack, info );
 	NifStream( hinge.pivotA, out, info );
 	NifStream( hinge.perp2AxleInA1, out, info );
 	NifStream( hinge.perp2AxleInA2, out, info );

@@ -65,12 +65,12 @@ void BSPSysMultiTargetEmitterCtlr::Read( istream& in, list<unsigned int> & link_
 	//--END CUSTOM CODE--//
 }
 
-void BSPSysMultiTargetEmitterCtlr::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void BSPSysMultiTargetEmitterCtlr::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiPSysModifierCtlr::Write( out, link_map, info );
+	NiPSysModifierCtlr::Write( out, link_map, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
 		if ( info.version < VER_3_3_0_13 ) {
 			WritePtr32( &(*data), out );
@@ -79,11 +79,14 @@ void BSPSysMultiTargetEmitterCtlr::Write( ostream& out, const map<NiObjectRef,un
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( data );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -95,11 +98,14 @@ void BSPSysMultiTargetEmitterCtlr::Write( ostream& out, const map<NiObjectRef,un
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(visibilityInterpolator) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( visibilityInterpolator );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

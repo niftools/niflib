@@ -65,11 +65,11 @@ void bhkListShape::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	//--END CUSTOM CODE--//
 }
 
-void bhkListShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void bhkListShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkShapeCollection::Write( out, link_map, info );
+	bhkShapeCollection::Write( out, link_map, missing_link_stack, info );
 	numUnknownInts = (unsigned int)(unknownInts.size());
 	numSubShapes = (unsigned int)(subShapes.size());
 	NifStream( numSubShapes, out, info );
@@ -81,11 +81,14 @@ void bhkListShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(subShapes[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( subShapes[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

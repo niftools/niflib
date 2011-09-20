@@ -67,12 +67,12 @@ void BSDecalPlacementVectorExtraData::Read( istream& in, list<unsigned int> & li
 	//--END CUSTOM CODE--//
 }
 
-void BSDecalPlacementVectorExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void BSDecalPlacementVectorExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiExtraData::Write( out, link_map, info );
+	NiExtraData::Write( out, link_map, missing_link_stack, info );
 	numVectorBlocks = (short)(vectorBlocks.size());
 	NifStream( unknownFloat1, out, info );
 	NifStream( numVectorBlocks, out, info );

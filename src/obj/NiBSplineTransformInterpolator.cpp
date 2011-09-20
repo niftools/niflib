@@ -59,11 +59,11 @@ void NiBSplineTransformInterpolator::Read( istream& in, list<unsigned int> & lin
 	//--END CUSTOM CODE--//
 }
 
-void NiBSplineTransformInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiBSplineTransformInterpolator::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiBSplineInterpolator::Write( out, link_map, info );
+	NiBSplineInterpolator::Write( out, link_map, missing_link_stack, info );
 	NifStream( translation, out, info );
 	NifStream( rotation, out, info );
 	NifStream( scale, out, info );

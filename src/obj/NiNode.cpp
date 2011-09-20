@@ -78,11 +78,11 @@ void NiNode::Read( istream& in, list<unsigned int> & link_stack, const NifInfo &
 	//--END CUSTOM CODE--//
 }
 
-void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiAVObject::Write( out, link_map, info );
+	NiAVObject::Write( out, link_map, missing_link_stack, info );
 	numEffects = (unsigned int)(effects.size());
 	numChildren = (unsigned int)(children.size());
 	NifStream( numChildren, out, info );
@@ -94,11 +94,14 @@ void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(children[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( children[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
@@ -111,11 +114,14 @@ void NiNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(effects[i1]) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( effects[i1] );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};

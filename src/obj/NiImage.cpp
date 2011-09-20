@@ -61,11 +61,11 @@ void NiImage::Read( istream& in, list<unsigned int> & link_stack, const NifInfo 
 	//--END CUSTOM CODE--//
 }
 
-void NiImage::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, const NifInfo & info ) const {
+void NiImage::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const {
 	//--BEGIN PRE-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, info );
+	NiObject::Write( out, link_map, missing_link_stack, info );
 	NifStream( external, out, info );
 	if ( (external != 0) ) {
 		NifStream( fileName, out, info );
@@ -78,11 +78,14 @@ void NiImage::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_ma
 				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(imageData) );
 				if (it != link_map.end()) {
 					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
 				} else {
 					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( imageData );
 				}
 			} else {
 				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
 			}
 		}
 	};
