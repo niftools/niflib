@@ -58,6 +58,7 @@ namespace Niflib {
 
 //Classes used
 class NiObject;
+typedef Ref<NiObject> NiObjectRef;
 class NiNode;
 class NiAVObject;
 class NiControllerSequence;
@@ -140,6 +141,16 @@ NIFLIB_API Ref<NiObject> ReadNifTree( string const & file_name, NifInfo * info =
  * \return The root of the tree of NIF Objects contained in the NIF file.
  */
 NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, NifInfo * info = NULL );
+
+/*!
+ * Creates a new NIF file of the given file name by crawling through the data tree starting with the root objects given, and keeps track of links that cannot been written.
+ * \param[in] in The output stream to write the NIF data to.
+ * \param[in] roots The root objects to start from when writing out the NIF file.  All decedents of these blocks will be written to the file in tree-descending order.
+ * \param[in] missing_link_stack stack of links which are referred to but which are not inside the tree rooted by roots.
+ * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
+ * \sa ReadNifList, WriteNifTree
+ */
+NIFLIB_API void WriteNifTree( ostream & in, list<NiObjectRef> const & roots, list<NiObject *> & missing_link_stack, const NifInfo & info = NifInfo() );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root object given.
