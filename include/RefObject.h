@@ -110,7 +110,7 @@ public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info ) = 0;
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
-	NIFLIB_HIDDEN virtual void Write( ostream& out, const map< Ref<NiObject>, unsigned int> & link_map, const NifInfo & info ) const = 0;
+	NIFLIB_HIDDEN virtual void Write( ostream& out, const map< Ref<NiObject>, unsigned int> & link_map, list<NiObject *> & missing_link_stack, const NifInfo & info ) const = 0;
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void FixLinks( const map<unsigned int, Ref<NiObject> > & objects, list<unsigned int> & link_stack, const NifInfo & info ) = 0;
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

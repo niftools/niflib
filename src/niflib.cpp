@@ -398,7 +398,9 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 }
 
 // Writes a valid Nif File given an ostream, a list to the root objects of a file tree
-void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo & info ) {
+// (missing_link_stack stores a stack of links which are referred to but which
+// are not inside the tree rooted by roots)
+void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, list<NiObject *> & missing_link_stack, const NifInfo & info) {
 
 	//Enumerate all objects in tree
 	map<Type*,unsigned int> type_map;
@@ -463,7 +465,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 		header.blockSize.resize( objects.size() );
 		for ( unsigned int i = 0; i < objects.size(); ++i ) {
 			ostr.reset();
-			objects[i]->Write( ostr, link_map, info );
+			objects[i]->Write( ostr, link_map, missing_link_stack, info );
 			header.blockSize[i] = ostr.tellp();
 		}
 		header.numStrings = header.strings.size();
@@ -505,7 +507,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 			WriteUInt( 0, out );
 		}
 
-		objects[i]->Write( out, link_map, info );
+		objects[i]->Write( out, link_map, missing_link_stack, info );
 	}
 
 	//--Write Footer--//
@@ -534,11 +536,16 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo
 			footer.numRoots = roots.size();
 			footer.roots.insert(footer.roots.end(), roots.begin(), roots.end());
 		}
-		footer.Write( out, link_map, info );
+		footer.Write( out, link_map, missing_link_stack, info );
 	}
 
 	// clear the header pointer in the stream.  Should be in try/catch block
 	out << hdrInfo(NULL);
+}
+
+void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo & info) {
+	list<NiObject *> missing_link_stack;
+	WriteNifTree( out, roots, missing_link_stack, info );
 }
 
 // Writes a valid Nif File given a file name, a pointer to the root object of a file tree

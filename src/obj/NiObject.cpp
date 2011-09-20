@@ -108,7 +108,8 @@ NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 
 	//Write this object's data to the stream
 	NifInfo info( version, user_version );
-	this->Write( tmp, link_map, info );
+	list<NiObject *> missing_link_stack;
+	this->Write( tmp, link_map, missing_link_stack, info );
 
 	//Dummy stack
 	list<unsigned int> link_stack;
