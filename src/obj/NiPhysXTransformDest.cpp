@@ -112,7 +112,7 @@ void NiPhysXTransformDest::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	node = FixLink<NiNode>( objects, link_stack, info );
+	node = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

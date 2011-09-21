@@ -182,12 +182,12 @@ void NiFlipController::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	NiFloatInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x04000000 ) {
 		for (unsigned int i2 = 0; i2 < sources.size(); i2++) {
-			sources[i2] = FixLink<NiSourceTexture>( objects, link_stack, info );
+			sources[i2] = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 	if ( info.version <= 0x03010000 ) {
 		for (unsigned int i2 = 0; i2 < images.size(); i2++) {
-			images[i2] = FixLink<NiImage>( objects, link_stack, info );
+			images[i2] = FixLink<NiImage>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

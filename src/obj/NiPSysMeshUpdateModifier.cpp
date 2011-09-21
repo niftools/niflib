@@ -119,7 +119,7 @@ void NiPSysMeshUpdateModifier::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	NiPSysModifier::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < meshes.size(); i1++) {
-		meshes[i1] = FixLink<NiAVObject>( objects, link_stack, info );
+		meshes[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

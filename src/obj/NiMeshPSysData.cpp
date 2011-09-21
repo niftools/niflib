@@ -131,7 +131,7 @@ void NiMeshPSysData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	//--END CUSTOM CODE--//
 
 	NiPSysData::FixLinks( objects, link_stack, missing_link_stack, info );
-	unknownNode = FixLink<NiNode>( objects, link_stack, info );
+	unknownNode = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

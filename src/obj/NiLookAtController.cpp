@@ -103,7 +103,7 @@ void NiLookAtController::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	//--END CUSTOM CODE--//
 
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
-	lookAtNode = FixLink<NiNode>( objects, link_stack, info );
+	lookAtNode = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

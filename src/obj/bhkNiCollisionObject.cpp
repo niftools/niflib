@@ -99,7 +99,7 @@ void bhkNiCollisionObject::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiCollisionObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	body = FixLink<NiObject>( objects, link_stack, info );
+	body = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

@@ -106,7 +106,7 @@ void BSFrustumFOVController::FixLinks( const map<unsigned int,NiObjectRef> & obj
 	//--END CUSTOM CODE--//
 
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
-	interpolator = FixLink<NiFloatInterpolator>( objects, link_stack, info );
+	interpolator = FixLink<NiFloatInterpolator>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

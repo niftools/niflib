@@ -122,7 +122,7 @@ void NiDefaultAVObjectPalette::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	NiAVObjectPalette::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < objs.size(); i1++) {
-		objs[i1].avObject = FixLink<NiAVObject>( objects, link_stack, info );
+		objs[i1].avObject = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

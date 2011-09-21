@@ -223,11 +223,11 @@ void NiControllerSequence::FixLinks( const map<unsigned int,NiObjectRef> & objec
 
 	NiSequence::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A01006A ) {
-		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
-		manager = FixLink<NiControllerManager>( objects, link_stack, info );
+		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, missing_link_stack, info );
+		manager = FixLink<NiControllerManager>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
-		stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
+		stringPalette = FixLink<NiStringPalette>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

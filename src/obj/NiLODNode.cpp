@@ -159,7 +159,7 @@ void NiLODNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<un
 
 	NiSwitchNode::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
-		lodLevelData = FixLink<NiLODData>( objects, link_stack, info );
+		lodLevelData = FixLink<NiLODData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

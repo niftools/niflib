@@ -123,8 +123,8 @@ void NiBSplineInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & obje
 	//--END CUSTOM CODE--//
 
 	NiInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
-	splineData = FixLink<NiBSplineData>( objects, link_stack, info );
-	basisData = FixLink<NiBSplineBasisData>( objects, link_stack, info );
+	splineData = FixLink<NiBSplineData>( objects, link_stack, missing_link_stack, info );
+	basisData = FixLink<NiBSplineBasisData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

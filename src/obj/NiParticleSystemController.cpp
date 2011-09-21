@@ -402,17 +402,17 @@ void NiParticleSystemController::FixLinks( const map<unsigned int,NiObjectRef> &
 	//--END CUSTOM CODE--//
 
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
-	emitter = FixLink<NiObject>( objects, link_stack, info );
+	emitter = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x03010000 ) {
-		particleLink = FixLink<NiObject>( objects, link_stack, info );
+		particleLink = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x04000002 ) {
-		unknownLink = FixLink<NiObject>( objects, link_stack, info );
+		unknownLink = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	};
-	particleExtra = FixLink<NiParticleModifier>( objects, link_stack, info );
-	unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
+	particleExtra = FixLink<NiParticleModifier>( objects, link_stack, missing_link_stack, info );
+	unknownLink2 = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x03010000 ) {
-		colorData = FixLink<NiColorData>( objects, link_stack, info );
+		colorData = FixLink<NiColorData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

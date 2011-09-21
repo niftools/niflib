@@ -252,15 +252,15 @@ void NiGeomMorpherController::FixLinks( const map<unsigned int,NiObjectRef> & ob
 	//--END CUSTOM CODE--//
 
 	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<NiMorphData>( objects, link_stack, info );
+	data = FixLink<NiMorphData>( objects, link_stack, missing_link_stack, info );
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020006 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
-			interpolators[i2] = FixLink<NiInterpolator>( objects, link_stack, info );
+			interpolators[i2] = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 	if ( info.version >= 0x14020007 ) {
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
-			interpolatorWeights[i2].interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
+			interpolatorWeights[i2].interpolator = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

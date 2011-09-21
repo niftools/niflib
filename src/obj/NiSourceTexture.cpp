@@ -192,11 +192,11 @@ void NiSourceTexture::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 	NiTexture::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		if ( (useExternal == 1) ) {
-			unknownLink = FixLink<NiObject>( objects, link_stack, info );
+			unknownLink = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 	if ( (useExternal == 0) ) {
-		pixelData = FixLink<ATextureRenderData>( objects, link_stack, info );
+		pixelData = FixLink<ATextureRenderData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -173,10 +173,10 @@ void NiLookAtInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
-	lookAt = FixLink<NiNode>( objects, link_stack, info );
-	unknownLink1 = FixLink<NiPoint3Interpolator>( objects, link_stack, info );
-	unknownLink2 = FixLink<NiFloatInterpolator>( objects, link_stack, info );
-	unknownLink3 = FixLink<NiFloatInterpolator>( objects, link_stack, info );
+	lookAt = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
+	unknownLink1 = FixLink<NiPoint3Interpolator>( objects, link_stack, missing_link_stack, info );
+	unknownLink2 = FixLink<NiFloatInterpolator>( objects, link_stack, missing_link_stack, info );
+	unknownLink3 = FixLink<NiFloatInterpolator>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

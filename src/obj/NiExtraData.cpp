@@ -107,7 +107,7 @@ void NiExtraData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x04020200 ) {
-		nextExtraData = FixLink<NiExtraData>( objects, link_stack, info );
+		nextExtraData = FixLink<NiExtraData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

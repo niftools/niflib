@@ -132,7 +132,7 @@ void BSMasterParticleSystem::FixLinks( const map<unsigned int,NiObjectRef> & obj
 
 	NiNode::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < particleSystems.size(); i1++) {
-		particleSystems[i1] = FixLink<NiAVObject>( objects, link_stack, info );
+		particleSystems[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -167,7 +167,7 @@ void NiDynamicEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		for (unsigned int i2 = 0; i2 < affectedNodes.size(); i2++) {
-			affectedNodes[i2] = FixLink<NiAVObject>( objects, link_stack, info );
+			affectedNodes[i2] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

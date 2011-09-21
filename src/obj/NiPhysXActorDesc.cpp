@@ -237,12 +237,12 @@ void NiPhysXActorDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	unknownRef0 = FixLink<NiPhysXBodyDesc>( objects, link_stack, info );
-	shapeDescription = FixLink<NiPhysXShapeDesc>( objects, link_stack, info );
-	unknownRef1 = FixLink<NiObject>( objects, link_stack, info );
-	unknownRef2 = FixLink<NiObject>( objects, link_stack, info );
+	unknownRef0 = FixLink<NiPhysXBodyDesc>( objects, link_stack, missing_link_stack, info );
+	shapeDescription = FixLink<NiPhysXShapeDesc>( objects, link_stack, missing_link_stack, info );
+	unknownRef1 = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
+	unknownRef2 = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < unknownRefs3.size(); i1++) {
-		unknownRefs3[i1] = FixLink<NiObject>( objects, link_stack, info );
+		unknownRefs3[i1] = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

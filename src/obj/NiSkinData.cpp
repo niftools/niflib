@@ -200,7 +200,7 @@ void NiSkinData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
-		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, info );
+		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

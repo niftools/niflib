@@ -137,7 +137,7 @@ void NiPortal::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<uns
 	//--END CUSTOM CODE--//
 
 	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	target = FixLink<NiNode>( objects, link_stack, info );
+	target = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

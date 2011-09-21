@@ -142,9 +142,9 @@ void NiTimeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	nextController = FixLink<NiTimeController>( objects, link_stack, info );
+	nextController = FixLink<NiTimeController>( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0303000D ) {
-		target = FixLink<NiObjectNET>( objects, link_stack, info );
+		target = FixLink<NiObjectNET>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

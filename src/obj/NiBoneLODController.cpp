@@ -269,18 +269,18 @@ void NiBoneLODController::FixLinks( const map<unsigned int,NiObjectRef> & object
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < nodeGroups.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
-			nodeGroups[i1].nodes[i2] = FixLink<NiNode>( objects, link_stack, info );
+			nodeGroups[i1].nodes[i2] = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 	if ( ( info.version >= 0x04020200 ) && ( info.userVersion == 0 ) ) {
 		for (unsigned int i2 = 0; i2 < shapeGroups1.size(); i2++) {
 			for (unsigned int i3 = 0; i3 < shapeGroups1[i2].linkPairs.size(); i3++) {
-				shapeGroups1[i2].linkPairs[i3].shape = FixLink<NiTriBasedGeom>( objects, link_stack, info );
-				shapeGroups1[i2].linkPairs[i3].skinInstance = FixLink<NiSkinInstance>( objects, link_stack, info );
+				shapeGroups1[i2].linkPairs[i3].shape = FixLink<NiTriBasedGeom>( objects, link_stack, missing_link_stack, info );
+				shapeGroups1[i2].linkPairs[i3].skinInstance = FixLink<NiSkinInstance>( objects, link_stack, missing_link_stack, info );
 			};
 		};
 		for (unsigned int i2 = 0; i2 < shapeGroups2.size(); i2++) {
-			shapeGroups2[i2] = FixLink<NiTriBasedGeom>( objects, link_stack, info );
+			shapeGroups2[i2] = FixLink<NiTriBasedGeom>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

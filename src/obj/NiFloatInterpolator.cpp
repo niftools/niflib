@@ -99,7 +99,7 @@ void NiFloatInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & object
 	//--END CUSTOM CODE--//
 
 	NiKeyBasedInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<NiFloatData>( objects, link_stack, info );
+	data = FixLink<NiFloatData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

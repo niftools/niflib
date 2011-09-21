@@ -144,9 +144,9 @@ void NiControllerManager::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < controllerSequences.size(); i1++) {
-		controllerSequences[i1] = FixLink<NiControllerSequence>( objects, link_stack, info );
+		controllerSequences[i1] = FixLink<NiControllerSequence>( objects, link_stack, missing_link_stack, info );
 	};
-	objectPalette = FixLink<NiDefaultAVObjectPalette>( objects, link_stack, info );
+	objectPalette = FixLink<NiDefaultAVObjectPalette>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

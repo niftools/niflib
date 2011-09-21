@@ -126,7 +126,7 @@ void BSShaderPPLightingProperty::FixLinks( const map<unsigned int,NiObjectRef> &
 	//--END CUSTOM CODE--//
 
 	BSShaderLightingProperty::FixLinks( objects, link_stack, missing_link_stack, info );
-	textureSet = FixLink<BSShaderTextureSet>( objects, link_stack, info );
+	textureSet = FixLink<BSShaderTextureSet>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

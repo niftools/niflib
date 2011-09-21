@@ -128,7 +128,7 @@ void NiTransformInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & ob
 	//--END CUSTOM CODE--//
 
 	NiKeyBasedInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<NiTransformData>( objects, link_stack, info );
+	data = FixLink<NiTransformData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

@@ -121,7 +121,7 @@ void NiPSysGravityModifier::FixLinks( const map<unsigned int,NiObjectRef> & obje
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::FixLinks( objects, link_stack, missing_link_stack, info );
-	gravityObject = FixLink<NiNode>( objects, link_stack, info );
+	gravityObject = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

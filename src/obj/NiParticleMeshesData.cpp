@@ -96,7 +96,7 @@ void NiParticleMeshesData::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiRotatingParticlesData::FixLinks( objects, link_stack, missing_link_stack, info );
-	unknownLink2 = FixLink<NiAVObject>( objects, link_stack, info );
+	unknownLink2 = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

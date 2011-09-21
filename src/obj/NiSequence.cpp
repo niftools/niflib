@@ -365,21 +365,21 @@ void NiSequence::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
-		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, info );
+		textKeys = FixLink<NiTextKeyExtraData>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < controlledBlocks.size(); i1++) {
 		if ( info.version <= 0x0A010000 ) {
-			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, info );
+			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, missing_link_stack, info );
 		};
 		if ( info.version >= 0x0A01006A ) {
-			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
-			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, info );
+			controlledBlocks[i1].interpolator = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
+			controlledBlocks[i1].controller = FixLink<NiTimeController>( objects, link_stack, missing_link_stack, info );
 		};
 		if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x0A01006A ) ) {
-			controlledBlocks[i1].unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
+			controlledBlocks[i1].unknownLink2 = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
-			controlledBlocks[i1].stringPalette = FixLink<NiStringPalette>( objects, link_stack, info );
+			controlledBlocks[i1].stringPalette = FixLink<NiStringPalette>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

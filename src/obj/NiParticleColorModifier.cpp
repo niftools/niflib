@@ -96,7 +96,7 @@ void NiParticleColorModifier::FixLinks( const map<unsigned int,NiObjectRef> & ob
 	//--END CUSTOM CODE--//
 
 	NiParticleModifier::FixLinks( objects, link_stack, missing_link_stack, info );
-	colorData = FixLink<NiColorData>( objects, link_stack, info );
+	colorData = FixLink<NiColorData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

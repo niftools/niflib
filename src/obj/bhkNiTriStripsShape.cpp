@@ -183,7 +183,7 @@ void bhkNiTriStripsShape::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 	bhkShapeCollection::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
-		stripsData[i1] = FixLink<NiTriStripsData>( objects, link_stack, info );
+		stripsData[i1] = FixLink<NiTriStripsData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

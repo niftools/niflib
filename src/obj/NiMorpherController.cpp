@@ -106,7 +106,7 @@ void NiMorpherController::FixLinks( const map<unsigned int,NiObjectRef> & object
 	//--END CUSTOM CODE--//
 
 	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<NiMorphData>( objects, link_stack, info );
+	data = FixLink<NiMorphData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

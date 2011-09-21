@@ -205,15 +205,15 @@ void NiObjectNET::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x04020200 ) ) {
-		extraData = FixLink<NiExtraData>( objects, link_stack, info );
+		extraData = FixLink<NiExtraData>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x0A000100 ) {
 		for (unsigned int i2 = 0; i2 < extraDataList.size(); i2++) {
-			extraDataList[i2] = FixLink<NiExtraData>( objects, link_stack, info );
+			extraDataList[i2] = FixLink<NiExtraData>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 	if ( info.version >= 0x03000000 ) {
-		controller = FixLink<NiTimeController>( objects, link_stack, info );
+		controller = FixLink<NiTimeController>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

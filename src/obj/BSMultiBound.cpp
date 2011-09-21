@@ -106,7 +106,7 @@ void BSMultiBound::FixLinks( const map<unsigned int,NiObjectRef> & objects, list
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<BSMultiBoundData>( objects, link_stack, info );
+	data = FixLink<BSMultiBoundData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

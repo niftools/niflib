@@ -126,10 +126,10 @@ void NiPSysEmitterCtlr::FixLinks( const map<unsigned int,NiObjectRef> & objects,
 
 	NiPSysModifierCtlr::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
-		data = FixLink<NiPSysEmitterCtlrData>( objects, link_stack, info );
+		data = FixLink<NiPSysEmitterCtlrData>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x0A020000 ) {
-		visibilityInterpolator = FixLink<NiInterpolator>( objects, link_stack, info );
+		visibilityInterpolator = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -222,13 +222,13 @@ void NiPhysXPropDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < actorDescs.size(); i1++) {
-		actorDescs[i1] = FixLink<NiPhysXActorDesc>( objects, link_stack, info );
+		actorDescs[i1] = FixLink<NiPhysXActorDesc>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < jointDescs.size(); i1++) {
-		jointDescs[i1] = FixLink<NiPhysXD6JointDesc>( objects, link_stack, info );
+		jointDescs[i1] = FixLink<NiPhysXD6JointDesc>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < materialDescs.size(); i1++) {
-		materialDescs[i1].materialDesc = FixLink<NiPhysXMaterialDesc>( objects, link_stack, info );
+		materialDescs[i1].materialDesc = FixLink<NiPhysXMaterialDesc>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

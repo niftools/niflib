@@ -122,7 +122,7 @@ void bhkConstraint::FixLinks( const map<unsigned int,NiObjectRef> & objects, lis
 
 	bhkSerializable::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < entities.size(); i1++) {
-		entities[i1] = FixLink<bhkEntity>( objects, link_stack, info );
+		entities[i1] = FixLink<bhkEntity>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

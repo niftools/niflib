@@ -160,7 +160,7 @@ void NiMultiTextureProperty::FixLinks( const map<unsigned int,NiObjectRef> & obj
 	NiProperty::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < 5; i1++) {
 		if ( textureElements[i1].hasImage ) {
-			textureElements[i1].image = FixLink<NiImage>( objects, link_stack, info );
+			textureElements[i1].image = FixLink<NiImage>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

@@ -120,7 +120,7 @@ void NiMultiTargetTransformController::FixLinks( const map<unsigned int,NiObject
 
 	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
-		extraTargets[i1] = FixLink<NiAVObject>( objects, link_stack, info );
+		extraTargets[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

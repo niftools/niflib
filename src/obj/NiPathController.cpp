@@ -136,8 +136,8 @@ void NiPathController::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	//--END CUSTOM CODE--//
 
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
-	posData = FixLink<NiPosData>( objects, link_stack, info );
-	floatData = FixLink<NiFloatData>( objects, link_stack, info );
+	posData = FixLink<NiPosData>( objects, link_stack, missing_link_stack, info );
+	floatData = FixLink<NiFloatData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

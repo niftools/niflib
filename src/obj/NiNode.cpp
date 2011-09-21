@@ -177,10 +177,10 @@ void NiNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsig
 
 	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-		children[i1] = FixLink<NiAVObject>( objects, link_stack, info );
+		children[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < effects.size(); i1++) {
-		effects[i1] = FixLink<NiDynamicEffect>( objects, link_stack, info );
+		effects[i1] = FixLink<NiDynamicEffect>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

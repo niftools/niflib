@@ -102,7 +102,7 @@ void NiSingleInterpController::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A020000 ) {
-		interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
+		interpolator = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

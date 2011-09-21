@@ -183,7 +183,7 @@ void Ni3dsAnimationNode::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( hasData ) {
-		child = FixLink<NiObject>( objects, link_stack, info );
+		child = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

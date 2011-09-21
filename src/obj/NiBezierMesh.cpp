@@ -220,7 +220,7 @@ void NiBezierMesh::FixLinks( const map<unsigned int,NiObjectRef> & objects, list
 
 	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < bezierTriangle.size(); i1++) {
-		bezierTriangle[i1] = FixLink<NiBezierTriangle4>( objects, link_stack, info );
+		bezierTriangle[i1] = FixLink<NiBezierTriangle4>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

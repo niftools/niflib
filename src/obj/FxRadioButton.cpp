@@ -127,7 +127,7 @@ void FxRadioButton::FixLinks( const map<unsigned int,NiObjectRef> & objects, lis
 
 	FxWidget::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < buttons.size(); i1++) {
-		buttons[i1] = FixLink<FxRadioButton>( objects, link_stack, info );
+		buttons[i1] = FixLink<FxRadioButton>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

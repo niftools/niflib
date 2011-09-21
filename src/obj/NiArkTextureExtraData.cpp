@@ -181,7 +181,7 @@ void NiArkTextureExtraData::FixLinks( const map<unsigned int,NiObjectRef> & obje
 
 	NiExtraData::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < textures.size(); i1++) {
-		textures[i1].texturingProperty = FixLink<NiTexturingProperty>( objects, link_stack, info );
+		textures[i1].texturingProperty = FixLink<NiTexturingProperty>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

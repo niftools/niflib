@@ -119,7 +119,7 @@ void NiParticleMeshModifier::FixLinks( const map<unsigned int,NiObjectRef> & obj
 
 	NiParticleModifier::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < particleMeshes.size(); i1++) {
-		particleMeshes[i1] = FixLink<NiAVObject>( objects, link_stack, info );
+		particleMeshes[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

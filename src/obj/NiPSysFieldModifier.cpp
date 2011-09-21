@@ -118,7 +118,7 @@ void NiPSysFieldModifier::FixLinks( const map<unsigned int,NiObjectRef> & object
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::FixLinks( objects, link_stack, missing_link_stack, info );
-	fieldObject = FixLink<NiAVObject>( objects, link_stack, info );
+	fieldObject = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

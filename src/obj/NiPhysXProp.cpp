@@ -198,12 +198,12 @@ void NiPhysXProp::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 
 	NiObjectNET::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < unknownRefs1.size(); i1++) {
-		unknownRefs1[i1] = FixLink<NiObject>( objects, link_stack, info );
+		unknownRefs1[i1] = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < transformDests.size(); i1++) {
-		transformDests[i1] = FixLink<NiPhysXTransformDest>( objects, link_stack, info );
+		transformDests[i1] = FixLink<NiPhysXTransformDest>( objects, link_stack, missing_link_stack, info );
 	};
-	propDescription = FixLink<NiPhysXPropDesc>( objects, link_stack, info );
+	propDescription = FixLink<NiPhysXPropDesc>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 

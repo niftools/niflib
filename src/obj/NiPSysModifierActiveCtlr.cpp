@@ -101,7 +101,7 @@ void NiPSysModifierActiveCtlr::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	NiPSysModifierBoolCtlr::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
-		data = FixLink<NiVisData>( objects, link_stack, info );
+		data = FixLink<NiVisData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -139,7 +139,7 @@ void bhkMoppBvTreeShape::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	//--END CUSTOM CODE--//
 
 	bhkBvTreeShape::FixLinks( objects, link_stack, missing_link_stack, info );
-	shape = FixLink<bhkShape>( objects, link_stack, info );
+	shape = FixLink<bhkShape>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

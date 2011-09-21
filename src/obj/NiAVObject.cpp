@@ -238,10 +238,10 @@ void NiAVObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 
 	NiObjectNET::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < properties.size(); i1++) {
-		properties[i1] = FixLink<NiProperty>( objects, link_stack, info );
+		properties[i1] = FixLink<NiProperty>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x0A000100 ) {
-		collisionObject = FixLink<NiCollisionObject>( objects, link_stack, info );
+		collisionObject = FixLink<NiCollisionObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

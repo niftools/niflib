@@ -1505,47 +1505,47 @@ void NiTexturingProperty::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 	NiProperty::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( (hasBaseTexture != 0) ) {
-		baseTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		baseTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasDarkTexture != 0) ) {
-		darkTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		darkTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasDetailTexture != 0) ) {
-		detailTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		detailTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasGlossTexture != 0) ) {
-		glossTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		glossTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasGlowTexture != 0) ) {
-		glowTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		glowTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasBumpMapTexture != 0) ) {
-		bumpMapTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		bumpMapTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x14020007 ) {
 		if ( (hasNormalTexture != 0) ) {
-			normalTexture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+			normalTexture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 		};
 		if ( (hasUnknown2Texture != 0) ) {
-			unknown2Texture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+			unknown2Texture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 	if ( (hasDecal0Texture != 0) ) {
-		decal0Texture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		decal0Texture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasDecal1Texture != 0) ) {
-		decal1Texture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		decal1Texture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasDecal2Texture != 0) ) {
-		decal2Texture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		decal2Texture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( (hasDecal3Texture != 0) ) {
-		decal3Texture.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+		decal3Texture.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x0A000100 ) {
 		for (unsigned int i2 = 0; i2 < shaderTextures.size(); i2++) {
 			if ( (shaderTextures[i2].isUsed != 0) ) {
-				shaderTextures[i2].textureData.source = FixLink<NiSourceTexture>( objects, link_stack, info );
+				shaderTextures[i2].textureData.source = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 			};
 		};
 	};

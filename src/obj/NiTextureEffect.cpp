@@ -170,10 +170,10 @@ void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 
 	NiDynamicEffect::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x03010000 ) {
-		image = FixLink<NiImage>( objects, link_stack, info );
+		image = FixLink<NiImage>( objects, link_stack, missing_link_stack, info );
 	};
 	if ( info.version >= 0x04000000 ) {
-		sourceTexture = FixLink<NiSourceTexture>( objects, link_stack, info );
+		sourceTexture = FixLink<NiSourceTexture>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

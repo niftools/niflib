@@ -162,7 +162,7 @@ void bhkPackedNiTriStripsShape::FixLinks( const map<unsigned int,NiObjectRef> & 
 	//--END CUSTOM CODE--//
 
 	bhkShapeCollection::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<hkPackedNiTriStripsData>( objects, link_stack, info );
+	data = FixLink<hkPackedNiTriStripsData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

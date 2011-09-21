@@ -108,7 +108,7 @@ void NiPoint3InterpController::FixLinks( const map<unsigned int,NiObjectRef> & o
 
 	NiSingleInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
-		data = FixLink<NiPosData>( objects, link_stack, info );
+		data = FixLink<NiPosData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

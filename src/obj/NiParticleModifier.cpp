@@ -130,9 +130,9 @@ void NiParticleModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	nextModifier = FixLink<NiParticleModifier>( objects, link_stack, info );
+	nextModifier = FixLink<NiParticleModifier>( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x04000002 ) {
-		controller = FixLink<NiParticleSystemController>( objects, link_stack, info );
+		controller = FixLink<NiParticleSystemController>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -99,7 +99,7 @@ void NiBinaryVoxelExtraData::FixLinks( const map<unsigned int,NiObjectRef> & obj
 	//--END CUSTOM CODE--//
 
 	NiExtraData::FixLinks( objects, link_stack, missing_link_stack, info );
-	data = FixLink<NiBinaryVoxelData>( objects, link_stack, info );
+	data = FixLink<NiBinaryVoxelData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

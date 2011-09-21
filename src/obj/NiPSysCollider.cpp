@@ -167,10 +167,10 @@ void NiPSysCollider::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	spawnModifier = FixLink<NiPSysSpawnModifier>( objects, link_stack, info );
-	parent = FixLink<NiObject>( objects, link_stack, info );
-	nextCollider = FixLink<NiObject>( objects, link_stack, info );
-	colliderObject = FixLink<NiNode>( objects, link_stack, info );
+	spawnModifier = FixLink<NiPSysSpawnModifier>( objects, link_stack, missing_link_stack, info );
+	parent = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
+	nextCollider = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
+	colliderObject = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

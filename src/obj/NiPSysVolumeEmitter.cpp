@@ -101,7 +101,7 @@ void NiPSysVolumeEmitter::FixLinks( const map<unsigned int,NiObjectRef> & object
 
 	NiPSysEmitter::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
-		emitterObject = FixLink<NiNode>( objects, link_stack, info );
+		emitterObject = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -568,7 +568,7 @@ void NiParticlesData::FixLinks( const map<unsigned int,NiObjectRef> & objects, l
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x14000004 ) {
-		additionalData = FixLink<NiAdditionalGeometryData>( objects, link_stack, info );
+		additionalData = FixLink<NiAdditionalGeometryData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

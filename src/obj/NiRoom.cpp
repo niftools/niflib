@@ -236,13 +236,13 @@ void NiRoom::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsig
 
 	NiNode::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < inPortals.size(); i1++) {
-		inPortals[i1] = FixLink<NiPortal>( objects, link_stack, info );
+		inPortals[i1] = FixLink<NiPortal>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < portals2.size(); i1++) {
-		portals2[i1] = FixLink<NiPortal>( objects, link_stack, info );
+		portals2[i1] = FixLink<NiPortal>( objects, link_stack, missing_link_stack, info );
 	};
 	for (unsigned int i1 = 0; i1 < items.size(); i1++) {
-		items[i1] = FixLink<NiAVObject>( objects, link_stack, info );
+		items[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

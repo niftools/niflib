@@ -321,8 +321,8 @@ void bhkMalleableConstraint::FixLinks( const map<unsigned int,NiObjectRef> & obj
 	//--END CUSTOM CODE--//
 
 	bhkConstraint::FixLinks( objects, link_stack, missing_link_stack, info );
-	unknownLink1 = FixLink<NiObject>( objects, link_stack, info );
-	unknownLink2 = FixLink<NiObject>( objects, link_stack, info );
+	unknownLink1 = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
+	unknownLink2 = FixLink<NiObject>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//

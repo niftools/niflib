@@ -149,9 +149,9 @@ void NiRoomGroup::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<
 	//--END CUSTOM CODE--//
 
 	NiNode::FixLinks( objects, link_stack, missing_link_stack, info );
-	shellLink = FixLink<NiNode>( objects, link_stack, info );
+	shellLink = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < rooms.size(); i1++) {
-		rooms[i1] = FixLink<NiRoom>( objects, link_stack, info );
+		rooms[i1] = FixLink<NiRoom>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

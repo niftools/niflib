@@ -127,7 +127,7 @@ void NiParticleSystem::FixLinks( const map<unsigned int,NiObjectRef> & objects, 
 	NiParticles::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		for (unsigned int i2 = 0; i2 < modifiers.size(); i2++) {
-			modifiers[i2] = FixLink<NiPSysModifier>( objects, link_stack, info );
+			modifiers[i2] = FixLink<NiPSysModifier>( objects, link_stack, missing_link_stack, info );
 		};
 	};
 

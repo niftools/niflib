@@ -165,7 +165,7 @@ void bhkListShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list
 
 	bhkShapeCollection::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
-		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, info );
+		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

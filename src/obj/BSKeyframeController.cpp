@@ -96,7 +96,7 @@ void BSKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	//--END CUSTOM CODE--//
 
 	NiKeyframeController::FixLinks( objects, link_stack, missing_link_stack, info );
-	data2 = FixLink<NiKeyframeData>( objects, link_stack, info );
+	data2 = FixLink<NiKeyframeData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
