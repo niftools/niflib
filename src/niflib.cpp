@@ -123,7 +123,7 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 	return ReadNifList(in, missing_link_stack, info);
 }
 
-vector<NiObjectRef> ReadNifList( istream & in, const list<NiObjectRef> & missing_link_stack, NifInfo * info ) {
+vector<NiObjectRef> ReadNifList( istream & in, list<NiObjectRef> & missing_link_stack, NifInfo * info ) {
 
 	//Ensure that objects are registered
 	if ( g_objects_registered == false ) {
@@ -409,6 +409,14 @@ NiObjectRef _ProcessMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
 	if (rootnode != NULL && objnode != NULL) {
 		if (!(rootnode->GetName().empty()) && rootnode->GetName() == objnode->GetName()) {
 			return StaticCast<NiObject>(rootnode);
+		}
+	} else if (root != NULL) {
+		list<NiObjectRef> children = root->GetRefs();
+		for (list<NiObjectRef>::iterator child = children.begin(); child != children.end(); ++child) {
+			NiObjectRef result = _ProcessMissingLinkStackHelper(*child, obj);
+			if (result != NULL) {
+				return result;
+			}
 		}
 	}
 	// nothing found

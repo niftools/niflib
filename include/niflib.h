@@ -121,7 +121,7 @@ NIFLIB_API list<Ref<NiObject> > ProcessMissingLinkStack(
  * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
  * \return All the NIF objects read from the stream.
  */
-NIFLIB_API vector<Ref<NiObject> > ReadNifList( istream & in, const list<Ref<NiObject> > & missing_link_stack, NifInfo * info );
+NIFLIB_API vector<Ref<NiObject> > ReadNifList( istream & in, list<Ref<NiObject> > & missing_link_stack, NifInfo * info );
 
 /*!
  * Reads the given file by file name and returns a vector of object references
