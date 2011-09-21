@@ -119,6 +119,11 @@ vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 }
 
 vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
+	list<NiObjectRef> missing_link_stack;
+	return ReadNifList(in, missing_link_stack, info);
+}
+
+vector<NiObjectRef> ReadNifList( istream & in, const list<NiObjectRef> & missing_link_stack, NifInfo * info ) {
 
 	//Ensure that objects are registered
 	if ( g_objects_registered == false ) {
@@ -395,6 +400,32 @@ vector<NiObjectRef> ReadNifList( istream & in, NifInfo * info ) {
 
 	//Return completed object list
 	return obj_list;
+}
+
+NiObjectRef _ProcessMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
+	// search by name
+	NiNodeRef rootnode = DynamicCast<NiNode>(root);
+	NiNodeRef objnode = DynamicCast<NiNode>(obj);
+	if (rootnode != NULL && objnode != NULL) {
+		if (!(rootnode->GetName().empty()) && rootnode->GetName() == objnode->GetName()) {
+			return StaticCast<NiObject>(rootnode);
+		}
+	}
+	// nothing found
+	return NiObjectRef();
+}
+
+list<NiObjectRef> ProcessMissingLinkStack(
+	list<NiObjectRef> const & roots,
+	const list<NiObject *> & missing_link_stack)
+{
+	list<NiObjectRef> result;
+	for (list<NiObject *>::const_iterator obj = missing_link_stack.begin(); obj != missing_link_stack.end(); ++obj) {
+		for (list<NiObjectRef>::const_iterator root = roots.begin(); root != roots.end(); ++root) {
+			result.push_back(_ProcessMissingLinkStackHelper(*root, *obj));
+		}
+	}
+	return result;
 }
 
 // Writes a valid Nif File given an ostream, a list to the root objects of a file tree

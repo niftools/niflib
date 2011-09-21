@@ -108,6 +108,22 @@ enum ExportOptions {
 NIFLIB_API unsigned int GetNifVersion( string const & file_name );
 
 /*!
+ * Return the missing link stack with objects replaced from nif trees at specified roots.
+ */
+NIFLIB_API list<Ref<NiObject> > ProcessMissingLinkStack(
+	list<Ref<NiObject> > const & roots,
+	const list<NiObject *> & missing_link_stack);
+
+/*!
+ * Reads the given input stream and returns a vector of object references
+ * \param in The input stream to read NIF data from.
+ * \param missing_link_stack A stack where to copy NULL refs from (in case of reading a nif from an incomplete nif tree)
+ * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
+ * \return All the NIF objects read from the stream.
+ */
+NIFLIB_API vector<Ref<NiObject> > ReadNifList( istream & in, const list<Ref<NiObject> > & missing_link_stack, NifInfo * info );
+
+/*!
  * Reads the given file by file name and returns a vector of object references
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
  * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.
