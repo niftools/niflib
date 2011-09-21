@@ -407,7 +407,7 @@ vector<NiObjectRef> ReadNifList( istream & in, list<NiObjectRef> & missing_link_
 	return obj_list;
 }
 
-NiObjectRef _ProcessMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
+NiObjectRef _ResolveMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
 	// search by name
 	NiNodeRef rootnode = DynamicCast<NiNode>(root);
 	NiNodeRef objnode = DynamicCast<NiNode>(obj);
@@ -415,10 +415,9 @@ NiObjectRef _ProcessMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
 		if (!(rootnode->GetName().empty()) && rootnode->GetName() == objnode->GetName()) {
 			return StaticCast<NiObject>(rootnode);
 		}
-	} else if (root != NULL) {
 		list<NiObjectRef> children = root->GetRefs();
 		for (list<NiObjectRef>::iterator child = children.begin(); child != children.end(); ++child) {
-			NiObjectRef result = _ProcessMissingLinkStackHelper(*child, obj);
+			NiObjectRef result = _ResolveMissingLinkStackHelper(*child, obj);
 			if (result != NULL) {
 				return result;
 			}
@@ -428,15 +427,21 @@ NiObjectRef _ProcessMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
 	return NiObjectRef();
 }
 
-list<NiObjectRef> ProcessMissingLinkStack(
+list<NiObjectRef> ResolveMissingLinkStack(
 	list<NiObjectRef> const & roots,
 	const list<NiObject *> & missing_link_stack)
 {
 	list<NiObjectRef> result;
 	for (list<NiObject *>::const_iterator obj = missing_link_stack.begin(); obj != missing_link_stack.end(); ++obj) {
-		for (list<NiObjectRef>::const_iterator root = roots.begin(); root != roots.end(); ++root) {
-			result.push_back(_ProcessMissingLinkStackHelper(*root, *obj));
+		NiObjectRef resolved;
+		if (*obj != NULL) {
+			for (list<NiObjectRef>::const_iterator root = roots.begin(); root != roots.end(); ++root) {
+				resolved = _ResolveMissingLinkStackHelper(*root, *obj);
+				if (resolved != NULL)
+					break;
+			}
 		}
+		result.push_back(resolved);
 	}
 	return result;
 }

@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(missing_link_stack_simple_test)
   BOOST_CHECK_NO_THROW(WriteNifTree(ss, roots, missing_link_stack, NifInfo(VER_20_0_0_5)));
   bool has_root = false;
   bool has_bone = false;
-  // check that root and bone are missing
+  // check that root and bone are in the missing link stack
   for (list<NiObject *>::iterator it =  missing_link_stack.begin(); it != missing_link_stack.end(); it++) {
     if ((*it) != NULL) {
       if (!has_root && (*it) == root) {
@@ -62,6 +62,21 @@ BOOST_AUTO_TEST_CASE(missing_link_stack_simple_test)
   }
   BOOST_CHECK_EQUAL(has_root, true);
   BOOST_CHECK_EQUAL(has_bone, true);
+  // read it again
+  roots.clear();
+  roots.push_back(StaticCast<NiObject>(root));
+  list<NiObjectRef> resolved_link_stack = ResolveMissingLinkStack(roots, missing_link_stack);
+  ss.seekg(0);
+  NifInfo info;
+  NiObjectRef new_root;
+  BOOST_CHECK_NO_THROW(new_root = ReadNifTree(ss, resolved_link_stack, &info));
+  NiTriStripsRef new_shape = DynamicCast<NiTriStrips>(new_root);
+  // check for references to the old tree
+  BOOST_CHECK(new_shape != NULL);
+  BOOST_CHECK(new_shape->skinInstance != NULL);
+  BOOST_CHECK_EQUAL(new_shape->skinInstance->skeletonRoot, root);
+  BOOST_CHECK_EQUAL(new_shape->skinInstance->bones.size(), 1);
+  BOOST_CHECK_EQUAL(new_shape->skinInstance->bones[0], bone);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

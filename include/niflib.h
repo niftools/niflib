@@ -110,7 +110,7 @@ NIFLIB_API unsigned int GetNifVersion( string const & file_name );
 /*!
  * Return the missing link stack with objects replaced from nif trees at specified roots.
  */
-NIFLIB_API list<Ref<NiObject> > ProcessMissingLinkStack(
+NIFLIB_API list<Ref<NiObject> > ResolveMissingLinkStack(
 	list<Ref<NiObject> > const & roots,
 	const list<NiObject *> & missing_link_stack);
 
