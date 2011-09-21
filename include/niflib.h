@@ -163,11 +163,11 @@ NIFLIB_API void WriteNifTree( string const & file_name, NiObject * root, const N
 
 /*!
  * Writes a nif tree to an ostream starting at the given root object.
- * \param[in] in The output stream to write the NIF data to.
+ * \param[in] out The output stream to write the NIF data to.
  * \param[in] root The root object to start from when writing out the NIF data.  All decedents of this object will be written to the stream in tree-descending order.
  * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  */
-NIFLIB_API void WriteNifTree( ostream & in, NiObject * root, const NifInfo & info = NifInfo() );
+NIFLIB_API void WriteNifTree( ostream & out, NiObject * root, const NifInfo & info = NifInfo() );
 
 /*!
  * Writes a bunch of files given a base file name, and a pointer to the root object of the Nif file tree.
