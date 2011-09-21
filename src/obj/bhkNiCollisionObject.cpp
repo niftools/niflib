@@ -94,11 +94,11 @@ std::string bhkNiCollisionObject::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkNiCollisionObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkNiCollisionObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiCollisionObject::FixLinks( objects, link_stack, info );
+	NiCollisionObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	body = FixLink<NiObject>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

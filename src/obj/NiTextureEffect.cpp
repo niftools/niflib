@@ -164,11 +164,11 @@ std::string NiTextureEffect::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiTextureEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiDynamicEffect::FixLinks( objects, link_stack, info );
+	NiDynamicEffect::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x03010000 ) {
 		image = FixLink<NiImage>( objects, link_stack, info );
 	};

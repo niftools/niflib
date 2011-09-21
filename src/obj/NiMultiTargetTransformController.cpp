@@ -114,11 +114,11 @@ std::string NiMultiTargetTransformController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiMultiTargetTransformController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiMultiTargetTransformController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiInterpController::FixLinks( objects, link_stack, info );
+	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < extraTargets.size(); i1++) {
 		extraTargets[i1] = FixLink<NiAVObject>( objects, link_stack, info );
 	};

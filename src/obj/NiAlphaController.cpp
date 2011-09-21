@@ -96,11 +96,11 @@ std::string NiAlphaController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiAlphaController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiAlphaController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiFloatInterpController::FixLinks( objects, link_stack, info );
+	NiFloatInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
 		data = FixLink<NiFloatData>( objects, link_stack, info );
 	};

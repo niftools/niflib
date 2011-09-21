@@ -160,11 +160,11 @@ std::string NiDynamicEffect::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiDynamicEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiDynamicEffect::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiAVObject::FixLinks( objects, link_stack, info );
+	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		for (unsigned int i2 = 0; i2 < affectedNodes.size(); i2++) {
 			affectedNodes[i2] = FixLink<NiAVObject>( objects, link_stack, info );

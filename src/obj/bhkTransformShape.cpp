@@ -119,11 +119,11 @@ std::string bhkTransformShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkTransformShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkTransformShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkShape::FixLinks( objects, link_stack, info );
+	bhkShape::FixLinks( objects, link_stack, missing_link_stack, info );
 	shape = FixLink<bhkShape>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

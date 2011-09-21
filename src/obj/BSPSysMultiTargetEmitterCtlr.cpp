@@ -135,12 +135,12 @@ std::string BSPSysMultiTargetEmitterCtlr::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void BSPSysMultiTargetEmitterCtlr::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void BSPSysMultiTargetEmitterCtlr::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiPSysModifierCtlr::FixLinks( objects, link_stack, info );
+	NiPSysModifierCtlr::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
 		data = FixLink<NiPSysEmitterCtlrData>( objects, link_stack, info );
 	};

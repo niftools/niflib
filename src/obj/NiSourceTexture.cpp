@@ -185,11 +185,11 @@ std::string NiSourceTexture::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiSourceTexture::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiSourceTexture::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTexture::FixLinks( objects, link_stack, info );
+	NiTexture::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		if ( (useExternal == 1) ) {
 			unknownLink = FixLink<NiObject>( objects, link_stack, info );

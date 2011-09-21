@@ -231,12 +231,12 @@ std::string NiPhysXActorDesc::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiPhysXActorDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiPhysXActorDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	unknownRef0 = FixLink<NiPhysXBodyDesc>( objects, link_stack, info );
 	shapeDescription = FixLink<NiPhysXShapeDesc>( objects, link_stack, info );
 	unknownRef1 = FixLink<NiObject>( objects, link_stack, info );

@@ -91,11 +91,11 @@ std::string NiParticleMeshesData::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiParticleMeshesData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiParticleMeshesData::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiRotatingParticlesData::FixLinks( objects, link_stack, info );
+	NiRotatingParticlesData::FixLinks( objects, link_stack, missing_link_stack, info );
 	unknownLink2 = FixLink<NiAVObject>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

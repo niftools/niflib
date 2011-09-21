@@ -96,11 +96,11 @@ std::string NiSingleInterpController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiSingleInterpController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiSingleInterpController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiInterpController::FixLinks( objects, link_stack, info );
+	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A020000 ) {
 		interpolator = FixLink<NiInterpolator>( objects, link_stack, info );
 	};

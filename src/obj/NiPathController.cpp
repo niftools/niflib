@@ -131,11 +131,11 @@ std::string NiPathController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiPathController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiPathController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::FixLinks( objects, link_stack, info );
+	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	posData = FixLink<NiPosData>( objects, link_stack, info );
 	floatData = FixLink<NiFloatData>( objects, link_stack, info );
 

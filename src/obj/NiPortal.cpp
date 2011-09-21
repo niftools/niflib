@@ -131,12 +131,12 @@ std::string NiPortal::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiPortal::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiPortal::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiAVObject::FixLinks( objects, link_stack, info );
+	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	target = FixLink<NiNode>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

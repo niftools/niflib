@@ -91,11 +91,11 @@ std::string BSKeyframeController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void BSKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void BSKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiKeyframeController::FixLinks( objects, link_stack, info );
+	NiKeyframeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	data2 = FixLink<NiKeyframeData>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

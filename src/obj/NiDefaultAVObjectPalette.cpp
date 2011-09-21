@@ -116,11 +116,11 @@ std::string NiDefaultAVObjectPalette::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiDefaultAVObjectPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiDefaultAVObjectPalette::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiAVObjectPalette::FixLinks( objects, link_stack, info );
+	NiAVObjectPalette::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < objs.size(); i1++) {
 		objs[i1].avObject = FixLink<NiAVObject>( objects, link_stack, info );
 	};

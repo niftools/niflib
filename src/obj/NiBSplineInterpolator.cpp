@@ -118,11 +118,11 @@ std::string NiBSplineInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiBSplineInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiBSplineInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiInterpolator::FixLinks( objects, link_stack, info );
+	NiInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
 	splineData = FixLink<NiBSplineData>( objects, link_stack, info );
 	basisData = FixLink<NiBSplineBasisData>( objects, link_stack, info );
 

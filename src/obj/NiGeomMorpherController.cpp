@@ -247,11 +247,11 @@ std::string NiGeomMorpherController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiGeomMorpherController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiGeomMorpherController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiInterpController::FixLinks( objects, link_stack, info );
+	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	data = FixLink<NiMorphData>( objects, link_stack, info );
 	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020006 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {

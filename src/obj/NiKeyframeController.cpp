@@ -95,11 +95,11 @@ std::string NiKeyframeController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiKeyframeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiSingleInterpController::FixLinks( objects, link_stack, info );
+	NiSingleInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version <= 0x0A010000 ) {
 		data = FixLink<NiKeyframeData>( objects, link_stack, info );
 	};

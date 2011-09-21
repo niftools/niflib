@@ -397,11 +397,11 @@ std::string NiParticleSystemController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiParticleSystemController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiParticleSystemController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::FixLinks( objects, link_stack, info );
+	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	emitter = FixLink<NiObject>( objects, link_stack, info );
 	if ( info.version <= 0x03010000 ) {
 		particleLink = FixLink<NiObject>( objects, link_stack, info );

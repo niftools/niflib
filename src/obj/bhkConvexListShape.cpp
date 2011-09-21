@@ -149,12 +149,12 @@ std::string bhkConvexListShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkConvexListShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkConvexListShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	bhkShape::FixLinks( objects, link_stack, info );
+	bhkShape::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, info );
 	};

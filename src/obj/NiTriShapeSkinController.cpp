@@ -165,11 +165,11 @@ std::string NiTriShapeSkinController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiTriShapeSkinController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiTriShapeSkinController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::FixLinks( objects, link_stack, info );
+	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {
 		bones[i1] = FixLink<NiBone>( objects, link_stack, info );
 	};

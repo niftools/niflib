@@ -137,11 +137,11 @@ std::string NiTimeController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiTimeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiTimeController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	nextController = FixLink<NiTimeController>( objects, link_stack, info );
 	if ( info.version >= 0x0303000D ) {
 		target = FixLink<NiObjectNET>( objects, link_stack, info );

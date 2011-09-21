@@ -192,11 +192,11 @@ std::string NiSkinInstance::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiSkinInstance::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	data = FixLink<NiSkinData>( objects, link_stack, info );
 	if ( info.version >= 0x0A020000 ) {
 		skinPartition = FixLink<NiSkinPartition>( objects, link_stack, info );

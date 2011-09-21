@@ -159,11 +159,11 @@ std::string bhkListShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkListShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkListShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkShapeCollection::FixLinks( objects, link_stack, info );
+	bhkShapeCollection::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
 		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, info );
 	};

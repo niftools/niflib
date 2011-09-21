@@ -265,11 +265,11 @@ std::string bhkRigidBody::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkRigidBody::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkRigidBody::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkEntity::FixLinks( objects, link_stack, info );
+	bhkEntity::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < constraints.size(); i1++) {
 		constraints[i1] = FixLink<bhkSerializable>( objects, link_stack, info );
 	};

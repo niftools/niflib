@@ -120,11 +120,11 @@ std::string NiParticleSystem::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiParticleSystem::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiParticleSystem::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiParticles::FixLinks( objects, link_stack, info );
+	NiParticles::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x0A010000 ) {
 		for (unsigned int i2 = 0; i2 < modifiers.size(); i2++) {
 			modifiers[i2] = FixLink<NiPSysModifier>( objects, link_stack, info );

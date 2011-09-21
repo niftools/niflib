@@ -168,11 +168,11 @@ std::string NiLookAtInterpolator::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiLookAtInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiLookAtInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiInterpolator::FixLinks( objects, link_stack, info );
+	NiInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
 	lookAt = FixLink<NiNode>( objects, link_stack, info );
 	unknownLink1 = FixLink<NiPoint3Interpolator>( objects, link_stack, info );
 	unknownLink2 = FixLink<NiFloatInterpolator>( objects, link_stack, info );

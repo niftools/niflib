@@ -262,11 +262,11 @@ std::string NiBoneLODController::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiBoneLODController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiBoneLODController::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiTimeController::FixLinks( objects, link_stack, info );
+	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < nodeGroups.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < nodeGroups[i1].nodes.size(); i2++) {
 			nodeGroups[i1].nodes[i2] = FixLink<NiNode>( objects, link_stack, info );

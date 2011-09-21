@@ -215,12 +215,12 @@ std::string NiPhysXPropDesc::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiPhysXPropDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiPhysXPropDesc::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < actorDescs.size(); i1++) {
 		actorDescs[i1] = FixLink<NiPhysXActorDesc>( objects, link_stack, info );
 	};

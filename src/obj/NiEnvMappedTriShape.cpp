@@ -169,12 +169,12 @@ std::string NiEnvMappedTriShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiEnvMappedTriShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiEnvMappedTriShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiObjectNET::FixLinks( objects, link_stack, info );
+	NiObjectNET::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
 		children[i1] = FixLink<NiAVObject>( objects, link_stack, info );
 	};

@@ -177,11 +177,11 @@ std::string bhkNiTriStripsShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkNiTriStripsShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkNiTriStripsShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkShapeCollection::FixLinks( objects, link_stack, info );
+	bhkShapeCollection::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < stripsData.size(); i1++) {
 		stripsData[i1] = FixLink<NiTriStripsData>( objects, link_stack, info );
 	};

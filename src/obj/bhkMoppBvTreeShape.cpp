@@ -134,11 +134,11 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void bhkMoppBvTreeShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void bhkMoppBvTreeShape::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	bhkBvTreeShape::FixLinks( objects, link_stack, info );
+	bhkBvTreeShape::FixLinks( objects, link_stack, missing_link_stack, info );
 	shape = FixLink<bhkShape>( objects, link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

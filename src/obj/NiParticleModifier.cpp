@@ -124,12 +124,12 @@ std::string NiParticleModifier::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiParticleModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiParticleModifier::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, info );
+	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	nextModifier = FixLink<NiParticleModifier>( objects, link_stack, info );
 	if ( info.version >= 0x04000002 ) {
 		controller = FixLink<NiParticleSystemController>( objects, link_stack, info );

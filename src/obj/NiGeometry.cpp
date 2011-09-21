@@ -210,11 +210,11 @@ std::string NiGeometry::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 }
 
-void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, const NifInfo & info ) {
+void NiGeometry::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<unsigned int> & link_stack, list<NiObjectRef> & missing_link_stack, const NifInfo & info ) {
 	//--BEGIN PRE-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 
-	NiAVObject::FixLinks( objects, link_stack, info );
+	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	data = FixLink<NiObject>( objects, link_stack, info );
 	if ( info.version >= 0x0303000D ) {
 		skinInstance = FixLink<NiSkinInstance>( objects, link_stack, info );
