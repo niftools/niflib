@@ -141,6 +141,11 @@ NIFLIB_API vector< Ref<NiObject> > ReadNifList( string const & file_name, NifInf
 NIFLIB_API vector< Ref<NiObject> > ReadNifList( istream & in, NifInfo * info = NULL );
 
 /*!
+ * Like ReadNifList but returns root.
+ */
+NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, list<Ref<NiObject> > & missing_link_stack, NifInfo * info );
+
+/*!
  * Reads the given file by file name and returns a reference to the root object.
  * \param file_name The name of the file to load, or the complete path if it is not in the working directory.
  * \param info Optionally, a NifInfo structure pointer can be passed in, and it will be filled with information from the header of the NIF file.

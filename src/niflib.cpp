@@ -60,6 +60,11 @@ static void SplitNifTree( NiObject * root_object, NiObjectRef& xnif_root, list<N
 
 //--Function Bodies--//
 
+NiObjectRef ReadNifTree( istream & in, list<NiObjectRef> & missing_link_stack, NifInfo * info ) {
+	vector<NiObjectRef> objects = ReadNifList( in, missing_link_stack, info );
+	return FindRoot( objects );
+}
+
 NiObjectRef ReadNifTree( string const & file_name, NifInfo * info ) {
 	//Read object list
 	vector<NiObjectRef> objects = ReadNifList( file_name, info );
