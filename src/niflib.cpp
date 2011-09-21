@@ -386,7 +386,7 @@ vector<NiObjectRef> ReadNifList( istream & in, list<NiObjectRef> & missing_link_
 		cout << "   " << i << ":  " << obj_list[i] << endl;
 #endif
 		//Fix links & other pre-processing
-		obj_list[i]->FixLinks( objects, link_stack, *info );
+		obj_list[i]->FixLinks( objects, link_stack, missing_link_stack, *info );
 	}
 
 	//delete info if it was dynamically allocated
