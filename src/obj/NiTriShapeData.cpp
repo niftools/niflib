@@ -237,7 +237,6 @@ void NiTriShapeData::DoMatchDetection() {
 		/* the currently observed vertex shares a normal with others */
 		if ( ( group.numVertices = group.vertexIndices.size() ) > 1 ) {
 			/* mark all of the participating vertices to belong to a group */
-			unsigned short groupid = matchGroups.size() + 1;
 			for ( unsigned short n = 0; n < group.numVertices; n++ )
 				is_shared[group.vertexIndices[n]] = true;
 
