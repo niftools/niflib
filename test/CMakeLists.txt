@@ -10,7 +10,8 @@ foreach(TEST
         skinpart_test
         ninode_test
         skin_test
-        missing_link_stack_test)
+        missing_link_stack_test
+        trishape_test)
     add_executable(${TEST} ${TEST}.cpp)
     target_link_libraries(${TEST} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} niflib)
     add_test(niflib::${TEST} ${TEST})
