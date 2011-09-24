@@ -200,15 +200,51 @@ void NiTriShapeData::SetVertices( const vector<Vector3> & in ) {
 	matchGroups.clear();
 }
 
-void NiTriShapeData::DoMatchDetection() { 
-	matchGroups.resize( vertices.size() );
+void NiTriShapeData::DoMatchDetection() {
+	/* minimum number of groups of shared normals */
+	matchGroups.resize( 0 );
+	/* counting sharing */
+	vector<int> sharing( vertices.size(), 0 );
 
-	for ( unsigned int i = 0; i < matchGroups.size(); ++i ){
+	for ( unsigned int i = 0; i < vertices.size() - 1; ++i ) {
+		/* this index belongs to a group already */
+		if ( sharing [i] != 0 )
+			continue;
+
+		/* we may find a valid group for this vertex */
+		MatchGroup group;
+
 		// Find all vertices that match this one.
-		for ( unsigned short j = 0; j < vertices.size(); ++j ) {
-			if ( vertices[i] == vertices[j] ) {
-				matchGroups[i].vertexIndices.push_back(j);
-			}
+		for ( unsigned short j = i + 1; j < vertices.size(); ++j ) {
+			/* for automatic regeneration we just consider
+			 * identical positions, though the format would
+			 * allow distinct positions to share a normal
+			 */
+			if ( vertices[j] != vertices[i] )
+				continue;
+			if ( normals [j] != normals [i] )
+				continue;
+
+			/* this index belongs to a group already */
+			if ( sharing [i] != 0 )
+				continue;
+
+			/* remember this vertex' index */
+			group.vertexIndices.push_back(j);
+		}
+
+		/* the currently observed vertex shares a normal with others */
+		if ( ( group.numVertices = group.vertexIndices.size() ) > 0 ) {
+			/* this vertex belongs to the group as well */
+			group.vertexIndices.push_back(i);
+			
+			/* mark all of the participating vertices to belong to a group */
+			int groupid = matchGroups.size() + 1;
+			for ( int n = 0; n < group.numVertices; n++ )
+				sharing[group.vertexIndices[n]] = groupid;
+
+			/* register the group */
+			matchGroups.push_back(group);
 		}
 	}
 }
