@@ -226,11 +226,6 @@ void NiTriShapeData::DoMatchDetection() {
 				continue;
 			if ( normals [j] != normals [i] )
 				continue;
-
-			/* this index belongs to a group already */
-			if ( sharing [i] != 0 )
-				continue;
-
 			/* remember this vertex' index */
 			group.vertexIndices.push_back(j);
 		}
