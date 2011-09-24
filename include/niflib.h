@@ -143,7 +143,7 @@ NIFLIB_API vector< Ref<NiObject> > ReadNifList( istream & in, NifInfo * info = N
 /*!
  * Like ReadNifList but returns root.
  */
-NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, list<Ref<NiObject> > & missing_link_stack, NifInfo * info );
+NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, list<Ref<NiObject> > & missing_link_stack, NifInfo * info = NULL);
 
 /*!
  * Reads the given file by file name and returns a reference to the root object.

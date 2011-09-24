@@ -1298,12 +1298,17 @@ string FormatVersionString(unsigned version) {
 Ref<NiObject> CloneNifTree( NiObject *root, unsigned version, unsigned user_version, NiObject *target_root ) {
 	//Create a string stream to temporarily hold the state-save of this tree
 	stringstream tmp;
+	list<NiObject *> missing_link_stack;
+	list<NiObjectRef> resolved_link_stack;
 
 	//Write the existing tree into the stringstream
-	WriteNifTree( tmp, root, NifInfo(version, user_version) );
+	WriteNifTree( tmp, root, missing_link_stack, NifInfo(version, user_version) );
+	//Resolve missing links into target root.
+	if ( target_root != NULL)
+		resolved_link_stack = ResolveMissingLinkStack( target_root, missing_link_stack );
 
 	//Read the data back out of the stringstream, returning the new tree
-	return ReadNifTree( tmp );
+	return ReadNifTree( tmp, resolved_link_stack );
 }
 
 void SendNifTreeToBindPos( NiNode * root ) {
