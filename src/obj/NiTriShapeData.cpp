@@ -218,6 +218,10 @@ void NiTriShapeData::DoMatchDetection() {
 
 		// Find all vertices that match this one.
 		for ( unsigned short j = i + 1; j < vertices.size(); ++j ) {
+			/* this index belongs to another group already */
+			/* so its vert/norm cannot match this group! */
+			if ( is_shared[j] )
+				continue;
 			/* for automatic regeneration we just consider
 			 * identical positions, though the format would
 			 * allow distinct positions to share a normal
