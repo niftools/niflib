@@ -204,9 +204,9 @@ void NiTriShapeData::DoMatchDetection() {
 	/* minimum number of groups of shared normals */
 	matchGroups.resize( 0 );
 	/* counting sharing */
-	vector<int> sharing( vertices.size(), 0 );
+	vector<unsigned short> sharing( vertices.size(), 0 );
 
-	for ( unsigned int i = 0; i < vertices.size() - 1; ++i ) {
+	for ( unsigned short i = 0; i < vertices.size() - 1; ++i ) {
 		/* this index belongs to a group already */
 		if ( sharing [i] != 0 )
 			continue;
@@ -233,8 +233,8 @@ void NiTriShapeData::DoMatchDetection() {
 		/* the currently observed vertex shares a normal with others */
 		if ( ( group.numVertices = group.vertexIndices.size() ) > 1 ) {
 			/* mark all of the participating vertices to belong to a group */
-			int groupid = matchGroups.size() + 1;
-			for ( int n = 0; n < group.numVertices; n++ )
+			unsigned short groupid = matchGroups.size() + 1;
+			for ( unsigned short n = 0; n < group.numVertices; n++ )
 				sharing[group.vertexIndices[n]] = groupid;
 
 			/* register the group */
