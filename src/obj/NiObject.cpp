@@ -96,7 +96,7 @@ std::list<NiObject *> NiObject::GetPtrs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version, NiObject *target_root ) {
+NiObjectRef NiObject::Clone( unsigned int version, unsigned int user_version ) {
 	//Create a string stream to temporarily hold the state-save of this object
 	stringstream tmp;
 
