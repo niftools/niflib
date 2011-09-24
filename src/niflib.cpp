@@ -1295,7 +1295,7 @@ string FormatVersionString(unsigned version) {
 }
 
 
-Ref<NiObject> CloneNifTree( NiObject * root, unsigned version, unsigned user_version ) {
+Ref<NiObject> CloneNifTree( NiObject *root, unsigned version, unsigned user_version, NiObject *target_root ) {
 	//Create a string stream to temporarily hold the state-save of this tree
 	stringstream tmp;
 

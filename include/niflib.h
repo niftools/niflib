@@ -204,9 +204,10 @@ NIFLIB_API void WriteFileGroup( string const & file_name, NiObject * root_object
  * \param[in] root The root object to start from when cloning the NIF data.  All referenced objects will be included in the new tree.
  * \param[in] version The version of the NIF format to use when writing a file.  Default is version 4.0.0.2.
  * \param[in] user_version The user version of the NIF format to use when writing a file.  Default is user version 0.
+ * \param[in] target_root The root of the nif tree in which the cloned tree will be embedded. If specified, missing links will be resolved to that tree.
  * \return The root of the new cloned tree.
  */
-NIFLIB_API Ref<NiObject> CloneNifTree( NiObject * root, unsigned version = 0xFFFFFFFF, unsigned user_version = 0 );
+NIFLIB_API Ref<NiObject> CloneNifTree( NiObject * root, unsigned version = 0xFFFFFFFF, unsigned user_version = 0, NiObject * target_root = NULL );
 
 
 //TODO:  Figure out how to fix this to work with the new system

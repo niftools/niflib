@@ -74,9 +74,10 @@ public:
 	 * if you need to clone an obsolete piece of information.
 	 * \param[in] version The version number to use in the memory streaming operation.  Default is the highest version availiable.
 	 * \param[in] user_version The game-specific version number extention.
+	 * \param[in] target_root The root of the nif tree in which the cloned object will be embedded. If specified, missing links will be resolved to that tree.
 	 * \return A cloned copy of this object as a new object.
 	 */
-	NIFLIB_API Ref<NiObject> Clone( unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0 );
+	NIFLIB_API Ref<NiObject> Clone( unsigned int version = 0xFFFFFFFF, unsigned int user_version = 0, NiObject *target_root = NULL );
 	
 public:
 	/*! Block number in the nif file. Only set when you read
