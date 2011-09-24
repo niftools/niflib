@@ -108,10 +108,10 @@ enum ExportOptions {
 NIFLIB_API unsigned int GetNifVersion( string const & file_name );
 
 /*!
- * Return the missing link stack with objects replaced from nif trees at specified roots.
+ * Return the missing link stack with objects replaced from nif trees at specified root.
  */
 NIFLIB_API list<Ref<NiObject> > ResolveMissingLinkStack(
-	list<Ref<NiObject> > const & roots,
+	NiObject *root,
 	const list<NiObject *> & missing_link_stack);
 
 /*!
@@ -165,12 +165,12 @@ NIFLIB_API Ref<NiObject> ReadNifTree( istream & in, NifInfo * info = NULL );
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root objects given, and keeps track of links that cannot been written.
  * \param[in] out The output stream to write the NIF data to.
- * \param[in] roots The root objects to start from when writing out the NIF file.  All decedents of these blocks will be written to the file in tree-descending order.
+ * \param[in] root The root object to start from when writing out the NIF file.  All decedents of this block will be written to the file in tree-descending order.
  * \param[in] missing_link_stack stack of links which are referred to but which are not inside the tree rooted by roots.
  * \param[in] info A NifInfo structure that contains information such as the version of the NIF file to create.
  * \sa ReadNifList, WriteNifTree
  */
-NIFLIB_API void WriteNifTree( ostream & out, list<Ref<NiObject> > const & roots, list<NiObject *> & missing_link_stack, const NifInfo & info = NifInfo() );
+NIFLIB_API void WriteNifTree( ostream & out, NiObject *root, list<NiObject *> & missing_link_stack, const NifInfo & info = NifInfo() );
 
 /*!
  * Creates a new NIF file of the given file name by crawling through the data tree starting with the root object given.

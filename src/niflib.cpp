@@ -407,7 +407,7 @@ vector<NiObjectRef> ReadNifList( istream & in, list<NiObjectRef> & missing_link_
 	return obj_list;
 }
 
-NiObjectRef _ResolveMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
+NiObjectRef _ResolveMissingLinkStackHelper(NiObject *root, NiObject *obj) {
 	// search by name
 	NiNodeRef rootnode = DynamicCast<NiNode>(root);
 	NiNodeRef objnode = DynamicCast<NiNode>(obj);
@@ -428,20 +428,12 @@ NiObjectRef _ResolveMissingLinkStackHelper(NiObjectRef root, NiObject *obj) {
 }
 
 list<NiObjectRef> ResolveMissingLinkStack(
-	list<NiObjectRef> const & roots,
+	NiObject *root,
 	const list<NiObject *> & missing_link_stack)
 {
 	list<NiObjectRef> result;
 	for (list<NiObject *>::const_iterator obj = missing_link_stack.begin(); obj != missing_link_stack.end(); ++obj) {
-		NiObjectRef resolved;
-		if (*obj != NULL) {
-			for (list<NiObjectRef>::const_iterator root = roots.begin(); root != roots.end(); ++root) {
-				resolved = _ResolveMissingLinkStackHelper(*root, *obj);
-				if (resolved != NULL)
-					break;
-			}
-		}
-		result.push_back(resolved);
+		result.push_back(_ResolveMissingLinkStackHelper(root, *obj));
 	}
 	return result;
 }
@@ -590,6 +582,12 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, list<NiObject
 
 	// clear the header pointer in the stream.  Should be in try/catch block
 	out << hdrInfo(NULL);
+}
+
+void WriteNifTree( ostream & out, NiObject *root, list<NiObject *> & missing_link_stack, const NifInfo & info) {
+	list<NiObjectRef> roots;
+	roots.push_back(root);
+	WriteNifTree( out, roots, missing_link_stack, info );
 }
 
 void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, const NifInfo & info) {

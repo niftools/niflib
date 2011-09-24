@@ -43,9 +43,7 @@ BOOST_AUTO_TEST_CASE(missing_link_stack_simple_test)
   }
   // write
   list<NiObject *> missing_link_stack;
-  list<NiObjectRef> roots;
-  roots.push_back(StaticCast<NiObject>(shape));
-  BOOST_CHECK_NO_THROW(WriteNifTree(ss, roots, missing_link_stack, NifInfo(VER_20_0_0_5)));
+  BOOST_CHECK_NO_THROW(WriteNifTree(ss, shape, missing_link_stack, NifInfo(VER_20_0_0_5)));
   bool has_root = false;
   bool has_bone = false;
   // check that root and bone are in the missing link stack
@@ -63,9 +61,7 @@ BOOST_AUTO_TEST_CASE(missing_link_stack_simple_test)
   BOOST_CHECK_EQUAL(has_root, true);
   BOOST_CHECK_EQUAL(has_bone, true);
   // read it again
-  roots.clear();
-  roots.push_back(StaticCast<NiObject>(root));
-  list<NiObjectRef> resolved_link_stack = ResolveMissingLinkStack(roots, missing_link_stack);
+  list<NiObjectRef> resolved_link_stack = ResolveMissingLinkStack(root, missing_link_stack);
   ss.seekg(0);
   NifInfo info;
   NiObjectRef new_root;
