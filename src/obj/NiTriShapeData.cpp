@@ -213,6 +213,8 @@ void NiTriShapeData::DoMatchDetection() {
 
 		/* we may find a valid group for this vertex */
 		MatchGroup group;
+		/* this vertex belongs to the group as well */
+		group.vertexIndices.push_back(i);
 
 		// Find all vertices that match this one.
 		for ( unsigned short j = i + 1; j < vertices.size(); ++j ) {
@@ -234,10 +236,7 @@ void NiTriShapeData::DoMatchDetection() {
 		}
 
 		/* the currently observed vertex shares a normal with others */
-		if ( ( group.numVertices = group.vertexIndices.size() ) > 0 ) {
-			/* this vertex belongs to the group as well */
-			group.vertexIndices.push_back(i);
-			
+		if ( ( group.numVertices = group.vertexIndices.size() ) > 1 ) {
 			/* mark all of the participating vertices to belong to a group */
 			int groupid = matchGroups.size() + 1;
 			for ( int n = 0; n < group.numVertices; n++ )
