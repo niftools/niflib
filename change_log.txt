@@ -58,6 +58,9 @@ Version 0.7.3
 
 * Fixed NiSkinInstance.FixLinks for NULL bones.
 
+* Fixed bug when writing 10.1.0.106 nifs (contributed by gentle_sal,
+  see issue #3411665).
+
 Version 0.7.2
 =============
 

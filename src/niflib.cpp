@@ -544,7 +544,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, list<NiObject
 		} else if (version < 0x05000001) {
 			//Write Object Type
 			WriteString( objects[i]->GetType().GetTypeName() , out );
-		} else if (version >= 0x05000001 && version <= VER_10_1_0_0 ) {
+		} else if (version >= 0x05000001 && version <= VER_10_1_0_106 ) {
 			WriteUInt( 0, out );
 		}
 
