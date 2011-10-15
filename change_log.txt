@@ -67,6 +67,9 @@ Version 0.7.3
 * Added scale access to bhkPackedNiTriStripsShape (contributed by
   gentle_sal, see issue #3411667).
 
+* Added method to remove match data from NiTriShapeData (contributed
+  by gentle_sal, see issue #3411674).
+
 Version 0.7.2
 =============
 

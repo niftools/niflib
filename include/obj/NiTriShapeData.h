@@ -80,6 +80,11 @@ public:
 	NIFLIB_API void DoMatchDetection();
 
 	/*!
+	 * Remove match detection data.
+	 */
+	NIFLIB_API void RemoveMatchData();
+
+	/*!
 	 * Used to determine whether current match detection data has been previously
 	 * generated.
 	 * \return true if there is current match data, false otherwise.

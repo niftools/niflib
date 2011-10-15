@@ -197,7 +197,7 @@ void NiTriShapeData::SetVertices( const vector<Vector3> & in ) {
 	NiTriBasedGeomData::SetVertices( in );
 
 	//Also, clear match detection data
-	matchGroups.clear();
+	RemoveMatchData();
 }
 
 void NiTriShapeData::DoMatchDetection() {
@@ -244,6 +244,10 @@ void NiTriShapeData::DoMatchDetection() {
 			matchGroups.push_back(group);
 		}
 	}
+}
+
+void NiTriShapeData::RemoveMatchData() { 
+	matchGroups.clear();
 }
 
 bool NiTriShapeData::HasMatchData() {
