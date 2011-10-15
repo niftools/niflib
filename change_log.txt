@@ -70,6 +70,9 @@ Version 0.7.3
 * Added method to remove match data from NiTriShapeData (contributed
   by gentle_sal, see issue #3411674).
 
+* Made various NiSkinPartition methods public, so they can be
+  manipulated (contributed by gentle_sal, see issue #3411675).
+
 Version 0.7.2
 =============
 

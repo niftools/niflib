@@ -154,40 +154,43 @@ public:
 	NIFLIB_API vector<Triangle> GetTriangles( int partition ) const;
 
 protected:
-   friend class NiTriBasedGeom;
-   NiSkinPartition(Ref<NiTriBasedGeom> shape);
-   NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, bool bStrippify, int *faceMap);
+	friend class NiTriBasedGeom;
+	NiSkinPartition(Ref<NiTriBasedGeom> shape);
+	NiSkinPartition(Ref<NiTriBasedGeom> shape, int maxBonesPerPartition, int maxBonesPerVertex, bool bStrippify, int *faceMap);
 
-   void SetNumPartitions( int value );
-   void SetWeightsPerVertex( int partition, unsigned short value );
-   void SetNumVertices( int partition, unsigned short value );
-   void SetVertexMap( int partition, const vector<unsigned short>& vertexMap );
-   void SetBoneMap( int partition, const vector<unsigned short>& boneMap );
+public:
+	NIFLIB_API void SetNumPartitions( int value );
+	NIFLIB_API void SetWeightsPerVertex( int partition, unsigned short value );
+	NIFLIB_API void SetNumVertices( int partition, unsigned short value );
+	NIFLIB_API void SetVertexMap( int partition, const vector<unsigned short>& vertexMap );
+	NIFLIB_API void SetBoneMap( int partition, const vector<unsigned short>& boneMap );
 
-   void EnableVertexWeights( int partition, bool enable);
-   void SetVertexWeights( int partition, int vertex, const vector<float> & n );
+	NIFLIB_API void EnableVertexWeights( int partition, bool enable);
+	NIFLIB_API void SetVertexWeights( int partition, int vertex, const vector<float> & n );
 
-   void EnableVertexBoneIndices( int partition, bool enable);
-   void SetVertexBoneIndices( int partition, int vertex, const vector<unsigned short>& boneList );
+	NIFLIB_API void EnableVertexBoneIndices( int partition, bool enable);
+	NIFLIB_API void SetVertexBoneIndices( int partition, int vertex, const vector<unsigned short>& boneList );
 
-   /*! Used to resize the triangle strips array from a particular skin partition.
-    * If the new size is smaller, strips at the end of the array will be deleted.
-    * \param[in] partition The specific partition to strip array from.
-    * \param[in] n The new size of the triangle strips array.
-    * \sa NiSkinPartition::GetStripCount
-    */
-   void SetStripCount( int partition, int n );
+	/*!
+	 * Used to resize the triangle strips array from a particular skin partition.
+	 * If the new size is smaller, strips at the end of the array will be deleted.
+	 * \param[in] partition The specific partition to strip array from.
+	 * \param[in] n The new size of the triangle strips array.
+	 * \sa NiSkinPartition::GetStripCount
+	 */
+	NIFLIB_API void SetStripCount( int partition, int n );
 
-   /*! Used to set the triangle face data in a specific triangle strip from a
-    * particular skin partition.
-    * \param[in] partition The specific partition to get the strip count from.
-	* \param[in] index The index of the triangle strip to set the face data for.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
-    * \param[in] in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
-    * \sa NiSkinPartition::GetStrip
-    */
-   void SetStrip( int partition, int index, const vector<unsigned short> & in );
+	/*!
+	 * Used to set the triangle face data in a specific triangle strip from a
+	 * particular skin partition.
+	 * \param[in] partition The specific partition to get the strip count from.
+	 * \param[in] index The index of the triangle strip to set the face data for.  This is a zero-based index which must be a positive number less than that returned by NiTriStripsData::GetStripCount.
+	 * \param[in] in The vertex indices that make up this strip, in standard OpenGL triangle strip order.
+	 * \sa NiSkinPartition::GetStrip
+	 */
+	NIFLIB_API void SetStrip( int partition, int index, const vector<unsigned short> & in );
 
-   void SetTriangles( int partition, const vector<Triangle> & in );
+	NIFLIB_API void SetTriangles( int partition, const vector<Triangle> & in );
 
 	//--END CUSTOM CODE--//
 protected:
