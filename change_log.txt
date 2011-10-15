@@ -64,6 +64,9 @@ Version 0.7.3
 * Added subshape and material access to bhkConvexListShape
   (contributed by gentle_sal, see issue #3411666).
 
+* Added scale access to bhkPackedNiTriStripsShape (contributed by
+  gentle_sal, see issue #3411667).
+
 Version 0.7.2
 =============
 

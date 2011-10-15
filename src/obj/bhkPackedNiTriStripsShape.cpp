@@ -200,6 +200,14 @@ void bhkPackedNiTriStripsShape::SetSubShapes( vector<OblivionSubShape>& value ) 
 	subShapes = value;
 }
 
+Vector3 bhkPackedNiTriStripsShape::GetScale() const {
+	return scale;
+}
+
+void bhkPackedNiTriStripsShape::SetScale( const Vector3 & n ) {
+	scale = n;	
+}
+
 void bhkPackedNiTriStripsShape::CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia)
 {
 	center = Vector3(0,0,0);

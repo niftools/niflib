@@ -83,6 +83,18 @@ public:
 	*/
 	NIFLIB_API void SetSubShapes( vector<OblivionSubShape>& value );	
 
+	/*!
+	 * Gets the scale. Usually (1.0, 1.0, 1.0).
+	 * \return The scale.
+	 */
+	NIFLIB_API Vector3 GetScale() const;
+
+	/*!
+	 * Sets the scale. Usually (1.0, 1.0, 1.0).
+	 * \param[in] n The new scale.
+	 */
+	NIFLIB_API void SetScale( const Vector3 & n );
+
 	/*! Helper routine for calculating mass properties.
 	 *  \param[in]  density Uniform density of object
 	 *  \param[in]  solid Determines whether the object is assumed to be solid or not
