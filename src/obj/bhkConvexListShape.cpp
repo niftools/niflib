@@ -184,4 +184,24 @@ std::list<NiObject *> bhkConvexListShape::GetPtrs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+HavokMaterial bhkConvexListShape::GetMaterial() const {
+	return material;
+}
+
+void bhkConvexListShape::SetMaterial( HavokMaterial value ) {
+	material = value;
+}
+
+vector<Ref<bhkConvexShape > > bhkConvexListShape::GetSubShapes() const {
+	return subShapes;
+}
+
+/*!
+ * Sets the child shape objects that this body is using.
+ * \param[in] shapes The shape objects being used by this body.
+ */
+void bhkConvexListShape::SetSubShapes(const vector<Ref<bhkConvexShape > >& shapes) {
+	subShapes = shapes;
+}
+
 //--END CUSTOM CODE--//

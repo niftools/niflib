@@ -61,6 +61,9 @@ Version 0.7.3
 * Fixed bug when writing 10.1.0.106 nifs (contributed by gentle_sal,
   see issue #3411665).
 
+* Added subshape and material access to bhkConvexListShape
+  (contributed by gentle_sal, see issue #3411666).
+
 Version 0.7.2
 =============
 
