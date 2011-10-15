@@ -73,6 +73,9 @@ Version 0.7.3
 * Made various NiSkinPartition methods public, so they can be
   manipulated (contributed by gentle_sal, see issue #3411675).
 
+* SkinWeight is now sortable (contributed by gentle_sal, see issue
+  #3411664).
+
 Version 0.7.2
 =============
 
