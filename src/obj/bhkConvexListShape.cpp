@@ -15,7 +15,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/bhkConvexListShape.h"
-#include "../../include/obj/bhkShape.h"
+#include "../../include/obj/bhkConvexShape.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -156,7 +156,7 @@ void bhkConvexListShape::FixLinks( const map<unsigned int,NiObjectRef> & objects
 
 	bhkShape::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < subShapes.size(); i1++) {
-		subShapes[i1] = FixLink<bhkShape>( objects, link_stack, missing_link_stack, info );
+		subShapes[i1] = FixLink<bhkConvexShape>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

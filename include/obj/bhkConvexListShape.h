@@ -21,13 +21,13 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class bhkShape;
+class bhkConvexShape;
 class bhkConvexListShape;
 typedef Ref<bhkConvexListShape> bhkConvexListShapeRef;
 
 /*!
  * A havok shape.
- *         A list of shapes.
+ *         A list of convex shapes.
  * 
  *         Do not put a bhkPackedNiTriStripsShape in the Sub Shapes. Use a
  *         separate collision nodes without a list shape for those.
@@ -74,7 +74,7 @@ protected:
 	/*! The number of sub shapes referenced. */
 	mutable unsigned int numSubShapes;
 	/*! List of shapes. */
-	vector<Ref<bhkShape > > subShapes;
+	vector<Ref<bhkConvexShape > > subShapes;
 	/*! The shape's material. */
 	HavokMaterial material;
 	/*! Unknown. Set to (0.0,0.0,-0.0,0.0,0.0,-0.0), where -0.0 is 0x80000000 in hex. */
