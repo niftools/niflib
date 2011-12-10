@@ -6,10 +6,10 @@ All rights reserved.  Please see niflib.h for license. */
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
 #include "../../include/gen/ControllerLink.h"
-#include "../../include/obj/NiTimeController.h"
 #include "../../include/obj/NiInterpolator.h"
 #include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiStringPalette.h"
+#include "../../include/obj/NiTimeController.h"
 using namespace Niflib;
 
 //Constructor

@@ -111,6 +111,10 @@ protected:
 	IndexString textKeysName;
 	/*! Link to NiTextKeyExtraData. */
 	Ref<NiTextKeyExtraData > textKeys;
+	/*! Unknown */
+	int unknownInt4;
+	/*! Unknown */
+	int unknownInt5;
 	/*! Number of controlled objects. */
 	mutable unsigned int numControlledBlocks;
 	/*! Unknown. */

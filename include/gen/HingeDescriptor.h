@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!  */
+/*! This constraint allows rotation about a specified axis. */
 struct HingeDescriptor {
 	/*! Default Constructor */
 	NIFLIB_API HingeDescriptor();
@@ -36,32 +36,12 @@ struct HingeDescriptor {
 	Vector4 pivotB;
 	/*! Axle A (vector orthogonal on Perp2 Axles) in second entity coordinate system. */
 	Vector4 axleB;
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	float unknownInt2;
-	/*! Unknown */
-	float unknownInt3;
-	/*! Unknown */
-	float unknownInt4;
-	/*! Unknown */
-	float unknownInt5;
-	/*! Unknown */
-	float unknownInt6;
-	/*! Unknown */
-	float unknownInt7;
-	/*! Unknown */
-	float unknownInt8;
-	/*! Unknown */
-	float unknownInt9;
-	/*! Unknown */
-	float unknownInt10;
-	/*! Unknown */
-	byte unknownByte1;
-	/*! Unknown */
-	byte unknownByte2;
-	/*! Unknown */
-	byte unknownByte3;
+	/*! Axis of rotation. */
+	Vector4 axleA;
+	/*! Perp2 Axle In A1 in second entity coordinate system. */
+	Vector4 perp2AxleInB1;
+	/*! Perp2 Axle In A2 in second entity coordinate system. */
+	Vector4 perp2AxleInB2;
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 };

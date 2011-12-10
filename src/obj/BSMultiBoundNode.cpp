@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSMultiBoundNode::TYPE("BSMultiBoundNode", &NiNode::TYPE );
 
-BSMultiBoundNode::BSMultiBoundNode() : multiBound(NULL) {
+BSMultiBoundNode::BSMultiBoundNode() : multiBound(NULL), unknownInt((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -50,6 +50,9 @@ void BSMultiBoundNode::Read( istream& in, list<unsigned int> & link_stack, const
 	NiNode::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
+		NifStream( unknownInt, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -79,6 +82,9 @@ void BSMultiBoundNode::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 			missing_link_stack.push_back( NULL );
 		}
 	}
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
+		NifStream( unknownInt, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -93,6 +99,7 @@ std::string BSMultiBoundNode::asString( bool verbose ) const {
 	stringstream out;
 	out << NiNode::asString();
 	out << "  Multi Bound:  " << multiBound << endl;
+	out << "  Unknown Int:  " << unknownInt << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -50,6 +50,10 @@ void BSFurnitureMarker::Read( istream& in, list<unsigned int> & link_stack, cons
 		NifStream( positions[i1].orientation, in, info );
 		NifStream( positions[i1].positionRef1, in, info );
 		NifStream( positions[i1].positionRef2, in, info );
+		if ( ((info.version >= 0x14020007) && (info.userVersion >= 12)) ) {
+			NifStream( positions[i1].unknownShort1, in, info );
+			NifStream( positions[i1].unknownShort2, in, info );
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -68,6 +72,10 @@ void BSFurnitureMarker::Write( ostream& out, const map<NiObjectRef,unsigned int>
 		NifStream( positions[i1].orientation, out, info );
 		NifStream( positions[i1].positionRef1, out, info );
 		NifStream( positions[i1].positionRef2, out, info );
+		if ( ((info.version >= 0x14020007) && (info.userVersion >= 12)) ) {
+			NifStream( positions[i1].unknownShort1, out, info );
+			NifStream( positions[i1].unknownShort2, out, info );
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -93,6 +101,8 @@ std::string BSFurnitureMarker::asString( bool verbose ) const {
 		out << "    Orientation:  " << positions[i1].orientation << endl;
 		out << "    Position Ref 1:  " << positions[i1].positionRef1 << endl;
 		out << "    Position Ref 2:  " << positions[i1].positionRef2 << endl;
+		out << "    Unknown Short 1:  " << positions[i1].unknownShort1 << endl;
+		out << "    Unknown Short 2:  " << positions[i1].unknownShort2 << endl;
 	};
 	return out.str();
 

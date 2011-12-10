@@ -68,10 +68,10 @@ protected:
 	float magnitude;
 	/*! Controls how quick the field diminishes */
 	float attenuation;
-	/*! Unknown */
-	bool unknownBoolean1;
-	/*! Unknown value, perhaps maximum effect distance */
-	float unknownFloat1;
+	/*! Use maximum distance */
+	bool useMaxDistance;
+	/*! Maximum distance */
+	float maxDistance;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

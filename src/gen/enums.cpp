@@ -177,6 +177,7 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 		case HAV_MAT_CHAIN_STAIRS: return out << "HAV_MAT_CHAIN_STAIRS";
 		case HAV_MAT_SNOW_STAIRS: return out << "HAV_MAT_SNOW_STAIRS";
 		case HAV_MAT_ELEVATOR: return out << "HAV_MAT_ELEVATOR";
+		case HAV_MAT_RUBBER: return out << "HAV_MAT_RUBBER";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -220,6 +221,29 @@ ostream & operator<<( ostream & out, VelocityType const & val ) {
 		case VELOCITY_USE_NORMALS: return out << "VELOCITY_USE_NORMALS";
 		case VELOCITY_USE_RANDOM: return out << "VELOCITY_USE_RANDOM";
 		case VELOCITY_USE_DIRECTION: return out << "VELOCITY_USE_DIRECTION";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--DataStreamUsage--//
+
+void NifStream( DataStreamUsage & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = DataStreamUsage(temp);
+}
+
+void NifStream( DataStreamUsage const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, DataStreamUsage const & val ) {
+	switch ( val ) {
+		case USAGE_VERTEX_INDEX: return out << "USAGE_VERTEX_INDEX";
+		case USAGE_VERTEX: return out << "USAGE_VERTEX";
+		case USAGE_SHADER_CONSTANT: return out << "USAGE_SHADER_CONSTANT";
+		case USAGE_USER: return out << "USAGE_USER";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -362,6 +386,33 @@ ostream & operator<<( ostream & out, StencilAction const & val ) {
 		case ACTION_INCREMENT: return out << "ACTION_INCREMENT";
 		case ACTION_DECREMENT: return out << "ACTION_DECREMENT";
 		case ACTION_INVERT: return out << "ACTION_INVERT";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SyncPoint--//
+
+void NifStream( SyncPoint & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = SyncPoint(temp);
+}
+
+void NifStream( SyncPoint const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SyncPoint const & val ) {
+	switch ( val ) {
+		case SYNC_ANY: return out << "SYNC_ANY";
+		case SYNC_UPDATE: return out << "SYNC_UPDATE";
+		case SYNC_POST_UPDATE: return out << "SYNC_POST_UPDATE";
+		case SYNC_VISIBLE: return out << "SYNC_VISIBLE";
+		case SYNC_RENDER: return out << "SYNC_RENDER";
+		case SYNC_PHYSICS_SIMULATE: return out << "SYNC_PHYSICS_SIMULATE";
+		case SYNC_PHYSICS_COMPLETED: return out << "SYNC_PHYSICS_COMPLETED";
+		case SYNC_REFLECTIONS: return out << "SYNC_REFLECTIONS";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -542,6 +593,30 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 }
 
 
+//--PSLoopBehavior--//
+
+void NifStream( PSLoopBehavior & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = PSLoopBehavior(temp);
+}
+
+void NifStream( PSLoopBehavior const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, PSLoopBehavior const & val ) {
+	switch ( val ) {
+		case PS_LOOP_CLAMP_BIRTH: return out << "PS_LOOP_CLAMP_BIRTH";
+		case PS_LOOP_CLAMP_DEATH: return out << "PS_LOOP_CLAMP_DEATH";
+		case PS_LOOP_AGESCALE: return out << "PS_LOOP_AGESCALE";
+		case PS_LOOP_LOOP: return out << "PS_LOOP_LOOP";
+		case PS_LOOP_REFLECT: return out << "PS_LOOP_REFLECT";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--SolverDeactivation--//
 
 void NifStream( SolverDeactivation & val, istream& in, const NifInfo & info ) {
@@ -562,6 +637,30 @@ ostream & operator<<( ostream & out, SolverDeactivation const & val ) {
 		case SOLVER_DEACTIVATION_MEDIUM: return out << "SOLVER_DEACTIVATION_MEDIUM";
 		case SOLVER_DEACTIVATION_HIGH: return out << "SOLVER_DEACTIVATION_HIGH";
 		case SOLVER_DEACTIVATION_MAX: return out << "SOLVER_DEACTIVATION_MAX";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--MeshPrimitiveType--//
+
+void NifStream( MeshPrimitiveType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = MeshPrimitiveType(temp);
+}
+
+void NifStream( MeshPrimitiveType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, MeshPrimitiveType const & val ) {
+	switch ( val ) {
+		case MESH_PRIMITIVE_TRIANGLES: return out << "MESH_PRIMITIVE_TRIANGLES";
+		case MESH_PRIMITIVE_TRISTRIPS: return out << "MESH_PRIMITIVE_TRISTRIPS";
+		case MESH_PRIMITIVE_LINESTRIPS: return out << "MESH_PRIMITIVE_LINESTRIPS";
+		case MESH_PRIMITIVE_QUADS: return out << "MESH_PRIMITIVE_QUADS";
+		case MESH_PRIMITIVE_POINTS: return out << "MESH_PRIMITIVE_POINTS";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -679,7 +778,7 @@ ostream & operator<<( ostream & out, KeyType const & val ) {
 		case QUADRATIC_KEY: return out << "QUADRATIC_KEY";
 		case TBC_KEY: return out << "TBC_KEY";
 		case XYZ_ROTATION_KEY: return out << "XYZ_ROTATION_KEY";
-		case UNKNOWN_KEY: return out << "UNKNOWN_KEY";
+		case CONST_KEY: return out << "CONST_KEY";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -1053,6 +1152,88 @@ ostream & operator<<( ostream & out, TexClampMode const & val ) {
 }
 
 
+//--ComponentFormat--//
+
+void NifStream( ComponentFormat & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = ComponentFormat(temp);
+}
+
+void NifStream( ComponentFormat const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, ComponentFormat const & val ) {
+	switch ( val ) {
+		case F_UNKNOWN: return out << "F_UNKNOWN";
+		case F_INT8_1: return out << "F_INT8_1";
+		case F_INT8_2: return out << "F_INT8_2";
+		case F_INT8_3: return out << "F_INT8_3";
+		case F_INT8_4: return out << "F_INT8_4";
+		case F_UINT8_1: return out << "F_UINT8_1";
+		case F_UINT8_2: return out << "F_UINT8_2";
+		case F_UINT8_3: return out << "F_UINT8_3";
+		case F_UINT8_4: return out << "F_UINT8_4";
+		case F_NORMINT8_1: return out << "F_NORMINT8_1";
+		case F_NORMINT8_2: return out << "F_NORMINT8_2";
+		case F_NORMINT8_3: return out << "F_NORMINT8_3";
+		case F_NORMINT8_4: return out << "F_NORMINT8_4";
+		case F_NORMUINT8_1: return out << "F_NORMUINT8_1";
+		case F_NORMUINT8_2: return out << "F_NORMUINT8_2";
+		case F_NORMUINT8_3: return out << "F_NORMUINT8_3";
+		case F_NORMUINT8_4: return out << "F_NORMUINT8_4";
+		case F_INT16_1: return out << "F_INT16_1";
+		case F_INT16_2: return out << "F_INT16_2";
+		case F_INT16_3: return out << "F_INT16_3";
+		case F_INT16_4: return out << "F_INT16_4";
+		case F_UINT16_1: return out << "F_UINT16_1";
+		case F_UINT16_2: return out << "F_UINT16_2";
+		case F_UINT16_3: return out << "F_UINT16_3";
+		case F_UINT16_4: return out << "F_UINT16_4";
+		case F_NORMINT16_1: return out << "F_NORMINT16_1";
+		case F_NORMINT16_2: return out << "F_NORMINT16_2";
+		case F_NORMINT16_3: return out << "F_NORMINT16_3";
+		case F_NORMINT16_4: return out << "F_NORMINT16_4";
+		case F_NORMUINT16_1: return out << "F_NORMUINT16_1";
+		case F_NORMUINT16_2: return out << "F_NORMUINT16_2";
+		case F_NORMUINT16_3: return out << "F_NORMUINT16_3";
+		case F_NORMUINT16_4: return out << "F_NORMUINT16_4";
+		case F_INT32_1: return out << "F_INT32_1";
+		case F_INT32_2: return out << "F_INT32_2";
+		case F_INT32_3: return out << "F_INT32_3";
+		case F_INT32_4: return out << "F_INT32_4";
+		case F_UINT32_1: return out << "F_UINT32_1";
+		case F_UINT32_2: return out << "F_UINT32_2";
+		case F_UINT32_3: return out << "F_UINT32_3";
+		case F_UINT32_4: return out << "F_UINT32_4";
+		case F_NORMINT32_1: return out << "F_NORMINT32_1";
+		case F_NORMINT32_2: return out << "F_NORMINT32_2";
+		case F_NORMINT32_3: return out << "F_NORMINT32_3";
+		case F_NORMINT32_4: return out << "F_NORMINT32_4";
+		case F_NORMUINT32_1: return out << "F_NORMUINT32_1";
+		case F_NORMUINT32_2: return out << "F_NORMUINT32_2";
+		case F_NORMUINT32_3: return out << "F_NORMUINT32_3";
+		case F_NORMUINT32_4: return out << "F_NORMUINT32_4";
+		case F_FLOAT16_1: return out << "F_FLOAT16_1";
+		case F_FLOAT16_2: return out << "F_FLOAT16_2";
+		case F_FLOAT16_3: return out << "F_FLOAT16_3";
+		case F_FLOAT16_4: return out << "F_FLOAT16_4";
+		case F_FLOAT32_1: return out << "F_FLOAT32_1";
+		case F_FLOAT32_2: return out << "F_FLOAT32_2";
+		case F_FLOAT32_3: return out << "F_FLOAT32_3";
+		case F_FLOAT32_4: return out << "F_FLOAT32_4";
+		case F_UINT_10_10_10_L1: return out << "F_UINT_10_10_10_L1";
+		case F_NORMINT_10_10_10_L1: return out << "F_NORMINT_10_10_10_L1";
+		case F_NORMINT_11_11_10: return out << "F_NORMINT_11_11_10";
+		case F_NORMUINT8_4_BGRA: return out << "F_NORMUINT8_4_BGRA";
+		case F_NORMINT_10_10_10_2: return out << "F_NORMINT_10_10_10_2";
+		case F_UINT_10_10_10_2: return out << "F_UINT_10_10_10_2";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--MotionQuality--//
 
 void NifStream( MotionQuality & val, istream& in, const NifInfo & info ) {
@@ -1077,6 +1258,28 @@ ostream & operator<<( ostream & out, MotionQuality const & val ) {
 		case MO_QUAL_USER: return out << "MO_QUAL_USER";
 		case MO_QUAL_CHARACTER: return out << "MO_QUAL_CHARACTER";
 		case MO_QUAL_KEYFRAMED_REPORT: return out << "MO_QUAL_KEYFRAMED_REPORT";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--CloningBehavior--//
+
+void NifStream( CloningBehavior & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = CloningBehavior(temp);
+}
+
+void NifStream( CloningBehavior const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, CloningBehavior const & val ) {
+	switch ( val ) {
+		case CLONING_SHARE: return out << "CLONING_SHARE";
+		case CLONING_COPY: return out << "CLONING_COPY";
+		case CLONING_BLANK_COPY: return out << "CLONING_BLANK_COPY";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -1233,38 +1436,38 @@ void NifStream( BSShaderFlags const & val, ostream& out, const NifInfo & info ) 
 
 ostream & operator<<( ostream & out, BSShaderFlags const & val ) {
 	switch ( val ) {
-		case SF_ZBUFFER_TEST: return out << "SF_ZBUFFER_TEST";
-		case SF_SHADOW_MAP: return out << "SF_SHADOW_MAP";
-		case SF_EXTERNAL_EMITTANCE: return out << "SF_EXTERNAL_EMITTANCE";
-		case SF_PARALLAX_OCCLUSION: return out << "SF_PARALLAX_OCCLUSION";
-		case SF_DYNAMIC_DECAL: return out << "SF_DYNAMIC_DECAL";
-		case SF_DECAL: return out << "SF_DECAL";
-		case SF_UNKNOWN_6: return out << "SF_UNKNOWN_6";
-		case SF_MULTIPLE_TEXTURES: return out << "SF_MULTIPLE_TEXTURES";
-		case SF_SHADOW_FRUSTUM: return out << "SF_SHADOW_FRUSTUM";
-		case SF_TREE_BILLBOARD: return out << "SF_TREE_BILLBOARD";
-		case SF_WINDOW_ENVIRONMENT_MAPPING: return out << "SF_WINDOW_ENVIRONMENT_MAPPING";
-		case SF_LOCALMAP_HIDE_SECRET: return out << "SF_LOCALMAP_HIDE_SECRET";
-		case SF_DYNAMIC_ALPHA: return out << "SF_DYNAMIC_ALPHA";
-		case SF_HAIR: return out << "SF_HAIR";
-		case SF_EYE_ENVIRONMENT_MAPPING: return out << "SF_EYE_ENVIRONMENT_MAPPING";
-		case SF_FIRE_REFRACTION: return out << "SF_FIRE_REFRACTION";
-		case SF_REFRACTION: return out << "SF_REFRACTION";
-		case SF_UNKNOWN_17: return out << "SF_UNKNOWN_17";
-		case NON_PROJECTIVE_SHADOWS: return out << "NON_PROJECTIVE_SHADOWS";
-		case SF_UNKNOWN_19: return out << "SF_UNKNOWN_19";
-		case SF_PARALLAX: return out << "SF_PARALLAX";
-		case SF_FACEGEN_SKIN: return out << "SF_FACEGEN_SKIN";
-		case SF_UNKNOWN_22: return out << "SF_UNKNOWN_22";
-		case SF_UNKNOWN_23: return out << "SF_UNKNOWN_23";
-		case SF_ENVIRONMENT_MAPPING: return out << "SF_ENVIRONMENT_MAPPING";
-		case SF_EMPTY: return out << "SF_EMPTY";
-		case SF_SINGLE_PASS: return out << "SF_SINGLE_PASS";
-		case SF_UNKNOWN_27: return out << "SF_UNKNOWN_27";
-		case SF_VERTEX_ALPHA: return out << "SF_VERTEX_ALPHA";
-		case SF_LOWDDETAIL: return out << "SF_LOWDDETAIL";
-		case SF_SKINNED: return out << "SF_SKINNED";
-		case SF_UNKNOWN_31: return out << "SF_UNKNOWN_31";
+		case SF_SPECULAR: return out << "SF_Specular";
+		case SF_SKINNED: return out << "SF_Skinned";
+		case SF_LOWDETAIL: return out << "SF_LowDetail";
+		case SF_VERTEX_ALPHA: return out << "SF_Vertex_Alpha";
+		case SF_UNKNOWN_1: return out << "SF_Unknown_1";
+		case SF_SINGLE_PASS: return out << "SF_Single_Pass";
+		case SF_EMPTY: return out << "SF_Empty";
+		case SF_ENVIRONMENT_MAPPING: return out << "SF_Environment_Mapping";
+		case SF_ALPHA_TEXTURE: return out << "SF_Alpha_Texture";
+		case SF_UNKNOWN_2: return out << "SF_Unknown_2";
+		case SF_FACEGEN: return out << "SF_FaceGen";
+		case SF_PARALLAX_SHADER_INDEX_15: return out << "SF_Parallax/Shader_Index=15";
+		case SF_UNKNOWN_3: return out << "SF_Unknown_3";
+		case SF_NON_PROJECTIVE_SHADOWS: return out << "SF_Non-Projective_Shadows";
+		case SF_UNKNOWN_4: return out << "SF_Unknown_4";
+		case SF_REFRACTION: return out << "SF_Refraction";
+		case SF_FIRE_REFRACTION: return out << "SF_Fire_Refraction";
+		case SF_EYE_ENVIRONMENT_MAPPING: return out << "SF_Eye_Environment_Mapping";
+		case SF_HAIR: return out << "SF_Hair";
+		case SF_DYNAMIC_ALPHA: return out << "SF_Dynamic_Alpha";
+		case SF_LOCALMAP_HIDE_SECRET: return out << "SF_Localmap_Hide_Secret";
+		case SF_WINDOW_ENVIRONMENT_MAPPING: return out << "SF_Window_Environment_Mapping";
+		case SF_TREE_BILLBOARD: return out << "SF_Tree_Billboard";
+		case SF_SHADOW_FRUSTUM: return out << "SF_Shadow_Frustum";
+		case SF_MULTIPLE_TEXTURES: return out << "SF_Multiple_Textures";
+		case SF_REMAPPABLE_TEXTURES: return out << "SF_Remappable_Textures";
+		case SF_DECAL_SINGLE_PASS: return out << "SF_Decal/Single_Pass";
+		case SF_DYNAMIC_DECAL_SINGLE_PASS: return out << "SF_Dynamic_Decal/Single_Pass";
+		case SF_PARALLAX_OCCULSION: return out << "SF_Parallax_Occulsion";
+		case SF_EXTERNAL_EMITTANCE: return out << "SF_External_Emittance";
+		case SF_SHADOW_MAP: return out << "SF_Shadow_Map";
+		case SF_ZBUFFER_TEST: return out << "SF_ZBuffer_Test";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -1286,6 +1489,188 @@ ostream & operator<<( ostream & out, BSPartFlag const & val ) {
 	switch ( val ) {
 		case PF_EDITOR_VISIBLE: return out << "PF_EDITOR_VISIBLE";
 		case PF_START_NET_BONESET: return out << "PF_START_NET_BONESET";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SkyrimLightingShaderFlags2--//
+
+void NifStream( SkyrimLightingShaderFlags2 & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = SkyrimLightingShaderFlags2(temp);
+}
+
+void NifStream( SkyrimLightingShaderFlags2 const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val ) {
+	switch ( val ) {
+		case SLSF2_ZBUFFER_WRITE: return out << "SLSF2_ZBuffer_Write";
+		case SLSF2_1: return out << "SLSF2_1";
+		case SLSF2_2: return out << "SLSF2_2";
+		case SLSF2_3: return out << "SLSF2_3";
+		case SLSF2_DOUBLE_SIDED: return out << "SLSF2_Double_Sided";
+		case SLSF2_VERTEX_COLOR: return out << "SLSF2_Vertex_Color";
+		case SLSF2_GLOW_MAP: return out << "SLSF2_Glow_Map";
+		case SLSF2_7: return out << "SLSF2_7";
+		case SLSF2_8: return out << "SLSF2_8";
+		case SLSF2_9: return out << "SLSF2_9";
+		case SLSF2_10: return out << "SLSF2_10";
+		case SLSF2_11: return out << "SLSF2_11";
+		case SLSF2_12: return out << "SLSF2_12";
+		case SLSF2_13: return out << "SLSF2_13";
+		case SLSF2_14: return out << "SLSF2_14";
+		case SLSF2_15: return out << "SLSF2_15";
+		case SLSF2_16: return out << "SLSF2_16";
+		case SLSF2_17: return out << "SLSF2_17";
+		case SLSF2_18: return out << "SLSF2_18";
+		case SLSF2_19: return out << "SLSF2_19";
+		case SLSF2_20: return out << "SLSF2_20";
+		case SLSF2_21: return out << "SLSF2_21";
+		case SLSF2_22: return out << "SLSF2_22";
+		case SLSF2_23: return out << "SLSF2_23";
+		case SLSF2_MULTI_LAYER: return out << "SLSF2_Multi_Layer";
+		case SLSF2_SOFT_LIGHT: return out << "SLSF2_Soft_Light";
+		case SLSF2_RIM_LIGHT: return out << "SLSF2_Rim_Light";
+		case SLSF2_BACK_LIGHT: return out << "SLSF2_Back_Light";
+		case SLSF2_28: return out << "SLSF2_28";
+		case SLSF2_VERTEX_ANIMATION: return out << "SLSF2_Vertex_Animation";
+		case SLSF2_30: return out << "SLSF2_30";
+		case SLSF2_31: return out << "SLSF2_31";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SkyrimLightingShaderFlags1--//
+
+void NifStream( SkyrimLightingShaderFlags1 & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = SkyrimLightingShaderFlags1(temp);
+}
+
+void NifStream( SkyrimLightingShaderFlags1 const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val ) {
+	switch ( val ) {
+		case SLSF1_SPECULAR: return out << "SLSF1_Specular";
+		case SLSF1_SKINNED: return out << "SLSF1_Skinned";
+		case SLSF1_2: return out << "SLSF1_2";
+		case SLSF1_3: return out << "SLSF1_3";
+		case SLSF1_4: return out << "SLSF1_4";
+		case SLSF1_5: return out << "SLSF1_5";
+		case SLSF1_6: return out << "SLSF1_6";
+		case SLSF1_ENVIRONMENT_MAPPING: return out << "SLSF1_Environment_Mapping";
+		case SLSF1_8: return out << "SLSF1_8";
+		case SLSF1_CAST_SHADOWS: return out << "SLSF1_Cast_Shadows";
+		case SLSF1_10: return out << "SLSF1_10";
+		case SLSF1_11: return out << "SLSF1_11";
+		case SLSF1_SPECULAR_MAP: return out << "SLSF1_Specular_Map";
+		case SLSF1_13: return out << "SLSF1_13";
+		case SLSF1_14: return out << "SLSF1_14";
+		case SLSF1_15: return out << "SLSF1_15";
+		case SLSF1_16: return out << "SLSF1_16";
+		case SLSF1_EYE_ENVIRONMENT_MAPPING: return out << "SLSF1_Eye_Environment_Mapping";
+		case SLSF1_18: return out << "SLSF1_18";
+		case SLSF1_19: return out << "SLSF1_19";
+		case SLSF1_20: return out << "SLSF1_20";
+		case SLSF1_21: return out << "SLSF1_21";
+		case SLSF1_22: return out << "SLSF1_22";
+		case SLSF1_23: return out << "SLSF1_23";
+		case SLSF1_24: return out << "SLSF1_24";
+		case SLSF1_25: return out << "SLSF1_25";
+		case SLSF1_26: return out << "SLSF1_26";
+		case SLSF1_27: return out << "SLSF1_27";
+		case SLSF1_28: return out << "SLSF1_28";
+		case SLSF1_29: return out << "SLSF1_29";
+		case SLSF1_30: return out << "SLSF1_30";
+		case SLSF1_ZBUFFER_TEST: return out << "SLSF1_ZBuffer_Test";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--DataStreamAccess--//
+
+void NifStream( DataStreamAccess & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = DataStreamAccess(temp);
+}
+
+void NifStream( DataStreamAccess const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, DataStreamAccess const & val ) {
+	switch ( val ) {
+		case CPU_READ: return out << "CPU Read";
+		case CPU_WRITE_STATIC: return out << "CPU Write Static";
+		case CPU_WRITE_MUTABLE: return out << "CPU Write Mutable";
+		case CPU_WRITE_VOLATILE: return out << "CPU Write Volatile";
+		case GPU_READ: return out << "GPU Read";
+		case GPU_WRITE: return out << "GPU Write";
+		case CPU_WRITE_STATIC_INITITIALIZED: return out << "CPU Write Static Inititialized";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SkyrimEffectShaderFlags2--//
+
+void NifStream( SkyrimEffectShaderFlags2 & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = SkyrimEffectShaderFlags2(temp);
+}
+
+void NifStream( SkyrimEffectShaderFlags2 const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SkyrimEffectShaderFlags2 const & val ) {
+	switch ( val ) {
+		case SESF2_TEXTURE_TRANSFORM_U: return out << "SESF2_Texture_Transform_U";
+		case SESF2_TEXTURE_TRANSFORM_V: return out << "SESF2_Texture_Transform_V";
+		case SESF2_2: return out << "SESF2_2";
+		case SESF2_3: return out << "SESF2_3";
+		case SESF2_4: return out << "SESF2_4";
+		case SESF2_5: return out << "SESF2_5";
+		case SESF2_6: return out << "SESF2_6";
+		case SESF2_7: return out << "SESF2_7";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--SkyrimEffectShaderFlags1--//
+
+void NifStream( SkyrimEffectShaderFlags1 & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = SkyrimEffectShaderFlags1(temp);
+}
+
+void NifStream( SkyrimEffectShaderFlags1 const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SkyrimEffectShaderFlags1 const & val ) {
+	switch ( val ) {
+		case SESF1_0: return out << "SESF1_0";
+		case SESF1_1: return out << "SESF1_1";
+		case SESF1_2: return out << "SESF1_2";
+		case SESF1_3: return out << "SESF1_3";
+		case SESF1_DOUBLE_SIDED: return out << "SESF1_Double_Sided";
+		case SESF1_5: return out << "SESF1_5";
+		case SESF1_6: return out << "SESF1_6";
+		case SESF1_7: return out << "SESF1_7";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

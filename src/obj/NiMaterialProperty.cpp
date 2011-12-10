@@ -42,10 +42,10 @@ void NiMaterialProperty::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 
 	NiProperty::Read( in, link_stack, info );
-	if ( info.version <= 0x0A000102 ) {
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x0A000102 ) ) {
 		NifStream( flags, in, info );
 	};
-	if ( (!((info.version == 0x14020007) && ((info.userVersion == 11) && (info.userVersion2 > 21)))) ) {
+	if ( (!((info.version == 0x14020007) && ((info.userVersion >= 11) && (info.userVersion2 > 21)))) ) {
 		NifStream( ambientColor, in, info );
 		NifStream( diffuseColor, in, info );
 	};
@@ -53,7 +53,7 @@ void NiMaterialProperty::Read( istream& in, list<unsigned int> & link_stack, con
 	NifStream( emissiveColor, in, info );
 	NifStream( glossiness, in, info );
 	NifStream( alpha, in, info );
-	if ( ((info.version == 0x14020007) && ((info.userVersion == 11) && (info.userVersion2 > 21))) ) {
+	if ( ((info.version == 0x14020007) && ((info.userVersion >= 11) && (info.userVersion2 > 21))) ) {
 		NifStream( emitMulti, in, info );
 	};
 
@@ -66,10 +66,10 @@ void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	NiProperty::Write( out, link_map, missing_link_stack, info );
-	if ( info.version <= 0x0A000102 ) {
+	if ( ( info.version >= 0x03000000 ) && ( info.version <= 0x0A000102 ) ) {
 		NifStream( flags, out, info );
 	};
-	if ( (!((info.version == 0x14020007) && ((info.userVersion == 11) && (info.userVersion2 > 21)))) ) {
+	if ( (!((info.version == 0x14020007) && ((info.userVersion >= 11) && (info.userVersion2 > 21)))) ) {
 		NifStream( ambientColor, out, info );
 		NifStream( diffuseColor, out, info );
 	};
@@ -77,7 +77,7 @@ void NiMaterialProperty::Write( ostream& out, const map<NiObjectRef,unsigned int
 	NifStream( emissiveColor, out, info );
 	NifStream( glossiness, out, info );
 	NifStream( alpha, out, info );
-	if ( ((info.version == 0x14020007) && ((info.userVersion == 11) && (info.userVersion2 > 21))) ) {
+	if ( ((info.version == 0x14020007) && ((info.userVersion >= 11) && (info.userVersion2 > 21))) ) {
 		NifStream( emitMulti, out, info );
 	};
 

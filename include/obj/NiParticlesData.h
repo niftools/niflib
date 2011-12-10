@@ -13,19 +13,19 @@ All rights reserved.  Please see niflib.h for license. */
 //--BEGIN FILE HEAD CUSTOM CODE--//
 //--END CUSTOM CODE--//
 
-#include "NiObject.h"
+#include "NiGeometryData.h"
 
 // Include structures
 #include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiAdditionalGeometryData;
+class NiObject;
 class NiParticlesData;
 typedef Ref<NiParticlesData> NiParticlesDataRef;
 
 /*! Generic rotating particles data object. */
-class NiParticlesData : public NiObject {
+class NiParticlesData : public NiGeometryData {
 public:
 	/*! Constructor */
 	NIFLIB_API NiParticlesData();
@@ -60,78 +60,6 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
-	/*! Name of this object. */
-	IndexString name;
-	/*!
-	 * Number of vertices. For NiPSysData this is max particles. (For Fallout 3 this is
-	 * always zero)
-	 */
-	mutable unsigned short numVertices;
-	/*! Used with NiCollision objects when OBB or TRI is set. */
-	byte keepFlags;
-	/*! Unknown. */
-	byte compressFlags;
-	/*! Is the vertex array present? (Always non-zero.) */
-	bool hasVertices;
-	/*! The mesh vertices. */
-	vector<Vector3 > vertices;
-	/*! Texture flags in lower byte. */
-	mutable byte numUvSets;
-	/*! Methods for saving binormals and tangents saved in upper byte. */
-	byte tspaceFlag;
-	/*!
-	 * Do we have lighting normals? These are essential for proper lighting: if not
-	 * present, the model will only be influenced by ambient light.
-	 */
-	bool hasNormals;
-	/*! The lighting normals. */
-	vector<Vector3 > normals;
-	/*!
-	 * Unknown. Binormal & tangents? has_normals must be set as well for this field to
-	 * be present.
-	 */
-	vector<Vector3 > binormals;
-	/*! Unknown. Binormal & tangents? */
-	vector<Vector3 > tangents;
-	/*!
-	 * Center of the bounding box (smallest box that contains all vertices) of the
-	 * mesh.
-	 */
-	Vector3 center;
-	/*!
-	 * Radius of the mesh: maximal Euclidean distance between the center and all
-	 * vertices.
-	 */
-	float radius;
-	/*!
-	 * Do we have vertex colors? These are usually used to fine-tune the lighting of
-	 * the model.
-	 * 
-	 *             Note: how vertex colors influence the model can be controlled by
-	 * having a NiVertexColorProperty object as a property child of the root node. If
-	 * this property object is not present, the vertex colors fine-tune lighting.
-	 * 
-	 *             Note 2: set to either 0 or 0xFFFFFFFF for NifTexture compatibility.
-	 */
-	bool hasVertexColors;
-	/*! The vertex colors. */
-	vector<Color4 > vertexColors;
-	/*!
-	 * Do we have UV coordinates?
-	 * 
-	 *             Note: for compatibility with NifTexture, set this value to either
-	 * 0x00000000 or 0xFFFFFFFF.
-	 */
-	bool hasUv;
-	/*!
-	 * The UV texture coordinates. They follow the OpenGL standard: some programs may
-	 * require you to flip the second coordinate.
-	 */
-	vector< vector<TexCoord > > uvSets;
-	/*! Consistency Flags */
-	ConsistencyType consistencyFlags;
-	/*! Unknown. */
-	Ref<NiAdditionalGeometryData > additionalData;
 	/*! The maximum number of particles (matches the number of vertices). */
 	unsigned short numParticles;
 	/*! The particles' size. */
@@ -153,6 +81,10 @@ protected:
 	bool hasRotations;
 	/*! The individual particle rotations. */
 	vector<Quaternion > rotations;
+	/*! Unknown, probably a boolean. */
+	byte unknownByte1;
+	/*! Unknown */
+	Ref<NiObject > unknownLink;
 	/*! Are the angles of rotation present? */
 	bool hasRotationAngles;
 	/*! Angles of rotation */

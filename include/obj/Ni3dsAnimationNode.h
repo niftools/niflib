@@ -25,7 +25,7 @@ class NiObject;
 class Ni3dsAnimationNode;
 typedef Ref<Ni3dsAnimationNode> Ni3dsAnimationNodeRef;
 
-/*! Unknown! */
+/*! Unknown. Only found in 2.3 nifs. */
 class Ni3dsAnimationNode : public NiObject {
 public:
 	/*! Constructor */
@@ -65,7 +65,7 @@ protected:
 	/*! Name of this object. */
 	IndexString name;
 	/*! Unknown. */
-	unsigned int hasData;
+	bool hasData;
 	/*! Unknown. Matrix? */
 	array<21,float > unknownFloats1;
 	/*! Unknown. */

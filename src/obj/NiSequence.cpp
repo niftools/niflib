@@ -15,17 +15,17 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSequence.h"
 #include "../../include/gen/ControllerLink.h"
-#include "../../include/obj/NiTimeController.h"
 #include "../../include/obj/NiInterpolator.h"
 #include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiStringPalette.h"
+#include "../../include/obj/NiTimeController.h"
 #include "../../include/obj/NiTextKeyExtraData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiSequence::TYPE("NiSequence", &NiObject::TYPE );
 
-NiSequence::NiSequence() : textKeys(NULL), numControlledBlocks((unsigned int)0), unknownInt1((unsigned int)0) {
+NiSequence::NiSequence() : textKeys(NULL), unknownInt4((int)0), unknownInt5((int)0), numControlledBlocks((unsigned int)0), unknownInt1((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -55,6 +55,10 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
+	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) && ( info.userVersion == 131072 ) ) {
+		NifStream( unknownInt4, in, info );
+		NifStream( unknownInt5, in, info );
+	};
 	NifStream( numControlledBlocks, in, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( unknownInt1, in, info );
@@ -77,7 +81,7 @@ void NiSequence::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			link_stack.push_back( block_num );
 			NifStream( controlledBlocks[i1].unknownShort0, in, info );
 		};
-		if ( ( info.version >= 0x0A01006A ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
+		if ( ( info.version >= 0x0A01006A ) && ( (info.userVersion >= 10) ) ) {
 			NifStream( controlledBlocks[i1].priority, in, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
@@ -162,6 +166,10 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			}
 		}
 	};
+	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) && ( info.userVersion == 131072 ) ) {
+		NifStream( unknownInt4, out, info );
+		NifStream( unknownInt5, out, info );
+	};
 	NifStream( numControlledBlocks, out, info );
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( unknownInt1, out, info );
@@ -243,7 +251,7 @@ void NiSequence::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			}
 			NifStream( controlledBlocks[i1].unknownShort0, out, info );
 		};
-		if ( ( info.version >= 0x0A01006A ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
+		if ( ( info.version >= 0x0A01006A ) && ( (info.userVersion >= 10) ) ) {
 			NifStream( controlledBlocks[i1].priority, out, info );
 		};
 		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
@@ -327,6 +335,8 @@ std::string NiSequence::asString( bool verbose ) const {
 	out << "  Name:  " << name << endl;
 	out << "  Text Keys Name:  " << textKeysName << endl;
 	out << "  Text Keys:  " << textKeys << endl;
+	out << "  Unknown Int 4:  " << unknownInt4 << endl;
+	out << "  Unknown Int 5:  " << unknownInt5 << endl;
 	out << "  Num Controlled Blocks:  " << numControlledBlocks << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	array_output_count = 0;

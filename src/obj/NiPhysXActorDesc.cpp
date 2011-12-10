@@ -15,9 +15,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPhysXActorDesc.h"
+#include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiPhysXBodyDesc.h"
 #include "../../include/obj/NiPhysXShapeDesc.h"
-#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

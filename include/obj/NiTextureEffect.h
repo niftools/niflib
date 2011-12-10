@@ -217,6 +217,8 @@ protected:
 	TexFilterMode textureFiltering;
 	/*! Texture Clamp mode. */
 	TexClampMode textureClamping;
+	/*! Unknown. */
+	short unknown;
 	/*! The type of effect that the texture is used for. */
 	EffectType textureType;
 	/*! The method that will be used to generate UV coordinates for the texture effect. */

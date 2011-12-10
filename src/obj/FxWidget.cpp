@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type FxWidget::TYPE("FxWidget", &NiNode::TYPE );
 
-FxWidget::FxWidget() : unknown1((byte)0) {
+FxWidget::FxWidget() : unknown3((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -42,7 +42,7 @@ void FxWidget::Read( istream& in, list<unsigned int> & link_stack, const NifInfo
 	//--END CUSTOM CODE--//
 
 	NiNode::Read( in, link_stack, info );
-	NifStream( unknown1, in, info );
+	NifStream( unknown3, in, info );
 	for (unsigned int i1 = 0; i1 < 292; i1++) {
 		NifStream( unknown292Bytes[i1], in, info );
 	};
@@ -56,7 +56,7 @@ void FxWidget::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_m
 	//--END CUSTOM CODE--//
 
 	NiNode::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknown1, out, info );
+	NifStream( unknown3, out, info );
 	for (unsigned int i1 = 0; i1 < 292; i1++) {
 		NifStream( unknown292Bytes[i1], out, info );
 	};
@@ -72,7 +72,7 @@ std::string FxWidget::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiNode::asString();
-	out << "  Unknown1:  " << unknown1 << endl;
+	out << "  Unknown 3:  " << unknown3 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 292; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

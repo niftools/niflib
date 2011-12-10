@@ -20,7 +20,7 @@ namespace Niflib {
 class NiPSysFieldMagnitudeCtlr;
 typedef Ref<NiPSysFieldMagnitudeCtlr> NiPSysFieldMagnitudeCtlrRef;
 
-/*! Particle system controller, used for ???. */
+/*! Particle system controller for force field magnitude. */
 class NiPSysFieldMagnitudeCtlr : public NiPSysModifierFloatCtlr {
 public:
 	/*! Constructor */

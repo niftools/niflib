@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysFieldModifier::TYPE("NiPSysFieldModifier", &NiPSysModifier::TYPE );
 
-NiPSysFieldModifier::NiPSysFieldModifier() : fieldObject(NULL), magnitude(0.0f), attenuation(0.0f), unknownBoolean1(false), unknownFloat1(0.0f) {
+NiPSysFieldModifier::NiPSysFieldModifier() : fieldObject(NULL), magnitude(0.0f), attenuation(0.0f), useMaxDistance(false), maxDistance(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -52,8 +52,8 @@ void NiPSysFieldModifier::Read( istream& in, list<unsigned int> & link_stack, co
 	link_stack.push_back( block_num );
 	NifStream( magnitude, in, info );
 	NifStream( attenuation, in, info );
-	NifStream( unknownBoolean1, in, info );
-	NifStream( unknownFloat1, in, info );
+	NifStream( useMaxDistance, in, info );
+	NifStream( maxDistance, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -85,8 +85,8 @@ void NiPSysFieldModifier::Write( ostream& out, const map<NiObjectRef,unsigned in
 	}
 	NifStream( magnitude, out, info );
 	NifStream( attenuation, out, info );
-	NifStream( unknownBoolean1, out, info );
-	NifStream( unknownFloat1, out, info );
+	NifStream( useMaxDistance, out, info );
+	NifStream( maxDistance, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -103,8 +103,8 @@ std::string NiPSysFieldModifier::asString( bool verbose ) const {
 	out << "  Field Object:  " << fieldObject << endl;
 	out << "  Magnitude:  " << magnitude << endl;
 	out << "  Attenuation:  " << attenuation << endl;
-	out << "  Unknown Boolean 1:  " << unknownBoolean1 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
+	out << "  Use Max Distance:  " << useMaxDistance << endl;
+	out << "  Max Distance:  " << maxDistance << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

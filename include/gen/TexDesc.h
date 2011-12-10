@@ -33,8 +33,13 @@ struct TexDesc {
 	TexClampMode clampMode;
 	/*! 0=nearest, 1=bilinear, 2=trilinear, 3=..., 4=..., 5=... */
 	TexFilterMode filterMode;
-	/*! Texture mode flags. Presumably stores Clamp Mode and Filter Mode? */
+	/*!
+	 * Texture mode flags; clamp and filter mode stored in upper byte with 0xYZ00 =
+	 * clamp mode Y, filter mode Z.
+	 */
 	unsigned short flags;
+	/*! Unknown, seems to always be 1 */
+	short unknownShort;
 	/*! The texture coordinate set in NiGeometryData that this texture slot will use. */
 	unsigned int uvSet;
 	/*!

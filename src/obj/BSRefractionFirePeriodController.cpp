@@ -15,12 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSRefractionFirePeriodController.h"
+#include "../../include/obj/NiInterpolator.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSRefractionFirePeriodController::TYPE("BSRefractionFirePeriodController", &NiTimeController::TYPE );
 
-BSRefractionFirePeriodController::BSRefractionFirePeriodController() {
+BSRefractionFirePeriodController::BSRefractionFirePeriodController() : interpolator(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -45,7 +46,12 @@ void BSRefractionFirePeriodController::Read( istream& in, list<unsigned int> & l
 
 	//--END CUSTOM CODE--//
 
+	unsigned int block_num;
 	NiTimeController::Read( in, link_stack, info );
+	if ( info.version >= 0x14020007 ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -58,6 +64,25 @@ void BSRefractionFirePeriodController::Write( ostream& out, const map<NiObjectRe
 	//--END CUSTOM CODE--//
 
 	NiTimeController::Write( out, link_map, missing_link_stack, info );
+	if ( info.version >= 0x14020007 ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			WritePtr32( &(*interpolator), out );
+		} else {
+			if ( interpolator != NULL ) {
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(interpolator) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( interpolator );
+				}
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
+			}
+		}
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -71,6 +96,7 @@ std::string BSRefractionFirePeriodController::asString( bool verbose ) const {
 
 	stringstream out;
 	out << NiTimeController::asString();
+	out << "  Interpolator:  " << interpolator << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -84,6 +110,9 @@ void BSRefractionFirePeriodController::FixLinks( const map<unsigned int,NiObject
 	//--END CUSTOM CODE--//
 
 	NiTimeController::FixLinks( objects, link_stack, missing_link_stack, info );
+	if ( info.version >= 0x14020007 ) {
+		interpolator = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -93,6 +122,8 @@ void BSRefractionFirePeriodController::FixLinks( const map<unsigned int,NiObject
 std::list<NiObjectRef> BSRefractionFirePeriodController::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiTimeController::GetRefs();
+	if ( interpolator != NULL )
+		refs.push_back(StaticCast<NiObject>(interpolator));
 	return refs;
 }
 

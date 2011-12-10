@@ -17,7 +17,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSkinData.h"
+#include "../../include/gen/SkinTransform.h"
 #include "../../include/gen/SkinData.h"
+#include "../../include/gen/SkinTransform.h"
 #include "../../include/gen/SkinWeight.h"
 #include "../../include/gen/SkinWeight.h"
 #include "../../include/obj/NiSkinPartition.h"
@@ -26,7 +28,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiSkinData::TYPE("NiSkinData", &NiObject::TYPE );
 
-NiSkinData::NiSkinData() : scale(0.0f), numBones((unsigned int)0), skinPartition(NULL), hasVertexWeights((byte)1) {
+NiSkinData::NiSkinData() : numBones((unsigned int)0), skinPartition(NULL), hasVertexWeights((byte)1) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -50,9 +52,9 @@ void NiSkinData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 
 	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
-	NifStream( rotation, in, info );
-	NifStream( translation, in, info );
-	NifStream( scale, in, info );
+	NifStream( skinTransform.rotation, in, info );
+	NifStream( skinTransform.translation, in, info );
+	NifStream( skinTransform.scale, in, info );
 	NifStream( numBones, in, info );
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
 		NifStream( block_num, in, info );
@@ -63,11 +65,16 @@ void NiSkinData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	};
 	boneList.resize(numBones);
 	for (unsigned int i1 = 0; i1 < boneList.size(); i1++) {
-		NifStream( boneList[i1].rotation, in, info );
-		NifStream( boneList[i1].translation, in, info );
-		NifStream( boneList[i1].scale, in, info );
+		NifStream( boneList[i1].skinTransform.rotation, in, info );
+		NifStream( boneList[i1].skinTransform.translation, in, info );
+		NifStream( boneList[i1].skinTransform.scale, in, info );
 		NifStream( boneList[i1].boundingSphereOffset, in, info );
 		NifStream( boneList[i1].boundingSphereRadius, in, info );
+		if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) && ( info.userVersion == 131072 ) ) {
+			for (unsigned int i3 = 0; i3 < 13; i3++) {
+				NifStream( boneList[i1].unknown13Shorts[i3], in, info );
+			};
+		};
 		NifStream( boneList[i1].numVertices, in, info );
 		if ( info.version <= 0x04020100 ) {
 			boneList[i1].vertexWeights.resize(boneList[i1].numVertices);
@@ -97,9 +104,9 @@ void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 
 	NiObject::Write( out, link_map, missing_link_stack, info );
 	numBones = (unsigned int)(boneList.size());
-	NifStream( rotation, out, info );
-	NifStream( translation, out, info );
-	NifStream( scale, out, info );
+	NifStream( skinTransform.rotation, out, info );
+	NifStream( skinTransform.translation, out, info );
+	NifStream( skinTransform.scale, out, info );
 	NifStream( numBones, out, info );
 	if ( ( info.version >= 0x04000002 ) && ( info.version <= 0x0A010000 ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
@@ -125,11 +132,16 @@ void NiSkinData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	};
 	for (unsigned int i1 = 0; i1 < boneList.size(); i1++) {
 		boneList[i1].numVertices = (unsigned short)(boneList[i1].vertexWeights.size());
-		NifStream( boneList[i1].rotation, out, info );
-		NifStream( boneList[i1].translation, out, info );
-		NifStream( boneList[i1].scale, out, info );
+		NifStream( boneList[i1].skinTransform.rotation, out, info );
+		NifStream( boneList[i1].skinTransform.translation, out, info );
+		NifStream( boneList[i1].skinTransform.scale, out, info );
 		NifStream( boneList[i1].boundingSphereOffset, out, info );
 		NifStream( boneList[i1].boundingSphereRadius, out, info );
+		if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) && ( info.userVersion == 131072 ) ) {
+			for (unsigned int i3 = 0; i3 < 13; i3++) {
+				NifStream( boneList[i1].unknown13Shorts[i3], out, info );
+			};
+		};
 		NifStream( boneList[i1].numVertices, out, info );
 		if ( info.version <= 0x04020100 ) {
 			for (unsigned int i3 = 0; i3 < boneList[i1].vertexWeights.size(); i3++) {
@@ -159,9 +171,9 @@ std::string NiSkinData::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	numBones = (unsigned int)(boneList.size());
-	out << "  Rotation:  " << rotation << endl;
-	out << "  Translation:  " << translation << endl;
-	out << "  Scale:  " << scale << endl;
+	out << "  Rotation:  " << skinTransform.rotation << endl;
+	out << "  Translation:  " << skinTransform.translation << endl;
+	out << "  Scale:  " << skinTransform.scale << endl;
 	out << "  Num Bones:  " << numBones << endl;
 	out << "  Skin Partition:  " << skinPartition << endl;
 	out << "  Has Vertex Weights:  " << hasVertexWeights << endl;
@@ -172,11 +184,23 @@ std::string NiSkinData::asString( bool verbose ) const {
 			break;
 		};
 		boneList[i1].numVertices = (unsigned short)(boneList[i1].vertexWeights.size());
-		out << "    Rotation:  " << boneList[i1].rotation << endl;
-		out << "    Translation:  " << boneList[i1].translation << endl;
-		out << "    Scale:  " << boneList[i1].scale << endl;
+		out << "    Rotation:  " << boneList[i1].skinTransform.rotation << endl;
+		out << "    Translation:  " << boneList[i1].skinTransform.translation << endl;
+		out << "    Scale:  " << boneList[i1].skinTransform.scale << endl;
 		out << "    Bounding Sphere Offset:  " << boneList[i1].boundingSphereOffset << endl;
 		out << "    Bounding Sphere Radius:  " << boneList[i1].boundingSphereRadius << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < 13; i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Unknown 13 Shorts[" << i2 << "]:  " << boneList[i1].unknown13Shorts[i2] << endl;
+			array_output_count++;
+		};
 		out << "    Num Vertices:  " << boneList[i1].numVertices << endl;
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < boneList[i1].vertexWeights.size(); i2++) {

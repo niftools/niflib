@@ -125,6 +125,10 @@ protected:
 	mutable unsigned int numShapeGroups2;
 	/*! Group of NiTriShape indices. */
 	vector<Ref<NiTriBasedGeom > > shapeGroups2;
+	/*! Unknown. */
+	int unknownInt2;
+	/*! Unknown. */
+	int unknownInt3;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

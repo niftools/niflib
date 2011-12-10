@@ -94,7 +94,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (skinPartitionBlocks[i1].hasVertexMap != 0) ) {
+			if ( skinPartitionBlocks[i1].hasVertexMap ) {
 				skinPartitionBlocks[i1].vertexMap.resize(skinPartitionBlocks[i1].numVertices);
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].vertexMap.size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].vertexMap[i4], in, info );
@@ -112,7 +112,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (skinPartitionBlocks[i1].hasVertexWeights != 0) ) {
+			if ( skinPartitionBlocks[i1].hasVertexWeights ) {
 				skinPartitionBlocks[i1].vertexWeights.resize(skinPartitionBlocks[i1].numVertices);
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].vertexWeights.size(); i4++) {
 					skinPartitionBlocks[i1].vertexWeights[i4].resize(skinPartitionBlocks[i1].numWeightsPerVertex);
@@ -141,7 +141,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips != 0)) ) {
+			if ( (skinPartitionBlocks[i1].hasFaces && (skinPartitionBlocks[i1].numStrips != 0)) ) {
 				skinPartitionBlocks[i1].strips.resize(skinPartitionBlocks[i1].numStrips);
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].strips.size(); i4++) {
 					skinPartitionBlocks[i1].strips[i4].resize(skinPartitionBlocks[i1].stripLengths[i4]);
@@ -160,7 +160,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips == 0)) ) {
+			if ( (skinPartitionBlocks[i1].hasFaces && (skinPartitionBlocks[i1].numStrips == 0)) ) {
 				skinPartitionBlocks[i1].triangles.resize(skinPartitionBlocks[i1].numTriangles);
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].triangles.size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].triangles[i4], in, info );
@@ -168,7 +168,7 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 			};
 		};
 		NifStream( skinPartitionBlocks[i1].hasBoneIndices, in, info );
-		if ( (skinPartitionBlocks[i1].hasBoneIndices != 0) ) {
+		if ( skinPartitionBlocks[i1].hasBoneIndices ) {
 			skinPartitionBlocks[i1].boneIndices.resize(skinPartitionBlocks[i1].numVertices);
 			for (unsigned int i3 = 0; i3 < skinPartitionBlocks[i1].boneIndices.size(); i3++) {
 				skinPartitionBlocks[i1].boneIndices[i3].resize(skinPartitionBlocks[i1].numWeightsPerVertex);
@@ -176,6 +176,9 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 					NifStream( skinPartitionBlocks[i1].boneIndices[i3][i4], in, info );
 				};
 			};
+		};
+		if ( (info.userVersion >= 12) ) {
+			NifStream( skinPartitionBlocks[i1].unknownShort, in, info );
 		};
 	};
 
@@ -196,7 +199,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = (unsigned short)(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = (unsigned short)(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].numTrianglesCalc();
+		skinPartitionBlocks[i1].numTriangles = (unsigned short)(skinPartitionBlocks[i1].triangles.size());
 		skinPartitionBlocks[i1].numVertices = (unsigned short)(skinPartitionBlocks[i1].vertexMap.size());
 		NifStream( skinPartitionBlocks[i1].numVertices, out, info );
 		NifStream( skinPartitionBlocks[i1].numTriangles, out, info );
@@ -215,7 +218,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (skinPartitionBlocks[i1].hasVertexMap != 0) ) {
+			if ( skinPartitionBlocks[i1].hasVertexMap ) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].vertexMap.size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].vertexMap[i4], out, info );
 				};
@@ -230,7 +233,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( (skinPartitionBlocks[i1].hasVertexWeights != 0) ) {
+			if ( skinPartitionBlocks[i1].hasVertexWeights ) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].vertexWeights.size(); i4++) {
 					for (unsigned int i5 = 0; i5 < skinPartitionBlocks[i1].vertexWeights[i4].size(); i5++) {
 						NifStream( skinPartitionBlocks[i1].vertexWeights[i4][i5], out, info );
@@ -254,7 +257,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips != 0)) ) {
+			if ( (skinPartitionBlocks[i1].hasFaces && (skinPartitionBlocks[i1].numStrips != 0)) ) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].strips.size(); i4++) {
 					for (unsigned int i5 = 0; i5 < skinPartitionBlocks[i1].stripLengths[i4]; i5++) {
 						NifStream( skinPartitionBlocks[i1].strips[i4][i5], out, info );
@@ -270,19 +273,22 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 			};
 		};
 		if ( info.version >= 0x0A010000 ) {
-			if ( ((skinPartitionBlocks[i1].hasFaces != 0) && (skinPartitionBlocks[i1].numStrips == 0)) ) {
+			if ( (skinPartitionBlocks[i1].hasFaces && (skinPartitionBlocks[i1].numStrips == 0)) ) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].triangles.size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].triangles[i4], out, info );
 				};
 			};
 		};
 		NifStream( skinPartitionBlocks[i1].hasBoneIndices, out, info );
-		if ( (skinPartitionBlocks[i1].hasBoneIndices != 0) ) {
+		if ( skinPartitionBlocks[i1].hasBoneIndices ) {
 			for (unsigned int i3 = 0; i3 < skinPartitionBlocks[i1].boneIndices.size(); i3++) {
 				for (unsigned int i4 = 0; i4 < skinPartitionBlocks[i1].boneIndices[i3].size(); i4++) {
 					NifStream( skinPartitionBlocks[i1].boneIndices[i3][i4], out, info );
 				};
 			};
+		};
+		if ( (info.userVersion >= 12) ) {
+			NifStream( skinPartitionBlocks[i1].unknownShort, out, info );
 		};
 	};
 
@@ -310,7 +316,7 @@ std::string NiSkinPartition::asString( bool verbose ) const {
 		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = (unsigned short)(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = (unsigned short)(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].numTrianglesCalc();
+		skinPartitionBlocks[i1].numTriangles = (unsigned short)(skinPartitionBlocks[i1].triangles.size());
 		skinPartitionBlocks[i1].numVertices = (unsigned short)(skinPartitionBlocks[i1].vertexMap.size());
 		out << "    Num Vertices:  " << skinPartitionBlocks[i1].numVertices << endl;
 		out << "    Num Triangles:  " << skinPartitionBlocks[i1].numTriangles << endl;
@@ -401,7 +407,7 @@ std::string NiSkinPartition::asString( bool verbose ) const {
 			};
 		};
 		out << "    Has Bone Indices:  " << skinPartitionBlocks[i1].hasBoneIndices << endl;
-		if ( (skinPartitionBlocks[i1].hasBoneIndices != 0) ) {
+		if ( skinPartitionBlocks[i1].hasBoneIndices ) {
 			array_output_count = 0;
 			for (unsigned int i3 = 0; i3 < skinPartitionBlocks[i1].boneIndices.size(); i3++) {
 				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -417,6 +423,7 @@ std::string NiSkinPartition::asString( bool verbose ) const {
 				};
 			};
 		};
+		out << "    Unknown Short:  " << skinPartitionBlocks[i1].unknownShort << endl;
 	};
 	return out.str();
 

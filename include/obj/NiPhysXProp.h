@@ -76,6 +76,8 @@ protected:
 	vector<Ref<NiPhysXTransformDest > > transformDests;
 	/*! Unknown */
 	byte unknownByte;
+	/*! Unknown */
+	int unknownInt;
 	/*! PhysX Property Description. */
 	Ref<NiPhysXPropDesc > propDescription;
 public:

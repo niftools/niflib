@@ -93,7 +93,7 @@ protected:
 	unsigned int unknownInt3;
 	/*! Flags */
 	byte flags;
-	/*! Seems to always be zero. */
+	/*! Unkown. Often zero. */
 	unsigned int unknownInt4;
 	/*! Unknown. */
 	byte unknownByte1;

@@ -15,14 +15,16 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSTreadTransfInterpolator.h"
-#include "../../include/gen/BSTreadTransfInfo.h"
-#include "../../include/gen/BSTreadTransfSubInfo.h"
+#include "../../include/gen/BSTreadTransform.h"
+#include "../../include/gen/BSTreadTransformData.h"
+#include "../../include/gen/BSTreadTransformData.h"
+#include "../../include/obj/NiFloatData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSTreadTransfInterpolator::TYPE("BSTreadTransfInterpolator", &NiInterpolator::TYPE );
 
-BSTreadTransfInterpolator::BSTreadTransfInterpolator() : numTransfers((int)0), unknownInt1((int)0) {
+BSTreadTransfInterpolator::BSTreadTransfInterpolator() : numTreadTransforms((int)0), data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -47,23 +49,21 @@ void BSTreadTransfInterpolator::Read( istream& in, list<unsigned int> & link_sta
 
 	//--END CUSTOM CODE--//
 
+	unsigned int block_num;
 	NiInterpolator::Read( in, link_stack, info );
-	NifStream( numTransfers, in, info );
-	treadTransferInfo.resize(numTransfers);
-	for (unsigned int i1 = 0; i1 < treadTransferInfo.size(); i1++) {
-		NifStream( treadTransferInfo[i1].unknownFloat1, in, info );
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt1, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt2, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt3, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt4, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt5, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt6, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt7, in, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt8, in, info );
-		};
+	NifStream( numTreadTransforms, in, info );
+	treadTransforms.resize(numTreadTransforms);
+	for (unsigned int i1 = 0; i1 < treadTransforms.size(); i1++) {
+		NifStream( treadTransforms[i1].name, in, info );
+		NifStream( treadTransforms[i1].transform1.translation, in, info );
+		NifStream( treadTransforms[i1].transform1.rotation, in, info );
+		NifStream( treadTransforms[i1].transform1.scale, in, info );
+		NifStream( treadTransforms[i1].transform2.translation, in, info );
+		NifStream( treadTransforms[i1].transform2.rotation, in, info );
+		NifStream( treadTransforms[i1].transform2.scale, in, info );
 	};
-	NifStream( unknownInt1, in, info );
+	NifStream( block_num, in, info );
+	link_stack.push_back( block_num );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -76,22 +76,34 @@ void BSTreadTransfInterpolator::Write( ostream& out, const map<NiObjectRef,unsig
 	//--END CUSTOM CODE--//
 
 	NiInterpolator::Write( out, link_map, missing_link_stack, info );
-	numTransfers = (int)(treadTransferInfo.size());
-	NifStream( numTransfers, out, info );
-	for (unsigned int i1 = 0; i1 < treadTransferInfo.size(); i1++) {
-		NifStream( treadTransferInfo[i1].unknownFloat1, out, info );
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt1, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt2, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt3, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt4, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt5, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt6, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt7, out, info );
-			NifStream( treadTransferInfo[i1].data[i2].unknownInt8, out, info );
-		};
+	numTreadTransforms = (int)(treadTransforms.size());
+	NifStream( numTreadTransforms, out, info );
+	for (unsigned int i1 = 0; i1 < treadTransforms.size(); i1++) {
+		NifStream( treadTransforms[i1].name, out, info );
+		NifStream( treadTransforms[i1].transform1.translation, out, info );
+		NifStream( treadTransforms[i1].transform1.rotation, out, info );
+		NifStream( treadTransforms[i1].transform1.scale, out, info );
+		NifStream( treadTransforms[i1].transform2.translation, out, info );
+		NifStream( treadTransforms[i1].transform2.rotation, out, info );
+		NifStream( treadTransforms[i1].transform2.scale, out, info );
 	};
-	NifStream( unknownInt1, out, info );
+	if ( info.version < VER_3_3_0_13 ) {
+		WritePtr32( &(*data), out );
+	} else {
+		if ( data != NULL ) {
+			map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(data) );
+			if (it != link_map.end()) {
+				NifStream( it->second, out, info );
+				missing_link_stack.push_back( NULL );
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( data );
+			}
+		} else {
+			NifStream( 0xFFFFFFFF, out, info );
+			missing_link_stack.push_back( NULL );
+		}
+	}
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -106,32 +118,23 @@ std::string BSTreadTransfInterpolator::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiInterpolator::asString();
-	numTransfers = (int)(treadTransferInfo.size());
-	out << "  Num Transfers:  " << numTransfers << endl;
+	numTreadTransforms = (int)(treadTransforms.size());
+	out << "  Num Tread Transforms:  " << numTreadTransforms << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < treadTransferInfo.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < treadTransforms.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Unknown Float 1:  " << treadTransferInfo[i1].unknownFloat1 << endl;
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown Int 1:  " << treadTransferInfo[i1].data[i2].unknownInt1 << endl;
-			out << "      Unknown Int 2:  " << treadTransferInfo[i1].data[i2].unknownInt2 << endl;
-			out << "      Unknown Int 3:  " << treadTransferInfo[i1].data[i2].unknownInt3 << endl;
-			out << "      Unknown Int 4:  " << treadTransferInfo[i1].data[i2].unknownInt4 << endl;
-			out << "      Unknown Int 5:  " << treadTransferInfo[i1].data[i2].unknownInt5 << endl;
-			out << "      Unknown Int 6:  " << treadTransferInfo[i1].data[i2].unknownInt6 << endl;
-			out << "      Unknown Int 7:  " << treadTransferInfo[i1].data[i2].unknownInt7 << endl;
-			out << "      Unknown Int 8:  " << treadTransferInfo[i1].data[i2].unknownInt8 << endl;
-		};
+		out << "    Name:  " << treadTransforms[i1].name << endl;
+		out << "    Translation:  " << treadTransforms[i1].transform1.translation << endl;
+		out << "    Rotation:  " << treadTransforms[i1].transform1.rotation << endl;
+		out << "    Scale:  " << treadTransforms[i1].transform1.scale << endl;
+		out << "    Translation:  " << treadTransforms[i1].transform2.translation << endl;
+		out << "    Rotation:  " << treadTransforms[i1].transform2.rotation << endl;
+		out << "    Scale:  " << treadTransforms[i1].transform2.scale << endl;
 	};
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	out << "  Data:  " << data << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -145,6 +148,7 @@ void BSTreadTransfInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & 
 	//--END CUSTOM CODE--//
 
 	NiInterpolator::FixLinks( objects, link_stack, missing_link_stack, info );
+	data = FixLink<NiFloatData>( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -154,6 +158,8 @@ void BSTreadTransfInterpolator::FixLinks( const map<unsigned int,NiObjectRef> & 
 std::list<NiObjectRef> BSTreadTransfInterpolator::GetRefs() const {
 	list<Ref<NiObject> > refs;
 	refs = NiInterpolator::GetRefs();
+	if ( data != NULL )
+		refs.push_back(StaticCast<NiObject>(data));
 	return refs;
 }
 

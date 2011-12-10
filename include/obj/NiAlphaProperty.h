@@ -214,6 +214,10 @@ protected:
 	unsigned short flags;
 	/*! Threshold for alpha testing (see: glAlphaFunc) */
 	byte threshold;
+	/*! Unknown */
+	unsigned short unknownShort1;
+	/*! Unknown */
+	unsigned int unknownInt2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

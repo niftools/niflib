@@ -132,10 +132,15 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
+	/*!
+	 * Skyrim's shaders: 0=default 1=EnvMap, 2=Glow, 5=Skin, 6=Hair, 7=Unknown,
+	 * 11=Ice/Parallax, 15=Eye.
+	 */
+	unsigned int skyrimShaderType;
 	/*! Name of this controllable object, used to refer to the object in .kf files. */
 	IndexString name;
 	/*! Extra data for pre-3.0 versions. */
-	unsigned int hasOldExtraData;
+	bool hasOldExtraData;
 	/*! (=NiStringExtraData) */
 	IndexString oldExtraPropName;
 	/*! ref */

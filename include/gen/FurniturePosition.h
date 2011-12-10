@@ -37,6 +37,10 @@ struct FurniturePosition {
 	 * Ref 1.
 	 */
 	byte positionRef2;
+	/*! Unknown */
+	unsigned short unknownShort1;
+	/*! Unknown */
+	unsigned short unknownShort2;
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 };

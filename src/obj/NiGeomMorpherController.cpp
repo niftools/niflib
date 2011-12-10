@@ -19,8 +19,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/NiGeomMorpherController.h"
 #include "../../include/gen/MorphWeight.h"
 #include "../../include/obj/NiInterpolator.h"
-#include "../../include/obj/NiMorphData.h"
 #include "../../include/obj/NiInterpolator.h"
+#include "../../include/obj/NiMorphData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -62,14 +62,14 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( numInterpolators, in, info );
 	};
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020006 ) ) {
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14000005 ) ) {
 		interpolators.resize(numInterpolators);
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			NifStream( block_num, in, info );
 			link_stack.push_back( block_num );
 		};
 	};
-	if ( info.version >= 0x14020007 ) {
+	if ( info.version >= 0x14010003 ) {
 		interpolatorWeights.resize(numInterpolators);
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			NifStream( block_num, in, info );
@@ -77,7 +77,7 @@ void NiGeomMorpherController::Read( istream& in, list<unsigned int> & link_stack
 			NifStream( interpolatorWeights[i2].weight_, in, info );
 		};
 	};
-	if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14000005 ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
+	if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14000005 ) && ( (info.userVersion >= 10) ) ) {
 		NifStream( numUnknownInts, in, info );
 		unknownInts.resize(numUnknownInts);
 		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
@@ -139,7 +139,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 	if ( info.version >= 0x0A01006A ) {
 		NifStream( numInterpolators, out, info );
 	};
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020006 ) ) {
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14000005 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
 				WritePtr32( &(*interpolators[i2]), out );
@@ -160,7 +160,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 			}
 		};
 	};
-	if ( info.version >= 0x14020007 ) {
+	if ( info.version >= 0x14010003 ) {
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
 				WritePtr32( &(*interpolatorWeights[i2].interpolator), out );
@@ -182,7 +182,7 @@ void NiGeomMorpherController::Write( ostream& out, const map<NiObjectRef,unsigne
 			NifStream( interpolatorWeights[i2].weight_, out, info );
 		};
 	};
-	if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14000005 ) && ( ((info.userVersion == 10) || (info.userVersion == 11)) ) ) {
+	if ( ( info.version >= 0x14000004 ) && ( info.version <= 0x14000005 ) && ( (info.userVersion >= 10) ) ) {
 		NifStream( numUnknownInts, out, info );
 		for (unsigned int i2 = 0; i2 < unknownInts.size(); i2++) {
 			NifStream( unknownInts[i2], out, info );
@@ -253,12 +253,12 @@ void NiGeomMorpherController::FixLinks( const map<unsigned int,NiObjectRef> & ob
 
 	NiInterpController::FixLinks( objects, link_stack, missing_link_stack, info );
 	data = FixLink<NiMorphData>( objects, link_stack, missing_link_stack, info );
-	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14020006 ) ) {
+	if ( ( info.version >= 0x0A01006A ) && ( info.version <= 0x14000005 ) ) {
 		for (unsigned int i2 = 0; i2 < interpolators.size(); i2++) {
 			interpolators[i2] = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
 		};
 	};
-	if ( info.version >= 0x14020007 ) {
+	if ( info.version >= 0x14010003 ) {
 		for (unsigned int i2 = 0; i2 < interpolatorWeights.size(); i2++) {
 			interpolatorWeights[i2].interpolator = FixLink<NiInterpolator>( objects, link_stack, missing_link_stack, info );
 		};

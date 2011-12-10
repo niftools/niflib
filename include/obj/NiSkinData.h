@@ -19,6 +19,7 @@ namespace Niflib {
 #include "NiObject.h"
 
 // Include structures
+#include "../gen/SkinTransform.h"
 #include "../Ref.h"
 #include "../gen/SkinData.h"
 namespace Niflib {
@@ -137,21 +138,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * The overall rotation offset of the skin from this bone in the bind position.
-	 *             (This is a guess, it has always been the identity matrix so far)
-	 */
-	Matrix33 rotation;
-	/*!
-	 * The overall translation offset of the skin from this bone in the bind position.
-	 * (This is a guess, it has always been (0.0, 0.0, 0.0) so far)
-	 */
-	Vector3 translation;
-	/*!
-	 * The scale offset of the skin from this bone in the bind position. (This is an
-	 * assumption - it has always been 1.0 so far)
-	 */
-	float scale;
+	/*! Offset of the skin from this bone in bind position. */
+	SkinTransform skinTransform;
 	/*! Number of bones. */
 	mutable unsigned int numBones;
 	/*! This optionally links a NiSkinPartition for hardware-acceleration information. */

@@ -52,6 +52,12 @@ void NifStream( VelocityType & val, istream& in, const NifInfo & info = NifInfo(
 void NifStream( VelocityType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---DataStreamUsage---//
+
+void NifStream( DataStreamUsage & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( DataStreamUsage const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---StencilCompareMode---//
 
 void NifStream( StencilCompareMode & val, istream& in, const NifInfo & info = NifInfo() );
@@ -87,6 +93,12 @@ void NifStream( MipMapFormat const & val, ostream& out, const NifInfo & info = N
 void NifStream( StencilAction & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( StencilAction const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+
+//---SyncPoint---//
+
+void NifStream( SyncPoint & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SyncPoint const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 void NifStream( BSDismemberBodyPartType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( BSDismemberBodyPartType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
@@ -99,11 +111,20 @@ void NifStream( ChannelType const & val, ostream& out, const NifInfo & info = Ni
 void NifStream( OblivionLayer & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( OblivionLayer const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+void NifStream( PSLoopBehavior & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( PSLoopBehavior const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 
 //---SolverDeactivation---//
 
 void NifStream( SolverDeactivation & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( SolverDeactivation const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---MeshPrimitiveType---//
+
+void NifStream( MeshPrimitiveType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( MeshPrimitiveType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---FaceDrawMode---//
@@ -217,10 +238,22 @@ void NifStream( TexClampMode & val, istream& in, const NifInfo & info = NifInfo(
 void NifStream( TexClampMode const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---ComponentFormat---//
+
+void NifStream( ComponentFormat & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( ComponentFormat const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---MotionQuality---//
 
 void NifStream( MotionQuality & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( MotionQuality const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---CloningBehavior---//
+
+void NifStream( CloningBehavior & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( CloningBehavior const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 void NifStream( PropagationMode & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( PropagationMode const & val, ostream& out, const NifInfo & info = NifInfo() );
@@ -266,6 +299,36 @@ void NifStream( BSShaderFlags const & val, ostream& out, const NifInfo & info = 
 
 void NifStream( BSPartFlag & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---SkyrimLightingShaderFlags2---//
+
+void NifStream( SkyrimLightingShaderFlags2 & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimLightingShaderFlags2 const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---SkyrimLightingShaderFlags1---//
+
+void NifStream( SkyrimLightingShaderFlags1 & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimLightingShaderFlags1 const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---DataStreamAccess---//
+
+void NifStream( DataStreamAccess & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( DataStreamAccess const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---SkyrimEffectShaderFlags2---//
+
+void NifStream( SkyrimEffectShaderFlags2 & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimEffectShaderFlags2 const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---SkyrimEffectShaderFlags1---//
+
+void NifStream( SkyrimEffectShaderFlags1 & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimEffectShaderFlags1 const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 }
 #endif

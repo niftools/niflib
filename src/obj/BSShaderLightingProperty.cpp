@@ -46,7 +46,9 @@ void BSShaderLightingProperty::Read( istream& in, list<unsigned int> & link_stac
 	//--END CUSTOM CODE--//
 
 	BSShaderProperty::Read( in, link_stack, info );
-	NifStream( unknownInt3, in, info );
+	if ( (info.userVersion <= 11) ) {
+		NifStream( unknownInt3, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -59,7 +61,9 @@ void BSShaderLightingProperty::Write( ostream& out, const map<NiObjectRef,unsign
 	//--END CUSTOM CODE--//
 
 	BSShaderProperty::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownInt3, out, info );
+	if ( (info.userVersion <= 11) ) {
+		NifStream( unknownInt3, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 

@@ -50,7 +50,9 @@ void BSShaderProperty::Read( istream& in, list<unsigned int> & link_stack, const
 	NifStream( shaderType, in, info );
 	NifStream( shaderFlags, in, info );
 	NifStream( unknownInt2, in, info );
-	NifStream( envmapScale, in, info );
+	if ( (info.userVersion == 11) ) {
+		NifStream( envmapScale, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -67,7 +69,9 @@ void BSShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	NifStream( shaderType, out, info );
 	NifStream( shaderFlags, out, info );
 	NifStream( unknownInt2, out, info );
-	NifStream( envmapScale, out, info );
+	if ( (info.userVersion == 11) ) {
+		NifStream( envmapScale, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 

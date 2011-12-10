@@ -15,9 +15,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiParticleSystemController.h"
 #include "../../include/gen/Particle.h"
+#include "../../include/obj/NiColorData.h"
 #include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiParticleModifier.h"
-#include "../../include/obj/NiColorData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

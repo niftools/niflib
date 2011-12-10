@@ -59,7 +59,7 @@ public:
 protected:
 	/*! Unknown */
 	mutable unsigned int numPixels;
-	/*! Unknown */
+	/*! Unknown, same as the number of pixels? / number of blocks? */
 	unsigned int unknownInt6;
 	/*! Unknown */
 	mutable unsigned int numFaces;

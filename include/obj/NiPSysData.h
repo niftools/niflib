@@ -68,6 +68,26 @@ protected:
 	unsigned short unknownShort1;
 	/*! Unknown. */
 	unsigned short unknownShort2;
+	/*! Unknown, probably a boolean. */
+	byte unknownByte2;
+	/*! Unknown, probably a boolean. */
+	byte hasVertexColors2;
+	/*! Num bytes per */
+	mutable unsigned int numVertexColors2;
+	/*! Unknown */
+	unsigned int unknownInt3;
+	/*! Unknown */
+	vector<Color4 > vertexColors;
+	/*! Unknown */
+	unsigned int unknownInt4;
+	/*! Unknown */
+	unsigned int unknownInt5;
+	/*! Unknown */
+	unsigned int unknownInt6;
+	/*! Unknown */
+	unsigned short unknownShort3;
+	/*! Unknown */
+	byte unknownByte4;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

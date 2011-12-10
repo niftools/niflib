@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSStripPSysData::TYPE("BSStripPSysData", &NiPSysData::TYPE );
 
-BSStripPSysData::BSStripPSysData() : unknownShort1((short)0), unknownByte1((byte)0), unknownInt2((int)0), unknownInt3((int)0) {
+BSStripPSysData::BSStripPSysData() : unknownShort3((short)0), unknownByte1((byte)0), unknownInt2((int)0), unknownInt3((int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,7 +46,7 @@ void BSStripPSysData::Read( istream& in, list<unsigned int> & link_stack, const 
 	//--END CUSTOM CODE--//
 
 	NiPSysData::Read( in, link_stack, info );
-	NifStream( unknownShort1, in, info );
+	NifStream( unknownShort3, in, info );
 	NifStream( unknownByte1, in, info );
 	NifStream( unknownInt2, in, info );
 	NifStream( unknownInt3, in, info );
@@ -62,7 +62,7 @@ void BSStripPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	//--END CUSTOM CODE--//
 
 	NiPSysData::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownShort1, out, info );
+	NifStream( unknownShort3, out, info );
 	NifStream( unknownByte1, out, info );
 	NifStream( unknownInt2, out, info );
 	NifStream( unknownInt3, out, info );
@@ -79,7 +79,7 @@ std::string BSStripPSysData::asString( bool verbose ) const {
 
 	stringstream out;
 	out << NiPSysData::asString();
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Unknown Short 3:  " << unknownShort3 << endl;
 	out << "  Unknown byte 1:  " << unknownByte1 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;

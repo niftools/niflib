@@ -60,6 +60,12 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
+	/*! Unknown */
+	unsigned short unknownShort1;
+	/*! Unknown */
+	unsigned short unknownShort2;
+	/*! Unknown */
+	unsigned int unknownInt1;
 	/*!
 	 * If true, Particles are birthed into world space.  If false, Particles are
 	 * birthed into object space.

@@ -22,8 +22,9 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiObject;
+class NiGeometryData;
 class NiSkinInstance;
+class NiProperty;
 class NiGeometry;
 typedef Ref<NiGeometry> NiGeometryRef;
 
@@ -168,7 +169,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Data index (NiTriShapeData/NiTriStripData). */
-	Ref<NiObject > data;
+	Ref<NiGeometryData > data;
 	/*! Skin instance index. */
 	Ref<NiSkinInstance > skinInstance;
 	/*! Num Materials */
@@ -191,6 +192,8 @@ protected:
 	int unknownInteger2;
 	/*! Dirty Flag? */
 	bool dirtyFlag;
+	/*! Two property links, used by Bethesda. */
+	array<2,Ref<NiProperty > > bsProperties;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -60,8 +60,8 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	float unknownFloat2;
+	/*! Frequency of the update. */
+	float frequency;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

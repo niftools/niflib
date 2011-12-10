@@ -18,15 +18,16 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiControllerSequence.h"
-#include "../../include/obj/NiTextKeyExtraData.h"
+#include "../../include/obj/BSAnimNotes.h"
 #include "../../include/obj/NiControllerManager.h"
 #include "../../include/obj/NiStringPalette.h"
+#include "../../include/obj/NiTextKeyExtraData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiControllerSequence::TYPE("NiControllerSequence", &NiSequence::TYPE );
 
-NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), cycleType((CycleType)0), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), unknownFloat2(0.0f), stopTime(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL), unknownShort1((short)0), unknownShort2((short)0), unknownInt3((unsigned int)0) {
+NiControllerSequence::NiControllerSequence() : weight(1.0f), textKeys(NULL), cycleType((CycleType)0), unknownInt0((unsigned int)0), frequency(0.0f), startTime(0.0f), unknownFloat2(0.0f), stopTime(0.0f), unknownByte((byte)0), manager(NULL), stringPalette(NULL), animNotes(NULL), unknownShort1((short)0), unknownInt3((unsigned int)64) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -81,13 +82,14 @@ void NiControllerSequence::Read( istream& in, list<unsigned int> & link_stack, c
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && (info.userVersion2 >= 24)) ) ) {
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion >= 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
+		NifStream( block_num, in, info );
+		link_stack.push_back( block_num );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion >= 11) && (info.userVersion2 > 28)) ) ) {
 		NifStream( unknownShort1, in, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
-		NifStream( unknownShort2, in, info );
-	};
-	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) ) {
+	if ( info.version >= 0x14030009 ) {
 		NifStream( unknownInt3, in, info );
 	};
 
@@ -176,13 +178,29 @@ void NiControllerSequence::Write( ostream& out, const map<NiObjectRef,unsigned i
 			}
 		}
 	};
-	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && (info.userVersion2 >= 24)) ) ) {
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion >= 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
+		if ( info.version < VER_3_3_0_13 ) {
+			WritePtr32( &(*animNotes), out );
+		} else {
+			if ( animNotes != NULL ) {
+				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(animNotes) );
+				if (it != link_map.end()) {
+					NifStream( it->second, out, info );
+					missing_link_stack.push_back( NULL );
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( animNotes );
+				}
+			} else {
+				NifStream( 0xFFFFFFFF, out, info );
+				missing_link_stack.push_back( NULL );
+			}
+		}
+	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion >= 11) && (info.userVersion2 > 28)) ) ) {
 		NifStream( unknownShort1, out, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion == 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
-		NifStream( unknownShort2, out, info );
-	};
-	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) ) {
+	if ( info.version >= 0x14030009 ) {
 		NifStream( unknownInt3, out, info );
 	};
 
@@ -208,8 +226,8 @@ std::string NiControllerSequence::asString( bool verbose ) const {
 	out << "  Manager:  " << manager << endl;
 	out << "  Target Name:  " << targetName << endl;
 	out << "  String Palette:  " << stringPalette << endl;
+	out << "  Anim Notes:  " << animNotes << endl;
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	return out.str();
 
@@ -229,6 +247,9 @@ void NiControllerSequence::FixLinks( const map<unsigned int,NiObjectRef> & objec
 	if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x14000005 ) ) {
 		stringPalette = FixLink<NiStringPalette>( objects, link_stack, missing_link_stack, info );
 	};
+	if ( ( info.version >= 0x14020007 ) && ( ((info.userVersion >= 11) && ((info.userVersion2 >= 24) && (info.userVersion2 <= 28))) ) ) {
+		animNotes = FixLink<BSAnimNotes>( objects, link_stack, missing_link_stack, info );
+	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -241,6 +262,8 @@ std::list<NiObjectRef> NiControllerSequence::GetRefs() const {
 		refs.push_back(StaticCast<NiObject>(textKeys));
 	if ( stringPalette != NULL )
 		refs.push_back(StaticCast<NiObject>(stringPalette));
+	if ( animNotes != NULL )
+		refs.push_back(StaticCast<NiObject>(animNotes));
 	return refs;
 }
 

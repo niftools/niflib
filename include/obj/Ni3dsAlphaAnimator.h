@@ -25,7 +25,7 @@ class NiObject;
 class Ni3dsAlphaAnimator;
 typedef Ref<Ni3dsAlphaAnimator> Ni3dsAlphaAnimatorRef;
 
-/*! Unknown! */
+/*! Unknown. */
 class Ni3dsAlphaAnimator : public NiObject {
 public:
 	/*! Constructor */

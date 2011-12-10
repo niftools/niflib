@@ -15,8 +15,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiRoom.h"
-#include "../../include/obj/NiPortal.h"
 #include "../../include/obj/NiAVObject.h"
+#include "../../include/obj/NiPortal.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

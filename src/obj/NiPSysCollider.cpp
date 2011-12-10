@@ -14,9 +14,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPSysCollider.h"
-#include "../../include/obj/NiPSysSpawnModifier.h"
-#include "../../include/obj/NiObject.h"
 #include "../../include/obj/NiNode.h"
+#include "../../include/obj/NiObject.h"
+#include "../../include/obj/NiPSysSpawnModifier.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

@@ -64,9 +64,11 @@ protected:
 	/*! Unknown */
 	short unknownShort2;
 	/*! NXS */
-	array<3,byte > unknownBytes1;
+	array<3,byte > unknownBytes0;
 	/*! Unknown */
 	byte unknownByte1;
+	/*! MESH */
+	array<4,byte > unknownBytes1;
 	/*! Unknown */
 	array<8,byte > unknownBytes2;
 	/*! Unknown */

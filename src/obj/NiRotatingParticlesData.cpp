@@ -44,7 +44,7 @@ void NiRotatingParticlesData::Read( istream& in, list<unsigned int> & link_stack
 	NiParticlesData::Read( in, link_stack, info );
 	if ( info.version <= 0x04020200 ) {
 		NifStream( hasRotations2, in, info );
-		if ( (hasRotations2 != 0) ) {
+		if ( hasRotations2 ) {
 			rotations2.resize(numVertices);
 			for (unsigned int i3 = 0; i3 < rotations2.size(); i3++) {
 				NifStream( rotations2[i3], in, info );
@@ -63,7 +63,7 @@ void NiRotatingParticlesData::Write( ostream& out, const map<NiObjectRef,unsigne
 	NiParticlesData::Write( out, link_map, missing_link_stack, info );
 	if ( info.version <= 0x04020200 ) {
 		NifStream( hasRotations2, out, info );
-		if ( (hasRotations2 != 0) ) {
+		if ( hasRotations2 ) {
 			for (unsigned int i3 = 0; i3 < rotations2.size(); i3++) {
 				NifStream( rotations2[i3], out, info );
 			};
@@ -82,7 +82,7 @@ std::string NiRotatingParticlesData::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiParticlesData::asString();
 	out << "  Has Rotations 2:  " << hasRotations2 << endl;
-	if ( (hasRotations2 != 0) ) {
+	if ( hasRotations2 ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < rotations2.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {

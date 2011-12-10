@@ -16,14 +16,14 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiPhysXProp.h"
 #include "../../include/obj/NiObject.h"
-#include "../../include/obj/NiPhysXTransformDest.h"
 #include "../../include/obj/NiPhysXPropDesc.h"
+#include "../../include/obj/NiPhysXTransformDest.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiPhysXProp::TYPE("NiPhysXProp", &NiObjectNET::TYPE );
 
-NiPhysXProp::NiPhysXProp() : unknownFloat1(0.0f), unknownInt1((unsigned int)0), numDests((int)0), unknownByte((byte)0), propDescription(NULL) {
+NiPhysXProp::NiPhysXProp() : unknownFloat1(0.0f), unknownInt1((unsigned int)0), numDests((int)0), unknownByte((byte)0), unknownInt((int)0), propDescription(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -64,6 +64,9 @@ void NiPhysXProp::Read( istream& in, list<unsigned int> & link_stack, const NifI
 		link_stack.push_back( block_num );
 	};
 	NifStream( unknownByte, in, info );
+	if ( info.version >= 0x14050000 ) {
+		NifStream( unknownInt, in, info );
+	};
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 
@@ -122,6 +125,9 @@ void NiPhysXProp::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 		}
 	};
 	NifStream( unknownByte, out, info );
+	if ( info.version >= 0x14050000 ) {
+		NifStream( unknownInt, out, info );
+	};
 	if ( info.version < VER_3_3_0_13 ) {
 		WritePtr32( &(*propDescription), out );
 	} else {
@@ -183,6 +189,7 @@ std::string NiPhysXProp::asString( bool verbose ) const {
 		array_output_count++;
 	};
 	out << "  Unknown Byte:  " << unknownByte << endl;
+	out << "  Unknown Int:  " << unknownInt << endl;
 	out << "  Prop Description:  " << propDescription << endl;
 	return out.str();
 

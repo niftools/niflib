@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiObject.h"
+#include "AbstractAdditionalGeometryData.h"
 
 // Include structures
 #include "../gen/AdditionalDataInfo.h"
@@ -25,7 +25,7 @@ class NiAdditionalGeometryData;
 typedef Ref<NiAdditionalGeometryData> NiAdditionalGeometryDataRef;
 
 /*!  */
-class NiAdditionalGeometryData : public NiObject {
+class NiAdditionalGeometryData : public AbstractAdditionalGeometryData {
 public:
 	/*! Constructor */
 	NIFLIB_API NiAdditionalGeometryData();

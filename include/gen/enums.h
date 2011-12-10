@@ -92,6 +92,7 @@ enum HavokMaterial {
 	HAV_MAT_CHAIN_STAIRS = 28, /*!< Chain Stairs */
 	HAV_MAT_SNOW_STAIRS = 29, /*!< Snow Stairs */
 	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
+	HAV_MAT_RUBBER = 31, /*!< Rubber */
 };
 
 ostream & operator<<( ostream & out, HavokMaterial const & val );
@@ -114,6 +115,16 @@ enum VelocityType {
 };
 
 ostream & operator<<( ostream & out, VelocityType const & val );
+
+/*! Determines how a data stream is used? */
+enum DataStreamUsage {
+	USAGE_VERTEX_INDEX = 0, /*!< USAGE_VERTEX_INDEX */
+	USAGE_VERTEX = 1, /*!< USAGE_VERTEX */
+	USAGE_SHADER_CONSTANT = 2, /*!< USAGE_SHADER_CONSTANT */
+	USAGE_USER = 3, /*!< USAGE_USER */
+};
+
+ostream & operator<<( ostream & out, DataStreamUsage const & val );
 
 /*! This enum contains the options for doing stencil buffer tests. */
 enum StencilCompareMode {
@@ -187,6 +198,20 @@ enum StencilAction {
 };
 
 ostream & operator<<( ostream & out, StencilAction const & val );
+
+/*! Specifies the time when an application must syncronize for some reason. */
+enum SyncPoint {
+	SYNC_ANY = 0x8000, /*!< Value used when no specific sync point is desired. */
+	SYNC_UPDATE = 0x8010, /*!< Synchronize when an object is updated. */
+	SYNC_POST_UPDATE = 0x8020, /*!< Synchronize when an entire scene graph has been updated. */
+	SYNC_VISIBLE = 0x8030, /*!< Synchronize when an object is determined to be potentially visible. */
+	SYNC_RENDER = 0x8040, /*!< Synchronize when an object is rendered. */
+	SYNC_PHYSICS_SIMULATE = 0x8050, /*!< Synchronize when a physics simulation step is about to begin. */
+	SYNC_PHYSICS_COMPLETED = 0x8060, /*!< Synchronize when a physics simulation step has produced results. */
+	SYNC_REFLECTIONS = 0x8070, /*!< Syncronize after all data necessary to calculate reflections is ready. */
+};
+
+ostream & operator<<( ostream & out, SyncPoint const & val );
 
 enum BSDismemberBodyPartType {
 	BP_TORSO = 0, /*!< Torso */
@@ -325,6 +350,16 @@ enum OblivionLayer {
 
 ostream & operator<<( ostream & out, OblivionLayer const & val );
 
+enum PSLoopBehavior {
+	PS_LOOP_CLAMP_BIRTH = 0, /*!< Key times map such that the first key occurs at the birth of the particle, and times later than the last key get the last key value. */
+	PS_LOOP_CLAMP_DEATH = 1, /*!< Key times map such that the last key occurs at the death of the particle, and times before the initial key time get the value of the initial key. */
+	PS_LOOP_AGESCALE = 2, /*!< Scale the animation to fit the particle lifetime, so that the first key is age zero, and the last key comes at the particle death. */
+	PS_LOOP_LOOP = 3, /*!< The time is converted to one within the time range represented by the keys, as if the key sequence loops forever in the past and future. */
+	PS_LOOP_REFLECT = 4, /*!< The time is reflection looped, as if the keys played forward then backward the forward then backward etc for all time. */
+};
+
+ostream & operator<<( ostream & out, PSLoopBehavior const & val );
+
 /*!
  * A list of possible solver deactivation settings. This value defines how the
  *         solver deactivates objects. The solver works on a per object basis.
@@ -341,6 +376,17 @@ enum SolverDeactivation {
 };
 
 ostream & operator<<( ostream & out, SolverDeactivation const & val );
+
+/*! Describes the type of primitives stored in a mesh object. */
+enum MeshPrimitiveType {
+	MESH_PRIMITIVE_TRIANGLES = 0, /*!< Triangle primitive type. */
+	MESH_PRIMITIVE_TRISTRIPS = 1, /*!< Triangle strip primitive type. */
+	MESH_PRIMITIVE_LINESTRIPS = 2, /*!< Line strip primitive type. */
+	MESH_PRIMITIVE_QUADS = 3, /*!< Quadrilateral primitive type. */
+	MESH_PRIMITIVE_POINTS = 4, /*!< Point primitive type. */
+};
+
+ostream & operator<<( ostream & out, MeshPrimitiveType const & val );
 
 /*! This enum lists the different face culling options. */
 enum FaceDrawMode {
@@ -392,7 +438,7 @@ enum KeyType {
 	QUADRATIC_KEY = 2, /*!< Use quadratic interpolation.  Forward and back tangents will be stored. */
 	TBC_KEY = 3, /*!< Use Tension Bias Continuity interpolation.  Tension, bias, and continuity will be stored. */
 	XYZ_ROTATION_KEY = 4, /*!< For use only with rotation data.  Separate X, Y, and Z keys will be stored instead of using quaternions. */
-	UNKNOWN_KEY = 5, /*!< Unknown.  Step function? */
+	CONST_KEY = 5, /*!< Step function. Used for visibility keys in NiBoolData. */
 };
 
 ostream & operator<<( ostream & out, KeyType const & val );
@@ -447,7 +493,7 @@ enum ApplyMode {
 	APPLY_DECAL = 1, /*!< For placing images on the object like stickers. */
 	APPLY_MODULATE = 2, /*!< Modulates existing color. (Default) */
 	APPLY_HILIGHT = 3, /*!< PS2 Only.  Function Unknown. */
-	APPLY_HILIGHT2 = 4, /*!< PS2 Only.  Function Unknown. */
+	APPLY_HILIGHT2 = 4, /*!< Parallax Flag in some Oblivion meshes. */
 };
 
 ostream & operator<<( ostream & out, ApplyMode const & val );
@@ -563,9 +609,9 @@ ostream & operator<<( ostream & out, PixelLayout const & val );
  * to be flags they behave as an enum.
  */
 enum ConsistencyType {
-	CT_MUTABLE = 0, /*!< Mutable Mesh */
-	CT_STATIC = 16384, /*!< Static Mesh */
-	CT_VOLATILE = 32768, /*!< Volatile Mesh */
+	CT_MUTABLE = 0x0000, /*!< Mutable Mesh */
+	CT_STATIC = 0x4000, /*!< Static Mesh */
+	CT_VOLATILE = 0x8000, /*!< Volatile Mesh */
 };
 
 ostream & operator<<( ostream & out, ConsistencyType const & val );
@@ -583,6 +629,75 @@ enum TexClampMode {
 
 ostream & operator<<( ostream & out, TexClampMode const & val );
 
+/*! The data format of components. */
+enum ComponentFormat {
+	F_UNKNOWN = 0x00000000, /*!< Unknown, or don't care, format. */
+	F_INT8_1 = 0x00010101, /*!< F_INT8_1 */
+	F_INT8_2 = 0x00020102, /*!< F_INT8_2 */
+	F_INT8_3 = 0x00030103, /*!< F_INT8_3 */
+	F_INT8_4 = 0x00040104, /*!< F_INT8_4 */
+	F_UINT8_1 = 0x00010105, /*!< F_UINT8_1 */
+	F_UINT8_2 = 0x00020106, /*!< F_UINT8_2 */
+	F_UINT8_3 = 0x00030107, /*!< F_UINT8_3 */
+	F_UINT8_4 = 0x00040108, /*!< F_UINT8_4 */
+	F_NORMINT8_1 = 0x00010109, /*!< F_NORMINT8_1 */
+	F_NORMINT8_2 = 0x0002010A, /*!< F_NORMINT8_2 */
+	F_NORMINT8_3 = 0x0003010B, /*!< F_NORMINT8_3 */
+	F_NORMINT8_4 = 0x0004010C, /*!< F_NORMINT8_4 */
+	F_NORMUINT8_1 = 0x0001010D, /*!< F_NORMUINT8_1 */
+	F_NORMUINT8_2 = 0x0002010E, /*!< F_NORMUINT8_2 */
+	F_NORMUINT8_3 = 0x0003010F, /*!< F_NORMUINT8_3 */
+	F_NORMUINT8_4 = 0x00040110, /*!< F_NORMUINT8_4 */
+	F_INT16_1 = 0x00010211, /*!< F_INT16_1 */
+	F_INT16_2 = 0x00020212, /*!< F_INT16_2 */
+	F_INT16_3 = 0x00030213, /*!< F_INT16_3 */
+	F_INT16_4 = 0x00040214, /*!< F_INT16_4 */
+	F_UINT16_1 = 0x00010215, /*!< F_UINT16_1 */
+	F_UINT16_2 = 0x00020216, /*!< F_UINT16_2 */
+	F_UINT16_3 = 0x00030217, /*!< F_UINT16_3 */
+	F_UINT16_4 = 0x00040218, /*!< F_UINT16_4 */
+	F_NORMINT16_1 = 0x00010219, /*!< F_NORMINT16_1 */
+	F_NORMINT16_2 = 0x0002021A, /*!< F_NORMINT16_2 */
+	F_NORMINT16_3 = 0x0003021B, /*!< F_NORMINT16_3 */
+	F_NORMINT16_4 = 0x0004021C, /*!< F_NORMINT16_4 */
+	F_NORMUINT16_1 = 0x0001021D, /*!< F_NORMUINT16_1 */
+	F_NORMUINT16_2 = 0x0002021E, /*!< F_NORMUINT16_2 */
+	F_NORMUINT16_3 = 0x0003021F, /*!< F_NORMUINT16_3 */
+	F_NORMUINT16_4 = 0x00040220, /*!< F_NORMUINT16_4 */
+	F_INT32_1 = 0x00010421, /*!< F_INT32_1 */
+	F_INT32_2 = 0x00020422, /*!< F_INT32_2 */
+	F_INT32_3 = 0x00030423, /*!< F_INT32_3 */
+	F_INT32_4 = 0x00040424, /*!< F_INT32_4 */
+	F_UINT32_1 = 0x00010425, /*!< F_UINT32_1 */
+	F_UINT32_2 = 0x00020426, /*!< F_UINT32_2 */
+	F_UINT32_3 = 0x00030427, /*!< F_UINT32_3 */
+	F_UINT32_4 = 0x00040428, /*!< F_UINT32_4 */
+	F_NORMINT32_1 = 0x00010429, /*!< F_NORMINT32_1 */
+	F_NORMINT32_2 = 0x0002042A, /*!< F_NORMINT32_2 */
+	F_NORMINT32_3 = 0x0003042B, /*!< F_NORMINT32_3 */
+	F_NORMINT32_4 = 0x0004042C, /*!< F_NORMINT32_4 */
+	F_NORMUINT32_1 = 0x0001042D, /*!< F_NORMUINT32_1 */
+	F_NORMUINT32_2 = 0x0002042E, /*!< F_NORMUINT32_2 */
+	F_NORMUINT32_3 = 0x0003042F, /*!< F_NORMUINT32_3 */
+	F_NORMUINT32_4 = 0x00040430, /*!< F_NORMUINT32_4 */
+	F_FLOAT16_1 = 0x00010231, /*!< F_FLOAT16_1 */
+	F_FLOAT16_2 = 0x00020232, /*!< F_FLOAT16_2 */
+	F_FLOAT16_3 = 0x00030233, /*!< F_FLOAT16_3 */
+	F_FLOAT16_4 = 0x00040234, /*!< F_FLOAT16_4 */
+	F_FLOAT32_1 = 0x00010435, /*!< F_FLOAT32_1 */
+	F_FLOAT32_2 = 0x00020436, /*!< F_FLOAT32_2 */
+	F_FLOAT32_3 = 0x00030437, /*!< F_FLOAT32_3 */
+	F_FLOAT32_4 = 0x00040438, /*!< F_FLOAT32_4 */
+	F_UINT_10_10_10_L1 = 0x00010439, /*!< F_UINT_10_10_10_L1 */
+	F_NORMINT_10_10_10_L1 = 0x0001043A, /*!< F_NORMINT_10_10_10_L1 */
+	F_NORMINT_11_11_10 = 0x0001043B, /*!< F_NORMINT_11_11_10 */
+	F_NORMUINT8_4_BGRA = 0x0004013C, /*!< F_NORMUINT8_4_BGRA */
+	F_NORMINT_10_10_10_2 = 0x0001043D, /*!< F_NORMINT_10_10_10_2 */
+	F_UINT_10_10_10_2 = 0x0001043E, /*!< F_UINT_10_10_10_2 */
+};
+
+ostream & operator<<( ostream & out, ComponentFormat const & val );
+
 /*! The motion type. Determines quality of motion? */
 enum MotionQuality {
 	MO_QUAL_INVALID = 0, /*!< Automatically assigned to MO_QUAL_FIXED, MO_QUAL_KEYFRAMED or MO_QUAL_DEBRIS */
@@ -599,6 +714,15 @@ enum MotionQuality {
 
 ostream & operator<<( ostream & out, MotionQuality const & val );
 
+/*! Sets how objects are to be cloned. */
+enum CloningBehavior {
+	CLONING_SHARE = 0, /*!< Share this object pointer with the newly cloned scene. */
+	CLONING_COPY = 1, /*!< Create an exact duplicate of this object for use with the newly cloned scene. */
+	CLONING_BLANK_COPY = 2, /*!< Create a copy of this object for use with the newly cloned stream, leaving some of the data to be written later. */
+};
+
+ostream & operator<<( ostream & out, CloningBehavior const & val );
+
 enum PropagationMode {
 	PROPAGATE_ON_SUCCESS = 0, /*!< On Success */
 	PROPAGATE_ON_FAILURE = 1, /*!< On Failure */
@@ -612,7 +736,7 @@ ostream & operator<<( ostream & out, PropagationMode const & val );
 enum PixelFormat {
 	PX_FMT_RGB8 = 0, /*!< 24-bit color: uses 8 bit to store each red, blue, and green component. */
 	PX_FMT_RGBA8 = 1, /*!< 32-bit color with alpha: uses 8 bits to store each red, blue, green, and alpha component. */
-	PX_FMT_PAL8 = 2, /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPallete object. */
+	PX_FMT_PAL8 = 2, /*!< 8-bit palette index: uses 8 bits to store an index into the palette stored in a NiPalette object. */
 	PX_FMT_DXT1 = 4, /*!< DXT1 compressed texture. */
 	PX_FMT_DXT5 = 5, /*!< DXT5 compressed texture. */
 	PX_FMT_DXT5_ALT = 6, /*!< DXT5 compressed texture. It is not clear what the difference is with PX_FMT_DXT5. */
@@ -659,38 +783,38 @@ ostream & operator<<( ostream & out, EmitFrom const & val );
 
 /*! Shader Property Flags */
 enum BSShaderFlags {
-	SF_ZBUFFER_TEST = 1, /*!< ZBuffer Test (1=on) */
-	SF_SHADOW_MAP = 2, /*!< Shadow Map */
-	SF_EXTERNAL_EMITTANCE = 4, /*!< External Emittance */
-	SF_PARALLAX_OCCLUSION = 8, /*!< Parallax Occlusion */
-	SF_DYNAMIC_DECAL = 16, /*!< Dynamic Decal */
-	SF_DECAL = 32, /*!< Decal */
-	SF_UNKNOWN_6 = 64, /*!< Unknown\Light fade? (if 0 and envmap is on, "envmap light fade" is not present) */
-	SF_MULTIPLE_TEXTURES = 128, /*!< Multiple Textures (base diff/norm become null) */
-	SF_SHADOW_FRUSTUM = 256, /*!< Shadow Frustum */
-	SF_TREE_BILLBOARD = 512, /*!< Tree Billboard */
-	SF_WINDOW_ENVIRONMENT_MAPPING = 1024, /*!< Window Environment Mapping */
-	SF_LOCALMAP_HIDE_SECRET = 2048, /*!< Localmap Hide Secret */
-	SF_DYNAMIC_ALPHA = 4096, /*!< Dynamic Alpha */
-	SF_HAIR = 8192, /*!< Hair */
-	SF_EYE_ENVIRONMENT_MAPPING = 16384, /*!< Eye Environment Mapping (does not use envmap light fade or envmap scale) */
-	SF_FIRE_REFRACTION = 32768, /*!< Fire Refraction (switches on refraction power/period) */
-	SF_REFRACTION = 65536, /*!< Refraction (switches on refraction power) */
-	SF_UNKNOWN_17 = 131072, /*!< Unknown/Crash */
-	NON_PROJECTIVE_SHADOWS = 262144, /*!< Non-Projective Shadows */
-	SF_UNKNOWN_19 = 524288, /*!< Unknown/Crash */
-	SF_PARALLAX = 1048576, /*!< Parallax */
-	SF_FACEGEN_SKIN = 2097152, /*!< Facegen\Skin */
-	SF_UNKNOWN_22 = 4194304, /*!< Unknown (Always 0?) */
-	SF_UNKNOWN_23 = 8388608, /*!< Unknown (usually 1) */
-	SF_ENVIRONMENT_MAPPING = 16777216, /*!< Environment mapping (uses Envmap Scale) */
-	SF_EMPTY = 33554432, /*!< EMPTY (usually seen w/texture animation) */
-	SF_SINGLE_PASS = 67108864, /*!< Single Pass (uses same default shader path as diff/norm/spec setup BSSM_ADTS10) */
-	SF_UNKNOWN_27 = 134217728, /*!< Unknown (Always 0?) */
-	SF_VERTEX_ALPHA = 268435456, /*!< Vertex Alpha */
-	SF_LOWDDETAIL = 536870912, /*!< Lowddetail (seems to use standard diff/norm/spec shader) */
-	SF_SKINNED = 1073741824, /*!< Skinned. */
-	SF_UNKNOWN_31 = 2147483648, /*!< Unknown */
+	SF_SPECULAR = 1, /*!< Enables Specularity */
+	SF_SKINNED = 2, /*!< Required For Skinned Meshes */
+	SF_LOWDETAIL = 4, /*!< Lowddetail (seems to use standard diff/norm/spec shader) */
+	SF_VERTEX_ALPHA = 8, /*!< Vertex Alpha */
+	SF_UNKNOWN_1 = 16, /*!< Unknown */
+	SF_SINGLE_PASS = 32, /*!< Single Pass */
+	SF_EMPTY = 64, /*!< Unknown */
+	SF_ENVIRONMENT_MAPPING = 128, /*!< Environment mapping (uses Envmap Scale) */
+	SF_ALPHA_TEXTURE = 256, /*!< Alpha Texture Requires NiAlphaProperty to Enable */
+	SF_UNKNOWN_2 = 512, /*!< Unknown */
+	SF_FACEGEN = 1024, /*!< FaceGen */
+	SF_PARALLAX_SHADER_INDEX_15 = 2048, /*!< Parallax */
+	SF_UNKNOWN_3 = 4096, /*!< Unknown/Crash */
+	SF_NON_PROJECTIVE_SHADOWS = 8192, /*!< Non-Projective Shadows */
+	SF_UNKNOWN_4 = 16384, /*!< Unknown/Crash */
+	SF_REFRACTION = 32768, /*!< Refraction (switches on refraction power) */
+	SF_FIRE_REFRACTION = 65536, /*!< Fire Refraction (switches on refraction power/period) */
+	SF_EYE_ENVIRONMENT_MAPPING = 131072, /*!< Eye Environment Mapping (does not use envmap light fade or envmap scale) */
+	SF_HAIR = 262144, /*!< Hair */
+	SF_DYNAMIC_ALPHA = 524288, /*!< Dynamic Alpha */
+	SF_LOCALMAP_HIDE_SECRET = 1048576, /*!< Localmap Hide Secret */
+	SF_WINDOW_ENVIRONMENT_MAPPING = 2097152, /*!< Window Environment Mapping */
+	SF_TREE_BILLBOARD = 4194304, /*!< Tree Billboard */
+	SF_SHADOW_FRUSTUM = 8388608, /*!< Shadow Frustum */
+	SF_MULTIPLE_TEXTURES = 16777216, /*!< Multiple Textures (base diff/norm become null) */
+	SF_REMAPPABLE_TEXTURES = 33554432, /*!< usually seen w/texture animation */
+	SF_DECAL_SINGLE_PASS = 67108864, /*!< Decal */
+	SF_DYNAMIC_DECAL_SINGLE_PASS = 134217728, /*!< Dynamic Decal */
+	SF_PARALLAX_OCCULSION = 268435456, /*!< Parallax Occlusion */
+	SF_EXTERNAL_EMITTANCE = 536870912, /*!< External Emittance */
+	SF_SHADOW_MAP = 1073741824, /*!< Shadow Map */
+	SF_ZBUFFER_TEST = 2147483648, /*!< ZBuffer Test (1=on) */
 };
 
 ostream & operator<<( ostream & out, BSShaderFlags const & val );
@@ -702,6 +826,123 @@ enum BSPartFlag {
 };
 
 ostream & operator<<( ostream & out, BSPartFlag const & val );
+
+/*! Skyrim Shader Property Flags 2 */
+enum SkyrimLightingShaderFlags2 {
+	SLSF2_ZBUFFER_WRITE = 1, /*!< Enables writing to the Z-Buffer */
+	SLSF2_1 = 2, /*!< SLSF2_1 */
+	SLSF2_2 = 4, /*!< SLSF2_2 */
+	SLSF2_3 = 8, /*!< SLSF2_3 */
+	SLSF2_DOUBLE_SIDED = 16, /*!< Double-sided rendering */
+	SLSF2_VERTEX_COLOR = 32, /*!< Has Vertex Colors (Maybe, could be Vertex Alpha?) */
+	SLSF2_GLOW_MAP = 64, /*!< Use Glow Map */
+	SLSF2_7 = 128, /*!< SLSF2_7 */
+	SLSF2_8 = 256, /*!< SLSF2_8 */
+	SLSF2_9 = 512, /*!< SLSF2_9 */
+	SLSF2_10 = 1024, /*!< SLSF2_10 */
+	SLSF2_11 = 2048, /*!< SLSF2_11 */
+	SLSF2_12 = 4096, /*!< SLSF2_12 */
+	SLSF2_13 = 8192, /*!< SLSF2_13 */
+	SLSF2_14 = 16384, /*!< SLSF2_14 */
+	SLSF2_15 = 32768, /*!< SLSF2_15 */
+	SLSF2_16 = 65536, /*!< Wireframe (Seems to only work on particles) */
+	SLSF2_17 = 131072, /*!< SLSF2_17 */
+	SLSF2_18 = 262144, /*!< SLSF2_18 */
+	SLSF2_19 = 524288, /*!< SLSF2_19 */
+	SLSF2_20 = 1048576, /*!< SLSF2_20 */
+	SLSF2_21 = 2097152, /*!< SLSF2_21 */
+	SLSF2_22 = 4194304, /*!< SLSF2_22 */
+	SLSF2_23 = 8388608, /*!< SLSF2_23 */
+	SLSF2_MULTI_LAYER = 16777216, /*!< Use Multilayer (inner-layer) Map */
+	SLSF2_SOFT_LIGHT = 33554432, /*!< Use Soft Lighting Map */
+	SLSF2_RIM_LIGHT = 67108864, /*!< Use Rim Lighting Map */
+	SLSF2_BACK_LIGHT = 134217728, /*!< Use Back Lighting Map */
+	SLSF2_28 = 268435456, /*!< SLSF2_28 */
+	SLSF2_VERTEX_ANIMATION = 536870912, /*!< Enables Vertex Animation */
+	SLSF2_30 = 1073741824, /*!< SLSF2_30 */
+	SLSF2_31 = 2147483648, /*!< SLSF2_31 */
+};
+
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val );
+
+/*! Skyrim Shader Property Flags 1 */
+enum SkyrimLightingShaderFlags1 {
+	SLSF1_SPECULAR = 1, /*!< Enables Specularity */
+	SLSF1_SKINNED = 2, /*!< Required For Skinned Meshes */
+	SLSF1_2 = 4, /*!< SLSF1_2 */
+	SLSF1_3 = 8, /*!< SLSF1_3 */
+	SLSF1_4 = 16, /*!< SLSF1_4 */
+	SLSF1_5 = 32, /*!< SLSF1_5 */
+	SLSF1_6 = 64, /*!< SLSF1_6 */
+	SLSF1_ENVIRONMENT_MAPPING = 128, /*!< Environment mapping (uses Envmap Scale) */
+	SLSF1_8 = 256, /*!< SLSF1_8 */
+	SLSF1_CAST_SHADOWS = 512, /*!< Can cast shadows */
+	SLSF1_10 = 1024, /*!< SLSF1_10 */
+	SLSF1_11 = 2048, /*!< SLSF1_11 */
+	SLSF1_SPECULAR_MAP = 4096, /*!< Use Specular Map */
+	SLSF1_13 = 8192, /*!< SLSF1_13 */
+	SLSF1_14 = 16384, /*!< SLSF1_14 */
+	SLSF1_15 = 32768, /*!< SLSF1_15 */
+	SLSF1_16 = 65536, /*!< SLSF1_16 */
+	SLSF1_EYE_ENVIRONMENT_MAPPING = 131072, /*!< Eye Environment Mapping (Must use the Eye shader and the model must be skinned) */
+	SLSF1_18 = 262144, /*!< SLSF1_18 */
+	SLSF1_19 = 524288, /*!< SLSF1_19 */
+	SLSF1_20 = 1048576, /*!< SLSF1_20 */
+	SLSF1_21 = 2097152, /*!< SLSF1_21 */
+	SLSF1_22 = 4194304, /*!< SLSF1_22 */
+	SLSF1_23 = 8388608, /*!< SLSF1_23 */
+	SLSF1_24 = 16777216, /*!< SLSF1_24 */
+	SLSF1_25 = 33554432, /*!< SLSF1_25 */
+	SLSF1_26 = 67108864, /*!< SLSF1_26 */
+	SLSF1_27 = 134217728, /*!< SLSF1_27 */
+	SLSF1_28 = 268435456, /*!< SLSF1_28 */
+	SLSF1_29 = 536870912, /*!< SLSF1_29 */
+	SLSF1_30 = 1073741824, /*!< SLSF1_30 */
+	SLSF1_ZBUFFER_TEST = 2147483648, /*!< ZBuffer Test (1=on) */
+};
+
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val );
+
+/*! Determines how the data stream is accessed? */
+enum DataStreamAccess {
+	CPU_READ = 1, /*!< CPU Read */
+	CPU_WRITE_STATIC = 2, /*!< CPU Write Static */
+	CPU_WRITE_MUTABLE = 4, /*!< CPU Write Mutable */
+	CPU_WRITE_VOLATILE = 8, /*!< CPU Write Volatile */
+	GPU_READ = 16, /*!< GPU Read */
+	GPU_WRITE = 32, /*!< GPU Write */
+	CPU_WRITE_STATIC_INITITIALIZED = 64, /*!< CPU Write Static Inititialized */
+};
+
+ostream & operator<<( ostream & out, DataStreamAccess const & val );
+
+/*! Skyrim Shader Property Flags 2 */
+enum SkyrimEffectShaderFlags2 {
+	SESF2_TEXTURE_TRANSFORM_U = 1, /*!< Has Texture Transform (U?) */
+	SESF2_TEXTURE_TRANSFORM_V = 2, /*!< Has Texture Transform (V?) */
+	SESF2_2 = 4, /*!< SESF2_2 */
+	SESF2_3 = 8, /*!< SESF2_3 */
+	SESF2_4 = 16, /*!< SESF2_4 */
+	SESF2_5 = 32, /*!< SESF2_5 */
+	SESF2_6 = 64, /*!< SESF2_6 */
+	SESF2_7 = 128, /*!< SESF2_7 */
+};
+
+ostream & operator<<( ostream & out, SkyrimEffectShaderFlags2 const & val );
+
+/*! Skyrim Shader Property Flags 1 */
+enum SkyrimEffectShaderFlags1 {
+	SESF1_0 = 1, /*!< SESF1_0 */
+	SESF1_1 = 2, /*!< SESF1_1 */
+	SESF1_2 = 4, /*!< SESF1_2 */
+	SESF1_3 = 8, /*!< SESF1_3 */
+	SESF1_DOUBLE_SIDED = 16, /*!< Draw textures double-sided */
+	SESF1_5 = 32, /*!< SESF1_5 */
+	SESF1_6 = 64, /*!< SESF1_6 */
+	SESF1_7 = 128, /*!< SESF1_7 */
+};
+
+ostream & operator<<( ostream & out, SkyrimEffectShaderFlags1 const & val );
 
 }
 #endif

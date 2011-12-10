@@ -80,6 +80,14 @@ protected:
 	vector<physXMaterialRef > materialDescs;
 	/*! Unknown */
 	unsigned int unknownInt2;
+	/*! Unknown */
+	unsigned int unknownInt3;
+	/*! Unknown */
+	IndexString unknownString4;
+	/*! Unknown */
+	unsigned int unknownInt5;
+	/*! Unknown */
+	byte unknownByte6;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-QuaternionXYZW::QuaternionXYZW() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {};
+QuaternionXYZW::QuaternionXYZW() : x(0.0f), y(0.0f), z(0.0f), w(1.0f) {};
 
 //Copy Constructor
 QuaternionXYZW::QuaternionXYZW( const QuaternionXYZW & src ) {

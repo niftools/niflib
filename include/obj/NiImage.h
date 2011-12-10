@@ -94,7 +94,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! 0 if the texture is internal to the NIF file. */
-	byte external;
+	byte useExternal;
 	/*! The filepath to the texture. */
 	IndexString fileName;
 	/*! Link to the internally stored image data. */

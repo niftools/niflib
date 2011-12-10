@@ -15,8 +15,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSPSysMultiTargetEmitterCtlr.h"
-#include "../../include/obj/NiPSysEmitterCtlrData.h"
 #include "../../include/obj/NiInterpolator.h"
+#include "../../include/obj/NiPSysEmitterCtlrData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

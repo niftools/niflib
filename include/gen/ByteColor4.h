@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!  */
+/*! Unknown. */
 struct ByteColor4 {
 	/*! Default Constructor */
 	NIFLIB_API ByteColor4();

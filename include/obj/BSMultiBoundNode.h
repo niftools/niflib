@@ -64,6 +64,8 @@ public:
 protected:
 	/*! Unknown. */
 	Ref<BSMultiBound > multiBound;
+	/*! Unknown */
+	unsigned int unknownInt;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -14,8 +14,8 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSourceTexture.h"
-#include "../../include/obj/NiObject.h"
 #include "../../include/obj/ATextureRenderData.h"
+#include "../../include/obj/NiObject.h"
 using namespace Niflib;
 
 //Definition of TYPE constant

@@ -55,6 +55,8 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 protected:
+	/*! Unknown. */
+	array<3,unsigned int > unknownInts;
 	/*! Unknown. Either 210 or 194. */
 	short unknownShort;
 	/*! 0? */

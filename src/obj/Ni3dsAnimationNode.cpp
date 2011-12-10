@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type Ni3dsAnimationNode::TYPE("Ni3dsAnimationNode", &NiObject::TYPE );
 
-Ni3dsAnimationNode::Ni3dsAnimationNode() : hasData((unsigned int)0), unknownShort((unsigned short)0), child(NULL), count((unsigned int)0) {
+Ni3dsAnimationNode::Ni3dsAnimationNode() : hasData(false), unknownShort((unsigned short)0), child(NULL), count((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

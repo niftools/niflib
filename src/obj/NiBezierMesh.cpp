@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiBezierMesh::TYPE("NiBezierMesh", &NiAVObject::TYPE );
 
-NiBezierMesh::NiBezierMesh() : numBezierTriangles((unsigned int)0), unknown1((unsigned int)0), count1((unsigned short)0), unknown2((unsigned short)0), unknown3((unsigned int)0), unknown4((unsigned int)0), count2((unsigned short)0) {
+NiBezierMesh::NiBezierMesh() : numBezierTriangles((unsigned int)0), unknown3((unsigned int)0), count1((unsigned short)0), unknown4((unsigned short)0), unknown5((unsigned int)0), unknown6((unsigned int)0), count2((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -54,21 +54,21 @@ void NiBezierMesh::Read( istream& in, list<unsigned int> & link_stack, const Nif
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	NifStream( unknown1, in, info );
+	NifStream( unknown3, in, info );
 	NifStream( count1, in, info );
-	NifStream( unknown2, in, info );
+	NifStream( unknown4, in, info );
 	points1.resize(count1);
 	for (unsigned int i1 = 0; i1 < points1.size(); i1++) {
 		NifStream( points1[i1], in, info );
 	};
-	NifStream( unknown3, in, info );
+	NifStream( unknown5, in, info );
 	points2.resize(count1);
 	for (unsigned int i1 = 0; i1 < points2.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < 2; i2++) {
 			NifStream( points2[i1][i2], in, info );
 		};
 	};
-	NifStream( unknown4, in, info );
+	NifStream( unknown6, in, info );
 	NifStream( count2, in, info );
 	data2.resize(count2);
 	for (unsigned int i1 = 0; i1 < data2.size(); i1++) {
@@ -111,19 +111,19 @@ void NiBezierMesh::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 			}
 		}
 	};
-	NifStream( unknown1, out, info );
+	NifStream( unknown3, out, info );
 	NifStream( count1, out, info );
-	NifStream( unknown2, out, info );
+	NifStream( unknown4, out, info );
 	for (unsigned int i1 = 0; i1 < points1.size(); i1++) {
 		NifStream( points1[i1], out, info );
 	};
-	NifStream( unknown3, out, info );
+	NifStream( unknown5, out, info );
 	for (unsigned int i1 = 0; i1 < points2.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < 2; i2++) {
 			NifStream( points2[i1][i2], out, info );
 		};
 	};
-	NifStream( unknown4, out, info );
+	NifStream( unknown6, out, info );
 	NifStream( count2, out, info );
 	for (unsigned int i1 = 0; i1 < data2.size(); i1++) {
 		for (unsigned int i2 = 0; i2 < 4; i2++) {
@@ -160,9 +160,9 @@ std::string NiBezierMesh::asString( bool verbose ) const {
 		out << "    Bezier Triangle[" << i1 << "]:  " << bezierTriangle[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Unknown 1:  " << unknown1 << endl;
+	out << "  Unknown 3:  " << unknown3 << endl;
 	out << "  Count 1:  " << count1 << endl;
-	out << "  Unknown 2:  " << unknown2 << endl;
+	out << "  Unknown 4:  " << unknown4 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < points1.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -175,7 +175,7 @@ std::string NiBezierMesh::asString( bool verbose ) const {
 		out << "    Points 1[" << i1 << "]:  " << points1[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Unknown 3:  " << unknown3 << endl;
+	out << "  Unknown 5:  " << unknown5 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < points2.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -190,7 +190,7 @@ std::string NiBezierMesh::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	out << "  Unknown 4:  " << unknown4 << endl;
+	out << "  Unknown 6:  " << unknown6 << endl;
 	out << "  Count 2:  " << count2 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < data2.size(); i1++) {

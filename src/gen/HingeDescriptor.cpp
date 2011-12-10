@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-HingeDescriptor::HingeDescriptor() : unknownFloat1(0.0f), unknownInt2(0.0f), unknownInt3(0.0f), unknownInt4(0.0f), unknownInt5(0.0f), unknownInt6(0.0f), unknownInt7(0.0f), unknownInt8(0.0f), unknownInt9(0.0f), unknownInt10(0.0f), unknownByte1((byte)0), unknownByte2((byte)0), unknownByte3((byte)0) {};
+HingeDescriptor::HingeDescriptor() {};
 
 //Copy Constructor
 HingeDescriptor::HingeDescriptor( const HingeDescriptor & src ) {
@@ -23,19 +23,9 @@ HingeDescriptor & HingeDescriptor::operator=( const HingeDescriptor & src ) {
 	this->perp2AxleInA2 = src.perp2AxleInA2;
 	this->pivotB = src.pivotB;
 	this->axleB = src.axleB;
-	this->unknownFloat1 = src.unknownFloat1;
-	this->unknownInt2 = src.unknownInt2;
-	this->unknownInt3 = src.unknownInt3;
-	this->unknownInt4 = src.unknownInt4;
-	this->unknownInt5 = src.unknownInt5;
-	this->unknownInt6 = src.unknownInt6;
-	this->unknownInt7 = src.unknownInt7;
-	this->unknownInt8 = src.unknownInt8;
-	this->unknownInt9 = src.unknownInt9;
-	this->unknownInt10 = src.unknownInt10;
-	this->unknownByte1 = src.unknownByte1;
-	this->unknownByte2 = src.unknownByte2;
-	this->unknownByte3 = src.unknownByte3;
+	this->axleA = src.axleA;
+	this->perp2AxleInB1 = src.perp2AxleInB1;
+	this->perp2AxleInB2 = src.perp2AxleInB2;
 	return *this;
 };
 

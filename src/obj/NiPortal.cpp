@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPortal::TYPE("NiPortal", &NiAVObject::TYPE );
 
-NiPortal::NiPortal() : unknownFlags((unsigned short)0), unknownShort1((short)0), numVertices((unsigned short)0), target(NULL) {
+NiPortal::NiPortal() : unknownFlags((unsigned short)0), unknownShort2((short)0), numVertices((unsigned short)0), target(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -49,7 +49,7 @@ void NiPortal::Read( istream& in, list<unsigned int> & link_stack, const NifInfo
 	unsigned int block_num;
 	NiAVObject::Read( in, link_stack, info );
 	NifStream( unknownFlags, in, info );
-	NifStream( unknownShort1, in, info );
+	NifStream( unknownShort2, in, info );
 	NifStream( numVertices, in, info );
 	vertices.resize(numVertices);
 	for (unsigned int i1 = 0; i1 < vertices.size(); i1++) {
@@ -71,7 +71,7 @@ void NiPortal::Write( ostream& out, const map<NiObjectRef,unsigned int> & link_m
 	NiAVObject::Write( out, link_map, missing_link_stack, info );
 	numVertices = (unsigned short)(vertices.size());
 	NifStream( unknownFlags, out, info );
-	NifStream( unknownShort1, out, info );
+	NifStream( unknownShort2, out, info );
 	NifStream( numVertices, out, info );
 	for (unsigned int i1 = 0; i1 < vertices.size(); i1++) {
 		NifStream( vertices[i1], out, info );
@@ -109,7 +109,7 @@ std::string NiPortal::asString( bool verbose ) const {
 	out << NiAVObject::asString();
 	numVertices = (unsigned short)(vertices.size());
 	out << "  Unknown Flags:  " << unknownFlags << endl;
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Unknown Short 2:  " << unknownShort2 << endl;
 	out << "  Num Vertices:  " << numVertices << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < vertices.size(); i1++) {

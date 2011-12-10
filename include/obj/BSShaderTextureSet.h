@@ -80,10 +80,10 @@ protected:
 	 * Textures.
 	 *             0: Diffuse
 	 *             1: Normal/Gloss
-	 *             2: Environment Mask
-	 *             3: Glow/Skin/Hair
-	 *             4: Height
-	 *             5: Environment
+	 *             2: Glow/Skin/Hair
+	 *             3: Height/Parallax
+	 *             4: Environment
+	 *             5: Environment Mask
 	 */
 	vector<string > textures;
 public:

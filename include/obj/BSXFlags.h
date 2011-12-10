@@ -21,12 +21,14 @@ typedef Ref<BSXFlags> BSXFlagsRef;
 
 /*!
  * Controls animation and collision.  Integer holds flags:
- *         Bit 0 : enable animation
+ *         Bit 0 : enable havok
  *         Bit 1 : enable collision
  *         Bit 2 : is skeleton nif?
- *         Bit 3 : toggable? unknown, set to 1 on oblivion signs
+ *         Bit 3 : enable animation
  *         Bit 4 : FlameNodes present
  *         Bit 5 : EditorMarkers present
+ *         Bit 6 : ? (Skyrim)
+ *         Bit 7 : ? (Skyrim)
  */
 class BSXFlags : public NiIntegerExtraData {
 public:

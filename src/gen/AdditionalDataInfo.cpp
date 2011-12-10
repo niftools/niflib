@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-AdditionalDataInfo::AdditionalDataInfo() : dataType((int)0), blockSize((int)0), numBlocks((int)0), blockSize2((int)0), blockIndex((int)0), unknownInt1((int)0), unknownByte1((byte)0) {};
+AdditionalDataInfo::AdditionalDataInfo() : dataType((int)0), numChannelBytesPerElement((int)0), numChannelBytes((int)0), numTotalBytesPerElement((int)0), blockIndex((int)0), channelOffset((int)0), unknownByte1((byte)2) {};
 
 //Copy Constructor
 AdditionalDataInfo::AdditionalDataInfo( const AdditionalDataInfo & src ) {
@@ -19,11 +19,11 @@ AdditionalDataInfo::AdditionalDataInfo( const AdditionalDataInfo & src ) {
 //Copy Operator
 AdditionalDataInfo & AdditionalDataInfo::operator=( const AdditionalDataInfo & src ) {
 	this->dataType = src.dataType;
-	this->blockSize = src.blockSize;
-	this->numBlocks = src.numBlocks;
-	this->blockSize2 = src.blockSize2;
+	this->numChannelBytesPerElement = src.numChannelBytesPerElement;
+	this->numChannelBytes = src.numChannelBytes;
+	this->numTotalBytesPerElement = src.numTotalBytesPerElement;
 	this->blockIndex = src.blockIndex;
-	this->unknownInt1 = src.unknownInt1;
+	this->channelOffset = src.channelOffset;
 	this->unknownByte1 = src.unknownByte1;
 	return *this;
 };

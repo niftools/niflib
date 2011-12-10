@@ -15,8 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiTimeController.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiInterpolator;
 class BSRefractionFirePeriodController;
 typedef Ref<BSRefractionFirePeriodController> BSRefractionFirePeriodControllerRef;
 
@@ -56,6 +61,9 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
+protected:
+	/*! Link to Interpolator. */
+	Ref<NiInterpolator > interpolator;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

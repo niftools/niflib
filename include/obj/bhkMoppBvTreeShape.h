@@ -166,8 +166,15 @@ protected:
 	 * box of the packed shape.
 	 */
 	float scale;
+	/*!
+	 * The tree of bounding volume data (old style, contains more than just the mopp
+	 * script).
+	 */
+	vector<byte > oldMoppData;
 	/*! The tree of bounding volume data. */
 	vector<byte > moppData;
+	/*! Unknown */
+	byte unknownByte1;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

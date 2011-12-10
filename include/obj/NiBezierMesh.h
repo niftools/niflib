@@ -67,19 +67,19 @@ protected:
 	/*! unknown */
 	vector<Ref<NiBezierTriangle4 > > bezierTriangle;
 	/*! Unknown. */
-	unsigned int unknown1;
+	unsigned int unknown3;
 	/*! Data count. */
 	mutable unsigned short count1;
 	/*! Unknown. */
-	unsigned short unknown2;
+	unsigned short unknown4;
 	/*! data. */
 	vector<Vector3 > points1;
 	/*! Unknown (illegal link?). */
-	unsigned int unknown3;
+	unsigned int unknown5;
 	/*! data. */
 	vector< array<2,float > > points2;
 	/*! unknown */
-	unsigned int unknown4;
+	unsigned int unknown6;
 	/*! data count 2. */
 	mutable unsigned short count2;
 	/*! data count. */

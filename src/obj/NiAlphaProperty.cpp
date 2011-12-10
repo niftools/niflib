@@ -19,7 +19,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiAlphaProperty::TYPE("NiAlphaProperty", &NiProperty::TYPE );
 
-NiAlphaProperty::NiAlphaProperty() : flags((unsigned short)237), threshold((byte)0) {
+NiAlphaProperty::NiAlphaProperty() : flags((unsigned short)237), threshold((byte)0), unknownShort1((unsigned short)0), unknownInt2((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -44,6 +44,10 @@ void NiAlphaProperty::Read( istream& in, list<unsigned int> & link_stack, const 
 	NiProperty::Read( in, link_stack, info );
 	NifStream( flags, in, info );
 	NifStream( threshold, in, info );
+	if ( info.version <= 0x02030000 ) {
+		NifStream( unknownShort1, in, info );
+		NifStream( unknownInt2, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -56,6 +60,10 @@ void NiAlphaProperty::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NiProperty::Write( out, link_map, missing_link_stack, info );
 	NifStream( flags, out, info );
 	NifStream( threshold, out, info );
+	if ( info.version <= 0x02030000 ) {
+		NifStream( unknownShort1, out, info );
+		NifStream( unknownInt2, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -69,6 +77,8 @@ std::string NiAlphaProperty::asString( bool verbose ) const {
 	out << NiProperty::asString();
 	out << "  Flags:  " << flags << endl;
 	out << "  Threshold:  " << threshold << endl;
+	out << "  Unknown Short 1:  " << unknownShort1 << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

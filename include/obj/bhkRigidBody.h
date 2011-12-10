@@ -384,6 +384,12 @@ protected:
 	 * buildings)
 	 */
 	float restitution;
+	/*! Unknown. */
+	float unknownFloat51;
+	/*! Unknown. */
+	float unknownFloat52;
+	/*! Unknown. */
+	float unknownFloat53;
 	/*! Maximal linear velocity. */
 	float maxLinearVelocity;
 	/*! Maximal angular velocity. Pi x 10? */
@@ -406,24 +412,22 @@ protected:
 	SolverDeactivation solverDeactivation;
 	/*! The motion type. Determines quality of motion? */
 	MotionQuality qualityType;
-	/*!
-	 * This is a user flag which you can set to give you a hint as to which objects to
-	 * remove from the simulation if the memory overhead becomes too high.
-	 */
-	unsigned int autoRemoveLevel;
-	/*!
-	 * Requests a number of extra fields in each hkpContactPointProperties for this
-	 * rigid body.
-	 */
-	unsigned int userDatasInContactPointProperties_;
-	/*! Ps3 only */
-	unsigned int forceCollideOntoPpu_;
+	/*! Unknown. */
+	unsigned int unknownInt6;
+	/*! Unknown. */
+	unsigned int unknownInt7;
+	/*! Unknown. */
+	unsigned int unknownInt8;
+	/*! Unknown. Skyrim only. */
+	unsigned int unknownInt81;
 	/*! The number of constraints this object is bound to. */
 	mutable unsigned int numConstraints;
 	/*! Unknown. */
 	vector<Ref<bhkSerializable > > constraints;
 	/*! 0 = do not respond to wind, 1 = respond to wind (?) */
 	unsigned int unknownInt9;
+	/*! Unknown. */
+	unsigned short unknownInt91;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

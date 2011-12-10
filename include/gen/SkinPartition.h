@@ -43,7 +43,7 @@ struct SkinPartition {
 	/*! List of bones. */
 	vector<unsigned short > bones;
 	/*! Do we have a vertex map? */
-	byte hasVertexMap;
+	bool hasVertexMap;
 	/*!
 	 * Maps the weight/influence lists in this submesh to the vertices in the shape
 	 * being skinned.
@@ -56,15 +56,17 @@ struct SkinPartition {
 	/*! The strip lengths. */
 	mutable vector<unsigned short > stripLengths;
 	/*! Do we have triangle or strip data? */
-	byte hasFaces;
+	bool hasFaces;
 	/*! The strips. */
 	vector< vector<unsigned short > > strips;
 	/*! The triangles. */
 	vector<Triangle > triangles;
 	/*! Do we have bone indices? */
-	byte hasBoneIndices;
+	bool hasBoneIndices;
 	/*! Bone indices, they index into 'Bones'. */
 	vector< vector<byte > > boneIndices;
+	/*! Unknown */
+	unsigned short unknownShort;
 	//--BEGIN MISC CUSTOM CODE--//
 	/*! Calculate proper value of numTriangles field. */
 	unsigned short numTrianglesCalc() const;

@@ -14,13 +14,14 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiGeometryData.h"
-#include "../../include/obj/NiAdditionalGeometryData.h"
+#include "../../include/obj/AbstractAdditionalGeometryData.h"
+#include "../../include/obj/NiPSysData.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : unknownInt((int)0), numVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((byte)0), tspaceFlag((byte)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
+NiGeometryData::NiGeometryData() : unknownInt((int)0), numVertices((unsigned short)0), bsMaxVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), bsNumUvSets((unsigned short)0), unknownInt2((unsigned int)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -47,45 +48,67 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( unknownInt, in, info );
 	};
-	NifStream( numVertices, in, info );
+	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+		NifStream( numVertices, in, info );
+	};
+	if ( ((info.version < 0x14020007) || (info.userVersion < 11)) ) {
+		if ( IsDerivedType(NiPSysData::TYPE) ) {
+			NifStream( numVertices, in, info );
+		};
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
+		if ( IsDerivedType(NiPSysData::TYPE) ) {
+			NifStream( bsMaxVertices, in, info );
+		};
+	};
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( keepFlags, in, info );
 		NifStream( compressFlags, in, info );
 	};
 	NifStream( hasVertices, in, info );
-	if ( (hasVertices != 0) ) {
+	if ( hasVertices ) {
 		vertices.resize(numVertices);
 		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
 			NifStream( vertices[i2], in, info );
 		};
 	};
-	if ( info.version >= 0x0A000100 ) {
+	if ( ((info.version >= 0x0A000100) && (!((info.version >= 0x14020007) && (info.userVersion >= 11)))) ) {
 		NifStream( numUvSets, in, info );
-		NifStream( tspaceFlag, in, info );
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
+		NifStream( bsNumUvSets, in, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( unknownInt2, in, info );
 	};
 	NifStream( hasNormals, in, info );
-	if ( (hasNormals != 0) ) {
+	if ( hasNormals ) {
 		normals.resize(numVertices);
 		for (unsigned int i2 = 0; i2 < normals.size(); i2++) {
 			NifStream( normals[i2], in, info );
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( ((hasNormals != 0) && (tspaceFlag & 240)) ) {
-			binormals.resize(numVertices);
-			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
-				NifStream( binormals[i3], in, info );
-			};
+		if ( (hasNormals && ((numUvSets & 61440) || (bsNumUvSets & 61440))) ) {
 			tangents.resize(numVertices);
 			for (unsigned int i3 = 0; i3 < tangents.size(); i3++) {
 				NifStream( tangents[i3], in, info );
+			};
+			binormals.resize(numVertices);
+			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
+				NifStream( binormals[i3], in, info );
 			};
 		};
 	};
 	NifStream( center, in, info );
 	NifStream( radius, in, info );
+	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) && ( info.userVersion == 131072 ) ) {
+		for (unsigned int i2 = 0; i2 < 13; i2++) {
+			NifStream( unknown13Shorts[i2], in, info );
+		};
+	};
 	NifStream( hasVertexColors, in, info );
-	if ( (hasVertexColors != 0) ) {
+	if ( hasVertexColors ) {
 		vertexColors.resize(numVertices);
 		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
 			NifStream( vertexColors[i2], in, info );
@@ -93,12 +116,11 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	};
 	if ( info.version <= 0x04020200 ) {
 		NifStream( numUvSets, in, info );
-		NifStream( tspaceFlag, in, info );
 	};
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasUv, in, info );
 	};
-	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
+	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
 		uvSets.resize((numUvSets & 63));
 		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
 			uvSets[i2].resize(numVertices);
@@ -107,8 +129,8 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 			};
 		};
 	};
-	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
-		uvSets.resize((numUvSets & 1));
+	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
+		uvSets.resize((bsNumUvSets & 1));
 		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
 			uvSets[i2].resize(numVertices);
 			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
@@ -133,65 +155,87 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, missing_link_stack, info );
-	numUvSets = (byte)(uvSets.size());
+	bsNumUvSets = (unsigned short)(uvSets.size());
+	numUvSets = (unsigned short)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( unknownInt, out, info );
 	};
-	NifStream( numVertices, out, info );
+	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+		NifStream( numVertices, out, info );
+	};
+	if ( ((info.version < 0x14020007) || (info.userVersion < 11)) ) {
+		if ( IsDerivedType(NiPSysData::TYPE) ) {
+			NifStream( numVertices, out, info );
+		};
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
+		if ( IsDerivedType(NiPSysData::TYPE) ) {
+			NifStream( bsMaxVertices, out, info );
+		};
+	};
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( keepFlags, out, info );
 		NifStream( compressFlags, out, info );
 	};
 	NifStream( hasVertices, out, info );
-	if ( (hasVertices != 0) ) {
+	if ( hasVertices ) {
 		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
 			NifStream( vertices[i2], out, info );
 		};
 	};
-	if ( info.version >= 0x0A000100 ) {
+	if ( ((info.version >= 0x0A000100) && (!((info.version >= 0x14020007) && (info.userVersion >= 11)))) ) {
 		NifStream( numUvSets, out, info );
-		NifStream( tspaceFlag, out, info );
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
+		NifStream( bsNumUvSets, out, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( unknownInt2, out, info );
 	};
 	NifStream( hasNormals, out, info );
-	if ( (hasNormals != 0) ) {
+	if ( hasNormals ) {
 		for (unsigned int i2 = 0; i2 < normals.size(); i2++) {
 			NifStream( normals[i2], out, info );
 		};
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( ((hasNormals != 0) && (tspaceFlag & 240)) ) {
-			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
-				NifStream( binormals[i3], out, info );
-			};
+		if ( (hasNormals && ((numUvSets & 61440) || (bsNumUvSets & 61440))) ) {
 			for (unsigned int i3 = 0; i3 < tangents.size(); i3++) {
 				NifStream( tangents[i3], out, info );
+			};
+			for (unsigned int i3 = 0; i3 < binormals.size(); i3++) {
+				NifStream( binormals[i3], out, info );
 			};
 		};
 	};
 	NifStream( center, out, info );
 	NifStream( radius, out, info );
+	if ( ( info.version >= 0x14030009 ) && ( info.version <= 0x14030009 ) && ( info.userVersion == 131072 ) ) {
+		for (unsigned int i2 = 0; i2 < 13; i2++) {
+			NifStream( unknown13Shorts[i2], out, info );
+		};
+	};
 	NifStream( hasVertexColors, out, info );
-	if ( (hasVertexColors != 0) ) {
+	if ( hasVertexColors ) {
 		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
 			NifStream( vertexColors[i2], out, info );
 		};
 	};
 	if ( info.version <= 0x04020200 ) {
 		NifStream( numUvSets, out, info );
-		NifStream( tspaceFlag, out, info );
 	};
 	if ( info.version <= 0x04000002 ) {
 		NifStream( hasUv, out, info );
 	};
-	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
+	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
 		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
 			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
 				NifStream( uvSets[i2][i3], out, info );
 			};
 		};
 	};
-	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
+	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
 		for (unsigned int i2 = 0; i2 < uvSets.size(); i2++) {
 			for (unsigned int i3 = 0; i3 < uvSets[i2].size(); i3++) {
 				NifStream( uvSets[i2][i3], out, info );
@@ -232,14 +276,20 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numUvSets = (byte)(uvSets.size());
+	bsNumUvSets = (unsigned short)(uvSets.size());
+	numUvSets = (unsigned short)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
-	out << "  Num Vertices:  " << numVertices << endl;
+	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+		out << "    Num Vertices:  " << numVertices << endl;
+	};
+	if ( IsDerivedType(NiPSysData::TYPE) ) {
+		out << "    BS Max Vertices:  " << bsMaxVertices << endl;
+	};
 	out << "  Keep Flags:  " << keepFlags << endl;
 	out << "  Compress Flags:  " << compressFlags << endl;
 	out << "  Has Vertices:  " << hasVertices << endl;
-	if ( (hasVertices != 0) ) {
+	if ( hasVertices ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -254,9 +304,10 @@ std::string NiGeometryData::asString( bool verbose ) const {
 		};
 	};
 	out << "  Num UV Sets:  " << numUvSets << endl;
-	out << "  TSpace Flag:  " << tspaceFlag << endl;
+	out << "  BS Num UV Sets:  " << bsNumUvSets << endl;
+	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Has Normals:  " << hasNormals << endl;
-	if ( (hasNormals != 0) ) {
+	if ( hasNormals ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < normals.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -270,19 +321,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	if ( ((hasNormals != 0) && (tspaceFlag & 240)) ) {
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < binormals.size(); i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Binormals[" << i2 << "]:  " << binormals[i2] << endl;
-			array_output_count++;
-		};
+	if ( (hasNormals && ((numUvSets & 61440) || (bsNumUvSets & 61440))) ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < tangents.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -295,11 +334,35 @@ std::string NiGeometryData::asString( bool verbose ) const {
 			out << "      Tangents[" << i2 << "]:  " << tangents[i2] << endl;
 			array_output_count++;
 		};
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < binormals.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				break;
+			};
+			out << "      Binormals[" << i2 << "]:  " << binormals[i2] << endl;
+			array_output_count++;
+		};
 	};
 	out << "  Center:  " << center << endl;
 	out << "  Radius:  " << radius << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 13; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown 13 shorts[" << i1 << "]:  " << unknown13Shorts[i1] << endl;
+		array_output_count++;
+	};
 	out << "  Has Vertex Colors:  " << hasVertexColors << endl;
-	if ( (hasVertexColors != 0) ) {
+	if ( hasVertexColors ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -342,7 +405,7 @@ void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
 	if ( info.version >= 0x14000004 ) {
-		additionalData = FixLink<NiAdditionalGeometryData>( objects, link_stack, missing_link_stack, info );
+		additionalData = FixLink<AbstractAdditionalGeometryData>( objects, link_stack, missing_link_stack, info );
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

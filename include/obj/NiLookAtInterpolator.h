@@ -114,7 +114,7 @@ protected:
 	/*! Unknown. */
 	unsigned short unknownShort;
 	/*! Refers to a Node to focus on. */
-	Ref<NiNode > lookAt;
+	NiNode * lookAt;
 	/*! Target node name. */
 	IndexString target;
 	/*! Translate. */

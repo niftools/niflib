@@ -225,7 +225,11 @@ protected:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! The number of rotation keys. */
+	/*!
+	 * The number of quaternion rotation keys. If the rotation type is XYZ (type 4)
+	 * then this *must* be set to 1, and in this case the actual number of keys is
+	 * stored in the XYZ Rotations field.
+	 */
 	mutable unsigned int numRotationKeys;
 	/*!
 	 * The type of interpolation to use for rotation.  Can also be 4 to indicate that

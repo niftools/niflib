@@ -47,7 +47,7 @@ void BSShaderNoLightingProperty::Read( istream& in, list<unsigned int> & link_st
 
 	BSShaderLightingProperty::Read( in, link_stack, info );
 	NifStream( fileName, in, info );
-	if ( ((info.userVersion == 11) && (info.userVersion2 > 26)) ) {
+	if ( ((info.userVersion >= 11) && (info.userVersion2 > 26)) ) {
 		NifStream( unknownFloat2, in, info );
 		NifStream( unknownFloat3, in, info );
 		NifStream( unknownFloat4, in, info );
@@ -66,7 +66,7 @@ void BSShaderNoLightingProperty::Write( ostream& out, const map<NiObjectRef,unsi
 
 	BSShaderLightingProperty::Write( out, link_map, missing_link_stack, info );
 	NifStream( fileName, out, info );
-	if ( ((info.userVersion == 11) && (info.userVersion2 > 26)) ) {
+	if ( ((info.userVersion >= 11) && (info.userVersion2 > 26)) ) {
 		NifStream( unknownFloat2, out, info );
 		NifStream( unknownFloat3, out, info );
 		NifStream( unknownFloat4, out, info );

@@ -52,7 +52,7 @@ void NiPSysGravityModifier::Read( istream& in, list<unsigned int> & link_stack, 
 	NifStream( forceType, in, info );
 	NifStream( turbulence, in, info );
 	NifStream( turbulenceScale, in, info );
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 11 ) ) {
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 11) ) ) {
 		NifStream( unknownByte, in, info );
 	};
 
@@ -88,7 +88,7 @@ void NiPSysGravityModifier::Write( ostream& out, const map<NiObjectRef,unsigned 
 	NifStream( forceType, out, info );
 	NifStream( turbulence, out, info );
 	NifStream( turbulenceScale, out, info );
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 11 ) ) {
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 11) ) ) {
 		NifStream( unknownByte, out, info );
 	};
 

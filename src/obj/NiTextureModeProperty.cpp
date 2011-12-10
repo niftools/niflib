@@ -42,7 +42,14 @@ void NiTextureModeProperty::Read( istream& in, list<unsigned int> & link_stack, 
 	//--END CUSTOM CODE--//
 
 	NiProperty::Read( in, link_stack, info );
-	NifStream( unknownShort, in, info );
+	if ( info.version <= 0x02030000 ) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknownInts[i2], in, info );
+		};
+	};
+	if ( info.version >= 0x03000000 ) {
+		NifStream( unknownShort, in, info );
+	};
 	if ( ( info.version >= 0x03010000 ) && ( info.version <= 0x0A020000 ) ) {
 		NifStream( ps2L, in, info );
 		NifStream( ps2K, in, info );
@@ -57,7 +64,14 @@ void NiTextureModeProperty::Write( ostream& out, const map<NiObjectRef,unsigned 
 	//--END CUSTOM CODE--//
 
 	NiProperty::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownShort, out, info );
+	if ( info.version <= 0x02030000 ) {
+		for (unsigned int i2 = 0; i2 < 3; i2++) {
+			NifStream( unknownInts[i2], out, info );
+		};
+	};
+	if ( info.version >= 0x03000000 ) {
+		NifStream( unknownShort, out, info );
+	};
 	if ( ( info.version >= 0x03010000 ) && ( info.version <= 0x0A020000 ) ) {
 		NifStream( ps2L, out, info );
 		NifStream( ps2K, out, info );
@@ -72,7 +86,20 @@ std::string NiTextureModeProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
+	unsigned int array_output_count = 0;
 	out << NiProperty::asString();
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < 3; i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Unknown Ints[" << i1 << "]:  " << unknownInts[i1] << endl;
+		array_output_count++;
+	};
 	out << "  Unknown Short:  " << unknownShort << endl;
 	out << "  PS2 L:  " << ps2L << endl;
 	out << "  PS2 K:  " << ps2K << endl;

@@ -23,19 +23,28 @@ struct AdditionalDataInfo {
 	NIFLIB_API AdditionalDataInfo( const AdditionalDataInfo & src );
 	/*! Copy Operator */
 	NIFLIB_API AdditionalDataInfo & operator=( const AdditionalDataInfo & src );
-	/*! Type of data */
+	/*! Type of data in this channel */
 	int dataType;
-	/*! Size of Block */
-	int blockSize;
-	/*! Unknown */
-	int numBlocks;
-	/*! Unknown */
-	int blockSize2;
-	/*! Unknown */
+	/*! Number of bytes per element of this channel */
+	int numChannelBytesPerElement;
+	/*! Total number of bytes of this channel (num vertices times num bytes per element) */
+	int numChannelBytes;
+	/*!
+	 * Number of bytes per element in all channels together. Sum of num channel bytes
+	 * per element over all block infos.
+	 */
+	int numTotalBytesPerElement;
+	/*!
+	 * Unsure. The block in which this channel is stored? Usually there is only one
+	 * block, and so this is zero.
+	 */
 	int blockIndex;
-	/*! Unknown */
-	int unknownInt1;
-	/*! Unknown */
+	/*!
+	 * Offset (in bytes) of this channel. Sum of all num channel bytes per element of
+	 * all preceeding block infos.
+	 */
+	int channelOffset;
+	/*! Unknown, usually equal to 2. */
 	byte unknownByte1;
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//

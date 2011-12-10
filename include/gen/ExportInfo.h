@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!  */
+/*! Information about how the file was exported */
 struct ExportInfo {
 	/*! Default Constructor */
 	NIFLIB_API ExportInfo();

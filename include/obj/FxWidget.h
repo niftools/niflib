@@ -56,7 +56,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	byte unknown1;
+	byte unknown3;
 	/*! Looks like 9 links and some string data. */
 	array<292,byte > unknown292Bytes;
 public:

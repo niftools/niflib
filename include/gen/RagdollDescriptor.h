@@ -10,6 +10,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "../NIF_IO.h"
 
+// Include structures
+#include "MotorDescriptor.h"
 namespace Niflib {
 
 
@@ -26,11 +28,12 @@ struct RagdollDescriptor {
 	NIFLIB_API RagdollDescriptor( const RagdollDescriptor & src );
 	/*! Copy Operator */
 	NIFLIB_API RagdollDescriptor & operator=( const RagdollDescriptor & src );
-	/*! Point around which the object will rotate. */
+	/*! The point where the constraint is attached to its parent rigidbody. */
 	Vector4 pivotA;
 	/*!
-	 * Defines the orthogonal directions in which the shape can be controlled (namely
-	 * in this direction, and in the direction orthogonal on this one and Twist A).
+	 * Defines the orthogonal plane in which the body can move, the orthogonal
+	 * directions in which the shape can be controlled (the direction orthogonal on
+	 * this one and Twist A).
 	 */
 	Vector4 planeA;
 	/*!
@@ -38,12 +41,28 @@ struct RagdollDescriptor {
 	 * Plane A.
 	 */
 	Vector4 twistA;
-	/*! Pivot A in second entity coordinate system. */
+	/*! The point where the constraint is attached to the other rigidbody. */
 	Vector4 pivotB;
-	/*! Plane A in second entity coordinate system. */
+	/*!
+	 * Defines the orthogonal plane in which the shape can be controlled (the direction
+	 * orthogonal on this one and Twist B).
+	 */
 	Vector4 planeB;
-	/*! Twist A in second entity coordinate system. */
+	/*!
+	 * Central directed axis of the cone in which the object can rotate. Orthogonal on
+	 * Plane B.
+	 */
 	Vector4 twistB;
+	/*!
+	 * Defines the orthogonal directions in which the shape can be controlled (namely
+	 * in this direction, and in the direction orthogonal on this one and Twist A).
+	 */
+	Vector4 motorA;
+	/*!
+	 * Defines the orthogonal directions in which the shape can be controlled (namely
+	 * in this direction, and in the direction orthogonal on this one and Twist A).
+	 */
+	Vector4 motorB;
 	/*!
 	 * Maximum angle the object can rotate around the vector orthogonal on Plane A and
 	 * Twist A relative to the Twist A vector. Note that Cone Min Angle is not stored,
@@ -58,22 +77,12 @@ struct RagdollDescriptor {
 	float twistMinAngle;
 	/*! Maximum angle the object can rotate around Twist A, relative to Plane A. */
 	float twistMaxAngle;
-	/*! Maximum friction, typically 0 or 10. */
+	/*! Maximum friction, typically 0 or 10. In Fallout 3, typically 100. */
 	float maxFriction;
 	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	float unknownFloat2;
-	/*! Unknown */
-	float unknownFloat3;
-	/*! Unknown */
-	float unknownFloat4;
-	/*! Unknown */
-	float unknownFloat5;
-	/*! Unknown */
-	float unknownFloat6;
-	/*! Unknown */
-	float unknownFloat7;
+	bool enableMotor;
+	/*! Unknown. */
+	MotorDescriptor motor;
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 };

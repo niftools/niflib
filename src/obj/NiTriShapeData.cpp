@@ -54,7 +54,7 @@ void NiTriShapeData::Read( istream& in, list<unsigned int> & link_stack, const N
 		};
 	};
 	if ( info.version >= 0x0A000103 ) {
-		if ( (hasTriangles != 0) ) {
+		if ( hasTriangles ) {
 			triangles.resize(numTriangles);
 			for (unsigned int i3 = 0; i3 < triangles.size(); i3++) {
 				NifStream( triangles[i3], in, info );
@@ -93,7 +93,7 @@ void NiTriShapeData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		};
 	};
 	if ( info.version >= 0x0A000103 ) {
-		if ( (hasTriangles != 0) ) {
+		if ( hasTriangles ) {
 			for (unsigned int i3 = 0; i3 < triangles.size(); i3++) {
 				NifStream( triangles[i3], out, info );
 			};

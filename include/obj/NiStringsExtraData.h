@@ -71,7 +71,7 @@ protected:
 	/*! Number of strings. */
 	mutable unsigned int numStrings;
 	/*! The strings. */
-	vector<IndexString > data;
+	vector<string > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

@@ -81,8 +81,6 @@ protected:
 	LimitedHingeDescriptor limitedHinge;
 	/*! Unknown. */
 	float tau;
-	/*! Unknown */
-	byte unknownByte1;
 	/*! Unknown. */
 	float damping;
 public:

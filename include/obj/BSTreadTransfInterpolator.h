@@ -17,9 +17,12 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiInterpolator.h"
 
 // Include structures
-#include "../gen/BSTreadTransfInfo.h"
+#include "../gen/BSTreadTransform.h"
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiFloatData;
 class BSTreadTransfInterpolator;
 typedef Ref<BSTreadTransfInterpolator> BSTreadTransfInterpolatorRef;
 
@@ -60,12 +63,12 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	mutable int numTransfers;
-	/*! Unknown */
-	vector<BSTreadTransfInfo > treadTransferInfo;
-	/*! Unknown */
-	int unknownInt1;
+	/*! Unknown. */
+	mutable int numTreadTransforms;
+	/*! Unknown. */
+	vector<BSTreadTransform > treadTransforms;
+	/*! Unknown float data. */
+	Ref<NiFloatData > data;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

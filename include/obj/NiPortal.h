@@ -62,7 +62,7 @@ protected:
 	/*! Unknown flags. */
 	unsigned short unknownFlags;
 	/*! Unknown */
-	short unknownShort1;
+	short unknownShort2;
 	/*! Number of vertices in this polygon */
 	mutable unsigned short numVertices;
 	/*! Vertices */

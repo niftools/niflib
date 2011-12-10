@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &bhkBvTreeShape::TYPE );
 
-bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f) {
+bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f), unknownByte1((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -53,9 +53,20 @@ void bhkMoppBvTreeShape::Read( istream& in, list<unsigned int> & link_stack, con
 	NifStream( moppDataSize, in, info );
 	NifStream( origin, in, info );
 	NifStream( scale, in, info );
-	moppData.resize(moppDataSize);
-	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
-		NifStream( moppData[i1], in, info );
+	if ( info.version <= 0x0A000100 ) {
+		oldMoppData.resize((moppDataSize - 1));
+		for (unsigned int i2 = 0; i2 < oldMoppData.size(); i2++) {
+			NifStream( oldMoppData[i2], in, info );
+		};
+	};
+	if ( info.version >= 0x0A000102 ) {
+		moppData.resize(moppDataSize);
+		for (unsigned int i2 = 0; i2 < moppData.size(); i2++) {
+			NifStream( moppData[i2], in, info );
+		};
+	};
+	if ( (info.userVersion >= 12) ) {
+		NifStream( unknownByte1, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -67,7 +78,7 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	bhkBvTreeShape::Write( out, link_map, missing_link_stack, info );
-	moppDataSize = (unsigned int)(moppData.size());
+	moppDataSize = (unsigned int)(oldMoppData.size());
 	if ( info.version < VER_3_3_0_13 ) {
 		WritePtr32( &(*shape), out );
 	} else {
@@ -92,8 +103,18 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	NifStream( moppDataSize, out, info );
 	NifStream( origin, out, info );
 	NifStream( scale, out, info );
-	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
-		NifStream( moppData[i1], out, info );
+	if ( info.version <= 0x0A000100 ) {
+		for (unsigned int i2 = 0; i2 < oldMoppData.size(); i2++) {
+			NifStream( oldMoppData[i2], out, info );
+		};
+	};
+	if ( info.version >= 0x0A000102 ) {
+		for (unsigned int i2 = 0; i2 < moppData.size(); i2++) {
+			NifStream( moppData[i2], out, info );
+		};
+	};
+	if ( (info.userVersion >= 12) ) {
+		NifStream( unknownByte1, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -107,7 +128,7 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkBvTreeShape::asString();
-	moppDataSize = (unsigned int)(moppData.size());
+	moppDataSize = (unsigned int)(oldMoppData.size());
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
@@ -116,6 +137,18 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	out << "  MOPP Data Size:  " << moppDataSize << endl;
 	out << "  Origin:  " << origin << endl;
 	out << "  Scale:  " << scale << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < oldMoppData.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
+		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Old MOPP Data[" << i1 << "]:  " << oldMoppData[i1] << endl;
+		array_output_count++;
+	};
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -128,6 +161,7 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 		out << "    MOPP Data[" << i1 << "]:  " << moppData[i1] << endl;
 		array_output_count++;
 	};
+	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiTextureEffect::TYPE("NiTextureEffect", &NiDynamicEffect::TYPE );
 
-NiTextureEffect::NiTextureEffect() : textureFiltering((TexFilterMode)FILTER_TRILERP), textureClamping((TexClampMode)WRAP_S_WRAP_T), textureType((EffectType)EFFECT_ENVIRONMENT_MAP), coordinateGenerationType((CoordGenType)CG_SPHERE_MAP), image(NULL), sourceTexture(NULL), clippingPlane((byte)0), unknownVector(1.0, 0.0, 0.0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
+NiTextureEffect::NiTextureEffect() : textureFiltering((TexFilterMode)FILTER_TRILERP), textureClamping((TexClampMode)WRAP_S_WRAP_T), unknown((short)0), textureType((EffectType)EFFECT_ENVIRONMENT_MAP), coordinateGenerationType((CoordGenType)CG_SPHERE_MAP), image(NULL), sourceTexture(NULL), clippingPlane((byte)0), unknownVector(1.0, 0.0, 0.0), unknownFloat(0.0f), ps2L((short)0), ps2K((short)-75), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -49,6 +49,9 @@ void NiTextureEffect::Read( istream& in, list<unsigned int> & link_stack, const 
 	NifStream( modelProjectionTransform, in, info );
 	NifStream( textureFiltering, in, info );
 	NifStream( textureClamping, in, info );
+	if ( info.version >= 0x14060000 ) {
+		NifStream( unknown, in, info );
+	};
 	NifStream( textureType, in, info );
 	NifStream( coordinateGenerationType, in, info );
 	if ( info.version <= 0x03010000 ) {
@@ -83,6 +86,9 @@ void NiTextureEffect::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	NifStream( modelProjectionTransform, out, info );
 	NifStream( textureFiltering, out, info );
 	NifStream( textureClamping, out, info );
+	if ( info.version >= 0x14060000 ) {
+		NifStream( unknown, out, info );
+	};
 	NifStream( textureType, out, info );
 	NifStream( coordinateGenerationType, out, info );
 	if ( info.version <= 0x03010000 ) {
@@ -148,6 +154,7 @@ std::string NiTextureEffect::asString( bool verbose ) const {
 	out << "  Model Projection Transform:  " << modelProjectionTransform << endl;
 	out << "  Texture Filtering:  " << textureFiltering << endl;
 	out << "  Texture Clamping:  " << textureClamping << endl;
+	out << "  Unknown:  " << unknown << endl;
 	out << "  Texture Type:  " << textureType << endl;
 	out << "  Coordinate Generation Type:  " << coordinateGenerationType << endl;
 	out << "  Image:  " << image << endl;
