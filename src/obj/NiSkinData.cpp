@@ -256,7 +256,7 @@ Matrix44 NiSkinData::GetBoneTransform( unsigned int bone_index ) const {
 		throw runtime_error( "The specified bone index was larger than the number of bones in this NiSkinData." );
 	}
 
-	return Matrix44( boneList[bone_index].translation, boneList[bone_index].rotation, boneList[bone_index].scale );
+	return Matrix44( boneList[bone_index].skinTransform.translation, boneList[bone_index].skinTransform.rotation, boneList[bone_index].skinTransform.scale );
 }
 
 vector<SkinWeight> NiSkinData::GetBoneWeights( unsigned int bone_index ) const {
@@ -279,11 +279,11 @@ void NiSkinData::SetBoneWeights( unsigned int bone_index, const vector<SkinWeigh
 }
 
 Matrix44 NiSkinData::GetOverallTransform() const {
-	return Matrix44( translation, rotation, scale );
+	return Matrix44( skinTransform.translation, skinTransform.rotation, skinTransform.scale );
 }
 
 void NiSkinData::SetOverallTransform( const Matrix44 & transform ) {
-	transform.Decompose( translation, rotation, scale );
+	transform.Decompose( skinTransform.translation, skinTransform.rotation, skinTransform.scale );
 }
 
 NiSkinData::NiSkinData( NiGeometry * owner ) {
@@ -354,7 +354,7 @@ void NiSkinData::ResetOffsets( NiGeometry * owner ) {
 	Matrix44 overall_mat = (owner_mat * sr_world.Inverse()).Inverse();
 
 	//Store result
-	overall_mat.Decompose( translation, rotation, scale );
+	overall_mat.Decompose( skinTransform.translation, skinTransform.rotation, skinTransform.scale );
 
 	//--Calculate Bone Offsets--//
 	Matrix44 res_mat;
@@ -369,7 +369,7 @@ void NiSkinData::ResetOffsets( NiGeometry * owner ) {
 		res_mat = owner_mat * bone_mat.Inverse();
 
 		//Store result
-		res_mat.Decompose( boneList[i].translation, boneList[i].rotation, boneList[i].scale );
+		res_mat.Decompose( boneList[i].skinTransform.translation, boneList[i].skinTransform.rotation, boneList[i].skinTransform.scale );
 	}
 }
 
