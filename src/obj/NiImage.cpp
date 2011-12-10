@@ -149,17 +149,17 @@ std::list<NiObject *> NiImage::GetPtrs() const {
 //--BEGIN MISC CUSTOM CODE--//
 
 bool NiImage::IsTextureExternal() const {
-	return (external != 0);
+	return (useExternal != 0);
 }
 
 void NiImage::SetExternalTexture( string file_name ) {
 	imageData = NULL;
-	external = 1;
+	useExternal = 1;
 	fileName = file_name;
 }
 
 void NiImage::SetInternalTexture( NiRawImageData * raw_image_data ) {
-	external = 0;
+	useExternal = 0;
 	fileName.clear();
 	imageData = raw_image_data;
 }
