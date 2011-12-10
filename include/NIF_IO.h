@@ -214,6 +214,12 @@ ostream & operator<<( ostream & out, Char8String const & val );
 void NifStream( InertiaMatrix & val, istream& in, const NifInfo & info);
 void NifStream( InertiaMatrix const & val, ostream& out, const NifInfo & info);
 
+//ByteColor4
+class ByteColor4;
+void NifStream( ByteColor4 & val, istream& in, const NifInfo & info);
+void NifStream( ByteColor4 const & val, ostream& out, const NifInfo & info);
+ostream & operator<<( ostream & out, ByteColor4 const & val );
+
 //--Templates--//
 
 void NifStream( Key<Quaternion> & key, istream& file, const NifInfo & info, KeyType type );

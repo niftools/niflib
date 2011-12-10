@@ -4,6 +4,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/NIF_IO.h"
 #include "../include/niflib.h"
 #include "../include/gen/Header.h"
+#include "../include/gen/ByteColor4.h"
 namespace Niflib {
 
 //--Endian Support Functions--//
@@ -888,6 +889,26 @@ void NifStream( InertiaMatrix const & val, ostream& out, const NifInfo & info ) 
 			WriteFloat( val[r][c], out );
 		}
 	}
+}
+
+//ByteColor4
+void NifStream( ByteColor4 & val, istream& in, const NifInfo & info ) {
+  val.r = ReadByte(in);
+  val.g = ReadByte(in);
+  val.b = ReadByte(in);
+  val.a = ReadByte(in);
+}
+
+void NifStream( ByteColor4 const & val, ostream& out, const NifInfo & info ) {
+  WriteByte( val.r, out);
+  WriteByte( val.g, out);
+  WriteByte( val.b, out);
+  WriteByte( val.a, out);
+}
+
+ostream & operator<<( ostream & out, ByteColor4 const & val ) {
+  out << "RGBA: " << val.r << " " << val.g << " " << val.b << " " << val.a;
+  return out;
 }
 
 ostream & operator<<( ostream & out, hdrInfo const & val ) {

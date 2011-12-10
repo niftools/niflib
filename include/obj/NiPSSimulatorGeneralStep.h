@@ -12,6 +12,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
 
+#include "../gen/ByteColor4.h"
+
 //--END CUSTOM CODE--//
 
 #include "NiPSSimulatorStep.h"
