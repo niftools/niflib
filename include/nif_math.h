@@ -200,22 +200,26 @@ struct Vector3 {
 	 * \return The result of the addition.
 	 */
 	NIFLIB_API Vector3 operator+( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator+( const float & rh ) const;
 
 	/* Adds the two vectors and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
 	NIFLIB_API Vector3 & operator+=( const Vector3 & rh );
+	NIFLIB_API Vector3 & operator+=( const float & rh );
 
 	/* Allows the subtraction of vectors.  Each component, x, y, y, is subtracted from
 	 * the same component of the other vector.
 	 * \return The result of the subtraction.
 	 */
 	NIFLIB_API Vector3 operator-( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator-( const float & rh ) const;
 
 	/* This operator subtracts the two vectors and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
 	NIFLIB_API Vector3 & operator-=( const Vector3 & rh);
+	NIFLIB_API Vector3 & operator-=( const float & rh );
 
 	/* Allows scaler multiplication, that is multipying all components of the
 	 * vector, x, y and z, by the same number.
