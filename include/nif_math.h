@@ -1068,6 +1068,14 @@ struct Quaternion {
 		this->z = z;
 	}
 
+	/* Dot-product */
+	NIFLIB_API float Dot(const Quaternion &rhs) const {
+		return  x * rhs.x + 
+			y * rhs.y + 
+			z * rhs.z + 
+			w * rhs.w;
+	}
+
 	/*! This function can be used to set all values in the structure at the same time.
 	 * \param[in] w The value to set the W scalar component of this quaternion to.
 	 * \param[in] x The value to set the X vector component of this quaternion to.
