@@ -205,6 +205,18 @@ vector<Triangle> hkPackedNiTriStripsData::GetTriangles() const {
 	return good_triangles;
 }
 
+vector<hkTriangle> hkPackedNiTriStripsData::GetHavokTriangles() const {
+	//Remove any bad triangles
+	vector<hkTriangle> good_triangles;
+	for ( unsigned i = 0; i < triangles.size(); ++i ) {
+		const hkTriangle & t = triangles[i];
+		if ( t.triangle.v1 != t.triangle.v2 && t.triangle.v2 != t.triangle.v3 && t.triangle.v1 != t.triangle.v3 ) {
+			good_triangles.push_back(t);
+		}
+	}
+	return good_triangles;
+}
+
 vector<Vector3> hkPackedNiTriStripsData::GetNormals() const {
 	//Remove any bad triangles
 	vector<Vector3> good_normals;
@@ -241,6 +253,13 @@ void hkPackedNiTriStripsData::SetTriangles( const vector<Triangle> & in ) {
 	for (size_t i=0; i<triangles.size(); ++i) {
 		triangles[i].triangle = in[i];
 	}
+}
+
+void hkPackedNiTriStripsData::SetHavokTriangles( const vector<hkTriangle> & in ) {
+	if ( in.size() > 65535 || in.size() < 0 ) {
+		throw runtime_error("Invalid Face Count: must be between 0 and 65535.");
+	}
+	triangles = in;
 }
 
 void hkPackedNiTriStripsData::SetNormals( const vector<Vector3> & in ) {
