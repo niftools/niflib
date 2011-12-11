@@ -996,6 +996,39 @@ struct Color4 {
 		return ret;
 	}
 
+	NIFLIB_API Color4 operator-(const Color4& rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r -= rhs.r;
+		ret.g -= rhs.g;
+		ret.b -= rhs.b;
+		ret.a -= rhs.a;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator+(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r += rhs;
+		ret.g += rhs;
+		ret.b += rhs;
+		ret.a += rhs;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator-(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r -= rhs;
+		ret.g -= rhs;
+		ret.b -= rhs;
+		ret.a -= rhs;
+		return ret;
+	}
+
 	NIFLIB_API Color4 operator*(const float rhs) const
 	{
 		Color4 ret;
@@ -1004,6 +1037,17 @@ struct Color4 {
 		ret.g *= rhs;
 		ret.b *= rhs;
 		ret.a *= rhs;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator/(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r /= rhs;
+		ret.g /= rhs;
+		ret.b /= rhs;
+		ret.a /= rhs;
 		return ret;
 	}
 
