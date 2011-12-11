@@ -544,5 +544,43 @@ void NiBoneLODController::ClearNodeGroups() {
    numNodeGroups2 = int(nodeGroups.size());
 }
 
+bool NiBoneLODController::AddShapeToGroup( Ref<NiTriBasedGeom > shape ) {
+    vector<Ref<NiTriBasedGeom > >& shapes = shapeGroups2;
+    vector<Ref<NiTriBasedGeom > >::iterator itr = std::find(shapes.begin(), shapes.end(), shape);
+    if (itr == shapes.end()) {
+	shapes.push_back(shape);
+	numShapeGroups2++;
+
+	return true;
+    }
+
+    return false;
+}
+
+bool NiBoneLODController::RemoveShapeFromGroup( Ref<NiTriBasedGeom > shape ) {
+    vector<Ref<NiTriBasedGeom > >& shapes = shapeGroups2;
+    vector<Ref<NiTriBasedGeom > >::iterator itr = std::find(shapes.begin(), shapes.end(), shape);
+    if (itr != shapes.end()) {
+	shapes.erase(itr);
+	numShapeGroups2--;
+
+	return true;
+    }
+
+    return false;
+}
+
+bool NiBoneLODController::ReplaceShapeInGroup( Ref<NiTriBasedGeom > newshape, Ref<NiTriBasedGeom > oldshape ) {
+    vector<Ref<NiTriBasedGeom > >& shapes = shapeGroups2;
+    vector<Ref<NiTriBasedGeom > >::iterator itr = std::find(shapes.begin(), shapes.end(), oldshape);
+    if (itr != shapes.end()) {
+	*itr = newshape;
+
+	return true;
+    }
+
+    return false;
+}
+
 
 //--END CUSTOM CODE--//
