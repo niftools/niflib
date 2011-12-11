@@ -1076,6 +1076,33 @@ struct Quaternion {
 			w * rhs.w;
 	}
 
+	/* Multiplication */
+	NIFLIB_API Quaternion operator*(const float &rhs) const {
+		Quaternion ret;
+		ret = *this;
+		ret.x *= rhs;
+		ret.y *= rhs;
+		ret.z *= rhs;
+		ret.w *= rhs;
+		return ret;
+	}
+
+	/* Addition */
+	NIFLIB_API Quaternion operator+(const Quaternion &rhs) const {
+		Quaternion ret;
+		ret = *this;
+		ret.x += rhs.x;
+		ret.y += rhs.y;
+		ret.z += rhs.z;
+		ret.w += rhs.w;
+		return ret;
+	}
+
+	/* Equality */
+	NIFLIB_API bool operator==( const Quaternion & n ) const {
+		return ( x == n.x && y == n.y && z == n.z && w == n.w );
+	}
+
 	/*! This function can be used to set all values in the structure at the same time.
 	 * \param[in] w The value to set the W scalar component of this quaternion to.
 	 * \param[in] x The value to set the X vector component of this quaternion to.
