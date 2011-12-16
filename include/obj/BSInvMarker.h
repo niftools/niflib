@@ -21,8 +21,7 @@ class BSInvMarker;
 typedef Ref<BSInvMarker> BSInvMarkerRef;
 
 /*!
- * Orientation marker for Skyrim's inventory view.
- *         How to show the nif in the player's inventory.
+ * How to show the nif in the player's inventory.
  *         Typically attached to the root node of the nif tree.
  *         If not present, then Skyrim will still show the nif in inventory,
  *         using the default values.

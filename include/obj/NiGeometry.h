@@ -198,8 +198,8 @@ protected:
 	int unknownInteger2;
 	/*! Dirty Flag? */
 	bool dirtyFlag;
-	/*! Two property links, used by Bethesda. */
-	array<2,Ref<NiProperty > > bsProperties;
+	/*! Two property links. */
+	array<2,Ref<NiProperty > > properties;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

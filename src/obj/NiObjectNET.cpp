@@ -14,7 +14,6 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiObjectNET.h"
-#include "../../include/obj/BSLightingShaderProperty.h"
 #include "../../include/obj/NiExtraData.h"
 #include "../../include/obj/NiTimeController.h"
 using namespace Niflib;
@@ -22,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiObjectNET::TYPE("NiObjectNET", &NiObject::TYPE );
 
-NiObjectNET::NiObjectNET() : skyrimShaderType((unsigned int)0), hasOldExtraData(false), oldExtraInternalId((unsigned int)0), unknownByte((byte)0), extraData(NULL), numExtraDataList((unsigned int)0), controller(NULL) {
+NiObjectNET::NiObjectNET() : hasOldExtraData(false), oldExtraInternalId((unsigned int)0), unknownByte((byte)0), extraData(NULL), numExtraDataList((unsigned int)0), controller(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -51,11 +50,6 @@ void NiObjectNET::Read( istream& in, list<unsigned int> & link_stack, const NifI
 
 	unsigned int block_num;
 	NiObject::Read( in, link_stack, info );
-	if ( (info.userVersion >= 12) ) {
-		if ( IsDerivedType(BSLightingShaderProperty::TYPE) ) {
-			NifStream( skyrimShaderType, in, info );
-		};
-	};
 	NifStream( name, in, info );
 	if ( info.version <= 0x02030000 ) {
 		NifStream( hasOldExtraData, in, info );
@@ -93,11 +87,6 @@ void NiObjectNET::Write( ostream& out, const map<NiObjectRef,unsigned int> & lin
 
 	NiObject::Write( out, link_map, missing_link_stack, info );
 	numExtraDataList = (unsigned int)(extraDataList.size());
-	if ( (info.userVersion >= 12) ) {
-		if ( IsDerivedType(BSLightingShaderProperty::TYPE) ) {
-			NifStream( skyrimShaderType, out, info );
-		};
-	};
 	NifStream( name, out, info );
 	if ( info.version <= 0x02030000 ) {
 		NifStream( hasOldExtraData, out, info );
@@ -181,9 +170,6 @@ std::string NiObjectNET::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
 	numExtraDataList = (unsigned int)(extraDataList.size());
-	if ( IsDerivedType(BSLightingShaderProperty::TYPE) ) {
-		out << "    Skyrim Shader Type:  " << skyrimShaderType << endl;
-	};
 	out << "  Name:  " << name << endl;
 	out << "  Has Old Extra Data:  " << hasOldExtraData << endl;
 	if ( hasOldExtraData ) {

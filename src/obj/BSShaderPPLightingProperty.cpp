@@ -58,6 +58,9 @@ void BSShaderPPLightingProperty::Read( istream& in, list<unsigned int> & link_st
 		NifStream( unknownFloat4, in, info );
 		NifStream( unknownFloat5, in, info );
 	};
+	if ( (info.userVersion >= 12) ) {
+		NifStream( emissiveColor, in, info );
+	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -95,6 +98,9 @@ void BSShaderPPLightingProperty::Write( ostream& out, const map<NiObjectRef,unsi
 		NifStream( unknownFloat4, out, info );
 		NifStream( unknownFloat5, out, info );
 	};
+	if ( (info.userVersion >= 12) ) {
+		NifStream( emissiveColor, out, info );
+	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -113,6 +119,7 @@ std::string BSShaderPPLightingProperty::asString( bool verbose ) const {
 	out << "  Refraction Period:  " << refractionPeriod << endl;
 	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
 	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
+	out << "  Emissive Color:  " << emissiveColor << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

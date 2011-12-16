@@ -259,10 +259,8 @@ public:
 protected:
 	/*! Unknown identifier. Always 0. */
 	int unknownInt;
-	/*! Number of vertices. */
+	/*! Number of vertices. For NiPSysData this is max particles. */
 	mutable unsigned short numVertices;
-	/*! Bethesda uses this for max number of particles in NiPSysData. */
-	unsigned short bsMaxVertices;
 	/*! Used with NiCollision objects when OBB or TRI is set. */
 	byte keepFlags;
 	/*! Unknown. */
@@ -276,12 +274,6 @@ protected:
 	 * lower byte.
 	 */
 	mutable unsigned short numUvSets;
-	/*!
-	 * Bethesda's version of this field for nif versions 20.2.0.7 and up. Only a single
-	 * bit denotes whether uv's are present. For example, see
-	 * meshes/architecture/megaton/megatonrampturn45sml.nif in Fallout 3.
-	 */
-	mutable unsigned short bsNumUvSets;
 	/*! Unknown, seen in Skyrim. */
 	unsigned int unknownInt2;
 	/*!

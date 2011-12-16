@@ -14,14 +14,20 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiProperty.h"
+#include "NiObject.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiExtraData;
+class NiTimeController;
 class BSShaderProperty;
 typedef Ref<BSShaderProperty> BSShaderPropertyRef;
 
 /*! Bethesda-specific Property node */
-class BSShaderProperty : public NiProperty {
+class BSShaderProperty : public NiObject {
 public:
 	/*! Constructor */
 	NIFLIB_API BSShaderProperty();
@@ -91,11 +97,25 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
+	unsigned int unknownFlag;
+	/*! Object Name */
+	IndexString name;
+	/*! Extra data object index. (The first in a chain) */
+	Ref<NiExtraData > extraData;
+	/*! The number of Extra Data objects referenced through the list. */
+	mutable unsigned int numExtraDataList;
+	/*! List of extra data indices. */
+	vector<Ref<NiExtraData > > extraDataList;
+	/*! Controller object index. (The first in a chain) */
+	Ref<NiTimeController > controller;
+	/*! Unknown */
 	unsigned short flags;
 	/*! Unknown (Set to 0x21 for NoLighting, 0x11 for Water) */
 	BSShaderType shaderType;
 	/*! Shader Property Flags */
 	BSShaderFlags shaderFlags;
+	/*! Unknown */
+	unsigned short unknownShort1;
 	/*! Unknown */
 	int unknownInt2;
 	/*! Unknown */

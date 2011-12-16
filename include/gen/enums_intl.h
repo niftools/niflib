@@ -289,16 +289,22 @@ void NifStream( EmitFrom & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( EmitFrom const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---SkyrimEffectShaderFlags---//
+
+void NifStream( SkyrimEffectShaderFlags & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimEffectShaderFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---BSShaderFlags---//
 
 void NifStream( BSShaderFlags & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( BSShaderFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
-//---BSPartFlag---//
+//---DataStreamAccess---//
 
-void NifStream( BSPartFlag & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info = NifInfo() );
+void NifStream( DataStreamAccess & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( DataStreamAccess const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
 //---SkyrimLightingShaderFlags2---//
@@ -313,22 +319,10 @@ void NifStream( SkyrimLightingShaderFlags1 & val, istream& in, const NifInfo & i
 void NifStream( SkyrimLightingShaderFlags1 const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
-//---DataStreamAccess---//
+//---BSPartFlag---//
 
-void NifStream( DataStreamAccess & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( DataStreamAccess const & val, ostream& out, const NifInfo & info = NifInfo() );
-
-
-//---SkyrimEffectShaderFlags2---//
-
-void NifStream( SkyrimEffectShaderFlags2 & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( SkyrimEffectShaderFlags2 const & val, ostream& out, const NifInfo & info = NifInfo() );
-
-
-//---SkyrimEffectShaderFlags1---//
-
-void NifStream( SkyrimEffectShaderFlags1 & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( SkyrimEffectShaderFlags1 const & val, ostream& out, const NifInfo & info = NifInfo() );
+void NifStream( BSPartFlag & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 }
 #endif

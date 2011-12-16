@@ -118,7 +118,7 @@ protected:
 	/*! Unknown. Same as Unknown Float 3 */
 	float unknownFloat1;
 	/*!
-	 * Unknown. Sometimes 0.0f or -1. but sometimes really large number.  Suspect its
+	 * Unknown. Sometimes 0.0f or -1.0f but sometimes really large number.  Suspect its
 	 * garbage.
 	 */
 	unsigned int unknownInt3;

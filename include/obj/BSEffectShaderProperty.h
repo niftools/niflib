@@ -63,18 +63,18 @@ protected:
 	unsigned short unknownShort1;
 	/*! always 80? */
 	byte unknownByte2;
-	/*! Shader options, will use SkyrimEffectShaderFlags1 */
-	unsigned int effectShaderFlags1;
+	/*!  */
+	unsigned int unknownInt1;
 	/*! Offset UVs */
 	TexCoord textureTranslation1;
 	/*! Offset UVs */
 	TexCoord textureTranslation2;
 	/*! points to an external texture. */
 	string sourceTexture;
-	/*! hader options, will use SkyrimEffectShaderFlags12 */
-	unsigned short effectShaderFlags2;
-	/*! Unknown */
+	/*! Unknown, flags? */
 	unsigned short unknownShort2;
+	/*! Unknown. */
+	SkyrimEffectShaderFlags effectShaderFlags;
 	/*! Unknown */
 	float unknownFloat1;
 	/*! Unknown */
@@ -83,12 +83,12 @@ protected:
 	float unknownFloat3;
 	/*! Unknown */
 	float unknownFloat4;
-	/*! Color */
-	Color3 diffuseColor;
-	/*! The material's transparency */
-	float alpha;
-	/*! Adds a glow effect */
-	float emissive;
+	/*! Emissive color */
+	Color3 emissiveColor;
+	/*! Adds fill to the glow effect */
+	float emissiveSaturation;
+	/*! How bright the glow will be */
+	float emissiveStrength;
 	/*! Unknown */
 	float unknownFloat5;
 	/*! points to an external texture. */

@@ -61,7 +61,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
-protected:
+public:
 	/*! Unknown. */
 	Ref<BSMultiBoundData > data;
 public:

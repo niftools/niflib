@@ -20,7 +20,7 @@ namespace Niflib {
 class BSMultiBoundAABB;
 typedef Ref<BSMultiBoundAABB> BSMultiBoundAABBRef;
 
-/*! Bethesda-specific node. */
+/*! Bethesda-specific node. Axis-Aligned Bounding-Box */
 class BSMultiBoundAABB : public BSMultiBoundData {
 public:
 	/*! Constructor */
@@ -56,9 +56,11 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
-protected:
-	/*! Unknown */
-	array<6,float > unknownFloats1;
+public:
+	/*! Extent of the AABB towards negative infinity */
+	Vector3 minimum;
+	/*! Extent of the AABB towards positive infinity */
+	Vector3 maximum;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

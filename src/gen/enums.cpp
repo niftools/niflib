@@ -1422,6 +1422,33 @@ ostream & operator<<( ostream & out, EmitFrom const & val ) {
 }
 
 
+//--SkyrimEffectShaderFlags--//
+
+void NifStream( SkyrimEffectShaderFlags & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = SkyrimEffectShaderFlags(temp);
+}
+
+void NifStream( SkyrimEffectShaderFlags const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SkyrimEffectShaderFlags const & val ) {
+	switch ( val ) {
+		case SFE_TEXTURE_TRANSFORM_U: return out << "SFE_Texture_Transform_U";
+		case SFE_TEXTURE_TRANSFORM_V: return out << "SFE_Texture_Transform_V";
+		case SFE_2: return out << "SFE_2";
+		case SFE_3: return out << "SFE_3";
+		case SFE_4: return out << "SFE_4";
+		case SFE_5: return out << "SFE_5";
+		case SFE_6: return out << "SFE_6";
+		case SFE_7: return out << "SFE_7";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--BSShaderFlags--//
 
 void NifStream( BSShaderFlags & val, istream& in, const NifInfo & info ) {
@@ -1473,129 +1500,6 @@ ostream & operator<<( ostream & out, BSShaderFlags const & val ) {
 }
 
 
-//--BSPartFlag--//
-
-void NifStream( BSPartFlag & val, istream& in, const NifInfo & info ) {
-	unsigned short temp;
-	NifStream( temp, in, info );
-	val = BSPartFlag(temp);
-}
-
-void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (unsigned short)(val), out, info );
-}
-
-ostream & operator<<( ostream & out, BSPartFlag const & val ) {
-	switch ( val ) {
-		case PF_EDITOR_VISIBLE: return out << "PF_EDITOR_VISIBLE";
-		case PF_START_NET_BONESET: return out << "PF_START_NET_BONESET";
-		default: return out << "Invalid Value! - " << (unsigned int)(val);
-	}
-}
-
-
-//--SkyrimLightingShaderFlags2--//
-
-void NifStream( SkyrimLightingShaderFlags2 & val, istream& in, const NifInfo & info ) {
-	unsigned int temp;
-	NifStream( temp, in, info );
-	val = SkyrimLightingShaderFlags2(temp);
-}
-
-void NifStream( SkyrimLightingShaderFlags2 const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (unsigned int)(val), out, info );
-}
-
-ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val ) {
-	switch ( val ) {
-		case SLSF2_ZBUFFER_WRITE: return out << "SLSF2_ZBuffer_Write";
-		case SLSF2_1: return out << "SLSF2_1";
-		case SLSF2_2: return out << "SLSF2_2";
-		case SLSF2_3: return out << "SLSF2_3";
-		case SLSF2_DOUBLE_SIDED: return out << "SLSF2_Double_Sided";
-		case SLSF2_VERTEX_COLOR: return out << "SLSF2_Vertex_Color";
-		case SLSF2_GLOW_MAP: return out << "SLSF2_Glow_Map";
-		case SLSF2_7: return out << "SLSF2_7";
-		case SLSF2_8: return out << "SLSF2_8";
-		case SLSF2_9: return out << "SLSF2_9";
-		case SLSF2_10: return out << "SLSF2_10";
-		case SLSF2_11: return out << "SLSF2_11";
-		case SLSF2_12: return out << "SLSF2_12";
-		case SLSF2_13: return out << "SLSF2_13";
-		case SLSF2_14: return out << "SLSF2_14";
-		case SLSF2_15: return out << "SLSF2_15";
-		case SLSF2_16: return out << "SLSF2_16";
-		case SLSF2_17: return out << "SLSF2_17";
-		case SLSF2_18: return out << "SLSF2_18";
-		case SLSF2_19: return out << "SLSF2_19";
-		case SLSF2_20: return out << "SLSF2_20";
-		case SLSF2_21: return out << "SLSF2_21";
-		case SLSF2_22: return out << "SLSF2_22";
-		case SLSF2_23: return out << "SLSF2_23";
-		case SLSF2_MULTI_LAYER: return out << "SLSF2_Multi_Layer";
-		case SLSF2_SOFT_LIGHT: return out << "SLSF2_Soft_Light";
-		case SLSF2_RIM_LIGHT: return out << "SLSF2_Rim_Light";
-		case SLSF2_BACK_LIGHT: return out << "SLSF2_Back_Light";
-		case SLSF2_28: return out << "SLSF2_28";
-		case SLSF2_VERTEX_ANIMATION: return out << "SLSF2_Vertex_Animation";
-		case SLSF2_30: return out << "SLSF2_30";
-		case SLSF2_31: return out << "SLSF2_31";
-		default: return out << "Invalid Value! - " << (unsigned int)(val);
-	}
-}
-
-
-//--SkyrimLightingShaderFlags1--//
-
-void NifStream( SkyrimLightingShaderFlags1 & val, istream& in, const NifInfo & info ) {
-	unsigned int temp;
-	NifStream( temp, in, info );
-	val = SkyrimLightingShaderFlags1(temp);
-}
-
-void NifStream( SkyrimLightingShaderFlags1 const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (unsigned int)(val), out, info );
-}
-
-ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val ) {
-	switch ( val ) {
-		case SLSF1_SPECULAR: return out << "SLSF1_Specular";
-		case SLSF1_SKINNED: return out << "SLSF1_Skinned";
-		case SLSF1_2: return out << "SLSF1_2";
-		case SLSF1_3: return out << "SLSF1_3";
-		case SLSF1_4: return out << "SLSF1_4";
-		case SLSF1_5: return out << "SLSF1_5";
-		case SLSF1_6: return out << "SLSF1_6";
-		case SLSF1_ENVIRONMENT_MAPPING: return out << "SLSF1_Environment_Mapping";
-		case SLSF1_8: return out << "SLSF1_8";
-		case SLSF1_CAST_SHADOWS: return out << "SLSF1_Cast_Shadows";
-		case SLSF1_10: return out << "SLSF1_10";
-		case SLSF1_11: return out << "SLSF1_11";
-		case SLSF1_SPECULAR_MAP: return out << "SLSF1_Specular_Map";
-		case SLSF1_13: return out << "SLSF1_13";
-		case SLSF1_14: return out << "SLSF1_14";
-		case SLSF1_15: return out << "SLSF1_15";
-		case SLSF1_16: return out << "SLSF1_16";
-		case SLSF1_EYE_ENVIRONMENT_MAPPING: return out << "SLSF1_Eye_Environment_Mapping";
-		case SLSF1_18: return out << "SLSF1_18";
-		case SLSF1_19: return out << "SLSF1_19";
-		case SLSF1_20: return out << "SLSF1_20";
-		case SLSF1_21: return out << "SLSF1_21";
-		case SLSF1_22: return out << "SLSF1_22";
-		case SLSF1_23: return out << "SLSF1_23";
-		case SLSF1_24: return out << "SLSF1_24";
-		case SLSF1_25: return out << "SLSF1_25";
-		case SLSF1_26: return out << "SLSF1_26";
-		case SLSF1_27: return out << "SLSF1_27";
-		case SLSF1_28: return out << "SLSF1_28";
-		case SLSF1_29: return out << "SLSF1_29";
-		case SLSF1_30: return out << "SLSF1_30";
-		case SLSF1_ZBUFFER_TEST: return out << "SLSF1_ZBuffer_Test";
-		default: return out << "Invalid Value! - " << (unsigned int)(val);
-	}
-}
-
-
 //--DataStreamAccess--//
 
 void NifStream( DataStreamAccess & val, istream& in, const NifInfo & info ) {
@@ -1622,55 +1526,124 @@ ostream & operator<<( ostream & out, DataStreamAccess const & val ) {
 }
 
 
-//--SkyrimEffectShaderFlags2--//
+//--SkyrimLightingShaderFlags2--//
 
-void NifStream( SkyrimEffectShaderFlags2 & val, istream& in, const NifInfo & info ) {
+void NifStream( SkyrimLightingShaderFlags2 & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
 	NifStream( temp, in, info );
-	val = SkyrimEffectShaderFlags2(temp);
+	val = SkyrimLightingShaderFlags2(temp);
 }
 
-void NifStream( SkyrimEffectShaderFlags2 const & val, ostream& out, const NifInfo & info ) {
+void NifStream( SkyrimLightingShaderFlags2 const & val, ostream& out, const NifInfo & info ) {
 	NifStream( (unsigned int)(val), out, info );
 }
 
-ostream & operator<<( ostream & out, SkyrimEffectShaderFlags2 const & val ) {
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val ) {
 	switch ( val ) {
-		case SESF2_TEXTURE_TRANSFORM_U: return out << "SESF2_Texture_Transform_U";
-		case SESF2_TEXTURE_TRANSFORM_V: return out << "SESF2_Texture_Transform_V";
-		case SESF2_2: return out << "SESF2_2";
-		case SESF2_3: return out << "SESF2_3";
-		case SESF2_4: return out << "SESF2_4";
-		case SESF2_5: return out << "SESF2_5";
-		case SESF2_6: return out << "SESF2_6";
-		case SESF2_7: return out << "SESF2_7";
+		case SFL2_ZBUFFER_WRITE: return out << "SFL2_ZBuffer_Write";
+		case SFL2_1: return out << "SFL2_1";
+		case SFL2_2: return out << "SFL2_2";
+		case SFL2_3: return out << "SFL2_3";
+		case SFL2_DOUBLE_SIDED: return out << "SFL2_Double_Sided";
+		case SFL2_VERTEX_COLOR: return out << "SFL2_Vertex_Color";
+		case SFL2_GLOW_MAP: return out << "SFL2_Glow_Map";
+		case SFL2_7: return out << "SFL2_7";
+		case SFL2_8: return out << "SFL2_8";
+		case SFL2_9: return out << "SFL2_9";
+		case SFL2_10: return out << "SFL2_10";
+		case SFL2_11: return out << "SFL2_11";
+		case SFL2_12: return out << "SFL2_12";
+		case SFL2_13: return out << "SFL2_13";
+		case SFL2_14: return out << "SFL2_14";
+		case SFL2_15: return out << "SFL2_15";
+		case SFL2_16: return out << "SFL2_16";
+		case SFL2_17: return out << "SFL2_17";
+		case SFL2_18: return out << "SFL2_18";
+		case SFL2_19: return out << "SFL2_19";
+		case SFL2_20: return out << "SFL2_20";
+		case SFL2_21: return out << "SFL2_21";
+		case SFL2_22: return out << "SFL2_22";
+		case SFL2_23: return out << "SFL2_23";
+		case SFL2_MULTI_LAYER: return out << "SFL2_Multi_Layer";
+		case SFL2_SOFT_LIGHT: return out << "SFL2_Soft_Light";
+		case SFL2_RIM_LIGHT: return out << "SFL2_Rim_Light";
+		case SFL2_BACK_LIGHT: return out << "SFL2_Back_Light";
+		case SFL2_28: return out << "SFL2_28";
+		case SFL2_VERTEX_ANIMATION: return out << "SFL2_Vertex_Animation";
+		case SFL2_30: return out << "SFL2_30";
+		case SFL2_31: return out << "SFL2_31";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
 
 
-//--SkyrimEffectShaderFlags1--//
+//--SkyrimLightingShaderFlags1--//
 
-void NifStream( SkyrimEffectShaderFlags1 & val, istream& in, const NifInfo & info ) {
+void NifStream( SkyrimLightingShaderFlags1 & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
 	NifStream( temp, in, info );
-	val = SkyrimEffectShaderFlags1(temp);
+	val = SkyrimLightingShaderFlags1(temp);
 }
 
-void NifStream( SkyrimEffectShaderFlags1 const & val, ostream& out, const NifInfo & info ) {
+void NifStream( SkyrimLightingShaderFlags1 const & val, ostream& out, const NifInfo & info ) {
 	NifStream( (unsigned int)(val), out, info );
 }
 
-ostream & operator<<( ostream & out, SkyrimEffectShaderFlags1 const & val ) {
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val ) {
 	switch ( val ) {
-		case SESF1_0: return out << "SESF1_0";
-		case SESF1_1: return out << "SESF1_1";
-		case SESF1_2: return out << "SESF1_2";
-		case SESF1_3: return out << "SESF1_3";
-		case SESF1_DOUBLE_SIDED: return out << "SESF1_Double_Sided";
-		case SESF1_5: return out << "SESF1_5";
-		case SESF1_6: return out << "SESF1_6";
-		case SESF1_7: return out << "SESF1_7";
+		case SFL1_SPECULAR: return out << "SFL1_Specular";
+		case SFL1_SKINNED: return out << "SFL1_Skinned";
+		case SFL1_2: return out << "SFL1_2";
+		case SFL1_3: return out << "SFL1_3";
+		case SFL1_4: return out << "SFL1_4";
+		case SFL1_5: return out << "SFL1_5";
+		case SFL1_6: return out << "SFL1_6";
+		case SFL1_ENVIRONMENT_MAPPING: return out << "SFL1_Environment_Mapping";
+		case SFL1_8: return out << "SFL1_8";
+		case SFL1_CAST_SHADOWS: return out << "SFL1_Cast_Shadows";
+		case SFL1_10: return out << "SFL1_10";
+		case SFL1_11: return out << "SFL1_11";
+		case SFL1_SPECULAR_MAP: return out << "SFL1_Specular_Map";
+		case SFL1_13: return out << "SFL1_13";
+		case SFL1_14: return out << "SFL1_14";
+		case SFL1_15: return out << "SFL1_15";
+		case SFL1_16: return out << "SFL1_16";
+		case SFL1_EYE_ENVIRONMENT_MAPPING: return out << "SFL1_Eye_Environment_Mapping";
+		case SFL1_18: return out << "SFL1_18";
+		case SFL1_19: return out << "SFL1_19";
+		case SFL1_20: return out << "SFL1_20";
+		case SFL1_21: return out << "SFL1_21";
+		case SFL1_22: return out << "SFL1_22";
+		case SFL1_23: return out << "SFL1_23";
+		case SFL1_24: return out << "SFL1_24";
+		case SFL1_25: return out << "SFL1_25";
+		case SFL1_26: return out << "SFL1_26";
+		case SFL1_27: return out << "SFL1_27";
+		case SFL1_28: return out << "SFL1_28";
+		case SFL1_29: return out << "SFL1_29";
+		case SFL1_30: return out << "SFL1_30";
+		case SFL1_ZBUFFER_TEST: return out << "SFL1_ZBuffer_Test";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--BSPartFlag--//
+
+void NifStream( BSPartFlag & val, istream& in, const NifInfo & info ) {
+	unsigned short temp;
+	NifStream( temp, in, info );
+	val = BSPartFlag(temp);
+}
+
+void NifStream( BSPartFlag const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned short)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BSPartFlag const & val ) {
+	switch ( val ) {
+		case PF_EDITOR_VISIBLE: return out << "PF_EDITOR_VISIBLE";
+		case PF_START_NET_BONESET: return out << "PF_START_NET_BONESET";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

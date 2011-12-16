@@ -43,18 +43,20 @@ void NiPSysData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	//--END CUSTOM CODE--//
 
 	NiRotatingParticlesData::Read( in, link_stack, info );
-	particleDescriptions.resize(numVertices);
-	for (unsigned int i1 = 0; i1 < particleDescriptions.size(); i1++) {
-		NifStream( particleDescriptions[i1].translation, in, info );
-		if ( info.version <= 0x0A040001 ) {
-			for (unsigned int i3 = 0; i3 < 3; i3++) {
-				NifStream( particleDescriptions[i1].unknownFloats1[i3], in, info );
+	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
+		particleDescriptions.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < particleDescriptions.size(); i2++) {
+			NifStream( particleDescriptions[i2].translation, in, info );
+			if ( info.version <= 0x0A040001 ) {
+				for (unsigned int i4 = 0; i4 < 3; i4++) {
+					NifStream( particleDescriptions[i2].unknownFloats1[i4], in, info );
+				};
 			};
+			NifStream( particleDescriptions[i2].unknownFloat1, in, info );
+			NifStream( particleDescriptions[i2].unknownFloat2, in, info );
+			NifStream( particleDescriptions[i2].unknownFloat3, in, info );
+			NifStream( particleDescriptions[i2].unknownInt1, in, info );
 		};
-		NifStream( particleDescriptions[i1].unknownFloat1, in, info );
-		NifStream( particleDescriptions[i1].unknownFloat2, in, info );
-		NifStream( particleDescriptions[i1].unknownFloat3, in, info );
-		NifStream( particleDescriptions[i1].unknownInt1, in, info );
 	};
 	if ( ( info.version >= 0x14000004 ) && ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) ) {
 		NifStream( hasUnknownFloats3, in, info );
@@ -99,17 +101,19 @@ void NiPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 
 	NiRotatingParticlesData::Write( out, link_map, missing_link_stack, info );
 	numVertexColors2 = (unsigned int)(vertexColors.size());
-	for (unsigned int i1 = 0; i1 < particleDescriptions.size(); i1++) {
-		NifStream( particleDescriptions[i1].translation, out, info );
-		if ( info.version <= 0x0A040001 ) {
-			for (unsigned int i3 = 0; i3 < 3; i3++) {
-				NifStream( particleDescriptions[i1].unknownFloats1[i3], out, info );
+	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
+		for (unsigned int i2 = 0; i2 < particleDescriptions.size(); i2++) {
+			NifStream( particleDescriptions[i2].translation, out, info );
+			if ( info.version <= 0x0A040001 ) {
+				for (unsigned int i4 = 0; i4 < 3; i4++) {
+					NifStream( particleDescriptions[i2].unknownFloats1[i4], out, info );
+				};
 			};
+			NifStream( particleDescriptions[i2].unknownFloat1, out, info );
+			NifStream( particleDescriptions[i2].unknownFloat2, out, info );
+			NifStream( particleDescriptions[i2].unknownFloat3, out, info );
+			NifStream( particleDescriptions[i2].unknownInt1, out, info );
 		};
-		NifStream( particleDescriptions[i1].unknownFloat1, out, info );
-		NifStream( particleDescriptions[i1].unknownFloat2, out, info );
-		NifStream( particleDescriptions[i1].unknownFloat3, out, info );
-		NifStream( particleDescriptions[i1].unknownInt1, out, info );
 	};
 	if ( ( info.version >= 0x14000004 ) && ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) ) {
 		NifStream( hasUnknownFloats3, out, info );

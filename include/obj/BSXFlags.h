@@ -27,8 +27,6 @@ typedef Ref<BSXFlags> BSXFlagsRef;
  *         Bit 3 : enable animation
  *         Bit 4 : FlameNodes present
  *         Bit 5 : EditorMarkers present
- *         Bit 6 : ? (Skyrim)
- *         Bit 7 : ? (Skyrim)
  */
 class BSXFlags : public NiIntegerExtraData {
 public:

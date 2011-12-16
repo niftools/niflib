@@ -781,6 +781,20 @@ enum EmitFrom {
 
 ostream & operator<<( ostream & out, EmitFrom const & val );
 
+/*! Skyrim Shader Property Flags 1 */
+enum SkyrimEffectShaderFlags {
+	SFE_TEXTURE_TRANSFORM_U = 1, /*!< Has Texture Transform (U?) */
+	SFE_TEXTURE_TRANSFORM_V = 2, /*!< Has Texture Transform (V?) */
+	SFE_2 = 4, /*!< SFE_2 */
+	SFE_3 = 8, /*!< SFE_3 */
+	SFE_4 = 16, /*!< SFE_4 */
+	SFE_5 = 32, /*!< SFE_5 */
+	SFE_6 = 64, /*!< SFE_6 */
+	SFE_7 = 128, /*!< SFE_7 */
+};
+
+ostream & operator<<( ostream & out, SkyrimEffectShaderFlags const & val );
+
 /*! Shader Property Flags */
 enum BSShaderFlags {
 	SF_SPECULAR = 1, /*!< Enables Specularity */
@@ -819,90 +833,6 @@ enum BSShaderFlags {
 
 ostream & operator<<( ostream & out, BSShaderFlags const & val );
 
-/*! Editor flags for the Body Partitions. */
-enum BSPartFlag {
-	PF_EDITOR_VISIBLE = 1, /*!< Visible in Editor */
-	PF_START_NET_BONESET = 256, /*!< Start a new shared boneset.  It is expected this BoneSet and the following sets in the Skin Partition will have the same bones. */
-};
-
-ostream & operator<<( ostream & out, BSPartFlag const & val );
-
-/*! Skyrim Shader Property Flags 2 */
-enum SkyrimLightingShaderFlags2 {
-	SLSF2_ZBUFFER_WRITE = 1, /*!< Enables writing to the Z-Buffer */
-	SLSF2_1 = 2, /*!< SLSF2_1 */
-	SLSF2_2 = 4, /*!< SLSF2_2 */
-	SLSF2_3 = 8, /*!< SLSF2_3 */
-	SLSF2_DOUBLE_SIDED = 16, /*!< Double-sided rendering */
-	SLSF2_VERTEX_COLOR = 32, /*!< Has Vertex Colors (Maybe, could be Vertex Alpha?) */
-	SLSF2_GLOW_MAP = 64, /*!< Use Glow Map */
-	SLSF2_7 = 128, /*!< SLSF2_7 */
-	SLSF2_8 = 256, /*!< SLSF2_8 */
-	SLSF2_9 = 512, /*!< SLSF2_9 */
-	SLSF2_10 = 1024, /*!< SLSF2_10 */
-	SLSF2_11 = 2048, /*!< SLSF2_11 */
-	SLSF2_12 = 4096, /*!< SLSF2_12 */
-	SLSF2_13 = 8192, /*!< SLSF2_13 */
-	SLSF2_14 = 16384, /*!< SLSF2_14 */
-	SLSF2_15 = 32768, /*!< SLSF2_15 */
-	SLSF2_16 = 65536, /*!< Wireframe (Seems to only work on particles) */
-	SLSF2_17 = 131072, /*!< SLSF2_17 */
-	SLSF2_18 = 262144, /*!< SLSF2_18 */
-	SLSF2_19 = 524288, /*!< SLSF2_19 */
-	SLSF2_20 = 1048576, /*!< SLSF2_20 */
-	SLSF2_21 = 2097152, /*!< SLSF2_21 */
-	SLSF2_22 = 4194304, /*!< SLSF2_22 */
-	SLSF2_23 = 8388608, /*!< SLSF2_23 */
-	SLSF2_MULTI_LAYER = 16777216, /*!< Use Multilayer (inner-layer) Map */
-	SLSF2_SOFT_LIGHT = 33554432, /*!< Use Soft Lighting Map */
-	SLSF2_RIM_LIGHT = 67108864, /*!< Use Rim Lighting Map */
-	SLSF2_BACK_LIGHT = 134217728, /*!< Use Back Lighting Map */
-	SLSF2_28 = 268435456, /*!< SLSF2_28 */
-	SLSF2_VERTEX_ANIMATION = 536870912, /*!< Enables Vertex Animation */
-	SLSF2_30 = 1073741824, /*!< SLSF2_30 */
-	SLSF2_31 = 2147483648, /*!< SLSF2_31 */
-};
-
-ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val );
-
-/*! Skyrim Shader Property Flags 1 */
-enum SkyrimLightingShaderFlags1 {
-	SLSF1_SPECULAR = 1, /*!< Enables Specularity */
-	SLSF1_SKINNED = 2, /*!< Required For Skinned Meshes */
-	SLSF1_2 = 4, /*!< SLSF1_2 */
-	SLSF1_3 = 8, /*!< SLSF1_3 */
-	SLSF1_4 = 16, /*!< SLSF1_4 */
-	SLSF1_5 = 32, /*!< SLSF1_5 */
-	SLSF1_6 = 64, /*!< SLSF1_6 */
-	SLSF1_ENVIRONMENT_MAPPING = 128, /*!< Environment mapping (uses Envmap Scale) */
-	SLSF1_8 = 256, /*!< SLSF1_8 */
-	SLSF1_CAST_SHADOWS = 512, /*!< Can cast shadows */
-	SLSF1_10 = 1024, /*!< SLSF1_10 */
-	SLSF1_11 = 2048, /*!< SLSF1_11 */
-	SLSF1_SPECULAR_MAP = 4096, /*!< Use Specular Map */
-	SLSF1_13 = 8192, /*!< SLSF1_13 */
-	SLSF1_14 = 16384, /*!< SLSF1_14 */
-	SLSF1_15 = 32768, /*!< SLSF1_15 */
-	SLSF1_16 = 65536, /*!< SLSF1_16 */
-	SLSF1_EYE_ENVIRONMENT_MAPPING = 131072, /*!< Eye Environment Mapping (Must use the Eye shader and the model must be skinned) */
-	SLSF1_18 = 262144, /*!< SLSF1_18 */
-	SLSF1_19 = 524288, /*!< SLSF1_19 */
-	SLSF1_20 = 1048576, /*!< SLSF1_20 */
-	SLSF1_21 = 2097152, /*!< SLSF1_21 */
-	SLSF1_22 = 4194304, /*!< SLSF1_22 */
-	SLSF1_23 = 8388608, /*!< SLSF1_23 */
-	SLSF1_24 = 16777216, /*!< SLSF1_24 */
-	SLSF1_25 = 33554432, /*!< SLSF1_25 */
-	SLSF1_26 = 67108864, /*!< SLSF1_26 */
-	SLSF1_27 = 134217728, /*!< SLSF1_27 */
-	SLSF1_28 = 268435456, /*!< SLSF1_28 */
-	SLSF1_29 = 536870912, /*!< SLSF1_29 */
-	SLSF1_30 = 1073741824, /*!< SLSF1_30 */
-	SLSF1_ZBUFFER_TEST = 2147483648, /*!< ZBuffer Test (1=on) */
-};
-
-ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val );
-
 /*! Determines how the data stream is accessed? */
 enum DataStreamAccess {
 	CPU_READ = 1, /*!< CPU Read */
@@ -917,32 +847,88 @@ enum DataStreamAccess {
 ostream & operator<<( ostream & out, DataStreamAccess const & val );
 
 /*! Skyrim Shader Property Flags 2 */
-enum SkyrimEffectShaderFlags2 {
-	SESF2_TEXTURE_TRANSFORM_U = 1, /*!< Has Texture Transform (U?) */
-	SESF2_TEXTURE_TRANSFORM_V = 2, /*!< Has Texture Transform (V?) */
-	SESF2_2 = 4, /*!< SESF2_2 */
-	SESF2_3 = 8, /*!< SESF2_3 */
-	SESF2_4 = 16, /*!< SESF2_4 */
-	SESF2_5 = 32, /*!< SESF2_5 */
-	SESF2_6 = 64, /*!< SESF2_6 */
-	SESF2_7 = 128, /*!< SESF2_7 */
+enum SkyrimLightingShaderFlags2 {
+	SFL2_ZBUFFER_WRITE = 1, /*!< Enables writing to the Z-Buffer */
+	SFL2_1 = 2, /*!< SFL2_1 */
+	SFL2_2 = 4, /*!< SFL2_2 */
+	SFL2_3 = 8, /*!< SFL2_3 */
+	SFL2_DOUBLE_SIDED = 16, /*!< Double-sided rendering */
+	SFL2_VERTEX_COLOR = 32, /*!< Has Vertex Colors (Maybe, could be Vertex Alpha?) */
+	SFL2_GLOW_MAP = 64, /*!< Use Glow Map */
+	SFL2_7 = 128, /*!< SFL2_7 */
+	SFL2_8 = 256, /*!< SFL2_8 */
+	SFL2_9 = 512, /*!< SFL2_9 */
+	SFL2_10 = 1024, /*!< SFL2_10 */
+	SFL2_11 = 2048, /*!< SFL2_11 */
+	SFL2_12 = 4096, /*!< SFL2_12 */
+	SFL2_13 = 8192, /*!< SFL2_13 */
+	SFL2_14 = 16384, /*!< SFL2_14 */
+	SFL2_15 = 32768, /*!< SFL2_15 */
+	SFL2_16 = 65536, /*!< Wireframe (Seems to only work on particles) */
+	SFL2_17 = 131072, /*!< SFL2_17 */
+	SFL2_18 = 262144, /*!< SFL2_18 */
+	SFL2_19 = 524288, /*!< SFL2_19 */
+	SFL2_20 = 1048576, /*!< SFL2_20 */
+	SFL2_21 = 2097152, /*!< SFL2_21 */
+	SFL2_22 = 4194304, /*!< SFL2_22 */
+	SFL2_23 = 8388608, /*!< SFL2_23 */
+	SFL2_MULTI_LAYER = 16777216, /*!< Use Multilayer (inner-layer) Map */
+	SFL2_SOFT_LIGHT = 33554432, /*!< Use Soft Lighting Map */
+	SFL2_RIM_LIGHT = 67108864, /*!< Use Rim Lighting Map */
+	SFL2_BACK_LIGHT = 134217728, /*!< Use Back Lighting Map */
+	SFL2_28 = 268435456, /*!< SFL2_28 */
+	SFL2_VERTEX_ANIMATION = 536870912, /*!< Enables Vertex Animation */
+	SFL2_30 = 1073741824, /*!< SFL2_30 */
+	SFL2_31 = 2147483648, /*!< SFL2_31 */
 };
 
-ostream & operator<<( ostream & out, SkyrimEffectShaderFlags2 const & val );
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val );
 
 /*! Skyrim Shader Property Flags 1 */
-enum SkyrimEffectShaderFlags1 {
-	SESF1_0 = 1, /*!< SESF1_0 */
-	SESF1_1 = 2, /*!< SESF1_1 */
-	SESF1_2 = 4, /*!< SESF1_2 */
-	SESF1_3 = 8, /*!< SESF1_3 */
-	SESF1_DOUBLE_SIDED = 16, /*!< Draw textures double-sided */
-	SESF1_5 = 32, /*!< SESF1_5 */
-	SESF1_6 = 64, /*!< SESF1_6 */
-	SESF1_7 = 128, /*!< SESF1_7 */
+enum SkyrimLightingShaderFlags1 {
+	SFL1_SPECULAR = 1, /*!< Enables Specularity */
+	SFL1_SKINNED = 2, /*!< Required For Skinned Meshes */
+	SFL1_2 = 4, /*!< SFL1_2 */
+	SFL1_3 = 8, /*!< SFL1_3 */
+	SFL1_4 = 16, /*!< SFL1_4 */
+	SFL1_5 = 32, /*!< SFL1_5 */
+	SFL1_6 = 64, /*!< SFL1_6 */
+	SFL1_ENVIRONMENT_MAPPING = 128, /*!< Environment mapping (uses Envmap Scale) */
+	SFL1_8 = 256, /*!< SFL1_8 */
+	SFL1_CAST_SHADOWS = 512, /*!< Can cast shadows */
+	SFL1_10 = 1024, /*!< SFL1_10 */
+	SFL1_11 = 2048, /*!< SFL1_11 */
+	SFL1_SPECULAR_MAP = 4096, /*!< Use Specular Map */
+	SFL1_13 = 8192, /*!< SFL1_13 */
+	SFL1_14 = 16384, /*!< SFL1_14 */
+	SFL1_15 = 32768, /*!< SFL1_15 */
+	SFL1_16 = 65536, /*!< SFL1_16 */
+	SFL1_EYE_ENVIRONMENT_MAPPING = 131072, /*!< Eye Environment Mapping (Must use the Eye shader and the model must be skinned) */
+	SFL1_18 = 262144, /*!< SFL1_18 */
+	SFL1_19 = 524288, /*!< SFL1_19 */
+	SFL1_20 = 1048576, /*!< SFL1_20 */
+	SFL1_21 = 2097152, /*!< SFL1_21 */
+	SFL1_22 = 4194304, /*!< SFL1_22 */
+	SFL1_23 = 8388608, /*!< SFL1_23 */
+	SFL1_24 = 16777216, /*!< SFL1_24 */
+	SFL1_25 = 33554432, /*!< SFL1_25 */
+	SFL1_26 = 67108864, /*!< SFL1_26 */
+	SFL1_27 = 134217728, /*!< SFL1_27 */
+	SFL1_28 = 268435456, /*!< SFL1_28 */
+	SFL1_29 = 536870912, /*!< SFL1_29 */
+	SFL1_30 = 1073741824, /*!< SFL1_30 */
+	SFL1_ZBUFFER_TEST = 2147483648, /*!< ZBuffer Test (1=on) */
 };
 
-ostream & operator<<( ostream & out, SkyrimEffectShaderFlags1 const & val );
+ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val );
+
+/*! Editor flags for the Body Partitions. */
+enum BSPartFlag {
+	PF_EDITOR_VISIBLE = 1, /*!< Visible in Editor */
+	PF_START_NET_BONESET = 256, /*!< Start a new shared boneset.  It is expected this BoneSet and the following sets in the Skin Partition will have the same bones. */
+};
+
+ostream & operator<<( ostream & out, BSPartFlag const & val );
 
 }
 #endif

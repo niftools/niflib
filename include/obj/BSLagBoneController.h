@@ -57,12 +57,12 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! How long it takes to rotate about an actor back to rest position. */
-	float rotationLag;
+	/*! Unknown */
+	float unknownFloat2;
 	/*! Unknown */
 	float unknownFloat3;
-	/*! How far bone will tail an actor. */
-	float length;
+	/*! Unknown */
+	float unknownFloat4;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

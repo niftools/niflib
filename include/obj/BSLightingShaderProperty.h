@@ -21,6 +21,8 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
+class NiExtraData;
+class NiTimeController;
 class BSShaderTextureSet;
 class BSLightingShaderProperty;
 typedef Ref<BSLightingShaderProperty> BSLightingShaderPropertyRef;
@@ -64,15 +66,27 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
-protected:
-	/*! Skyrim Shader Flag field 1 (will use SkyrimLightingShaderFlags1) */
-	unsigned int shaderFlags1;
-	/*! Skyrim Shader Flag field 2 (will use SkyrimLightingShaderFlags2) */
-	unsigned int shaderFlags2;
+public:
+	/*! Unknown */
+	unsigned int shaderType;
+	/*! Object Name */
+	IndexString name;
+	/*! Extra data object index. (The first in a chain) */
+	Ref<NiExtraData > extraData;
+	/*! The number of Extra Data objects referenced through the list. */
+	mutable unsigned int numExtraDataList;
+	/*! List of extra data indices. */
+	vector<Ref<NiExtraData > > extraDataList;
+	/*! Controller object index. (The first in a chain) */
+	Ref<NiTimeController > controller;
+	/*! Unknown. */
+	SkyrimLightingShaderFlags1 shaderFlags1;
+	/*! Unknown. */
+	SkyrimLightingShaderFlags2 shaderFlags2;
 	/*! Offset UVs */
 	TexCoord textureTranslation1;
 	/*! Offset UVs */
-	TexCoord textureRepeat;
+	TexCoord textureTranslation2;
 	/*! Texture Set */
 	Ref<BSShaderTextureSet > textureSet;
 	/*! Glow color and alpha */
@@ -82,7 +96,7 @@ protected:
 	/*! Unknown, always 3? */
 	unsigned int unknownInt7;
 	/*! The material transparency (1=non-transparent). */
-	float alpha;
+	float transparency;
 	/*! Unknown */
 	float unknownFloat2;
 	/*! The material's glossiness. (0-999) */
