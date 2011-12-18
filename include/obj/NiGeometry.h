@@ -173,7 +173,7 @@ public:
    NIFLIB_API bool HasShader() const;
 
 	//--END CUSTOM CODE--//
-protected:
+public:
 	/*! Data index (NiTriShapeData/NiTriStripData). */
 	Ref<NiGeometryData > data;
 	/*! Skin instance index. */

@@ -21,8 +21,6 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiExtraData;
-class NiTimeController;
 class BSShaderTextureSet;
 class BSLightingShaderProperty;
 typedef Ref<BSLightingShaderProperty> BSLightingShaderPropertyRef;
@@ -69,16 +67,6 @@ public:
 public:
 	/*! Unknown */
 	unsigned int shaderType;
-	/*! Object Name */
-	IndexString name;
-	/*! Extra data object index. (The first in a chain) */
-	Ref<NiExtraData > extraData;
-	/*! The number of Extra Data objects referenced through the list. */
-	mutable unsigned int numExtraDataList;
-	/*! List of extra data indices. */
-	vector<Ref<NiExtraData > > extraDataList;
-	/*! Controller object index. (The first in a chain) */
-	Ref<NiTimeController > controller;
 	/*! Unknown. */
 	SkyrimLightingShaderFlags1 shaderFlags1;
 	/*! Unknown. */
