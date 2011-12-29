@@ -161,8 +161,11 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	if ( ((info.version >= 0x0A000100) && (!((info.version >= 0x14020007) && (info.userVersion >= 11)))) ) {
 		NifStream( numUvSets, out, info );
 	};
-	if ( ((info.version >= 0x14020007) && (info.userVersion >= 11)) ) {
+	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
 		NifStream( numUvSets, out, info );
+	};
+	if ( ((info.version >= 0x14020007) && (info.userVersion == 12)) ) {
+		NifStream( (unsigned short)(numUvSets | numUvMask), out, info );
 	};
 	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
 		NifStream( unknownInt2, out, info );

@@ -256,7 +256,7 @@ public:
    NIFLIB_API void SetTangents( const vector<Vector3 >& value );
 
 	//--END CUSTOM CODE--//
-protected:
+public:
 	/*! Unknown identifier. Always 0. */
 	int unknownInt;
 	/*! Number of vertices. For NiPSysData this is max particles. */
@@ -274,6 +274,7 @@ protected:
 	 * lower byte.
 	 */
 	mutable unsigned short numUvSets;
+	mutable unsigned short numUvMask;
 	/*! Unknown, seen in Skyrim. */
 	unsigned int unknownInt2;
 	/*!

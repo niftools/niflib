@@ -59,7 +59,7 @@ public:
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
-protected:
+public:
 	/*! Unknown */
 	mutable int numSegTriangles;
 	/*! Unknown */

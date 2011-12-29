@@ -64,7 +64,7 @@ NifInfo Header::Read( istream& in ) {
 	if ( info.version >= 0x0303000D ) {
 		NifStream( numBlocks, in, info );
 	};
-	if ( ( info.version >= 0x0A010000 ) && ( ((info.userVersion >= 10) || ((info.userVersion == 1) && (info.version != 0x0A020000))) ) ) {
+	if ( ( info.version >= 0x0A010000 ) && ( ((userVersion >= 10) || ((userVersion == 1) && (info.version != 0x0A020000))) ) ) {
 		NifStream( userVersion2, in, info );
 	};
 	if ( info.version >= 0x1E000002 ) {
@@ -78,7 +78,7 @@ NifInfo Header::Read( istream& in ) {
 		NifStream( exportInfo.exportInfo1, in, info );
 		NifStream( exportInfo.exportInfo2, in, info );
 	};
-	if ( ( info.version >= 0x0A010000 ) && ( ((info.userVersion >= 10) || ((info.userVersion == 1) && (info.version != 0x0A020000))) ) ) {
+	if ( ( info.version >= 0x0A010000 ) && ( ((userVersion >= 10) || ((userVersion == 1) && (info.version != 0x0A020000))) ) ) {
 		if ( info.version <= 0x0A000102 ) {
 			NifStream( exportInfo.unknown, in, info );
 		};
@@ -151,7 +151,7 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 	if ( info.version >= 0x0303000D ) {
 		NifStream( numBlocks, out, info );
 	};
-	if ( ( info.version >= 0x0A010000 ) && ( ((info.userVersion >= 10) || ((info.userVersion == 1) && (info.version != 0x0A020000))) ) ) {
+	if ( ( info.version >= 0x0A010000 ) && ( ((userVersion >= 10) || ((userVersion == 1) && (info.version != 0x0A020000))) ) ) {
 		NifStream( userVersion2, out, info );
 	};
 	if ( info.version >= 0x1E000002 ) {
@@ -165,7 +165,7 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 		NifStream( exportInfo.exportInfo1, out, info );
 		NifStream( exportInfo.exportInfo2, out, info );
 	};
-	if ( ( info.version >= 0x0A010000 ) && ( ((info.userVersion >= 10) || ((info.userVersion == 1) && (info.version != 0x0A020000))) ) ) {
+	if ( ( info.version >= 0x0A010000 ) && ( ((userVersion >= 10) || ((userVersion == 1) && (info.version != 0x0A020000))) ) ) {
 		if ( info.version <= 0x0A000102 ) {
 			NifStream( exportInfo.unknown, out, info );
 		};

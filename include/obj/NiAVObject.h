@@ -266,7 +266,7 @@ protected:
 	NiNode * parent;
 
 	//--END CUSTOM CODE--//
-protected:
+public:
 	/*! Some flags; commonly 0x000C or 0x000A. */
 	unsigned short flags;
 	/*! Unknown Flag */
