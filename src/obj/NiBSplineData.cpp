@@ -190,7 +190,7 @@ void NiBSplineData::SetShortControlPoints( vector<short> value )
 	this->numShortControlPoints = value.size();
 
 	for(int i = 0; i < value.size(); i++) {
-		this->shortControlPoints.push_back(value);
+		this->shortControlPoints.push_back(value[i]);
 	}
 }
 
