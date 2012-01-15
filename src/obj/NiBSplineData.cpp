@@ -157,7 +157,6 @@ void NiBSplineData::SetFloatControlPoints( vector<float> value )
 	}
 }
 
-
 void NiBSplineData::AppendFloatControlPoints( vector<float> value )
 {
 	this->numFloatControlPoints += value.size();
@@ -167,6 +166,10 @@ void NiBSplineData::AppendFloatControlPoints( vector<float> value )
 	}
 }
 
+int NiBSplineData::GetNumFloatControlPoints()
+{
+	return this->numFloatControlPoints;
+}
 
 vector<float> NiBSplineData::GetFloatControlPointRange(int offset, int count) const
 {
@@ -202,6 +205,13 @@ void NiBSplineData::AppendShortControlPoints( vector<short> value )
 		this->shortControlPoints.push_back(value[i]);
 	}
 }
+
+
+int NiBSplineData::GetNumShortControlPoints()
+{
+	return this->numShortControlPoints;
+}
+
 
 vector<short > NiBSplineData::GetShortControlPointRange(int offset, int count) const
 {

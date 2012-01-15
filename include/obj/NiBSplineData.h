@@ -73,6 +73,12 @@ public:
 	NIFLIB_API void AppendFloatControlPoints(vector<float> value);
 
 	/*!
+	* Get the number of float control points stored in the data
+	* \return The number of float control points
+	*/
+	NIFLIB_API int GetNumFloatControlPoints();
+
+	/*!
 	 * Get Range of signed shorts representing the data scaled by SHRT_MAX.
 	 * \param[in] offset The start of the range.
 	 * \param[in] count The number of control points to get.
@@ -97,6 +103,12 @@ public:
 	* \param[in] The short points to add at the end of the collection
 	*/
 	NIFLIB_API void AppendShortControlPoints(vector<short> value);
+
+	/*!
+	* Get the number of short control points stored in the data
+	* \return The number of short control points
+	*/
+	NIFLIB_API int GetNumShortControlPoints();
 
 	/*!
 	 * Get Range of signed shorts representing the data scaled by SHRT_MAX.
