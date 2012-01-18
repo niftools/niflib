@@ -791,7 +791,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 			shapes[shape_num]->NormalizeSkinWeights();
 
 			if ( max_bones_per_partition > 0 ) {
-				shapes[shape_num]->GenHardwareSkinInfo( max_bones_per_partition );
+				shapes[shape_num]->GenHardwareSkinInfo( max_bones_per_partition, 4, stripify);
 			}
 
 			//NiSkinInstanceRef skinInst = shapes[shape_num]->GetSkinInstance();
