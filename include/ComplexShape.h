@@ -177,7 +177,8 @@ public:
 		Matrix44 & transform,
 		int max_bones_per_partition = 4,
 		bool stripify = false,
-		bool tangent_space = false
+		bool tangent_space = false,
+		float min_vertex_weight = 0.001f
 	) const;
 
 	/* 

@@ -526,7 +526,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 	//Done Merging
 }
 
-Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space ) const {
+Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
@@ -744,7 +744,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 			SkinWeight sk;
 			for ( map<NiNodeRef, float>::iterator wt = cv->weights.begin(); wt != cv->weights.end(); ++wt ) {
 				//Only record influences that make a noticable contribution
-				if ( wt->second > 0.1f ) {
+				if ( wt->second > min_vertex_weight ) {
 					sk.index = vert_index;
 					sk.weight = wt->second;
 					if ( shapeWeights.find( wt->first ) == shapeWeights.end() ) {
