@@ -161,7 +161,7 @@ void NiBSplineData::AppendFloatControlPoints( vector<float> value )
 {
 	this->numFloatControlPoints += value.size();
 
-	for(int i = 0; i < this->floatControlPoints.size(); i++) {
+	for(int i = 0; i < value.size(); i++) {
 		this->floatControlPoints.push_back(value[i]);
 	}
 }
