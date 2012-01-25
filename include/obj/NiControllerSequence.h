@@ -114,6 +114,15 @@ public:
 	 */
 	NIFLIB_API void AddInterpolator( NiSingleInterpController * obj, byte priority = 0 );
 
+	/*!
+	 * Attatches an interpolator to this KF file for a KF file of version greater than 10.2.0.0.  Versions below this use controllers.
+	 * \param[in] obj A reference to the new controller which has an interpolator to attach.
+	 * \param[in] priority Used only in Oblivion to set the priority of one controller over another when the two are merged.
+	 * \param[in] include_string_pallete Indicates if the resulting ControllerLinks will hold reference to the NiStringPallete in the NiControllerSequence
+	 * \sa NiControllerSequence::ClearChildren, NiControllerSequence::AddController
+	 */
+	NIFLIB_API void AddInterpolator( NiSingleInterpController * obj, byte priority , bool include_string_pallete );
+
 	/*! 
 	 * Removes all controllers and interpolators from this Kf file root object.
 	 * \sa NiControllerSequence::AddController, NiControllerSequence::AddInterpolator
