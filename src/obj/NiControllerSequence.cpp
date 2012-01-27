@@ -433,6 +433,53 @@ void NiControllerSequence::AddInterpolator( NiSingleInterpController * obj, byte
 }
 
 
+void NiControllerSequence::AddGenericInterpolator( NiInterpolator * interpolator, NiObjectNET* target, string controller_type_name, byte priority /*= 0*/, bool include_string_pallete /*= true*/ ) {
+	//Make sure the parameters aren't null
+
+	if(interpolator == NULL) {
+		throw runtime_error("Attempted to add a null interpolator to the controller sequence");
+	}
+
+	if(target == NULL) {
+		throw runtime_error("Attempted to add a null target to the controller sequence");
+	}
+
+	//Make a new ControllerLink and fill out necessary data
+	ControllerLink cl;
+
+	NiPropertyRef prop = DynamicCast<NiProperty>(target);
+
+	cl.interpolator = interpolator;
+	cl.priority = priority;
+	if(include_string_pallete == true) {
+		//If there are existing ControllerLinks, use the same StringPalette they're using
+		if ( stringPalette == NULL ) {
+			stringPalette = new NiStringPalette;
+		}
+
+		cl.stringPalette = stringPalette;
+		cl.nodeNameOffset = stringPalette->AddSubStr( target->GetName() );
+
+		if ( prop != NULL ) {
+			cl.propertyTypeOffset = stringPalette->AddSubStr( prop->GetType().GetTypeName() );
+		}
+
+		cl.controllerTypeOffset = stringPalette->AddSubStr( controller_type_name );
+
+	} else {
+		cl.stringPalette = NULL;
+		cl.nodeName = target->GetName();
+		if(prop != NULL) {
+			cl.propertyType = prop->GetType().GetTypeName();
+		}
+		cl.controllerType = controller_type_name;
+	}
+
+	//Add finished ControllerLink to list
+	controlledBlocks.push_back( cl );
+}
+
+
 
 void NiControllerSequence::ClearControllerData() {
 	
