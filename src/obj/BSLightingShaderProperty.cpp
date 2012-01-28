@@ -263,4 +263,192 @@ std::list<NiObject *> BSLightingShaderProperty::GetPtrs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
+unsigned int BSLightingShaderProperty::getShaderFlags1() {
+	return shaderFlags1;
+}
+
+void BSLightingShaderProperty::setShaderFlags1( unsigned int value ) {
+	shaderFlags1 = value;
+}
+
+unsigned int BSLightingShaderProperty::getShaderFlags2() {
+	return shaderFlags2;
+}
+
+void BSLightingShaderProperty::setShaderFlags2( unsigned int value ) {
+	shaderFlags2 = value;
+}
+
+TexCoord BSLightingShaderProperty::getTextureTranslation1() {
+	return textureTranslation1;
+}
+
+void BSLightingShaderProperty::setTextureTranslation1( TexCoord value ) {
+	textureTranslation1 = value;
+}
+
+TexCoord BSLightingShaderProperty::getTextureRepeat() {
+	return textureRepeat;
+}
+
+void BSLightingShaderProperty::setTextureRepeat( TexCoord value ) {
+	textureRepeat = value;
+}
+
+Ref<BSShaderTextureSet > BSLightingShaderProperty::getTextureSet() {
+	return textureSet;
+}
+
+void BSLightingShaderProperty::setTextureSet( BSShaderTextureSet * value ) {
+	textureSet = value;
+}
+
+Color3 BSLightingShaderProperty::getEmissiveColor() {
+	return emissiveColor;
+}
+
+void BSLightingShaderProperty::setEmissiveColor( Color3 value ) {
+	emissiveColor = value;
+}
+
+float BSLightingShaderProperty::getEmissiveSaturation() {
+	return emissiveSaturation;
+}
+
+void BSLightingShaderProperty::setEmissiveSaturation( float value ) {
+	emissiveSaturation = value;
+}
+
+unsigned int BSLightingShaderProperty::getUnkownInt7() {
+	return unknownInt7;
+}
+
+void BSLightingShaderProperty::setUnknownInt7( unsigned int value ) {
+	unknownInt7 = value;
+}
+
+float BSLightingShaderProperty::getAlpha() {
+	return alpha;
+}
+
+void BSLightingShaderProperty::setAlpha( float value ) {
+	alpha = value;
+}
+
+float BSLightingShaderProperty::getUnknownFloat2() {
+	return unknownFloat2;
+}
+
+
+void BSLightingShaderProperty::setUnknownFloat2( float value ) {
+	unknownFloat2 = value;
+}
+
+
+float BSLightingShaderProperty::getGlossiness() {
+	return glossiness;
+}
+
+void BSLightingShaderProperty::setGlossiness( float value ) {
+	glossiness = value;
+}
+
+Color3 BSLightingShaderProperty::getSpecularColor() {
+	return specularColor;
+}
+
+void BSLightingShaderProperty::setSpecularColor( Color3 value ) {
+	specularColor = value;
+}
+
+float BSLightingShaderProperty::getSpecularStrength() {
+	return specularStrength;
+}
+
+void BSLightingShaderProperty::setSpecularStrength( float value ) {
+	specularStrength = value;
+}
+
+float BSLightingShaderProperty::getLightningEffect1() {
+	return lightingEffect1;
+}
+
+void BSLightingShaderProperty::setLightningEffect1( float value ) {
+	lightingEffect1 = value;
+}
+
+float BSLightingShaderProperty::getLightningEffect2() {
+	return lightingEffect2;
+}
+
+void BSLightingShaderProperty::setLightningEffect2( float value ) {
+	lightingEffect2 = value;
+}
+
+float BSLightingShaderProperty::getEnvironmentMapStrength() {
+	return environmentMapStrength;
+}
+
+void BSLightingShaderProperty::setEnvironmentMapStrength( float value ) {
+	environmentMapStrength = value;
+}
+
+array<2, float> BSLightingShaderProperty::getUnknownFloatSet3() {
+	return unknownFloatSet3;
+}
+
+void BSLightingShaderProperty::setUnknownFloatSet3( array<2, float> value ) {
+	unknownFloatSet3 = value;
+}
+
+float BSLightingShaderProperty::getUnknownFloat9() {
+	return unknownFloat9;
+}
+
+void BSLightingShaderProperty::setUnknownFloat9( float value ) {
+	unknownFloat9 = value;
+}
+
+Color4 BSLightingShaderProperty::getUnknownColor2() {
+	return unknownColor2;
+}
+
+void BSLightingShaderProperty::setUnknownColor2( Color4 value ) {
+	unknownColor2 = value;
+}
+
+Vector4 BSLightingShaderProperty::getUnknownFloatSet5() {
+	return unknownFloatSet5;
+}
+
+void BSLightingShaderProperty::setUnknownFloatSet5( Vector4 value ) {
+	unknownFloatSet5 = value;
+}
+
+float BSLightingShaderProperty::getEyeCubemapScale() {
+	return eyeCubemapScale;
+}
+
+void BSLightingShaderProperty::setEyeCubemapScale( float value ) {
+	eyeCubemapScale = value;
+}
+
+Vector3 BSLightingShaderProperty::getLeftEyeReflectionCenter() {
+	return leftEyeReflectionCenter;
+}
+
+void BSLightingShaderProperty::setLeftEyeReflectionCenter( Vector3 value ) {
+	leftEyeReflectionCenter = value;
+}
+
+Vector3 BSLightingShaderProperty::getRightEyeReflectionCenter() {
+	return rightEyeReflectionCenter;
+}
+
+void BSLightingShaderProperty::setRightEyeReflectionCenter( Vector3 value ) {
+	rightEyeReflectionCenter = value;
+}
+
 //--END CUSTOM CODE--//
+
+
