@@ -226,8 +226,19 @@ void ComplexShape::Merge( NiAVObject * root ) {
 	unsigned int prop_group_index = 0;
 	for ( vector<NiTriBasedGeomRef>::iterator geom = shapes.begin(); geom != shapes.end(); ++geom ) {
 	
+		vector<NiPropertyRef> current_property_group =  (*geom)->GetProperties();
+
+		//Special code to handle the Bethesda Skyrim properties
+		array<2, NiPropertyRef> bs_properties = (*geom)->getBsProperties();
+		if(bs_properties[0] != NULL) {
+			current_property_group.push_back(bs_properties[0]);
+		}
+		if(bs_properties[1] != NULL) {
+			current_property_group.push_back(bs_properties[1]);
+		}
+	
 		//Get properties of this shape
-		propGroups[prop_group_index] = (*geom)->GetProperties();
+		propGroups[prop_group_index] = current_property_group;
 		
 		
 		NiTriBasedGeomDataRef geomData = DynamicCast<NiTriBasedGeomData>( (*geom)->GetData() );
