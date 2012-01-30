@@ -633,5 +633,14 @@ bool NiGeometry::HasShader() const {
    return hasShader;
 }
 
+array<2,Ref<NiProperty > > Niflib::NiGeometry::getBsProperties() {
+	return this->bsProperties;
+}
+
+void Niflib::NiGeometry::setBsProperties( array<2, Ref<NiProperty>> value ) {
+	this->bsProperties = value;
+}
 
 //--END CUSTOM CODE--//
+
+

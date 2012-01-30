@@ -114,6 +114,21 @@ unsigned int GetNifVersion( string const & file_name ) {
 	return info.version;
 }
 
+
+NifInfo ReadHeaderInfo( string const & file_name ) {
+	//--Open File--//
+	ifstream in( file_name.c_str(), ifstream::binary );
+
+	//--Read Header Info--//
+
+	Header nif_header;
+	NifInfo info;
+	info = nif_header.Read(in);
+
+	return info;
+}
+
+
 vector<NiObjectRef> ReadNifList( string const & file_name, NifInfo * info ) {
 
 	//--Open File--//
