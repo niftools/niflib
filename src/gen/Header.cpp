@@ -294,4 +294,31 @@ string Header::asString( bool verbose ) const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+HeaderString Header::getHeaderString() {
+	return headerString;
+}
+
+unsigned int Header::getVersion() {
+	return version;
+}
+
+EndianType Header::getEndianType() {
+	return endianType;
+}
+
+unsigned int Header::getUserVersion() {
+	return userVersion;
+}
+
+unsigned int Header::getUserVersion2() {
+	return userVersion2;
+}
+
+vector<string> Header::getBlockTypes() {
+	return blockTypes;
+}
+
 //--END CUSTOM CODE--//
+
+

@@ -78,6 +78,31 @@ struct Header {
 	NIFLIB_HIDDEN void Write( ostream& out, const NifInfo & info = NifInfo() ) const;
 	NIFLIB_HIDDEN string asString( bool verbose = false ) const;
 	//--BEGIN MISC CUSTOM CODE--//
+
+	// HeaderString
+	// \return The header string
+	NIFLIB_API HeaderString getHeaderString();
+
+	// Nif Version
+	// \return The current nif version
+	NIFLIB_API unsigned int getVersion();
+
+	// Endian type
+	// \return The endian type. Intel machines use small endian
+	NIFLIB_API EndianType getEndianType();
+
+	// User version
+	// \return The user version of this file which refers to the company/game that used the netimmerse/gamebryo engine
+	NIFLIB_API unsigned int getUserVersion();
+
+	// User version2
+	// \return The user version of this file which refers to the company/game that used the netimmerse/gamebryo engine
+	NIFLIB_API unsigned int getUserVersion2();
+
+	// Block type
+	// \return A vector containing all the names of the block types in the nif file. Useful for determing what does the nif contain
+	NIFLIB_API vector<string> getBlockTypes();
+
 	//--END CUSTOM CODE--//
 };
 
