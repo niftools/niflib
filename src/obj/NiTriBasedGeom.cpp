@@ -131,6 +131,10 @@ void NiTriBasedGeom::GenHardwareSkinInfo( int max_bones_per_partition /*= 4*/, i
    }
 }
 
+void NiTriBasedGeom::GenHardwareDismemberSkinInfo( vector< pair <BodyPartList, vector < int> > > dismember_groups ) {
+
+}
+
 void NiTriBasedGeom::UpdateTangentSpace(int method) {
 
 	NiTriBasedGeomDataRef niTriGeomData = DynamicCast<NiTriBasedGeomData>(this->data);
@@ -332,3 +336,5 @@ void NiTriBasedGeom::UpdateTangentSpace(int method) {
 }
 
 //--END CUSTOM CODE--//
+
+

@@ -7,6 +7,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "Ref.h"
 #include "nif_math.h"
 #include "nif_basic_types.h"
+#include "gen/BodyPartList.h"
 #include <vector>
 
 namespace Niflib {
@@ -292,7 +293,20 @@ public:
 	 */
 	NIFLIB_API vector< Ref<NiNode> > GetSkinInfluences() const;
 
+	/*
+	 * Gets the dismember groups from the ComplexShape. These groups split the mesh into submeshes and in games like Fallout3 are responsibile for how a body ca be "dismembered"
+	 * \return The dismember groups
+	 */
+	NIFLIB_API vector<pair<BodyPartList, vector<int>>> GetDismemberGroups() const;
+
+	/*
+	 * Sets the dismember groups from the ComplexShape. These groups split the mesh into submeshes and in games like Fallout3 are responsibile for how a body ca be "dismembered"
+	 * \param[in] The new dismember groups
+	 */
+	NIFLIB_API void SetDismemberGroups( vector< pair< BodyPartList, vector<int> > > value );
+
 private:
+	vector<pair<BodyPartList, vector<int>>> dismemberGroups;
 	vector<WeightedVertex> vertices;
 	vector<Color4> colors;
 	vector<Vector3> normals;

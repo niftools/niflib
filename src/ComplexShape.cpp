@@ -137,6 +137,13 @@ void ComplexShape::SetSkinInfluences( const vector< Ref<NiNode> > & n ) {
 	skinInfluences = n;
 }
 
+vector<pair<BodyPartList, vector<int>>> ComplexShape::GetDismemberGroups() const {
+	return dismemberGroups;
+}
+
+void ComplexShape::SetDismemberGroups( vector< pair< BodyPartList, vector<int> > > value ) {
+	dismemberGroups = value;
+}
 
 string ComplexShape::GetName() const {
 	return name;
