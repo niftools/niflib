@@ -137,12 +137,20 @@ void ComplexShape::SetSkinInfluences( const vector< Ref<NiNode> > & n ) {
 	skinInfluences = n;
 }
 
-vector<pair<BodyPartList, vector<int>>> ComplexShape::GetDismemberGroups() const {
-	return dismemberGroups;
+vector<int> ComplexShape::GetDismemberPartitionsFaces() const {
+	return dismemberPartitionsFaces;
 }
 
-void ComplexShape::SetDismemberGroups( vector< pair< BodyPartList, vector<int> > > value ) {
-	dismemberGroups = value;
+void ComplexShape::SetDismemberPartitionsFaces( vector<int> value ) {
+	dismemberPartitionsFaces = value;
+}
+
+vector<BodyPartList> ComplexShape::GetDismemberPartitionsBodyParts() const {
+	return dismemberPartitionsBodyParts;
+}
+
+void ComplexShape::SetDismemberPartitionsBodyParts( vector<BodyPartList> value ) {
+	dismemberPartitionsBodyParts = value;
 }
 
 string ComplexShape::GetName() const {
@@ -186,6 +194,8 @@ void ComplexShape::Clear() {
 	propGroups.clear();
 	skinInfluences.clear();
 	name.clear();
+	dismemberPartitionsBodyParts.clear();
+	dismemberPartitionsFaces.clear();
 }
 
 void ComplexShape::Merge( NiAVObject * root ) {
@@ -544,13 +554,19 @@ void ComplexShape::Merge( NiAVObject * root ) {
 	//Done Merging
 }
 
-Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight ) const {
+Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight, bool use_dismember_partitions ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
 		throw runtime_error ("A parent is necessary to split a complex shape.");
 	}
 
+	if( use_dismember_partitions == true ) {
+		if(dismemberPartitionsFaces.size() != faces.size()) {
+			throw runtime_error ("The number of faces mapped to skin partitions is different from the actual face count.");
+		}
+	}
+	
 	//There will be one NiTriShape per property group
 	//with a minimum of 1
 	unsigned int num_shapes = (unsigned int)(propGroups.size());
@@ -595,7 +611,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 
 	parent->AddChild( root );
 
-	//Set transfrm of root
+	//Set transform of root
 	root->SetLocalTransform( transform );
 
 	//Create NiTriShapeData and fill it out with all data that is relevant
@@ -617,6 +633,12 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 
 		//List of triangles for the final shape to use
 		vector<Triangle> shapeTriangles;
+
+		//a vector that holds in what dismember groups or skin partition does each face belong
+		vector<BodyPartList> current_dismember_partitions;
+
+		//create a map betweem the faces and the dismember groups
+		vector<int> current_dismember_partitions_faces;
 
 		//Loop through all faces, and all points on each face
 		//to set the vertices in the CompoundVertex list
@@ -686,19 +708,64 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 				//Next Point
 			}
 
-			//Starting from vertex 0, create a fan of triangles to fill
-			//in non-triangle polygons
-			Triangle new_face;
-			for ( unsigned int i = 0; i < shapeFacePoints.size() - 2; ++i ) {
-				new_face[0] = shapeFacePoints[0];
-				new_face[1] = shapeFacePoints[i+1];
-				new_face[2] = shapeFacePoints[i+2];
+			if(use_dismember_partitions == false) {
+				//Starting from vertex 0, create a fan of triangles to fill
+				//in non-triangle polygons
+				Triangle new_face;
+				for ( unsigned int i = 0; i < shapeFacePoints.size() - 2; ++i ) {
+					new_face[0] = shapeFacePoints[0];
+					new_face[1] = shapeFacePoints[i+1];
+					new_face[2] = shapeFacePoints[i+2];
 
-				//Push the face into the face list
-				shapeTriangles.push_back(new_face);
+					//Push the face into the face list
+					shapeTriangles.push_back(new_face);
+				}
+
+				//Next Face
+			} else {
+				//Starting from vertex 0, create a fan of triangles to fill
+				//in non-triangle polygons
+				Triangle new_face;
+				for ( unsigned int i = 0; i < shapeFacePoints.size() - 2; ++i ) {
+					new_face[0] = shapeFacePoints[0];
+					new_face[1] = shapeFacePoints[i+1];
+					new_face[2] = shapeFacePoints[i+2];
+
+					//Push the face into the face list
+					shapeTriangles.push_back(new_face);
+
+					//all the resulting triangles belong in the the same dismember partition or better said skin partition
+					current_dismember_partitions_faces.push_back(dismemberPartitionsFaces[i]);
+				}
+			}			
+		}
+
+		//Clean up the dismember skin partitions
+		//if no face points to a certain dismember partition then that dismember partition must be removed
+		if(use_dismember_partitions == true) {
+			vector<bool> used_dismember_groups;
+			for(int x = 0; x < current_dismember_partitions.size(); x++) {
+				used_dismember_groups.push_back(false);
+			}
+			for(int x = 0; x < current_dismember_partitions_faces.size(); x++) {
+				if(used_dismember_groups[current_dismember_partitions_faces[x]] == false) {
+					used_dismember_groups[current_dismember_partitions_faces[x]] = true;
+				}	
 			}
 
-			//Next Face
+			vector<BodyPartList> cleaned_up_dismember_partitions;
+			for(int x = 0; x < current_dismember_partitions.size(); x++) {
+				if (used_dismember_groups[x] == false) {
+					for(int y = 0; y < current_dismember_partitions_faces.size(); y++) {
+						if(current_dismember_partitions_faces[y] > x) {
+							current_dismember_partitions_faces[y]--;
+						}
+					}
+				} else {
+					cleaned_up_dismember_partitions.push_back(current_dismember_partitions[x]);
+				} 
+			}
+			current_dismember_partitions = cleaned_up_dismember_partitions;
 		}
 
 		//Attatch properties if any
@@ -709,7 +776,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		}
 
 		//--Set Shape Data--//
-
+		
 		//lists to hold data
 		vector<Vector3> shapeVerts( compVerts.size() );
 		vector<Vector3> shapeNorms( compVerts.size() );
@@ -719,7 +786,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		map<NiNodeRef, vector<SkinWeight> > shapeWeights;
 
 		//Search for a NiTexturingProperty to build list of
-		//texture cooridinate sets to create
+		//texture coordinates sets to create
 		NiPropertyRef niProp = shapes[shape_num]->GetPropertyByType( NiTexturingProperty::TYPE );
 		NiTexturingPropertyRef niTexProp;
 		if ( niProp != NULL ) {
@@ -800,7 +867,12 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 				shapeInfluences.push_back( inf->first );
 			}
 
-			shapes[shape_num]->BindSkin( shapeInfluences );
+			if(use_dismember_partitions == false) {
+				shapes[shape_num]->BindSkin( shapeInfluences );
+			} else {
+				shapes[shape_num]->BindSkinWith( shapeInfluences, BSDismemberSkinInstance::Create );
+			}
+			
 
 			for ( unsigned int inf = 0; inf < shapeInfluences.size(); ++inf ) {
 				shapes[shape_num]->SetBoneWeights( inf, shapeWeights[ shapeInfluences[inf] ] );
@@ -808,7 +880,17 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 
 			shapes[shape_num]->NormalizeSkinWeights();
 
-			if ( max_bones_per_partition > 0 ) {
+			if(use_dismember_partitions == true ) {
+				int* face_map = new int[current_dismember_partitions_faces.size()];
+				for(int x = 0; x < current_dismember_partitions_faces.size(); x++) {
+					face_map[x] = current_dismember_partitions_faces[x];
+				}
+				shapes[ shape_num]->GenHardwareSkinInfo( max_bones_per_partition, 4, stripify, face_map);
+				delete[] face_map;
+
+				BSDismemberSkinInstanceRef dismember_skin = DynamicCast<BSDismemberSkinInstance>(shapes[ shape_num]->GetSkinInstance());
+				dismember_skin->SetPartitions(current_dismember_partitions);
+			} else if ( max_bones_per_partition > 0 ) {
 				shapes[shape_num]->GenHardwareSkinInfo( max_bones_per_partition, 4, stripify);
 			}
 

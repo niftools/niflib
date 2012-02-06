@@ -5,6 +5,7 @@ All rights reserved.  Please see niflib.h for license. */
 #define _COMPLEX_SHAPE_H_
 
 #include "Ref.h"
+#include "obj/BSDismemberSkinInstance.h"
 #include "nif_math.h"
 #include "nif_basic_types.h"
 #include "gen/BodyPartList.h"
@@ -19,6 +20,7 @@ class NiProperty;
 class NiNode;
 class NiAVObject;
 class NiTriBasedGeom;
+class BSDismemberSkinInstance;
 
 /*! Marks empty data indices */
 const unsigned int CS_NO_INDEX = 0xFFFFFFFF;
@@ -171,7 +173,9 @@ public:
 	 * \param stripify Whether or not to generate efficient triangle strips.
 	 * \param tangent_space Whether or not to generate Oblivion tangent space
 	 * information.
-	 * \return A referene to the root NiAVObject that was created.
+	 * \param min_vertex_weight Remove vertex weights bellow a given value
+	 * \param use_dismember_partitions Uses BSDismemberSkinInstance with custom partitions for dismember
+	 * \return A reference to the root NiAVObject that was created.
 	 */
 	NIFLIB_API Ref<NiAVObject> Split( 
 		NiNode * parent,
@@ -179,7 +183,8 @@ public:
 		int max_bones_per_partition = 4,
 		bool stripify = false,
 		bool tangent_space = false,
-		float min_vertex_weight = 0.001f
+		float min_vertex_weight = 0.001f,
+		bool use_dismember_partitions = false
 	) const;
 
 	/* 
@@ -294,19 +299,32 @@ public:
 	NIFLIB_API vector< Ref<NiNode> > GetSkinInfluences() const;
 
 	/*
-	 * Gets the dismember groups from the ComplexShape. These groups split the mesh into submeshes and in games like Fallout3 are responsibile for how a body ca be "dismembered"
-	 * \return The dismember groups
+	 * Gets the association between the faces in the complex shape and the corresponding body parts
+	 * \return A vector depicting the association
 	 */
-	NIFLIB_API vector<pair<BodyPartList, vector<int>>> GetDismemberGroups() const;
+	NIFLIB_API vector<int> GetDismemberPartitionsFaces() const;
 
 	/*
-	 * Sets the dismember groups from the ComplexShape. These groups split the mesh into submeshes and in games like Fallout3 are responsibile for how a body ca be "dismembered"
-	 * \param[in] The new dismember groups
+	 * Sets the association between the body parts and the faces in the complex shape
+	 * \param[in] The new association meaning that the face at the position of the index corresponds to the body part group given by the value at the position of the index of the face
 	 */
-	NIFLIB_API void SetDismemberGroups( vector< pair< BodyPartList, vector<int> > > value );
+	NIFLIB_API void SetDismemberPartitionsFaces( vector<int> value );
+
+	/*
+	 * Gets a list of the dismember groups
+	 * \return The list of the dismember groups
+	 */
+	NIFLIB_API vector<BodyPartList> GetDismemberPartitionsBodyParts() const;
+
+	/*
+	 * Gets the association between the faces in the complex shape and the corresponding body parts
+	 * \param[in] A list of the dismember groups;
+	 */
+	NIFLIB_API void SetDismemberPartitionsBodyParts( vector<BodyPartList> value);
 
 private:
-	vector<pair<BodyPartList, vector<int>>> dismemberGroups;
+	vector<BodyPartList> dismemberPartitionsBodyParts;
+	vector<int> dismemberPartitionsFaces;
 	vector<WeightedVertex> vertices;
 	vector<Color4> colors;
 	vector<Vector3> normals;

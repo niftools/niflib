@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for license. */
 #define _NITRIBASEDGEOM_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
-#include "BodyPartList.h"
+#include "../gen/BodyPartList.h"
 //--END CUSTOM CODE--//
 
 #include "NiGeometry.h"
@@ -61,12 +61,6 @@ public:
 	 * \param[in] max_bones_per_vertex The maximum number of bones that can affect any one vertex.  Vertices affected by more bones than this will have the bone witht he smallest affect removed and the remaining bones will be normalized.
 	 */
 	NIFLIB_API void GenHardwareSkinInfo( int max_bones_per_partition = 4, int max_bones_per_vertex = 4, bool bStrippify = true, int* face2PartMap = NULL );
-
-	/*!
-	 * This generates dismember skin data for hardware acceleration.  Specifically, it creates a NiDismemberSkinPartition object based on the current skin weights.  This splits up the mesh into smaller parts that are affected by fewer bones so that they can be processed by 3D accelerator hardware.
-	 * \param[in] dismember_groups A collection of pairs of body part list - face indexes that splits the mesh into submeshes that corresponds to various body parts
-	 */
-	NIFLIB_API void GenHardwareDismemberSkinInfo( vector< pair <BodyPartList, vector < int> > > dismember_groups);
 
 	/*!
 	 * This clears any hardware acceleration skin data that was previously created.
