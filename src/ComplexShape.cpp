@@ -531,18 +531,36 @@ void ComplexShape::Merge( NiAVObject * root ) {
 
 				for(int y = 0; y < skin_partition->GetNumPartitions(); y++) {
 					vector<Triangle> partition_triangles = skin_partition->GetTriangles(y);
+					vector<unsigned short> partition_vertex_map = skin_partition->GetVertexMap(y);
+					bool has_vertex_map = false;
+
+					if(partition_vertex_map.size() > 0) {
+						has_vertex_map = true;
+					}
 
 					for(int z = 0; z < partition_triangles.size(); z++) {
 						int w = faces.size() - shapeTris.size();
-						int merged_x = lookUp[partition_triangles[z].v1].vertIndex;
-						int merged_y = lookUp[partition_triangles[z].v2].vertIndex;
-						int merged_z = lookUp[partition_triangles[z].v3].vertIndex;
+
+						int merged_x;
+						int merged_y;
+						int merged_z;
+
+						if(has_vertex_map == true) {
+							merged_x = lookUp[partition_vertex_map[partition_triangles[z].v1]].vertIndex;
+							merged_y = lookUp[partition_vertex_map[partition_triangles[z].v2]].vertIndex;
+							merged_z = lookUp[partition_vertex_map[partition_triangles[z].v3]].vertIndex;
+						} else {
+							merged_x = lookUp[partition_triangles[z].v1].vertIndex;
+							merged_y = lookUp[partition_triangles[z].v2].vertIndex;
+							merged_z = lookUp[partition_triangles[z].v3].vertIndex;
+						}
 
 						for(; w < faces.size(); w++) {
 							ComplexFace current_face = faces[w];
-							bool is_same_face = false;
 
-							if(current_face.points[0].vertexIndex == merged_x) {
+							//keep this commented code is case my theory that all triangles must have vertices arranged in a certain way and that you can't rearrange vertices in a triangle
+
+							/*if(current_face.points[0].vertexIndex == merged_x) {
 								if(current_face.points[1].vertexIndex == merged_y && current_face.points[2].vertexIndex == merged_z) {
 									is_same_face = true;
 									break;
@@ -566,14 +584,16 @@ void ComplexShape::Merge( NiAVObject * root ) {
 									is_same_face = true;
 									break;
 								}
+							} */
+
+							if(current_face.points[0].vertexIndex == merged_x && current_face.points[1].vertexIndex == merged_y && current_face.points[2].vertexIndex == merged_z) {
+								break;
 							}
 						}
-
-						if(w < faces.size() && w >= faces.size() - shapeTris.size()) {
-							current_body_parts_faces[w - shapeTris.size()] = y;
-						} else {
-							throw runtime_error("Could not find a skin partition face inside the complex shape faces");
-						}
+						
+						if(w - (faces.size() - shapeTris.size()) < shapeTris.size()) {
+							current_body_parts_faces[w - (faces.size() - shapeTris.size())] = y;
+						} 
 					}
 				}
 
