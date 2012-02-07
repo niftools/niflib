@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include "Ref.h"
 #include "obj/BSDismemberSkinInstance.h"
+#include "obj/NiSkinPartition.h"
 #include "nif_math.h"
 #include "nif_basic_types.h"
 #include "gen/BodyPartList.h"
@@ -21,6 +22,7 @@ class NiNode;
 class NiAVObject;
 class NiTriBasedGeom;
 class BSDismemberSkinInstance;
+class NiSkinPartition;
 
 /*! Marks empty data indices */
 const unsigned int CS_NO_INDEX = 0xFFFFFFFF;

@@ -212,7 +212,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		//Add it to the list
 		shapes.push_back( DynamicCast<NiTriBasedGeom>(root) );
 	} else if ( root->IsDerivedType( NiNode::TYPE ) ) {
-		//The function was called on a NiNOde.  Search for
+		//The function was called on a NiNode.  Search for
 		//shape children
 		NiNodeRef nodeRoot = DynamicCast<NiNode>(root);
 		vector<NiAVObjectRef> children = nodeRoot->GetChildren();
@@ -270,6 +270,11 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		//If this is a skin influenced mesh, get vertices from niGeom
 		if ( (*geom)->GetSkinInstance() != NULL ) {
 			(*geom)->GetSkinDeformation( shapeVerts, shapeNorms );
+
+			if((*geom)->GetSkinInstance()->GetType().IsSameType(BSDismemberSkinInstance::TYPE)) {
+				BSDismemberSkinInstanceRef dismember_skin =  DynamicCast<BSDismemberSkinInstance>((*geom)->GetSkinInstance());
+				NiSkinPartitionRef skin_partition = dismember_skin->GetSkinPartition();
+			}
 		} else {
 			shapeVerts = geomData->GetVertices();
 			shapeNorms = geomData->GetNormals();
@@ -424,7 +429,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 					uvSetIndex = (unsigned int)(texCoordSets.size()) - 1;
 				}
 
-				//Loop through texture cooridnates in this set
+				//Loop through texture coordinates in this set
 				if ( set >= shapeUVs.size() || set < 0 ) {
 					throw runtime_error("One of the UV sets specified in the NiTexturingProperty did not exist in the NiTriBasedGeomData.");
 				}
@@ -433,7 +438,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 
 					newCoord = shapeUVs[set][v];
 
-					//Search for matching texture cooridnate
+					//Search for matching texture coordinate
 					bool match_found = false;
 					for ( unsigned int tc_index = 0; tc_index < texCoordSets[uvSetIndex].texCoords.size(); ++tc_index ) {
 						if ( texCoordSets[uvSetIndex].texCoords[tc_index]  == newCoord ) {
@@ -503,6 +508,95 @@ void ComplexShape::Merge( NiAVObject * root ) {
 						float weight = shapeWeights[w].weight;
 
 						vns[vn_index].weights[boneRef] = weight;
+					}
+				}
+			}
+
+			//Check to see if the skin is actually a dismember skin instance in which case import the partitions too
+			if(skinInst->GetType().IsSameType(BSDismemberSkinInstance::TYPE)) {
+				BSDismemberSkinInstanceRef dismember_skin = DynamicCast<BSDismemberSkinInstance>((*geom)->GetSkinInstance());
+				NiSkinPartitionRef skin_partition = dismember_skin->GetSkinPartition();
+
+				//These are the partition data of the current shapes
+				vector<BodyPartList> current_body_parts;
+				vector<int> current_body_parts_faces;
+
+				for(int y = 0; y < dismember_skin->GetPartitions().size(); y++) {
+					current_body_parts.push_back(dismember_skin->GetPartitions().at(y));
+				}
+
+				for(int y = 0; y < shapeTris.size(); y++) {
+					current_body_parts_faces.push_back(0);
+				}
+
+				for(int y = 0; y < skin_partition->GetNumPartitions(); y++) {
+					vector<Triangle> partition_triangles = skin_partition->GetTriangles(y);
+
+					for(int z = 0; z < partition_triangles.size(); z++) {
+						int w = faces.size() - shapeTris.size();
+						int merged_x = lookUp[partition_triangles[z].v1].vertIndex;
+						int merged_y = lookUp[partition_triangles[z].v2].vertIndex;
+						int merged_z = lookUp[partition_triangles[z].v3].vertIndex;
+
+						for(; w < faces.size(); w++) {
+							ComplexFace current_face = faces[w];
+							bool is_same_face = false;
+
+							if(current_face.points[0].vertexIndex == merged_x) {
+								if(current_face.points[1].vertexIndex == merged_y && current_face.points[2].vertexIndex == merged_z) {
+									is_same_face = true;
+									break;
+								} else if(current_face.points[2].vertexIndex == merged_y && current_face.points[1].vertexIndex == merged_z) {
+									is_same_face = true;
+									break;
+								}
+							} else if(current_face.points[1].vertexIndex == merged_x) {
+								if(current_face.points[0].vertexIndex == merged_y && current_face.points[2].vertexIndex == merged_z) {
+									is_same_face = true;
+									break;
+								} else if(current_face.points[2].vertexIndex == merged_y && current_face.points[0].vertexIndex == merged_z) {
+									is_same_face = true;
+									break;
+								}
+							} else if(current_face.points[2].vertexIndex == merged_x) {
+								if(current_face.points[0].vertexIndex == merged_y && current_face.points[1].vertexIndex == merged_z) {
+									is_same_face = true;
+									break;
+								} else if(current_face.points[1].vertexIndex == merged_y && current_face.points[0].vertexIndex == merged_z) {
+									is_same_face = true;
+									break;
+								}
+							}
+						}
+
+						if(w < faces.size() && w >= faces.size() - shapeTris.size()) {
+							current_body_parts_faces[w - shapeTris.size()] = y;
+						} else {
+							throw runtime_error("Could not find a skin partition face inside the complex shape faces");
+						}
+					}
+				}
+
+				for(int y = 0; y < current_body_parts.size(); y++) {
+					int match_index = -1;
+
+					for(int z = 0; z < dismemberPartitionsBodyParts.size(); z++) {
+						if(dismemberPartitionsBodyParts[z].bodyPart == current_body_parts[y].bodyPart 
+							&& dismemberPartitionsBodyParts[z].partFlag == current_body_parts[y].partFlag) {
+								match_index = z;
+								break;
+						}
+					}
+
+					if(match_index < 0) {
+						dismemberPartitionsBodyParts.push_back(current_body_parts[y]);
+						match_index = dismemberPartitionsBodyParts.size() - 1;
+					} 
+
+					for(int z = 0; z < current_body_parts_faces.size(); z++) {
+						if(current_body_parts_faces[z] == y) {
+							current_body_parts_faces[z] = match_index;
+						}
 					}
 				}
 			}
@@ -871,6 +965,8 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 				shapes[shape_num]->BindSkin( shapeInfluences );
 			} else {
 				shapes[shape_num]->BindSkinWith( shapeInfluences, BSDismemberSkinInstance::Create );
+				BSDismemberSkinInstanceRef dismember_skin = DynamicCast<BSDismemberSkinInstance>(shapes[shape_num]->GetSkinInstance());
+				dismember_skin->SetPartitions(current_dismember_partitions);
 			}
 			
 

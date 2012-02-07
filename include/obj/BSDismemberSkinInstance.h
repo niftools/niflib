@@ -58,12 +58,16 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
-   // Get list of dismemberment partitions
-   // \return The current value.
+	/*!
+     * Get list of dismemberment partitions
+     * \return The current value.
+	 */
    NIFLIB_API vector<BodyPartList > GetPartitions() const;
 
-   // Assign the dismemberment partition list
-   // \param[in] value The new value.
+   /*!
+    * Assign the dismemberment partition list
+    * \param[in] value The new value.
+	*/
    NIFLIB_API void SetPartitions( const vector<BodyPartList >& value );
 
 	//--END CUSTOM CODE--//
