@@ -15,8 +15,15 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/obj/NiSkinData.h"
 #include "../include/obj/NiTextureProperty.h"
 #include "../include/gen/SkinWeight.h"
+#include "../include/obj/NiSkinPartition.h"
+#include "../include/gen/BodyPartList.h"
+#include "../include/obj/BSShaderTextureSet.h"
+#include "../include/obj/BSLightingShaderProperty.h"
 
 #include <stdlib.h>
+
+
+
 
 using namespace Niflib;
 
@@ -379,13 +386,32 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		if ( niProp != NULL ) {
 			niTexProp = DynamicCast<NiTextureProperty>(niProp);
 		}
+		BSShaderTextureSetRef bsTexProp = NULL;
+		niProp = (*geom)->GetPropertyByType(BSShaderTextureSet::TYPE);
+		if(niProp != NULL) {
+			bsTexProp = DynamicCast<BSShaderTextureSet>(niProp);
+		}
+		niProp = (*geom)->getBsProperties()[0];
+		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
+			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
+			if(bs_shader->getTextureSet() != NULL) {
+				bsTexProp = bs_shader->getTextureSet();
+			}
+		}
+		niProp = (*geom)->getBsProperties()[1];
+		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
+			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
+			if(bs_shader->getTextureSet() != NULL) {
+				bsTexProp = bs_shader->getTextureSet();
+			}
+		}
 
 		//Create a list of UV sets to check
 		//pair.first = Texture Type
 		//pair.second = UV Set ID
 		vector< pair<TexType, unsigned int> > uvSets;
 
-		if ( shapeUVs.size() != 0 && (niTexingProp != NULL || niTexProp != NULL) ) {
+		if ( shapeUVs.size() != 0 && (niTexingProp != NULL || niTexProp != NULL || bsTexProp != NULL) ) {
 			if ( niTexingProp != NULL ) {
 				//Add the UV set to the list for every type of texture slot that uses it
 				for ( int tex = 0; tex < 8; ++tex ) {
@@ -396,7 +422,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 						uvSets.push_back( pair<TexType, unsigned int>( TexType(tex), td.uvSet ) );
 					}
 				}
-			} else if ( niTexProp != NULL ) {
+			} else if ( niTexProp != NULL || bsTexProp != NULL ) {
 				//Add the base UV set to the list and just use zero.
 				uvSets.push_back( pair<TexType, unsigned int>( BASE_MAP, 0 ) );
 			}
@@ -618,6 +644,10 @@ void ComplexShape::Merge( NiAVObject * root ) {
 							current_body_parts_faces[z] = match_index;
 						}
 					}
+				}
+
+				for(int x = 0; x < current_body_parts_faces.size(); x++) {
+					dismemberPartitionsFaces.push_back(current_body_parts_faces[x]);
 				}
 			}
 		}

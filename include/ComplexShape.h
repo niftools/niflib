@@ -5,11 +5,9 @@ All rights reserved.  Please see niflib.h for license. */
 #define _COMPLEX_SHAPE_H_
 
 #include "Ref.h"
-#include "obj/BSDismemberSkinInstance.h"
-#include "obj/NiSkinPartition.h"
 #include "nif_math.h"
 #include "nif_basic_types.h"
-#include "gen/BodyPartList.h"
+#include "../include/obj/BSDismemberSkinInstance.h"
 #include <vector>
 
 namespace Niflib {
@@ -21,7 +19,6 @@ class NiProperty;
 class NiNode;
 class NiAVObject;
 class NiTriBasedGeom;
-class BSDismemberSkinInstance;
 class NiSkinPartition;
 
 /*! Marks empty data indices */
