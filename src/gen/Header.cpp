@@ -319,6 +319,11 @@ vector<string> Header::getBlockTypes() {
 	return blockTypes;
 }
 
+
+vector<unsigned short> Niflib::Header::getBlockTypeIndex() {
+	return blockTypeIndex;
+}
+
 //--END CUSTOM CODE--//
 
 
