@@ -698,17 +698,24 @@ void ComplexShape::Merge( NiAVObject * root ) {
 	//Done Merging
 }
 
-Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight, bool use_dismember_partitions ) const {
+Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
 		throw runtime_error ("A parent is necessary to split a complex shape.");
 	}
 
-	if( use_dismember_partitions == true ) {
-		if(dismemberPartitionsFaces.size() != faces.size()) {
+	bool use_dismember_partitions = false;
+
+	if( dismemberPartitionsFaces.size() > 0 ) {
+		if( dismemberPartitionsFaces.size() != faces.size() ) {
 			throw runtime_error ("The number of faces mapped to skin partitions is different from the actual face count.");
 		}
+		if(dismemberPartitionsBodyParts.size() == 0) {
+			throw runtime_error ("The number of dismember partition body parts can't be 0.");
+		}
+
+		use_dismember_partitions = true;
 	}
 	
 	//There will be one NiTriShape per property group
