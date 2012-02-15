@@ -19,6 +19,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../include/gen/BodyPartList.h"
 #include "../include/obj/BSShaderTextureSet.h"
 #include "../include/obj/BSLightingShaderProperty.h"
+#include "../include/obj/NiAlphaProperty.h"
 
 #include <stdlib.h>
 
@@ -920,9 +921,33 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		}
 
 		//Attatch properties if any
+		//Check if the properties are skyrim specific in which case attach them in the 2 special slots
 		if ( propGroups.size() > 0 ) {
-			for ( vector<NiPropertyRef>::const_iterator prop = propGroups[shape_num].begin(); prop != propGroups[shape_num].end(); ++prop ) {
-				shapes[shape_num]->AddProperty( *prop );						
+			BSLightingShaderPropertyRef shader_property = NULL;
+
+			for(vector<NiPropertyRef>::const_iterator prop = propGroups[shape_num].begin(); prop != propGroups[shape_num].end(); ++prop ) {
+				NiPropertyRef current_property = *prop;
+				if(current_property->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
+					shader_property = DynamicCast<BSLightingShaderProperty>(current_property);
+					break;
+				}
+			}
+
+			if(shader_property == NULL) {
+				for ( vector<NiPropertyRef>::const_iterator prop = propGroups[shape_num].begin(); prop != propGroups[shape_num].end(); ++prop ) {
+					shapes[shape_num]->AddProperty( *prop );						
+				}
+			} else {
+				NiAlphaPropertyRef alpha_property = NULL;
+				for ( vector<NiPropertyRef>::const_iterator prop = propGroups[shape_num].begin(); prop != propGroups[shape_num].end(); ++prop ) {
+					if ((*prop)->GetType().IsSameType(NiAlphaProperty::TYPE)) {
+						alpha_property = DynamicCast<NiAlphaProperty>((*prop));
+					}						
+				}
+				array<2, NiPropertyRef> bs_properties;
+				bs_properties[0] = shader_property;
+				bs_properties[1] = alpha_property;
+				shapes[shape_num]->setBsProperties(bs_properties);
 			}
 		}
 
