@@ -149,15 +149,19 @@ vector<int> ComplexShape::GetDismemberPartitionsFaces() const {
 	return dismemberPartitionsFaces;
 }
 
-void ComplexShape::SetDismemberPartitionsFaces( vector<int> value ) {
-	dismemberPartitionsFaces = value;
+void ComplexShape::SetDismemberPartitionsFaces(const vector<int>& value ) {
+	dismemberPartitionsFaces.resize(value.size());
+
+	for(int i = 0; i < dismemberPartitionsFaces.size(); i++) {
+		dismemberPartitionsFaces[i] = value[i];
+	}
 }
 
 vector<BodyPartList> ComplexShape::GetDismemberPartitionsBodyParts() const {
 	return dismemberPartitionsBodyParts;
 }
 
-void ComplexShape::SetDismemberPartitionsBodyParts( vector<BodyPartList> value ) {
+void ComplexShape::SetDismemberPartitionsBodyParts( const vector<BodyPartList>& value ) {
 	dismemberPartitionsBodyParts = value;
 }
 
@@ -787,10 +791,13 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		vector<Triangle> shapeTriangles;
 
 		//a vector that holds in what dismember groups or skin partition does each face belong
-		vector<BodyPartList> current_dismember_partitions;
+		vector<BodyPartList> current_dismember_partitions = dismemberPartitionsBodyParts;
 
 		//create a map betweem the faces and the dismember groups
 		vector<int> current_dismember_partitions_faces;
+
+		//since we might have dismember partitions the face index is also required
+		int current_face_index = 0;
 
 		//Loop through all faces, and all points on each face
 		//to set the vertices in the CompoundVertex list
@@ -887,18 +894,16 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 					shapeTriangles.push_back(new_face);
 
 					//all the resulting triangles belong in the the same dismember partition or better said skin partition
-					current_dismember_partitions_faces.push_back(dismemberPartitionsFaces[i]);
+					current_dismember_partitions_faces.push_back(dismemberPartitionsFaces[current_face_index]);
 				}
-			}			
+			}
+			current_face_index++;
 		}
 
 		//Clean up the dismember skin partitions
 		//if no face points to a certain dismember partition then that dismember partition must be removed
 		if(use_dismember_partitions == true) {
-			vector<bool> used_dismember_groups;
-			for(int x = 0; x < current_dismember_partitions.size(); x++) {
-				used_dismember_groups.push_back(false);
-			}
+			vector<bool> used_dismember_groups(current_dismember_partitions.size(), false);
 			for(int x = 0; x < current_dismember_partitions_faces.size(); x++) {
 				if(used_dismember_groups[current_dismember_partitions_faces[x]] == false) {
 					used_dismember_groups[current_dismember_partitions_faces[x]] = true;
@@ -921,7 +926,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		}
 
 		//Attatch properties if any
-		//Check if the properties are skyrim specific in which case attach them in the 2 special slots
+		//Check if the properties are skyrim specific in which case attach them in the 2 special slots called bs_properties
 		if ( propGroups.size() > 0 ) {
 			BSLightingShaderPropertyRef shader_property = NULL;
 

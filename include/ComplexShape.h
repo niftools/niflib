@@ -306,7 +306,7 @@ public:
 	 * Sets the association between the body parts and the faces in the complex shape
 	 * \param[in] The new association meaning that the face at the position of the index corresponds to the body part group given by the value at the position of the index of the face
 	 */
-	NIFLIB_API void SetDismemberPartitionsFaces( vector<int> value );
+	NIFLIB_API void SetDismemberPartitionsFaces( const vector<int>& value );
 
 	/*
 	 * Gets a list of the dismember groups
@@ -318,7 +318,7 @@ public:
 	 * Gets the association between the faces in the complex shape and the corresponding body parts
 	 * \param[in] A list of the dismember groups;
 	 */
-	NIFLIB_API void SetDismemberPartitionsBodyParts( vector<BodyPartList> value);
+	NIFLIB_API void SetDismemberPartitionsBodyParts( const vector<BodyPartList>& value);
 
 private:
 	vector<BodyPartList> dismemberPartitionsBodyParts;
