@@ -703,7 +703,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 	//Done Merging
 }
 
-Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight ) const {
+Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int max_bones_per_partition, bool stripify, bool tangent_space, float min_vertex_weight, byte tspace_flags ) const {
 
 	//Make sure parent is not NULL
 	if ( parent == NULL ) {
@@ -1092,7 +1092,15 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 
 		//If tangent space was requested, generate it
 		if ( tangent_space ) {
-			shapes[shape_num]->UpdateTangentSpace();
+			if(tspace_flags == 0) {
+				shapes[shape_num]->UpdateTangentSpace();
+			} else {
+				if(shapes[shape_num]->GetData() != NULL) {
+					shapes[shape_num]->GetData()->SetUVSetCount(1);
+					shapes[shape_num]->GetData()->SetTspaceFlag(tspace_flags);
+					shapes[shape_num]->UpdateTangentSpace(1);
+				}
+			}
 		}
 		
 		//Next Shape

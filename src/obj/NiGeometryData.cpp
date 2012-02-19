@@ -155,7 +155,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, missing_link_stack, info );
-	bsNumUvSets = (unsigned short)(uvSets.size());
+	bsNumUvSets = ((unsigned short)(uvSets.size()) | (bsNumUvSets & 0xFF00));
 	numUvSets = (unsigned short)(uvSets.size());
 	numVertices = (unsigned short)(vertices.size());
 	if ( info.version >= 0x0A020000 ) {
@@ -659,12 +659,12 @@ void NiGeometryData::SetBound(Vector3 const & center, float radius)
 
 
 byte NiGeometryData::GetTspaceFlag() const {
-   return numUvSets | bsNumUvSets;
+   return (numUvSets | bsNumUvSets) >> 8;
 }
 
 void NiGeometryData::SetTspaceFlag( byte value ) {
-   numUvSets = value;
-   bsNumUvSets = value;
+   numUvSets = ((value << 8) | numUvSets);
+   bsNumUvSets = ((value << 8) | bsNumUvSets);
 }
 
 bool NiGeometryData::GetHasNormals() const {

@@ -182,7 +182,8 @@ public:
 		int max_bones_per_partition = 4,
 		bool stripify = false,
 		bool tangent_space = false,
-		float min_vertex_weight = 0.001f
+		float min_vertex_weight = 0.001f,
+		byte tspace_flags = 0
 	) const;
 
 	/* 
