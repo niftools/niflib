@@ -130,6 +130,18 @@ public:
 	 */
 	NIFLIB_API list< Ref<NiTimeController> > GetControllers() const;
 
+	/*!
+	* Gets the skyrim shader type
+	* \return The skyrim shader flag value
+	*/
+	NIFLIB_API unsigned int GetSkyrimShaderType();
+
+	/*!
+	* Set the skyrim shader type
+	* \param[in] The new skyrim shader value
+	*/
+	NIFLIB_API void SetSkyrimShaderType(unsigned int value);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*!

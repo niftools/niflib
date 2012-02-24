@@ -405,4 +405,14 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 	return conts;
 }
 
+unsigned int NiObjectNET::GetSkyrimShaderType() {
+	return skyrimShaderType;
+}
+
+void NiObjectNET::SetSkyrimShaderType( unsigned int value ) {
+	skyrimShaderType = value;
+}
+
 //--END CUSTOM CODE--//
+
+
