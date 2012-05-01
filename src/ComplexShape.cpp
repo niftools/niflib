@@ -152,7 +152,7 @@ vector<int> ComplexShape::GetDismemberPartitionsFaces() const {
 void ComplexShape::SetDismemberPartitionsFaces(const vector<int>& value ) {
 	dismemberPartitionsFaces.resize(value.size());
 
-	for(int i = 0; i < dismemberPartitionsFaces.size(); i++) {
+	for(unsigned int i = 0; i < dismemberPartitionsFaces.size(); i++) {
 		dismemberPartitionsFaces[i] = value[i];
 	}
 }
@@ -552,11 +552,11 @@ void ComplexShape::Merge( NiAVObject * root ) {
 				vector<BodyPartList> current_body_parts;
 				vector<int> current_body_parts_faces;
 
-				for(int y = 0; y < dismember_skin->GetPartitions().size(); y++) {
+				for(unsigned int y = 0; y < dismember_skin->GetPartitions().size(); y++) {
 					current_body_parts.push_back(dismember_skin->GetPartitions().at(y));
 				}
 
-				for(int y = 0; y < shapeTris.size(); y++) {
+				for(unsigned int y = 0; y < shapeTris.size(); y++) {
 					current_body_parts_faces.push_back(0);
 				}
 
@@ -569,8 +569,8 @@ void ComplexShape::Merge( NiAVObject * root ) {
 						has_vertex_map = true;
 					}
 
-					for(int z = 0; z < partition_triangles.size(); z++) {
-						int w = faces.size() - shapeTris.size();
+					for(unsigned int z = 0; z < partition_triangles.size(); z++) {
+						unsigned int w = faces.size() - shapeTris.size();
 
 						int merged_x;
 						int merged_y;
@@ -628,10 +628,10 @@ void ComplexShape::Merge( NiAVObject * root ) {
 					}
 				}
 
-				for(int y = 0; y < current_body_parts.size(); y++) {
+				for(unsigned int y = 0; y < current_body_parts.size(); y++) {
 					int match_index = -1;
 
-					for(int z = 0; z < dismemberPartitionsBodyParts.size(); z++) {
+					for(unsigned int z = 0; z < dismemberPartitionsBodyParts.size(); z++) {
 						if(dismemberPartitionsBodyParts[z].bodyPart == current_body_parts[y].bodyPart 
 							&& dismemberPartitionsBodyParts[z].partFlag == current_body_parts[y].partFlag) {
 								match_index = z;
@@ -644,14 +644,14 @@ void ComplexShape::Merge( NiAVObject * root ) {
 						match_index = dismemberPartitionsBodyParts.size() - 1;
 					} 
 
-					for(int z = 0; z < current_body_parts_faces.size(); z++) {
+					for(unsigned int z = 0; z < current_body_parts_faces.size(); z++) {
 						if(current_body_parts_faces[z] == y) {
 							current_body_parts_faces[z] = match_index;
 						}
 					}
 				}
 
-				for(int x = 0; x < current_body_parts_faces.size(); x++) {
+				for(unsigned int x = 0; x < current_body_parts_faces.size(); x++) {
 					dismemberPartitionsFaces.push_back(current_body_parts_faces[x]);
 				}
 			}
@@ -904,16 +904,16 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		//if no face points to a certain dismember partition then that dismember partition must be removed
 		if(use_dismember_partitions == true) {
 			vector<bool> used_dismember_groups(current_dismember_partitions.size(), false);
-			for(int x = 0; x < current_dismember_partitions_faces.size(); x++) {
+			for(unsigned int x = 0; x < current_dismember_partitions_faces.size(); x++) {
 				if(used_dismember_groups[current_dismember_partitions_faces[x]] == false) {
 					used_dismember_groups[current_dismember_partitions_faces[x]] = true;
 				}	
 			}
 
 			vector<BodyPartList> cleaned_up_dismember_partitions;
-			for(int x = 0; x < current_dismember_partitions.size(); x++) {
+			for(unsigned int x = 0; x < current_dismember_partitions.size(); x++) {
 				if (used_dismember_groups[x] == false) {
-					for(int y = 0; y < current_dismember_partitions_faces.size(); y++) {
+					for(unsigned int y = 0; y < current_dismember_partitions_faces.size(); y++) {
 						if(current_dismember_partitions_faces[y] > x) {
 							current_dismember_partitions_faces[y]--;
 						}
@@ -1065,7 +1065,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 
 			if(use_dismember_partitions == true ) {
 				int* face_map = new int[current_dismember_partitions_faces.size()];
-				for(int x = 0; x < current_dismember_partitions_faces.size(); x++) {
+				for(unsigned int x = 0; x < current_dismember_partitions_faces.size(); x++) {
 					face_map[x] = current_dismember_partitions_faces[x];
 				}
 				shapes[ shape_num]->GenHardwareSkinInfo( max_bones_per_partition, 4, stripify, face_map);

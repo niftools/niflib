@@ -61,7 +61,7 @@ class NiObject;
 class NiNode;
 class NiAVObject;
 class NiControllerSequence;
-class Header;
+struct Header;
 
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
