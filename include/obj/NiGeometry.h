@@ -166,6 +166,16 @@ public:
    // \return The current value.
    NIFLIB_API bool HasShader() const;
 
+   // BSProperty
+   // \param[in] index Index of property to be retrieved.
+   // \return The propterty.
+   NIFLIB_API Ref<NiProperty> getBSProperty(short index);
+
+   // BSProperty
+   // \param[in] index Index of property to be set.
+   // \param[in] index Property to be set.
+   NIFLIB_API void setBSProperty(short index, Ref<NiProperty> value);
+
    /*
 	 * Returns the array of the only 2 properties that are specific to Bethesda
 	 * \return Returns the array of the 2 properties

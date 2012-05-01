@@ -128,4 +128,12 @@ Ref<NiObject > bhkNiCollisionObject::GetBody() const {
 void bhkNiCollisionObject::SetBody( NiObject * value ) {
    body = value;
 }
+
+unsigned short bhkNiCollisionObject::GetFlags() const {
+  return flags;
+}
+
+void bhkNiCollisionObject::SetFlags(unsigned short value) {
+  flags = value;
+}
 //--END CUSTOM CODE--//

@@ -69,6 +69,19 @@ public:
    * \param[in] value The new rigid body for this collision object to use, or NULL to clear the current reference.
    */
    NIFLIB_API void SetBody( NiObject * value );
+
+   /*!
+   * Gets the flags field
+   * \return flags
+   */
+   NIFLIB_API unsigned short GetFlags() const;
+
+   /*!
+   * Sets the flags field
+   * \param[in] flags The new flags to be set
+   */
+   NIFLIB_API void SetFlags(unsigned short value);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*!

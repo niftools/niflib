@@ -26,7 +26,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkCompressedMeshShapeData::TYPE("bhkCompressedMeshShapeData", &NiObject::TYPE );
 
-bhkCompressedMeshShapeData::bhkCompressedMeshShapeData() : unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownShort3((unsigned short)0), unknownShort4((unsigned short)0), unknownFloat1(0.0f), unknownByte1((byte)0), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownByte2((byte)0), somethingCount((unsigned int)0), unknownInt6((unsigned int)0), numDataSet((unsigned int)0), unknownInt7((unsigned int)0), unknownInt8((unsigned int)0), unknownInt9((unsigned int)0), unknownFloat2(0.0f), numVertices((unsigned int)0), numBytes2((unsigned int)0), numSubshapes((unsigned int)0), unknownInt10((unsigned int)0), unknownInt11((unsigned int)0), unknownFloat3(0.0f), unknownInt12((unsigned int)0) {
+bhkCompressedMeshShapeData::bhkCompressedMeshShapeData() : bitsPerIndex((unsigned int)0), bitsPerWIndex((unsigned int)0), maskWIndex((unsigned short)0), maskIndex((unsigned short)0), error(0.0f), unknownByte1((byte)0), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownByte2((byte)0), numMaterials((unsigned int)0), unknownInt6((unsigned int)0), numTransforms((unsigned int)0), numBigVerts((unsigned int)0), numBigTris((unsigned int)0), numChunks((unsigned int)0), unknownInt12((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -52,92 +52,90 @@ void bhkCompressedMeshShapeData::Read( istream& in, list<unsigned int> & link_st
 	//--END CUSTOM CODE--//
 
 	NiObject::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownShort1, in, info );
-	NifStream( unknownShort2, in, info );
-	NifStream( unknownShort3, in, info );
-	NifStream( unknownShort4, in, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownFloats1, in, info );
-	NifStream( unknownFloats2, in, info );
+	NifStream( bitsPerIndex, in, info );
+	NifStream( bitsPerWIndex, in, info );
+	NifStream( maskWIndex, in, info );
+	NifStream( maskIndex, in, info );
+	NifStream( error, in, info );
+	NifStream( boundsMin, in, info );
+	NifStream( boundsMax, in, info );
 	NifStream( unknownByte1, in, info );
 	NifStream( unknownInt3, in, info );
 	NifStream( unknownInt4, in, info );
 	NifStream( unknownInt5, in, info );
 	NifStream( unknownByte2, in, info );
-	NifStream( somethingCount, in, info );
-	unknownIntSomething.resize(somethingCount);
-	for (unsigned int i1 = 0; i1 < unknownIntSomething.size(); i1++) {
-		NifStream( unknownIntSomething[i1].largeInt, in, info );
-		NifStream( unknownIntSomething[i1].unknownInteger, in, info );
+	NifStream( numMaterials, in, info );
+	chunkMaterials.resize(numMaterials);
+	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
+		NifStream( chunkMaterials[i1].largeInt, in, info );
+		NifStream( chunkMaterials[i1].unknownInteger, in, info );
 	};
 	NifStream( unknownInt6, in, info );
-	NifStream( numDataSet, in, info );
-	NifStream( unknownInt7, in, info );
-	NifStream( unknownInt8, in, info );
-	NifStream( unknownInt9, in, info );
-	if ( (numDataSet >= 1) ) {
-		dataSet1.resize(numDataSet);
-		for (unsigned int i2 = 0; i2 < dataSet1.size(); i2++) {
-			NifStream( dataSet1[i2].unknownFloats1, in, info );
-			NifStream( dataSet1[i2].unknownInt1, in, info );
+	NifStream( numTransforms, in, info );
+	if ( (numTransforms >= 1) ) {
+    chunkTransforms.resize(numTransforms);
+		for (unsigned int i2 = 0; i2 < chunkTransforms.size(); i2++) {
+      NifStream( chunkTransforms[i2].translation, in, info );
+      NifStream( chunkTransforms[i2].rotation.x, in, info );
+      NifStream( chunkTransforms[i2].rotation.y, in, info );
+      NifStream( chunkTransforms[i2].rotation.z, in, info );
+      NifStream( chunkTransforms[i2].rotation.w, in, info );
 		};
 	};
-	if ( (numDataSet >= 2) ) {
-		dataSet2.resize((numDataSet - 1));
-		for (unsigned int i2 = 0; i2 < dataSet2.size(); i2++) {
-			NifStream( dataSet2[i2].unknownFloats1, in, info );
-			NifStream( dataSet2[i2].unknownInt1, in, info );
+	NifStream( numBigVerts, in, info );
+	if ( (numBigVerts >= 1) ) {
+		bigVerts.resize(numBigVerts);
+		for (unsigned int i2 = 0; i2 < bigVerts.size(); i2++) {
+			NifStream( bigVerts[i2], in, info );
 		};
 	};
-	NifStream( unknownFloat2, in, info );
-	NifStream( numVertices, in, info );
-	if ( (numVertices >= 1) ) {
-		vertices.resize(numVertices);
-		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
-			NifStream( vertices[i2], in, info );
+	NifStream( numBigTris, in, info );
+	if ( (numBigTris >= 1) ) {
+		bigTris.resize(numBigTris);
+		for (unsigned int i2 = 0; i2 < bigTris.size(); i2++) {
+      NifStream( bigTris[i2].triangle1, in, info );
+      NifStream( bigTris[i2].triangle2, in, info );
+      NifStream( bigTris[i2].triangle3, in, info );
+      NifStream( bigTris[i2].unknownInt1, in, info );
+      NifStream( bigTris[i2].unknownShort1, in, info );
 		};
 	};
-	NifStream( numBytes2, in, info );
-	if ( (numBytes2 >= 1) ) {
-		unknownBytes.resize(numBytes2);
-		for (unsigned int i2 = 0; i2 < unknownBytes.size(); i2++) {
-			for (unsigned int i3 = 0; i3 < 12; i3++) {
-				NifStream( unknownBytes[i2][i3], in, info );
-			};
-		};
-	};
-	NifStream( numSubshapes, in, info );
-	if ( (numSubshapes >= 1) ) {
-		NifStream( unknownFloats3, in, info );
-		NifStream( unknownInt10, in, info );
-		NifStream( unknownInt11, in, info );
-		NifStream( unknownFloat3, in, info );
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			NifStream( shapeSet1[i2].numShape, in, info );
-			if ( (shapeSet1[i2].numShape >= 1) ) {
-				shapeSet1[i2].shape.resize(shapeSet1[i2].numShape);
-				for (unsigned int i4 = 0; i4 < shapeSet1[i2].shape.size(); i4++) {
-					NifStream( shapeSet1[i2].shape[i4], in, info );
-				};
-			};
-		};
-		shapeSet2.resize((numSubshapes - 1));
-		for (unsigned int i2 = 0; i2 < shapeSet2.size(); i2++) {
-			NifStream( shapeSet2[i2].unknownFloats, in, info );
-			NifStream( shapeSet2[i2].unknownInt, in, info );
-			NifStream( shapeSet2[i2].unknownShort1, in, info );
-			NifStream( shapeSet2[i2].unknownShort2, in, info );
-			for (unsigned int i3 = 0; i3 < 4; i3++) {
-				NifStream( shapeSet2[i2].shape[i3].numShape, in, info );
-				if ( (shapeSet2[i2].shape[i3].numShape >= 1) ) {
-					shapeSet2[i2].shape[i3].shape.resize(shapeSet2[i2].shape[i3].numShape);
-					for (unsigned int i5 = 0; i5 < shapeSet2[i2].shape[i3].shape.size(); i5++) {
-						NifStream( shapeSet2[i2].shape[i3].shape[i5], in, info );
-					};
-				};
-			};
+	NifStream( numChunks, in, info );
+	if ( (numChunks >= 1) ) {
+    chunks.resize(numChunks);
+    for (unsigned int i2 = 0; i2 < chunks.size(); i2++) {
+      NifStream( chunks[i2].translation, in, info );
+      NifStream( chunks[i2].materialIndex, in, info );
+      NifStream( chunks[i2].unknownShort1, in, info );
+      NifStream( chunks[i2].transformIndex, in, info );
+      NifStream( chunks[i2].numVertices, in, info );
+      if ( (chunks[i2].numVertices >= 1) ) {
+        chunks[i2].vertices.resize(chunks[i2].numVertices);
+        for (unsigned int i4 = 0; i4 < chunks[i2].vertices.size(); i4++) {
+          NifStream( chunks[i2].vertices[i4], in, info );
+        };
+      };
+      NifStream( chunks[i2].numIndices, in, info );
+      if ( (chunks[i2].numIndices >= 1) ) {
+        chunks[i2].indices.resize(chunks[i2].numIndices);
+        for (unsigned int i4 = 0; i4 < chunks[i2].indices.size(); i4++) {
+          NifStream( chunks[i2].indices[i4], in, info );
+        };
+      };
+      NifStream( chunks[i2].numStrips, in, info );
+      if ( (chunks[i2].numStrips >= 1) ) {
+        chunks[i2].strips.resize(chunks[i2].numStrips);
+        for (unsigned int i4 = 0; i4 < chunks[i2].strips.size(); i4++) {
+          NifStream( chunks[i2].strips[i4], in, info );
+        };
+      };
+      NifStream( chunks[i2].numIndices2, in, info );
+      if ( (chunks[i2].numIndices2 >= 1) ) {
+        chunks[i2].indices2.resize(chunks[i2].numIndices2);
+        for (unsigned int i4 = 0; i4 < chunks[i2].indices2.size(); i4++) {
+          NifStream( chunks[i2].indices2[i4], in, info );
+        };
+      };
 		};
 	};
 	NifStream( unknownInt12, in, info );
@@ -153,91 +151,90 @@ void bhkCompressedMeshShapeData::Write( ostream& out, const map<NiObjectRef,unsi
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, missing_link_stack, info );
-	numSubshapes = (unsigned int)(shapeSet2.size());
-	numBytes2 = (unsigned int)(unknownBytes.size());
-	numVertices = (unsigned int)(vertices.size());
-	numDataSet = (unsigned int)(dataSet1.size());
-	somethingCount = (unsigned int)(unknownIntSomething.size());
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownShort1, out, info );
-	NifStream( unknownShort2, out, info );
-	NifStream( unknownShort3, out, info );
-	NifStream( unknownShort4, out, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownFloats1, out, info );
-	NifStream( unknownFloats2, out, info );
+	numChunks = (unsigned int)(chunks.size());
+	numBigTris = (unsigned int)(bigTris.size());
+	numBigVerts = (unsigned int)(bigVerts.size());
+	numTransforms = (unsigned int)(chunkTransforms.size());
+	numMaterials = (unsigned int)(chunkMaterials.size());
+	NifStream( bitsPerIndex, out, info );
+	NifStream( bitsPerWIndex, out, info );
+	NifStream( maskWIndex, out, info );
+	NifStream( maskIndex, out, info );
+	NifStream( error, out, info );
+	NifStream( boundsMin, out, info );
+	NifStream( boundsMax, out, info );
 	NifStream( unknownByte1, out, info );
 	NifStream( unknownInt3, out, info );
 	NifStream( unknownInt4, out, info );
 	NifStream( unknownInt5, out, info );
 	NifStream( unknownByte2, out, info );
-	NifStream( somethingCount, out, info );
-	for (unsigned int i1 = 0; i1 < unknownIntSomething.size(); i1++) {
-		NifStream( unknownIntSomething[i1].largeInt, out, info );
-		NifStream( unknownIntSomething[i1].unknownInteger, out, info );
+	NifStream( numMaterials, out, info );
+	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
+		NifStream( chunkMaterials[i1].largeInt, out, info );
+		NifStream( chunkMaterials[i1].unknownInteger, out, info );
 	};
 	NifStream( unknownInt6, out, info );
-	NifStream( numDataSet, out, info );
-	NifStream( unknownInt7, out, info );
-	NifStream( unknownInt8, out, info );
-	NifStream( unknownInt9, out, info );
-	if ( (numDataSet >= 1) ) {
-		for (unsigned int i2 = 0; i2 < dataSet1.size(); i2++) {
-			NifStream( dataSet1[i2].unknownFloats1, out, info );
-			NifStream( dataSet1[i2].unknownInt1, out, info );
+	NifStream( numTransforms, out, info );
+	if ( (numTransforms >= 1) ) {
+		for (unsigned int i2 = 0; i2 < chunkTransforms.size(); i2++) {
+			NifStream( chunkTransforms[i2].translation, out, info );
+			NifStream( chunkTransforms[i2].rotation.x, out, info );
+			NifStream( chunkTransforms[i2].rotation.y, out, info );
+			NifStream( chunkTransforms[i2].rotation.z, out, info );
+			NifStream( chunkTransforms[i2].rotation.w, out, info );
 		};
 	};
-	if ( (numDataSet >= 2) ) {
-		for (unsigned int i2 = 0; i2 < dataSet2.size(); i2++) {
-			NifStream( dataSet2[i2].unknownFloats1, out, info );
-			NifStream( dataSet2[i2].unknownInt1, out, info );
+	NifStream( numBigVerts, out, info );
+	if ( (numBigVerts >= 1) ) {
+		for (unsigned int i2 = 0; i2 < bigVerts.size(); i2++) {
+			NifStream( bigVerts[i2], out, info );
 		};
 	};
-	NifStream( unknownFloat2, out, info );
-	NifStream( numVertices, out, info );
-	if ( (numVertices >= 1) ) {
-		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
-			NifStream( vertices[i2], out, info );
+	NifStream( numBigTris, out, info );
+	if ( (numBigTris >= 1) ) {
+		for (unsigned int i2 = 0; i2 < bigTris.size(); i2++) {
+      NifStream( bigTris[i2].triangle1, out, info );
+      NifStream( bigTris[i2].triangle2, out, info );
+      NifStream( bigTris[i2].triangle3, out, info );
+      NifStream( bigTris[i2].unknownInt1, out, info );
+      NifStream( bigTris[i2].unknownShort1, out, info );
 		};
 	};
-	NifStream( numBytes2, out, info );
-	if ( (numBytes2 >= 1) ) {
-		for (unsigned int i2 = 0; i2 < unknownBytes.size(); i2++) {
-			for (unsigned int i3 = 0; i3 < 12; i3++) {
-				NifStream( unknownBytes[i2][i3], out, info );
-			};
-		};
-	};
-	NifStream( numSubshapes, out, info );
-	if ( (numSubshapes >= 1) ) {
-		NifStream( unknownFloats3, out, info );
-		NifStream( unknownInt10, out, info );
-		NifStream( unknownInt11, out, info );
-		NifStream( unknownFloat3, out, info );
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
-			shapeSet1[i2].numShape = (unsigned int)(shapeSet1[i2].shape.size());
-			NifStream( shapeSet1[i2].numShape, out, info );
-			if ( (shapeSet1[i2].numShape >= 1) ) {
-				for (unsigned int i4 = 0; i4 < shapeSet1[i2].shape.size(); i4++) {
-					NifStream( shapeSet1[i2].shape[i4], out, info );
-				};
-			};
-		};
-		for (unsigned int i2 = 0; i2 < shapeSet2.size(); i2++) {
-			NifStream( shapeSet2[i2].unknownFloats, out, info );
-			NifStream( shapeSet2[i2].unknownInt, out, info );
-			NifStream( shapeSet2[i2].unknownShort1, out, info );
-			NifStream( shapeSet2[i2].unknownShort2, out, info );
-			for (unsigned int i3 = 0; i3 < 4; i3++) {
-				shapeSet2[i2].shape[i3].numShape = (unsigned int)(shapeSet2[i2].shape[i3].shape.size());
-				NifStream( shapeSet2[i2].shape[i3].numShape, out, info );
-				if ( (shapeSet2[i2].shape[i3].numShape >= 1) ) {
-					for (unsigned int i5 = 0; i5 < shapeSet2[i2].shape[i3].shape.size(); i5++) {
-						NifStream( shapeSet2[i2].shape[i3].shape[i5], out, info );
-					};
-				};
-			};
+	NifStream( numChunks, out, info );
+	if ( (numChunks >= 1) ) {
+    for (unsigned int i2 = 0; i2 < chunks.size(); i2++) {
+      NifStream( chunks[i2].translation, out, info );
+      NifStream( chunks[i2].materialIndex, out, info );
+      NifStream( chunks[i2].unknownShort1, out, info );
+      NifStream( chunks[i2].transformIndex, out, info );
+      chunks[i2].numVertices = chunks[i2].vertices.size();
+      NifStream( chunks[i2].numVertices, out, info );
+      if ( (chunks[i2].numVertices >= 1) ) {
+        for (unsigned int i4 = 0; i4 < chunks[i2].vertices.size(); i4++) {
+          NifStream( chunks[i2].vertices[i4], out, info );
+        };
+      };
+      chunks[i2].numIndices = chunks[i2].indices.size();
+      NifStream( chunks[i2].numIndices, out, info );
+      if ( (chunks[i2].numIndices >= 1) ) {
+        for (unsigned int i4 = 0; i4 < chunks[i2].indices.size(); i4++) {
+          NifStream( chunks[i2].indices[i4], out, info );
+        };
+      };
+      chunks[i2].numStrips = chunks[i2].strips.size();
+      NifStream( chunks[i2].numStrips, out, info );
+      if ( (chunks[i2].numStrips >= 1) ) {
+        for (unsigned int i4 = 0; i4 < chunks[i2].strips.size(); i4++) {
+          NifStream( chunks[i2].strips[i4], out, info );
+        };
+      };
+      chunks[i2].numIndices2 = chunks[i2].indices2.size();
+      NifStream( chunks[i2].numIndices2, out, info );
+      if ( (chunks[i2].numIndices2 >= 1) ) {
+        for (unsigned int i4 = 0; i4 < chunks[i2].indices2.size(); i4++) {
+          NifStream( chunks[i2].indices2[i4], out, info );
+        };
+      };
 		};
 	};
 	NifStream( unknownInt12, out, info );
@@ -255,155 +252,137 @@ std::string bhkCompressedMeshShapeData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	numSubshapes = (unsigned int)(shapeSet2.size());
-	numBytes2 = (unsigned int)(unknownBytes.size());
-	numVertices = (unsigned int)(vertices.size());
-	numDataSet = (unsigned int)(dataSet1.size());
-	somethingCount = (unsigned int)(unknownIntSomething.size());
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
-	out << "  Unknown Short 3:  " << unknownShort3 << endl;
-	out << "  Unknown Short 4:  " << unknownShort4 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Floats 1:  " << unknownFloats1 << endl;
-	out << "  Unknown Floats 2:  " << unknownFloats2 << endl;
+	numChunks = (unsigned int)(chunks.size());
+	numBigTris = (unsigned int)(bigTris.size());
+	numBigVerts = (unsigned int)(bigVerts.size());
+	numTransforms = (unsigned int)(chunkTransforms.size());
+	numMaterials = (unsigned int)(chunkMaterials.size());
+	out << "  Bits Per Index:  " << bitsPerIndex << endl;
+	out << "  Bits Per WIndex:  " << bitsPerWIndex << endl;
+	out << "  Mask WIndex:  " << maskWIndex << endl;
+	out << "  Mask Index:  " << maskIndex << endl;
+	out << "  Error:  " << error << endl;
+	out << "  boundsMin:  " << boundsMin << endl;
+	out << "  boundsMax:  " << boundsMax << endl;
 	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	out << "  Unknown Int 4:  " << unknownInt4 << endl;
 	out << "  Unknown Int 5:  " << unknownInt5 << endl;
 	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
-	out << "  Something Count:  " << somethingCount << endl;
+	out << "  numMaterials:  " << numMaterials << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownIntSomething.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Large Int:  " << unknownIntSomething[i1].largeInt << endl;
-		out << "    Unknown Integer:  " << unknownIntSomething[i1].unknownInteger << endl;
+		out << "    Large Int:  " << chunkMaterials[i1].largeInt << endl;
+		out << "    Unknown Integer:  " << chunkMaterials[i1].unknownInteger << endl;
 	};
 	out << "  Unknown Int 6:  " << unknownInt6 << endl;
-	out << "  Num Data Set:  " << numDataSet << endl;
-	out << "  Unknown Int 7:  " << unknownInt7 << endl;
-	out << "  Unknown Int 8:  " << unknownInt8 << endl;
-	out << "  Unknown Int 9:  " << unknownInt9 << endl;
-	if ( (numDataSet >= 1) ) {
+	out << "  Num Transforms:  " << numTransforms << endl;
+	if ( (numTransforms >= 1) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < dataSet1.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < chunkTransforms.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			out << "      Unknown Floats 1:  " << dataSet1[i2].unknownFloats1 << endl;
-			out << "      Unknown Int 1:  " << dataSet1[i2].unknownInt1 << endl;
+			out << "      Translation:  " << chunkTransforms[i2].translation << endl;
+			out << "      Rotation:  " << chunkTransforms[i2].rotation.x << ", " << chunkTransforms[i2].rotation.y << ", "  << chunkTransforms[i2].rotation.z << ", "  << chunkTransforms[i2].rotation.w << endl;
 		};
 	};
-	if ( (numDataSet >= 2) ) {
+	out << "  Num Big Verts:  " << numBigVerts << endl;
+	if ( (numBigVerts >= 1) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < dataSet2.size(); i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown Floats 1:  " << dataSet2[i2].unknownFloats1 << endl;
-			out << "      Unknown Int 1:  " << dataSet2[i2].unknownInt1 << endl;
-		};
-	};
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
-	out << "  Num Vertices:  " << numVertices << endl;
-	if ( (numVertices >= 1) ) {
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < vertices.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < bigVerts.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			out << "      Vertices[" << i2 << "]:  " << vertices[i2] << endl;
+			out << "      Vertices[" << i2 << "]:  " << bigVerts[i2] << endl;
 			array_output_count++;
 		};
 	};
-	out << "  Num Bytes 2:  " << numBytes2 << endl;
-	if ( (numBytes2 >= 1) ) {
+	out << "  Num Big Tris:  " << numBigTris << endl;
+	if ( (numBigTris >= 1) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < unknownBytes.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < bigTris.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			for (unsigned int i3 = 0; i3 < 12; i3++) {
-				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-					break;
-				};
-				out << "        Unknown Bytes[" << i3 << "]:  " << unknownBytes[i2][i3] << endl;
-				array_output_count++;
-			};
+			out << "    Triangle1:  " << bigTris[i2].triangle1 << endl;
+			out << "    Triangle2:  " << bigTris[i2].triangle2 << endl;
+			out << "    Triangle3:  " << bigTris[i2].triangle3 << endl;
+			out << "    unknown Int 1:  " << bigTris[i2].unknownInt1 << endl;
+			out << "    unknown Short 1:  " << bigTris[i2].unknownShort1 << endl;
 		};
 	};
-	out << "  Num Subshapes:  " << numSubshapes << endl;
-	if ( (numSubshapes >= 1) ) {
-		out << "    Unknown Floats 3:  " << unknownFloats3 << endl;
-		out << "    Unknown Int 10:  " << unknownInt10 << endl;
-		out << "    Unknown Int 11:  " << unknownInt11 << endl;
-		out << "    Unknown Float 3:  " << unknownFloat3 << endl;
+	out << "  Num Chunks:  " << numChunks << endl;
+	if ( (numChunks >= 1) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < 4; i2++) {
+		for (unsigned int i2 = 0; i2 < chunks.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
 			};
-			shapeSet1[i2].numShape = (unsigned int)(shapeSet1[i2].shape.size());
-			out << "      Num Shape:  " << shapeSet1[i2].numShape << endl;
-			if ( (shapeSet1[i2].numShape >= 1) ) {
+			out << "    Translation:  " << chunks[i2].translation << endl;
+			out << "    MaterialIndex:  " << chunks[i2].materialIndex << endl;
+			out << "    Unknown Short 1:  " << chunks[i2].unknownShort1 << endl;
+			out << "    TransformIndex:  " << chunks[i2].transformIndex << endl;
+			chunks[i2].numVertices = chunks[i2].vertices.size();
+			out << "      Num Vertices:  " << chunks[i2].numVertices << endl;
+			if ( (chunks[i2].numVertices >= 1) ) {
 				array_output_count = 0;
-				for (unsigned int i4 = 0; i4 < shapeSet1[i2].shape.size(); i4++) {
+				for (unsigned int i4 = 0; i4 < chunks[i2].vertices.size(); i4++) {
 					if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 						out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 						break;
 					};
-					if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-						break;
-					};
-					out << "          Shape[" << i4 << "]:  " << shapeSet1[i2].shape[i4] << endl;
+					out << "          Vertex[" << i4 << "]:  " << chunks[i2].vertices[i4] << endl;
 					array_output_count++;
 				};
 			};
-		};
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < shapeSet2.size(); i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Unknown Floats:  " << shapeSet2[i2].unknownFloats << endl;
-			out << "      Unknown Int:  " << shapeSet2[i2].unknownInt << endl;
-			out << "      Unknown Short 1:  " << shapeSet2[i2].unknownShort1 << endl;
-			out << "      Unknown Short 2:  " << shapeSet2[i2].unknownShort2 << endl;
-			array_output_count = 0;
-			for (unsigned int i3 = 0; i3 < 4; i3++) {
-				if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-					out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-					break;
-				};
-				shapeSet2[i2].shape[i3].numShape = (unsigned int)(shapeSet2[i2].shape[i3].shape.size());
-				out << "        Num Shape:  " << shapeSet2[i2].shape[i3].numShape << endl;
-				if ( (shapeSet2[i2].shape[i3].numShape >= 1) ) {
-					array_output_count = 0;
-					for (unsigned int i5 = 0; i5 < shapeSet2[i2].shape[i3].shape.size(); i5++) {
-						if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-							out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-							break;
-						};
-						if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-							break;
-						};
-						out << "            Shape[" << i5 << "]:  " << shapeSet2[i2].shape[i3].shape[i5] << endl;
-						array_output_count++;
+			chunks[i2].numIndices = chunks[i2].indices.size();
+			out << "      Num Indices:  " << chunks[i2].numIndices << endl;
+			if ( (chunks[i2].numIndices >= 1) ) {
+				array_output_count = 0;
+				for (unsigned int i4 = 0; i4 < chunks[i2].indices.size(); i4++) {
+					if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+						out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+						break;
 					};
+					out << "          Indices[" << i4 << "]:  " << chunks[i2].indices[i4] << endl;
+					array_output_count++;
+				};
+			};
+			chunks[i2].numStrips = chunks[i2].strips.size();
+			out << "      Num Strips:  " << chunks[i2].numStrips << endl;
+			if ( (chunks[i2].numStrips >= 1) ) {
+				array_output_count = 0;
+				for (unsigned int i4 = 0; i4 < chunks[i2].strips.size(); i4++) {
+					if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+						out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+						break;
+					};
+					out << "          Strips[" << i4 << "]:  " << chunks[i2].strips[i4] << endl;
+				};
+			};
+			chunks[i2].numIndices2 = chunks[i2].indices2.size();
+			out << "      Num Indices2:  " << chunks[i2].numIndices2 << endl;
+			if ( (chunks[i2].numIndices2 >= 1) ) {
+				array_output_count = 0;
+		        for (unsigned int i4 = 0; i4 < chunks[i2].indices2.size(); i4++) {
+					if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+						out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+						break;
+					};
+					out << "          Indices2[" << i4 << "]:  " << chunks[i2].indices2[i4] << endl;
 				};
 			};
 		};
@@ -441,5 +420,154 @@ std::list<NiObject *> bhkCompressedMeshShapeData::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+const unsigned int bhkCompressedMeshShapeData::GetBitsPerIndex() const {
+	return bitsPerIndex;
+}
+
+void bhkCompressedMeshShapeData::SetBitsPerIndex(unsigned int value) {
+	bitsPerIndex = value;
+}
+
+const unsigned int bhkCompressedMeshShapeData::GetBitsPerWIndex() const {
+	return bitsPerWIndex;
+}
+
+void bhkCompressedMeshShapeData::SetBitsPerWIndex(unsigned int value) {
+	bitsPerWIndex = value;
+}
+
+const unsigned int bhkCompressedMeshShapeData::GetMaskWIndex() const {
+	return maskWIndex;
+}
+
+void bhkCompressedMeshShapeData::SetMaskWIndex(unsigned int value) {
+	maskWIndex = value;
+}
+
+const unsigned int bhkCompressedMeshShapeData::GetMaskIndex() const {
+	return maskIndex;
+}
+
+void bhkCompressedMeshShapeData::SetMaskIndex(unsigned int value) {
+	maskIndex = value;
+}
+
+const float bhkCompressedMeshShapeData::GetError() const {
+	return error;
+}
+
+void bhkCompressedMeshShapeData::SetError(float value) {
+	error = value;
+}
+
+const Vector4 bhkCompressedMeshShapeData::GetBoundsMin() const {
+	return boundsMin;
+}
+
+void bhkCompressedMeshShapeData::SetBoundsMin(Vector4 value) {
+	boundsMin = value;
+}
+
+const Vector4 bhkCompressedMeshShapeData::GetBoundsMax() const {
+	return boundsMax;
+}
+
+void bhkCompressedMeshShapeData::SetBoundsMax(Vector4 value) {
+	boundsMax = value;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumMaterials() const {
+	return numMaterials;
+}
+
+void bhkCompressedMeshShapeData::SetNumMaterials(unsigned int value) {
+	numMaterials = value;
+}
+
+const vector<bhkCMSD_Something> & bhkCompressedMeshShapeData::GetChunkMaterials() const {
+	return chunkMaterials;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetChunkMaterials(vector<bhkCMSD_Something>& theChunkMaterials)
+{
+	numMaterials   = theChunkMaterials.size();
+	chunkMaterials = theChunkMaterials;
+	return numMaterials;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumTransforms() const {
+	return numTransforms;
+}
+
+void bhkCompressedMeshShapeData::SetNumTransforms(unsigned int value) {
+	numTransforms = value;
+}
+
+const vector<bhkCMSDTransform> & bhkCompressedMeshShapeData::GetChunkTransforms() const {
+	return chunkTransforms;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetChunkTransforms(vector<bhkCMSDTransform>& theChunkTransforms)
+{
+	numTransforms   = theChunkTransforms.size();
+	chunkTransforms = theChunkTransforms;
+	return numTransforms;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumBigVerts() const {
+	return numBigVerts;
+}
+
+void bhkCompressedMeshShapeData::SetNumBigVerts(unsigned int value) {
+	numBigVerts = value;
+}
+
+const vector<Vector4> & bhkCompressedMeshShapeData::GetBigVerts() const {
+	return bigVerts;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetBigVerts(vector<Vector4>& theBigVerts)
+{
+	numBigVerts = theBigVerts.size();
+	bigVerts    = theBigVerts;
+	return numBigVerts;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumBigTris() const {
+	return numBigTris;
+}
+
+void bhkCompressedMeshShapeData::SetNumBigTris(unsigned int value) {
+	numBigTris = value;
+}
+
+const vector<bhkCMSDBigTris> & bhkCompressedMeshShapeData::GetBigTris() const {
+	return bigTris;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetBigTris(vector<bhkCMSDBigTris>& theBigVerts)
+{
+	numBigTris = theBigVerts.size();
+	bigTris    = theBigVerts;
+	return numBigTris;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumChunks() const {
+	return numChunks;
+}
+
+void bhkCompressedMeshShapeData::SetNumChunks(unsigned int value) {
+	numChunks = value;
+}
+
+const vector<bhkCMSDChunk> & bhkCompressedMeshShapeData::GetChunks() const {
+	return chunks;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetChunks(vector<bhkCMSDChunk>& theChunks) {
+	numChunks = theChunks.size();
+	chunks    = theChunks;
+	return numChunks;
+}
 
 //--END CUSTOM CODE--//
