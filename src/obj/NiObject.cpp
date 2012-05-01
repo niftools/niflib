@@ -25,6 +25,14 @@ NiObject::NiObject() {
 	//--END CUSTOM CODE--//
 }
 
+NiObject::NiObject(const NiObject& src)
+	:	RefObject(src),
+		internal_block_number(src.internal_block_number)
+{
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
 NiObject::~NiObject() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//

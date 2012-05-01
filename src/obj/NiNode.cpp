@@ -33,6 +33,13 @@ NiNode::NiNode() : numChildren((unsigned int)0), numEffects((unsigned int)0) {
 	//--END CUSTOM CODE--//
 }
 
+NiNode::NiNode(const NiNode& src)
+	:	NiAVObject(src),
+		numChildren((unsigned int)0),
+		numEffects((unsigned int)0)
+{
+}
+
 NiNode::~NiNode() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 

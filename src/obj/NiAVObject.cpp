@@ -31,6 +31,27 @@ NiAVObject::NiAVObject() : flags((unsigned short)0), unknownShort1((unsigned sho
 	//--END CUSTOM CODE--//
 }
 
+NiAVObject::NiAVObject(const NiAVObject& src)
+	:	NiObjectNET(src),
+		flags(src.flags),
+		unknownShort1(src.unknownShort1),
+		scale(src.scale),
+		numProperties((unsigned int)0),
+		unknown2(src.unknown2),
+		hasBoundingBox(src.hasBoundingBox),
+		collisionObject(NULL),
+		translation(src.translation),
+		velocity(src.velocity),
+		rotation(src.rotation),
+		boundingBox(src.boundingBox)
+{
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+
+	parent = NULL;
+
+	//--END CUSTOM CODE--//
+}
+
 NiAVObject::~NiAVObject() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 

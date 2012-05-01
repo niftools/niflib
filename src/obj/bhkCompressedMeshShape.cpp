@@ -28,6 +28,19 @@ bhkCompressedMeshShape::bhkCompressedMeshShape() : target(NULL), material((Havok
 	//--END CUSTOM CODE--//
 }
 
+bhkCompressedMeshShape::bhkCompressedMeshShape(const bhkCompressedMeshShape& src)
+	:	target(NULL),
+		material(src.material),
+		unknownFloat1(src.unknownFloat1),
+		data(NULL)
+{
+	for (short i(0); i < 8; ++i)
+	{
+		unknown8Bytes[i] = src.unknown8Bytes[i];
+		unknownFloats[i] = src.unknownFloats[i];
+	}
+}
+
 bhkCompressedMeshShape::~bhkCompressedMeshShape() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 

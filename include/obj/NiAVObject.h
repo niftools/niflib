@@ -35,6 +35,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API NiAVObject();
 
+	/*! Copy constructor */
+	NIFLIB_API NiAVObject(const NiAVObject& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~NiAVObject();
 

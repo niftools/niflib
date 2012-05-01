@@ -27,6 +27,36 @@ BSLightingShaderProperty::BSLightingShaderProperty() : shaderFlags1((unsigned in
 	//--END CUSTOM CODE--//
 }
 
+BSLightingShaderProperty::BSLightingShaderProperty(const BSLightingShaderProperty& src)
+	:	shaderFlags1(src.shaderFlags1),
+		shaderFlags2(src.shaderFlags2),
+		textureSet(NULL),
+		emissiveSaturation(src.emissiveSaturation),
+		unknownInt7(src.unknownInt7),
+		alpha(src.alpha),
+		unknownFloat2(src.unknownFloat2),
+		glossiness(src.glossiness),
+		specularStrength(src.specularStrength),
+		lightingEffect1(src.lightingEffect1),
+		lightingEffect2(src.lightingEffect2),
+		environmentMapStrength(src.environmentMapStrength),
+		unknownFloat9(src.unknownFloat9),
+		eyeCubemapScale(src.eyeCubemapScale),
+		emissiveColor(src.emissiveColor),
+		specularColor(src.specularColor),
+		unknownColor1(src.unknownColor1),
+		unknownColor2(src.unknownColor2),
+		unknownFloatSet1(src.unknownFloatSet1),
+		unknownFloatSet5(src.unknownFloatSet5),
+		leftEyeReflectionCenter(src.leftEyeReflectionCenter),
+		rightEyeReflectionCenter(src.rightEyeReflectionCenter),
+		textureTranslation1(src.textureTranslation1),
+		textureRepeat(src.textureRepeat)
+{
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	//--END CUSTOM CODE--//
+}
+
 BSLightingShaderProperty::~BSLightingShaderProperty() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 

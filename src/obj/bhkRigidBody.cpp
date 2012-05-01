@@ -27,6 +27,60 @@ bhkRigidBody::bhkRigidBody() : unknownInt1((int)0), unknownInt2((int)0x00000001)
 	//--END CUSTOM CODE--//
 }
 
+bhkRigidBody::bhkRigidBody(const bhkRigidBody& src)
+	:	unknownInt1(src.unknownInt1),
+		unknownInt2(src.unknownInt2),
+		collisionResponse_(src.collisionResponse_),
+		unknownByte(src.unknownByte),
+		processContactCallbackDelay_(src.processContactCallbackDelay_),
+		layerCopy(src.layerCopy),
+		colFilterCopy(src.colFilterCopy),
+		translation(src.translation),
+		rotation(src.rotation),
+		linearVelocity(src.linearVelocity),
+		angularVelocity(src.angularVelocity),
+		inertia(src.inertia),
+		center(src.center),
+		mass(src.mass),
+		linearDamping(src.linearDamping),
+		angularDamping(src.angularDamping),
+		friction(src.friction),
+		restitution(src.restitution),
+		unknownFloat51(src.unknownFloat51),
+		unknownFloat52(src.unknownFloat52),
+		unknownFloat53(src.unknownFloat53),
+		maxLinearVelocity(src.maxLinearVelocity),
+		maxAngularVelocity(src.maxAngularVelocity),
+		penetrationDepth(src.penetrationDepth),
+		motionSystem(src.motionSystem),
+		deactivatorType(src.deactivatorType),
+		solverDeactivation(src.solverDeactivation),
+		qualityType(src.qualityType),
+		unknownInt6(src.unknownInt6),
+		unknownInt7(src.unknownInt7),
+		unknownInt8(src.unknownInt8),
+		unknownInt81(src.unknownInt81),
+		numConstraints(src.numConstraints),
+		unknownInt9(src.unknownInt9),
+		unknownInt91(src.unknownInt91)
+{
+	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	for (short i(0); i < 3; ++i)
+	{
+		unknown3Ints[i] = src.unknown3Ints[i];
+	}
+	for (short i(0); i < 2; ++i)
+	{
+		unknown2Shorts[i] = src.unknown2Shorts[i];
+	}
+	for (short i(0); i < 7; ++i)
+	{
+		unknown7Shorts[i] = src.unknown7Shorts[i];
+	}
+	//vector<Ref<bhkSerializable > > constraints;	vector<Ref<bhkSerializable > > constraints;
+	//--END CUSTOM CODE--//
+}
+
 bhkRigidBody::~bhkRigidBody() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//

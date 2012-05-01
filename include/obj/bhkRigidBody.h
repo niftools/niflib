@@ -39,6 +39,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API bhkRigidBody();
 
+	/*! Copy constructor */
+	NIFLIB_API bhkRigidBody(const bhkRigidBody& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~bhkRigidBody();
 

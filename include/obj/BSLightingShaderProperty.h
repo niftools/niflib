@@ -34,6 +34,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API BSLightingShaderProperty();
 
+	/*! Copy constructor */
+	NIFLIB_API BSLightingShaderProperty(const BSLightingShaderProperty& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~BSLightingShaderProperty();
 

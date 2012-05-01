@@ -298,6 +298,10 @@ Matrix33::Matrix33() {
 	*this = Matrix33::IDENTITY;
 }
 
+Matrix33::Matrix33(const Matrix33& src) {
+	*this = src;
+}
+
 Quaternion Matrix33::AsQuaternion() const {
 	Quaternion quat;
 	float tr, s, q[4];

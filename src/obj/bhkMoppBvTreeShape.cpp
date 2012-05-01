@@ -25,6 +25,24 @@ bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)
 	//--END CUSTOM CODE--//
 }
 
+bhkMoppBvTreeShape::bhkMoppBvTreeShape(const bhkMoppBvTreeShape& src)
+	:	shape(NULL),
+		material(src.material),
+		unknownInt1(src.unknownInt1),
+		unknownInt2(src.unknownInt2),
+		unknownFloat(src.unknownFloat),
+		moppDataSize(src.moppDataSize),
+		scale(src.scale),
+		unknownByte1(src.unknownByte1),
+		origin(src.origin)
+{
+	moppData.resize(src.moppData.size());
+	for (unsigned int i(0); i < src.moppData.size(); ++i)
+	{
+		moppData[i] = src.moppData[i];
+	}
+}
+
 bhkMoppBvTreeShape::~bhkMoppBvTreeShape() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//

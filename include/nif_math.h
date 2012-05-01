@@ -45,6 +45,9 @@ struct TexCoord {
 	/*! Default constructor	*/
 	NIFLIB_API TexCoord() : u(0.0f), v(0.0f) {}
 
+	/*! Copy constructor	*/
+	NIFLIB_API TexCoord(const TexCoord& src) : u(src.u), v(src.v) {}
+
 	NIFLIB_API TexCoord operator+(const TexCoord& rhs) const
 	{
 		TexCoord ret;
@@ -603,6 +606,9 @@ struct Matrix33 {
 	/*! Default constructor.   Initializes matrix to identity.  */
 	NIFLIB_API Matrix33();
 
+	/*! Copy constructor.   */
+	NIFLIB_API Matrix33(const Matrix33& src);
+
 	/*! This constructor can be used to set all values in this matrix during initialization
 	 * \param[in] m11 The value to set at row 1, column 1.
 	 * \param[in] m12 The value to set at row 1, column 2.
@@ -955,6 +961,13 @@ struct Color3 {
 	/*! Default constructor */
 	NIFLIB_API Color3() {}
 
+	/*! Copy constructor */
+	NIFLIB_API Color3(const Color3& src) {
+		this->r = src.r;
+		this->g = src.g;
+		this->b = src.b;
+	}
+
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.
 	 * \param[in] g The value to set the green component of this color to. Should be between 0.0f and 1.0f.
@@ -1009,6 +1022,9 @@ struct Color4 {
 
 	/*! Default constructor */
 	NIFLIB_API Color4() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
+
+	/*! Copy constructor */
+	NIFLIB_API Color4(const Color4& src) : r(src.r), g(src.g), b(src.b), a(src.a) {}
 
 	/*! This constructor can be used to set all values in this structure during initialization
 	 * \param[in] r The value to set the red component of this color to.  Should be between 0.0f and 1.0f.

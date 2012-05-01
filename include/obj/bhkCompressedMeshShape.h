@@ -32,6 +32,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API bhkCompressedMeshShape();
 
+	/*! Copy constructor */
+	NIFLIB_API bhkCompressedMeshShape(const bhkCompressedMeshShape& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~bhkCompressedMeshShape();
 

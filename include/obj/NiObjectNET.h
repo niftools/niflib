@@ -31,6 +31,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API NiObjectNET();
 
+	/*! Copy constructor */
+	NIFLIB_API NiObjectNET(const NiObjectNET& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~NiObjectNET();
 

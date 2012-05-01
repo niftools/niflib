@@ -30,6 +30,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API bhkMoppBvTreeShape();
 
+	/*! Copy constructor */
+	NIFLIB_API bhkMoppBvTreeShape(const bhkMoppBvTreeShape& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~bhkMoppBvTreeShape();
 

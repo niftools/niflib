@@ -38,6 +38,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API NiObject();
 
+	/*! Copy constructor */
+	NIFLIB_API NiObject(const NiObject& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~NiObject();
 
