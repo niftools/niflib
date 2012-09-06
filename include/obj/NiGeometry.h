@@ -180,13 +180,13 @@ public:
 	 * Returns the array of the only 2 properties that are specific to Bethesda
 	 * \return Returns the array of the 2 properties
 	 */
-   NIFLIB_API array<2,Ref<NiProperty > > getBsProperties();
+   NIFLIB_API array<2,Ref<NiProperty > > getBSProperties();
 
    /*
 	 * Sets the array of the only 2 properties that are specific to Bethesda
 	 * \param[in] The new array of properties
 	 */
-   NIFLIB_API void setBsProperties( array<2, Ref<NiProperty>> value);
+   NIFLIB_API void setBSProperties( array<2, Ref<NiProperty> > value);
 
 	//--END CUSTOM CODE--//
 protected:
