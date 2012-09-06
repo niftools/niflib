@@ -71,33 +71,27 @@ void bhkCompressedMeshShapeData::Read( istream& in, list<unsigned int> & link_st
 	};
 	NifStream( unknownInt6, in, info );
 	NifStream( numTransforms, in, info );
-	if ( (numTransforms >= 1) ) {
-		chunkTransforms.resize(numTransforms);
-		for (unsigned int i2 = 0; i2 < chunkTransforms.size(); i2++) {
-			NifStream( chunkTransforms[i2].translation, in, info );
-			NifStream( chunkTransforms[i2].rotation.x, in, info );
-			NifStream( chunkTransforms[i2].rotation.y, in, info );
-			NifStream( chunkTransforms[i2].rotation.z, in, info );
-			NifStream( chunkTransforms[i2].rotation.w, in, info );
-		};
+	chunkTransforms.resize(numTransforms);
+	for (unsigned int i1 = 0; i1 < chunkTransforms.size(); i1++) {
+		NifStream( chunkTransforms[i1].translation, in, info );
+		NifStream( chunkTransforms[i1].rotation.x, in, info );
+		NifStream( chunkTransforms[i1].rotation.y, in, info );
+		NifStream( chunkTransforms[i1].rotation.z, in, info );
+		NifStream( chunkTransforms[i1].rotation.w, in, info );
 	};
 	NifStream( numBigVerts, in, info );
-	if ( (numBigVerts >= 1) ) {
-		bigVerts.resize(numBigVerts);
-		for (unsigned int i2 = 0; i2 < bigVerts.size(); i2++) {
-			NifStream( bigVerts[i2], in, info );
-		};
+	bigVerts.resize(numBigVerts);
+	for (unsigned int i1 = 0; i1 < bigVerts.size(); i1++) {
+		NifStream( bigVerts[i1], in, info );
 	};
 	NifStream( numBigTris, in, info );
-	if ( (numBigTris >= 1) ) {
-		bigTris.resize(numBigTris);
-		for (unsigned int i2 = 0; i2 < bigTris.size(); i2++) {
-			NifStream( bigTris[i2].triangle1, in, info );
-			NifStream( bigTris[i2].triangle2, in, info );
-			NifStream( bigTris[i2].triangle3, in, info );
-			NifStream( bigTris[i2].unknownInt1, in, info );
-			NifStream( bigTris[i2].unknownShort1, in, info );
-		};
+	bigTris.resize(numBigTris);
+	for (unsigned int i1 = 0; i1 < bigTris.size(); i1++) {
+		NifStream( bigTris[i1].triangle1, in, info );
+		NifStream( bigTris[i1].triangle2, in, info );
+		NifStream( bigTris[i1].triangle3, in, info );
+		NifStream( bigTris[i1].unknownInt1, in, info );
+		NifStream( bigTris[i1].unknownShort1, in, info );
 	};
 	NifStream( numChunks, in, info );
 	chunks.resize(numChunks);
@@ -164,30 +158,24 @@ void bhkCompressedMeshShapeData::Write( ostream& out, const map<NiObjectRef,unsi
 	};
 	NifStream( unknownInt6, out, info );
 	NifStream( numTransforms, out, info );
-	if ( (numTransforms >= 1) ) {
-		for (unsigned int i2 = 0; i2 < chunkTransforms.size(); i2++) {
-			NifStream( chunkTransforms[i2].translation, out, info );
-			NifStream( chunkTransforms[i2].rotation.x, out, info );
-			NifStream( chunkTransforms[i2].rotation.y, out, info );
-			NifStream( chunkTransforms[i2].rotation.z, out, info );
-			NifStream( chunkTransforms[i2].rotation.w, out, info );
-		};
+	for (unsigned int i1 = 0; i1 < chunkTransforms.size(); i1++) {
+		NifStream( chunkTransforms[i1].translation, out, info );
+		NifStream( chunkTransforms[i1].rotation.x, out, info );
+		NifStream( chunkTransforms[i1].rotation.y, out, info );
+		NifStream( chunkTransforms[i1].rotation.z, out, info );
+		NifStream( chunkTransforms[i1].rotation.w, out, info );
 	};
 	NifStream( numBigVerts, out, info );
-	if ( (numBigVerts >= 1) ) {
-		for (unsigned int i2 = 0; i2 < bigVerts.size(); i2++) {
-			NifStream( bigVerts[i2], out, info );
-		};
+	for (unsigned int i1 = 0; i1 < bigVerts.size(); i1++) {
+		NifStream( bigVerts[i1], out, info );
 	};
 	NifStream( numBigTris, out, info );
-	if ( (numBigTris >= 1) ) {
-		for (unsigned int i2 = 0; i2 < bigTris.size(); i2++) {
-			NifStream( bigTris[i2].triangle1, out, info );
-			NifStream( bigTris[i2].triangle2, out, info );
-			NifStream( bigTris[i2].triangle3, out, info );
-			NifStream( bigTris[i2].unknownInt1, out, info );
-			NifStream( bigTris[i2].unknownShort1, out, info );
-		};
+	for (unsigned int i1 = 0; i1 < bigTris.size(); i1++) {
+		NifStream( bigTris[i1].triangle1, out, info );
+		NifStream( bigTris[i1].triangle2, out, info );
+		NifStream( bigTris[i1].triangle3, out, info );
+		NifStream( bigTris[i1].unknownInt1, out, info );
+		NifStream( bigTris[i1].unknownShort1, out, info );
 	};
 	NifStream( numChunks, out, info );
 	for (unsigned int i1 = 0; i1 < chunks.size(); i1++) {
@@ -260,49 +248,43 @@ std::string bhkCompressedMeshShapeData::asString( bool verbose ) const {
 	};
 	out << "  Unknown Int 6:  " << unknownInt6 << endl;
 	out << "  Num Transforms:  " << numTransforms << endl;
-	if ( (numTransforms >= 1) ) {
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < chunkTransforms.size(); i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Translation:  " << chunkTransforms[i2].translation << endl;
-			out << "      x:  " << chunkTransforms[i2].rotation.x << endl;
-			out << "      y:  " << chunkTransforms[i2].rotation.y << endl;
-			out << "      z:  " << chunkTransforms[i2].rotation.z << endl;
-			out << "      w:  " << chunkTransforms[i2].rotation.w << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < chunkTransforms.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
 		};
+		out << "    Translation:  " << chunkTransforms[i1].translation << endl;
+		out << "    x:  " << chunkTransforms[i1].rotation.x << endl;
+		out << "    y:  " << chunkTransforms[i1].rotation.y << endl;
+		out << "    z:  " << chunkTransforms[i1].rotation.z << endl;
+		out << "    w:  " << chunkTransforms[i1].rotation.w << endl;
 	};
 	out << "  Num Big Verts:  " << numBigVerts << endl;
-	if ( (numBigVerts >= 1) ) {
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < bigVerts.size(); i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Big Verts[" << i2 << "]:  " << bigVerts[i2] << endl;
-			array_output_count++;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < bigVerts.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
 		};
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			break;
+		};
+		out << "    Big Verts[" << i1 << "]:  " << bigVerts[i1] << endl;
+		array_output_count++;
 	};
 	out << "  Num Big Tris:  " << numBigTris << endl;
-	if ( (numBigTris >= 1) ) {
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < bigTris.size(); i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			out << "      Triangle 1:  " << bigTris[i2].triangle1 << endl;
-			out << "      Triangle 2:  " << bigTris[i2].triangle2 << endl;
-			out << "      Triangle 3:  " << bigTris[i2].triangle3 << endl;
-			out << "      Unknown Int 1:  " << bigTris[i2].unknownInt1 << endl;
-			out << "      Unknown Short 1:  " << bigTris[i2].unknownShort1 << endl;
+	array_output_count = 0;
+	for (unsigned int i1 = 0; i1 < bigTris.size(); i1++) {
+		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+			break;
 		};
+		out << "    Triangle 1:  " << bigTris[i1].triangle1 << endl;
+		out << "    Triangle 2:  " << bigTris[i1].triangle2 << endl;
+		out << "    Triangle 3:  " << bigTris[i1].triangle3 << endl;
+		out << "    Unknown Int 1:  " << bigTris[i1].unknownInt1 << endl;
+		out << "    Unknown Short 1:  " << bigTris[i1].unknownShort1 << endl;
 	};
 	out << "  Num Chunks:  " << numChunks << endl;
 	array_output_count = 0;

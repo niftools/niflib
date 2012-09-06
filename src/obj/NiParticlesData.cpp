@@ -112,7 +112,7 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
 		NifStream( hasUvQuadrants, in, info );
 		NifStream( numUvQuadrants, in, info );
-		if ( (hasUvQuadrants >= 1) ) {
+		if ( hasUvQuadrants ) {
 			uvQuadrants.resize(numUvQuadrants);
 			for (unsigned int i3 = 0; i3 < uvQuadrants.size(); i3++) {
 				NifStream( uvQuadrants[i3], in, info );
@@ -211,7 +211,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
 		NifStream( hasUvQuadrants, out, info );
 		NifStream( numUvQuadrants, out, info );
-		if ( (hasUvQuadrants >= 1) ) {
+		if ( hasUvQuadrants ) {
 			for (unsigned int i3 = 0; i3 < uvQuadrants.size(); i3++) {
 				NifStream( uvQuadrants[i3], out, info );
 			};
@@ -315,7 +315,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 	};
 	out << "  Has UV Quadrants:  " << hasUvQuadrants << endl;
 	out << "  Num UV Quadrants:  " << numUvQuadrants << endl;
-	if ( (hasUvQuadrants >= 1) ) {
+	if ( hasUvQuadrants ) {
 		array_output_count = 0;
 		for (unsigned int i2 = 0; i2 < uvQuadrants.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
