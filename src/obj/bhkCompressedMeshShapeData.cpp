@@ -469,11 +469,11 @@ void bhkCompressedMeshShapeData::SetNumMaterials(unsigned int value) {
 	numMaterials = value;
 }
 
-const vector<bhkCMSD_Something> & bhkCompressedMeshShapeData::GetChunkMaterials() const {
+const vector<bhkCMSDMaterial> & bhkCompressedMeshShapeData::GetChunkMaterials() const {
 	return chunkMaterials;
 }
 
-unsigned int bhkCompressedMeshShapeData::SetChunkMaterials(vector<bhkCMSD_Something>& theChunkMaterials)
+unsigned int bhkCompressedMeshShapeData::SetChunkMaterials(vector<bhkCMSDMaterial>& theChunkMaterials)
 {
 	numMaterials   = theChunkMaterials.size();
 	chunkMaterials = theChunkMaterials;

@@ -2457,7 +2457,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\gen\bhkCMSD_Something.cpp"
+					RelativePath=".\src\gen\bhkCMSDMaterial.cpp"
 					>
 				</File>
 				<File
@@ -4647,7 +4647,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\gen\bhkCMSD_Something.h"
+					RelativePath=".\include\gen\bhkCMSDMaterial.h"
 					>
 				</File>
 				<File

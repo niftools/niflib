@@ -765,7 +765,7 @@
     <ClCompile Include="src\gen\ArkTexture.cpp" />
     <ClCompile Include="src\gen\AVObject.cpp" />
     <ClCompile Include="src\gen\bhkCMSD_Shape.cpp" />
-    <ClCompile Include="src\gen\bhkCMSD_Something.cpp" />
+    <ClCompile Include="src\gen\bhkCMSDMaterial.cpp" />
     <ClCompile Include="src\gen\bhkCMSDBigTris.cpp" />
     <ClCompile Include="src\gen\bhkCMSDChunk.cpp" />
     <ClCompile Include="src\gen\bhkCMSDContainer.cpp" />
@@ -1309,7 +1309,7 @@
     <ClInclude Include="include\gen\ArkTexture.h" />
     <ClInclude Include="include\gen\AVObject.h" />
     <ClInclude Include="include\gen\bhkCMSD_Shape.h" />
-    <ClInclude Include="include\gen\bhkCMSD_Something.h" />
+    <ClInclude Include="include\gen\bhkCMSDMaterial.h" />
     <ClInclude Include="include\gen\bhkCMSDBigTris.h" />
     <ClInclude Include="include\gen\bhkCMSDChunk.h" />
     <ClInclude Include="include\gen\bhkCMSDContainer.h" />

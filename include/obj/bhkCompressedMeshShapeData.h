@@ -160,13 +160,13 @@ public:
 	 * Retrieve list of chunkMaterials
 	 * \return List of the chunkMaterials
      */
-	NIFLIB_API virtual const vector<bhkCMSD_Something> & GetChunkMaterials() const;
+	NIFLIB_API virtual const vector<bhkCMSDMaterial> & GetChunkMaterials() const;
 	
 	/*!
 	 * Set list of chunkMaterials 
 	 * \param[in] List of the chunkMaterials
      */
-	NIFLIB_API virtual unsigned int SetChunkMaterials(vector<bhkCMSD_Something>& theChunkMaterials);
+	NIFLIB_API virtual unsigned int SetChunkMaterials(vector<bhkCMSDMaterial>& theChunkMaterials);
 
 	/*!
 	 * Retrieve numTransforms
