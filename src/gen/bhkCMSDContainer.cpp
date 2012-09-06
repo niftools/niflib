@@ -6,7 +6,7 @@ All rights reserved.  Please see niflib.h for license. */
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
 #include "../../include/gen/bhkCMSDContainer.h"
-#include "../../include/gen/bhkCMSD_Shape.h"
+#include "../../include/gen/bhkCMSDBigTris.h"
 using namespace Niflib;
 
 //Constructor

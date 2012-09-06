@@ -2453,7 +2453,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\src\gen\bhkCMSD_Shape.cpp"
+					RelativePath=".\src\gen\bhkCMSDBigTris.cpp"
 					>
 				</File>
 				<File
@@ -4643,7 +4643,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\include\gen\bhkCMSD_Shape.h"
+					RelativePath=".\include\gen\bhkCMSDBigTris.h"
 					>
 				</File>
 				<File

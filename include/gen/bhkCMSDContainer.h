@@ -11,7 +11,7 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../NIF_IO.h"
 
 // Include structures
-#include "bhkCMSD_Shape.h"
+#include "bhkCMSDBigTris.h"
 namespace Niflib {
 
 
@@ -34,7 +34,7 @@ struct bhkCMSDContainer {
 	/*! Unknown */
 	unsigned short unknownShort2;
 	/*! Unknown */
-	array<4,bhkCMSD_Shape > shape;
+	array<4,bhkCMSDBigTris > shape;
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

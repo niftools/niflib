@@ -1407,7 +1407,7 @@
     <ClCompile Include="src\gen\AVObject.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
-    <ClCompile Include="src\gen\bhkCMSD_Shape.cpp">
+    <ClCompile Include="src\gen\bhkCMSDBigTris.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
     <ClCompile Include="src\gen\bhkCMSDMaterial.cpp">
@@ -3035,7 +3035,7 @@
     <ClInclude Include="include\gen\AVObject.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
-    <ClInclude Include="include\gen\bhkCMSD_Shape.h">
+    <ClInclude Include="include\gen\bhkCMSDBigTris.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
     <ClInclude Include="include\gen\bhkCMSDMaterial.h">
