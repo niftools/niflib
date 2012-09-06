@@ -60,6 +60,282 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
+	/*!
+	 * Shader flags used by Skyrim
+	 * \return The value of the shader flags
+	 */
+	NIFLIB_API unsigned int getShaderFlags1();
+
+	/*!
+	 * Sets the value of the shader flags used by Skyrim
+	 * \param[in] The new value of the shader flags
+	 */
+	NIFLIB_API void setShaderFlags1(unsigned int value);
+
+	/*!
+	 * Gets the second set of shader flags used by Skyrim
+	 * \return The value of the second set of flags
+	 */
+	NIFLIB_API unsigned int getShaderFlags2();
+
+	/*!
+	 * Sets the value of the second set of skyrim shader flags
+	 * \param[in] the value of the second set of flags
+	 */
+	NIFLIB_API void setShaderFlags2(unsigned int value); 
+
+	/*!
+	 * Used to reposition the texture coordinates of the uv's
+	 * \return The texture translation the the uv's
+	 */
+	NIFLIB_API TexCoord getTextureTranslation1();
+
+	/*!
+	 * Sets the value of the texture offset of the uv's
+	 * \param[in] The new value of the uv offsets
+	 */
+	NIFLIB_API void setTextureTranslation1(TexCoord value);
+
+	/*!
+	 * Used to get the offset of the texture coordinates or uv's
+	 * \return The second texture offsets for the uv
+	 */
+	NIFLIB_API TexCoord getTextureRepeat();
+
+	/*!
+	 * Used to set the second texture offsets
+	 * \param[in] The second texture offsets
+	 */
+	NIFLIB_API void setTextureRepeat(TexCoord value);
+
+	/*!
+	 * Returns the current texture set used
+	 * \return A reference to the texture set
+	 */
+	NIFLIB_API Ref<BSShaderTextureSet > getTextureSet();
+
+	/*!
+	 * Sets the texture set used by this material
+	 * \param[in] A reference to the texture set
+	 */
+	NIFLIB_API void setTextureSet(BSShaderTextureSet * value);
+
+	/*!
+	 * Returns the emissive color of the material
+	 * \return The emissive color value
+	 */
+	NIFLIB_API Color3 getEmissiveColor();
+
+	/*!
+	 * Sets the emissive color of this material
+	 * \param[in] The new emissive color
+	 */
+	NIFLIB_API void setEmissiveColor(Color3 value);
+
+	/*!
+	 * Get the emissive saturation
+	 * \return The emissive saturation
+	 */
+	NIFLIB_API float getEmissiveSaturation();
+
+	/*!
+	 * Sets the emissive saturation of the material
+	 * \param[in] The new emissive saturation value
+	 */
+	NIFLIB_API void setEmissiveSaturation(float value);
+
+	/*!
+	 * Gets unknown unsigned int7
+	 * \return The current value
+	 */
+	NIFLIB_API unsigned int  getUnkownInt7();
+
+	/*!
+	 * Sets the unknown int7 of this material
+	 * \param[in] The new value
+	 */
+	NIFLIB_API void setUnknownInt7(unsigned int value);
+
+	/*!
+	 * Get the transparency or "alpha" of this material
+	 * \return The current alpha value of the material
+	 */
+	NIFLIB_API float getAlpha();
+
+	/*!
+	 * Sets the transparency or alpha of this material
+	 * \param[in] The new alpha value
+	 */
+	NIFLIB_API void setAlpha(float value);
+
+	/*!
+	 * Get the unknown float2 of the material
+	 * \return The unknown float2 value
+	 */
+	NIFLIB_API float getUnknownFloat2();
+
+	/*!
+	 * Sets the unknown float2 of the material
+	 * \param[in] The new unknown float2 value
+	 */
+	 NIFLIB_API void setUnknownFloat2(float value);
+
+	/*!
+	 * Gets the glossiness of the material
+	 * \return The glossiness 
+	 */
+	NIFLIB_API float getGlossiness();
+
+	/*!
+	 * Sets the glossiness of the material
+	 * \param[in] The new glossiness value
+	 */
+	NIFLIB_API void setGlossiness(float value);
+
+	/*!
+	 * Gets the specular color of the material
+	 * \return The specular color
+	 */
+	NIFLIB_API Color3 getSpecularColor();
+
+	/*!
+	 * Sets the specular color of the material
+	 * \param[in] The new specular color 
+	 */
+	NIFLIB_API void setSpecularColor(Color3 value);
+
+	/*!
+	 * Gets the specular strength of the material
+	 * \return The specular strength value
+	 */
+	NIFLIB_API float getSpecularStrength();
+
+	/*!
+	 * Sets the specular strength of the material
+	 * \param[in] The new specular strength value
+	 */
+	NIFLIB_API void setSpecularStrength(float value);
+
+	/*!
+	 * Gets the lightning effect1 of the material
+	 * \return The lightning effect2 value 
+	 */
+	NIFLIB_API float getLightningEffect1();
+
+	/*!
+	 * Sets the lightning effect1 of the material
+	 * \param[in] The new lighting effect1 value
+	 */
+	NIFLIB_API void setLightningEffect1(float value);
+
+	/*!
+	 * Gets the lightning effect2 of the material
+	 * \return The lightning effect2 value
+	 */
+	NIFLIB_API float getLightningEffect2();
+
+	/*!
+	 * Sets the lightning effect2 of the material
+	 * \param[in] The new lighting effect2 of the material
+	 */
+	NIFLIB_API void setLightningEffect2(float value);
+
+	/*!
+	 * Gets the environment map strength of the material
+	 * \return The environment map strength
+	 */
+	NIFLIB_API float getEnvironmentMapStrength();
+
+	/*!
+	 * Sets the environment map strength of the material
+	 * \param[in] The new environment map strength value
+	 */
+	NIFLIB_API void setEnvironmentMapStrength(float value);
+
+	/*!
+	 * Sets unknown float set3 of the material related to hair
+	 * \return The unknown float set3 value
+	 */
+	NIFLIB_API array<2, float> getUnknownFloatSet3();
+
+	/*!
+	 * Sets the unknown float set3 of the material
+	 * \param[in] The new unknown float set3 value 
+	 */
+	NIFLIB_API void setUnknownFloatSet3(array<2, float> value);
+
+	/*!
+	 * Gets the unknown float9 of the material
+	 * \return The unknown float9 value
+	 */
+	NIFLIB_API float getUnknownFloat9();
+
+	/*!
+	 * Sets the unknown float9 of the material
+	 * \param[in] The new unknown float9 value
+	 */
+	NIFLIB_API void setUnknownFloat9(float value);
+
+	/*!
+	 * Gets the unknown color2 of the material
+	 * \return The unknown color2 value
+	 */
+	NIFLIB_API Color4 getUnknownColor2();
+
+	/*!
+	 * Sets the unknown color2 of the material
+	 * \param[in] The new unknown color2 value
+	 */
+	NIFLIB_API void setUnknownColor2(Color4 value);
+
+	/*!
+	 * Gets the unknown float set5 of the material
+	 * \return The unknown float set5 value
+	 */
+	NIFLIB_API Vector4 getUnknownFloatSet5();
+
+	/*!
+	 * Sets the unknown float set5 of the material
+	 * \param[in] The new unknown float set5 value
+	 */
+	NIFLIB_API void setUnknownFloatSet5(Vector4 value);
+
+	/*!
+	 * Get the eye cubemap scale
+	 * \return The eye cubemap scale value
+	 */
+	NIFLIB_API float getEyeCubemapScale();
+
+	/*!
+	 * Sets the eye cubemap scale
+	 * \param[in] The new eye cubemap scale value
+	 */
+	NIFLIB_API void setEyeCubemapScale(float value);
+
+	/*!
+	 * Gets the left eye reflection center
+	 * \return The left eye reflection center value
+	 */
+	NIFLIB_API Vector3 getLeftEyeReflectionCenter();
+
+	/*!
+	 * Sets the left eye reflection center
+	 * \param[in] The new left eye reflection center value
+	 */
+	NIFLIB_API void setLeftEyeReflectionCenter(Vector3 value);
+
+	/*!
+	 * Get the right eye reflection center
+	 * \return The right eye reflection center value
+	 */
+	NIFLIB_API Vector3 getRightEyeReflectionCenter();
+
+	/*!
+	 * Sets the right eye reflection center
+	 * \param[in] The new right eye reflection center value
+	 */
+	NIFLIB_API void setRightEyeReflectionCenter(Vector3 value);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Skyrim Shader Flags for setting render/shader options. */

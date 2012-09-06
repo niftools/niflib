@@ -195,5 +195,20 @@ std::list<NiObject *> bhkCompressedMeshShape::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+NiAVObject* bhkCompressedMeshShape::GetTarget() const {
+	return target;
+}
+
+void bhkCompressedMeshShape::SetTarget(NiAVObject* value) {
+	target = value;
+}
+
+Ref<bhkCompressedMeshShapeData> bhkCompressedMeshShape::GetData() const {
+	return data;
+}
+
+void bhkCompressedMeshShape::SetData(Ref<bhkCompressedMeshShapeData > value) {
+	data = value;
+}
 
 //--END CUSTOM CODE--//

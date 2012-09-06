@@ -29,6 +29,9 @@ public:
 	/*! Constructor */
 	NIFLIB_API RefObject();
 
+	/*! Copy Constructor */
+	NIFLIB_API RefObject(const RefObject& src);
+
 	/*! Destructor */
 	NIFLIB_API virtual ~RefObject();
 

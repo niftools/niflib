@@ -19,6 +19,7 @@ class NiObject;
 class Type {
 public:
 	NIFLIB_API Type (const string & type_name, const Type * par_type );
+	NIFLIB_API Type (const Type& src);
 	NIFLIB_API ~Type();
 
 	NIFLIB_API string GetTypeName() const;

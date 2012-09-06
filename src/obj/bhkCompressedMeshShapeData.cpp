@@ -405,5 +405,154 @@ std::list<NiObject *> bhkCompressedMeshShapeData::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+const unsigned int bhkCompressedMeshShapeData::GetBitsPerIndex() const {
+	return bitsPerIndex;
+}
+
+void bhkCompressedMeshShapeData::SetBitsPerIndex(unsigned int value) {
+	bitsPerIndex = value;
+}
+
+const unsigned int bhkCompressedMeshShapeData::GetBitsPerWIndex() const {
+	return bitsPerWIndex;
+}
+
+void bhkCompressedMeshShapeData::SetBitsPerWIndex(unsigned int value) {
+	bitsPerWIndex = value;
+}
+
+const unsigned int bhkCompressedMeshShapeData::GetMaskWIndex() const {
+	return maskWIndex;
+}
+
+void bhkCompressedMeshShapeData::SetMaskWIndex(unsigned int value) {
+	maskWIndex = value;
+}
+
+const unsigned int bhkCompressedMeshShapeData::GetMaskIndex() const {
+	return maskIndex;
+}
+
+void bhkCompressedMeshShapeData::SetMaskIndex(unsigned int value) {
+	maskIndex = value;
+}
+
+const float bhkCompressedMeshShapeData::GetError() const {
+	return error;
+}
+
+void bhkCompressedMeshShapeData::SetError(float value) {
+	error = value;
+}
+
+const Vector4 bhkCompressedMeshShapeData::GetBoundsMin() const {
+	return boundsMin;
+}
+
+void bhkCompressedMeshShapeData::SetBoundsMin(Vector4 value) {
+	boundsMin = value;
+}
+
+const Vector4 bhkCompressedMeshShapeData::GetBoundsMax() const {
+	return boundsMax;
+}
+
+void bhkCompressedMeshShapeData::SetBoundsMax(Vector4 value) {
+	boundsMax = value;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumMaterials() const {
+	return numMaterials;
+}
+
+void bhkCompressedMeshShapeData::SetNumMaterials(unsigned int value) {
+	numMaterials = value;
+}
+
+const vector<bhkCMSD_Something> & bhkCompressedMeshShapeData::GetChunkMaterials() const {
+	return chunkMaterials;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetChunkMaterials(vector<bhkCMSD_Something>& theChunkMaterials)
+{
+	numMaterials   = theChunkMaterials.size();
+	chunkMaterials = theChunkMaterials;
+	return numMaterials;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumTransforms() const {
+	return numTransforms;
+}
+
+void bhkCompressedMeshShapeData::SetNumTransforms(unsigned int value) {
+	numTransforms = value;
+}
+
+const vector<bhkCMSDTransform> & bhkCompressedMeshShapeData::GetChunkTransforms() const {
+	return chunkTransforms;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetChunkTransforms(vector<bhkCMSDTransform>& theChunkTransforms)
+{
+	numTransforms   = theChunkTransforms.size();
+	chunkTransforms = theChunkTransforms;
+	return numTransforms;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumBigVerts() const {
+	return numBigVerts;
+}
+
+void bhkCompressedMeshShapeData::SetNumBigVerts(unsigned int value) {
+	numBigVerts = value;
+}
+
+const vector<Vector4> & bhkCompressedMeshShapeData::GetBigVerts() const {
+	return bigVerts;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetBigVerts(vector<Vector4>& theBigVerts)
+{
+	numBigVerts = theBigVerts.size();
+	bigVerts    = theBigVerts;
+	return numBigVerts;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumBigTris() const {
+	return numBigTris;
+}
+
+void bhkCompressedMeshShapeData::SetNumBigTris(unsigned int value) {
+	numBigTris = value;
+}
+
+const vector<bhkCMSDBigTris> & bhkCompressedMeshShapeData::GetBigTris() const {
+	return bigTris;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetBigTris(vector<bhkCMSDBigTris>& theBigVerts)
+{
+	numBigTris = theBigVerts.size();
+	bigTris    = theBigVerts;
+	return numBigTris;
+}
+
+unsigned int bhkCompressedMeshShapeData::GetNumChunks() const {
+	return numChunks;
+}
+
+void bhkCompressedMeshShapeData::SetNumChunks(unsigned int value) {
+	numChunks = value;
+}
+
+const vector<bhkCMSDChunk> & bhkCompressedMeshShapeData::GetChunks() const {
+	return chunks;
+}
+
+unsigned int bhkCompressedMeshShapeData::SetChunks(vector<bhkCMSDChunk>& theChunks) {
+	numChunks = theChunks.size();
+	chunks    = theChunks;
+	return numChunks;
+}
 
 //--END CUSTOM CODE--//

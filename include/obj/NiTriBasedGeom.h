@@ -11,6 +11,7 @@ All rights reserved.  Please see niflib.h for license. */
 #define _NITRIBASEDGEOM_H_
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include "../gen/BodyPartList.h"
 //--END CUSTOM CODE--//
 
 #include "NiGeometry.h"

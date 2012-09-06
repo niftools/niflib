@@ -659,12 +659,12 @@ void NiGeometryData::SetBound(Vector3 const & center, float radius)
 
 
 byte NiGeometryData::GetTspaceFlag() const {
-   return numUvSets | bsNumUvSets;
+   return (numUvSets | bsNumUvSets) >> 8;
 }
 
 void NiGeometryData::SetTspaceFlag( byte value ) {
-   numUvSets = value;
-   bsNumUvSets = value;
+   numUvSets = ((value << 8) | numUvSets);
+   bsNumUvSets = ((value << 8) | bsNumUvSets);
 }
 
 bool NiGeometryData::GetHasNormals() const {

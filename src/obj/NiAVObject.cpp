@@ -28,6 +28,9 @@ NiAVObject::NiAVObject() : flags((unsigned short)0), unknownShort1((unsigned sho
 
 	parent = NULL;
 
+
+	parent = NULL;
+
 	//--END CUSTOM CODE--//
 }
 

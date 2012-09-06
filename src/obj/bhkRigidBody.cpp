@@ -24,6 +24,19 @@ const Type bhkRigidBody::TYPE("bhkRigidBody", &bhkEntity::TYPE );
 
 bhkRigidBody::bhkRigidBody() : unknownInt1((int)0), unknownInt2((int)0x00000001), unknown3Ints(3,(int)0,(int)0,(int)0x80000000), collisionResponse_((hkResponseType)RESPONSE_SIMPLE_CONTACT), unknownByte((byte)0xbe), processContactCallbackDelay_((unsigned short)0xffff), unknown2Shorts(2,(unsigned short)35899,(unsigned short)16336), layerCopy((OblivionLayer)OL_STATIC), colFilterCopy((byte)0), unknown7Shorts(7,(unsigned short)0,(unsigned short)21280,(unsigned short)2481,(unsigned short)62977,(unsigned short)65535,(unsigned short)44,(unsigned short)0), mass(1.0f), linearDamping(0.1f), angularDamping(0.05f), unknownTimefactorOrGravityfactor1(0.0f), unknownTimefactorOrGravityfactor2(0.0f), friction(0.3f), rollingfrictionmultiplier_(0.0f), restitution(0.3f), maxLinearVelocity(250.0f), maxAngularVelocity(31.4159f), penetrationDepth(0.15f), motionSystem((MotionSystem)MO_SYS_DYNAMIC), deactivatorType((DeactivatorType)DEACTIVATOR_NEVER), solverDeactivation((SolverDeactivation)SOLVER_DEACTIVATION_OFF), qualityType((MotionQuality)MO_QUAL_FIXED), unknownInt6((unsigned int)512), unknownInt7((unsigned int)160), unknownInt8((unsigned int)161), unknownInt81((unsigned int)0), numConstraints((unsigned int)0), unknownInt9((unsigned int)0), unknownInt91((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
+	for (short i(0); i < 3; ++i)
+	{
+		unknown3Ints[i] = src.unknown3Ints[i];
+	}
+	for (short i(0); i < 2; ++i)
+	{
+		unknown2Shorts[i] = src.unknown2Shorts[i];
+	}
+	for (short i(0); i < 7; ++i)
+	{
+		unknown7Shorts[i] = src.unknown7Shorts[i];
+	}
+	//vector<Ref<bhkSerializable > > constraints;	vector<Ref<bhkSerializable > > constraints;
 	//--END CUSTOM CODE--//
 }
 

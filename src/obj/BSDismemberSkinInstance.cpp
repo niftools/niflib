@@ -127,7 +127,10 @@ vector<BodyPartList > BSDismemberSkinInstance::GetPartitions() const {
 }
 
 void BSDismemberSkinInstance::SetPartitions( const vector<BodyPartList >& value ) {
-   partitions = value;
+   partitions.clear();
+   for(unsigned int i = 0; i < value.size(); i++) {
+	   partitions.push_back(value[i]);
+   }
 }
 
 //--END CUSTOM CODE--//

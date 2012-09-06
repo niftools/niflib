@@ -61,6 +61,7 @@ class NiObject;
 class NiNode;
 class NiAVObject;
 class NiControllerSequence;
+struct Header;
 
 #ifndef NULL
 #define NULL 0  /*!< Definition used to detect null pointers. */ 
@@ -106,6 +107,21 @@ enum ExportOptions {
  * \endcode
  */
 NIFLIB_API unsigned int GetNifVersion( string const & file_name );
+
+/*!
+ * Returns the nif info without reading the entire file which includes the nif version,
+ * the nif user version1 and the nif user version2
+ * \param The full path to the nif file which includes the file name and the location of the nif file
+ * \return The nif info structure which contains the nif header info
+ */
+NIFLIB_API NifInfo ReadHeaderInfo( string const & file_name );
+
+/*!
+ * Returns the nif header without reading the entire file 
+ * \param The full path to the nif file which includes the file name and the location of the nif file
+ * \return The nif info structure which contains the nif header
+ */
+NIFLIB_API Header ReadHeader( string const & file_name );
 
 /*!
  * Return the missing link stack with objects replaced from nif trees at specified root.
