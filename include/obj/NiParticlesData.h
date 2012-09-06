@@ -93,12 +93,17 @@ protected:
 	bool hasRotationAxes;
 	/*! Unknown */
 	vector<Vector3 > rotationAxes;
-	/*! Unknown ushort */
-	bool hasUnknownStuff1;
+	/*! if value is no, a single image rendered */
+	bool hasUvQuadrants;
+	/*!
+	 * 2,4,8,16,32,64 are potential values. If "Has" was no then this should be 256,
+	 * which represents a 16x16 framed image, which is invalid
+	 */
+	mutable byte numUvQuadrants;
+	/*! Unknown. */
+	vector<Vector4 > uvQuadrants;
 	/*! Unknown */
-	mutable short numUnknownStuff1;
-	/*! Unknown */
-	vector<Vector4 > unknownStuff1;
+	byte unknownByte2;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

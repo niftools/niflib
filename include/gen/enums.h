@@ -93,6 +93,30 @@ enum HavokMaterial {
 	HAV_MAT_SNOW_STAIRS = 29, /*!< Snow Stairs */
 	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
 	HAV_MAT_RUBBER = 31, /*!< Rubber */
+	SKY_HAV_MAT_LIGHT_WOOD = 365420259, /*!< Light Wood */
+	SKY_HAV_MAT_BROKEN_STONE = 131151687, /*!< Broken Stone */
+	SKY_HAV_MAT_SNOW = 398949039, /*!< Snow */
+	SKY_HAV_MAT_GRAVEL = 428587608, /*!< Gravel */
+	SKY_HAV_MAT_MATERIAL_CHAIN_METAL = 438912228, /*!< MaterialChainMetal */
+	SKY_HAV_MAT_WOOD = 500811281, /*!< Wood */
+	SKY_HAV_MAT_BARREL = 732141076, /*!< Barrel */
+	SKY_HAV_MAT_MATERIAL_BASKET = 790784366, /*!< Material Basket */
+	SKY_HAV_MAT_ICE = 873356572, /*!< Ice */
+	SKY_HAV_MAT_STAIRSSTONE = 899511101, /*!< Stairs Stone */
+	SKY_HAV_MAT_MATERIAL_BLADE_1HAND = 1060167844, /*!< Material Blade 1 Hand */
+	SKY_HAV_MAT_MATERIALBOOK = 1264672850, /*!< Material Book */
+	SKY_HAV_MAT_SOLID_METAL = 1288358971, /*!< Solid Metal */
+	SKY_HAV_MAT_MATERIAL_AXE_1HAND = 1305674443, /*!< Material Axe 1Hand */
+	SKY_HAV_MAT_STAIRS_WOOD = 1461712277, /*!< Stairs Wood */
+	SKY_HAV_MAT_MUD = 1486385281, /*!< Mud */
+	SKY_HAV_MAT_STAIRSSNOW = 1560365355, /*!< Stairs Snow */
+	SKY_HAV_MAT_UNKNOWN = 1591009235, /*!< Unknown material in Creation Kit v1.5.24.0. Found in trap objects. */
+	SKY_HAV_MAT_MATERIAL_BOWS_STAVES = 1607128641, /*!< Material Bows Staves */
+	SKY_HAV_MAT_GRASS = 1848600814, /*!< Grass */
+	SKY_HAV_MAT_MATERIAL_BOULDER_LARGE = 1885326971, /*!< MaterialBoulderLarge */
+	SKY_HAV_MAT_MATERIALSTONEASSTAIRS = 1886078335, /*!< Material Stone As Stairs */
+	SKY_HAV_MAT_MATERIAL_BLADE_2HAND = 2022742644, /*!< Material Blade 2Hand */
+	SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL = 2025794648, /*!< MaterialBottleSmall */
 };
 
 ostream & operator<<( ostream & out, HavokMaterial const & val );
@@ -115,6 +139,18 @@ enum VelocityType {
 };
 
 ostream & operator<<( ostream & out, VelocityType const & val );
+
+/*!
+ * Animation type used on this position. This specifies the function of this
+ * position.
+ */
+enum AnimationType {
+	SIT = 1, /*!< Actor use sit animation. */
+	SLEEP = 2, /*!< Actor use sleep animation. */
+	LEAN = 4, /*!< Used for lean animations? */
+};
+
+ostream & operator<<( ostream & out, AnimationType const & val );
 
 /*! Determines how a data stream is used? */
 enum DataStreamUsage {
@@ -213,6 +249,12 @@ enum SyncPoint {
 
 ostream & operator<<( ostream & out, SyncPoint const & val );
 
+/*!
+ * Biped bodypart data used for visibility control of triangles.  Options are
+ * Fallout 3, except where marked for Skyrim (uses SBP prefix)
+ *         Skyrim BP names are listed only for vanilla names, different creatures
+ * have different defnitions for naming.
+ */
 enum BSDismemberBodyPartType {
 	BP_TORSO = 0, /*!< Torso */
 	BP_HEAD = 1, /*!< Head */
@@ -228,6 +270,27 @@ enum BSDismemberBodyPartType {
 	BP_RIGHTLEG2 = 11, /*!< Right Leg 2 */
 	BP_RIGHTLEG3 = 12, /*!< Right Leg 3 */
 	BP_BRAIN = 13, /*!< Brain */
+	SBP_30_HEAD = 30, /*!< Skyrim, Head(Human), Body(Atronachs,Beasts), Mask(Dragonpriest) */
+	SBP_31_HAIR = 31, /*!< Skyrim, Hair(human), Far(Dragon), Mask2(Dragonpriest),SkinnedFX(Spriggan) */
+	SBP_32_BODY = 32, /*!< Skyrim, Main body, extras(Spriggan) */
+	SBP_33_HANDS = 33, /*!< Skyrim, Hands L/R, BodyToo(Dragonpriest), Legs(Draugr), Arms(Giant) */
+	SBP_34_FOREARMS = 34, /*!< Skyrim, Forearms L/R, Beard(Draugr) */
+	SBP_35_AMULET = 35, /*!< Skyrim, Amulet */
+	SBP_36_RING = 36, /*!< Skyrim, Ring */
+	SBP_37_FEET = 37, /*!< Skyrim, Feet L/R */
+	SBP_38_CALVES = 38, /*!< Skyrim, Calves L/R */
+	SBP_39_SHIELD = 39, /*!< Skyrim, Shield */
+	SBP_40_TAIL = 40, /*!< Skyrim, Tail(Argonian/Khajiit), Skeleton01(Dragon), FX01(AtronachStorm),FXMist (Dragonpriest), Spit(Chaurus,Spider),SmokeFins(IceWraith) */
+	SBP_41_LONGHAIR = 41, /*!< Skyrim, Long Hair(Human), Skeleton02(Dragon),FXParticles(Dragonpriest) */
+	SBP_42_CIRCLET = 42, /*!< Skyrim, Circlet(Human, MouthFireEffect(Dragon) */
+	SBP_43_EARS = 43, /*!< Skyrim, Ears */
+	SBP_44_BLOODHEAD = 44, /*!< Skyrim, Bloodied dragon head */
+	SBP_45_BLOODWINGL = 45, /*!< Skyrim, Left Bloodied dragon wing, Saddle(Horse) */
+	SBP_46_BLOODWINGR = 46, /*!< Skyrim, Right Bloodied dragon wing */
+	SBP_47_BLOODTAIL = 47, /*!< Skyrim, Bloodied dragon tail */
+	SBP_50_DECAPITATEDHEAD = 50, /*!< Skyrim, Decapitated Head */
+	SBP_51_DECAPITATE = 51, /*!< Skyrim, Decapitate, neck gore */
+	SBP_61_FX01 = 61, /*!< Skyrim, FX01(Humanoid) */
 	BP_SECTIONCAP_HEAD = 101, /*!< Section Cap | Head */
 	BP_SECTIONCAP_HEAD2 = 102, /*!< Section Cap | Head 2 */
 	BP_SECTIONCAP_LEFTARM = 103, /*!< Section Cap | Left Arm */
@@ -241,6 +304,12 @@ enum BSDismemberBodyPartType {
 	BP_SECTIONCAP_RIGHTLEG2 = 111, /*!< Section Cap | Right Leg 2 */
 	BP_SECTIONCAP_RIGHTLEG3 = 112, /*!< Section Cap | Right Leg 3 */
 	BP_SECTIONCAP_BRAIN = 113, /*!< Section Cap | Brain */
+	SBP_130_HEAD = 130, /*!< Skyrim, Head slot, use on full-face helmets */
+	SBP_131_HAIR = 131, /*!< Skyrim, Hair slot 1, use on hoods */
+	SBP_141_LONGHAIR = 141, /*!< Skyrim, Hair slot 2, use for longer hair */
+	SBP_142_CIRCLET = 142, /*!< Skyrim, Circlet slot 1, use for circlets */
+	SBP_143_EARS = 143, /*!< Skyrim, Ear slot */
+	SBP_150_DECAPITATEDHEAD = 150, /*!< Skyrim, neck gore on head side */
 	BP_TORSOCAP_HEAD = 201, /*!< Torso Cap | Head */
 	BP_TORSOCAP_HEAD2 = 202, /*!< Torso Cap | Head 2 */
 	BP_TORSOCAP_LEFTARM = 203, /*!< Torso Cap | Left Arm */
@@ -254,6 +323,7 @@ enum BSDismemberBodyPartType {
 	BP_TORSOCAP_RIGHTLEG2 = 211, /*!< Torso Cap | Right Leg 2 */
 	BP_TORSOCAP_RIGHTLEG3 = 212, /*!< Torso Cap | Right Leg 3 */
 	BP_TORSOCAP_BRAIN = 213, /*!< Torso Cap | Brain */
+	SBP_230_HEAD = 230, /*!< Skyrim, Head slot, use for neck on character head */
 	BP_TORSOSECTION_HEAD = 1000, /*!< Torso Section | Head */
 	BP_TORSOSECTION_HEAD2 = 2000, /*!< Torso Section | Head 2 */
 	BP_TORSOSECTION_LEFTARM = 3000, /*!< Torso Section | Left Arm */
@@ -282,6 +352,18 @@ enum ChannelType {
 };
 
 ostream & operator<<( ostream & out, ChannelType const & val );
+
+/*! Skyrim, sets what sky function this object fulfills in BSSkyShaderProperty. */
+enum SkyObjectType {
+	BSSM_SKY_TEXTURE = 0, /*!< BSSM_Sky_Texture */
+	BSSM_SKY_SUNGLARE = 1, /*!< BSSM_Sky_Sunglare */
+	BSSM_SKY = 2, /*!< BSSM_Sky */
+	BSSM_SKY_CLOUDS = 3, /*!< BSSM_Sky_Clouds */
+	BSSM_SKY_STARS = 5, /*!< BSSM_Sky_Stars */
+	BSSM_SKY_MOON_STARS_MASK = 7, /*!< BSSM_Sky_Moon_Stars_Mask */
+};
+
+ostream & operator<<( ostream & out, SkyObjectType const & val );
 
 /*!
  * Sets mesh color in Oblivion Construction Set.  Anything higher than 57 is also
@@ -591,6 +673,13 @@ enum ImageType {
 
 ostream & operator<<( ostream & out, ImageType const & val );
 
+/*! An unsigned 32-bit integer, describing what's inside the segment. */
+enum BSSegmentFlags {
+	BSSEG_WATER = 9, /*!< Contains water. */
+};
+
+ostream & operator<<( ostream & out, BSSegmentFlags const & val );
+
 /*! An unsigned 32-bit integer, describing the color depth of a texture. */
 enum PixelLayout {
 	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
@@ -761,6 +850,32 @@ enum FieldType {
 
 ostream & operator<<( ostream & out, FieldType const & val );
 
+/*! Values for configuring the shader type in a BSLightingShaderProperty */
+enum BSLightingShaderPropertyShaderType {
+	DEFAULT = 0, /*!< Default */
+	ENVIRONMENT_MAP = 1, /*!< Enables EnvMap Mask(TS6), EnvMap Scale */
+	GLOW_SHADER = 2, /*!< Enables Glow(TS3) */
+	HEIGHTMAP = 3, /*!< Enables Height(TS4) */
+	FACE_TINT = 4, /*!< Enables SubSurface(TS3), Detail(TS4), Tint(TS7) */
+	SKIN_TINT = 5, /*!< Enables Skin Tint Color */
+	HAIR_TINT = 6, /*!< Enables Hair Tint Color */
+	PARALLAX_OCC_MATERIAL = 7, /*!< Enables Height(TS4), Max Passes, Scale.  Unused? */
+	WORLD_MULTITEXTURE = 8, /*!< World Multitexture */
+	WORLDMAP1 = 9, /*!< WorldMap1 */
+	UNKNOWN_10 = 10, /*!< Unknown 10 */
+	MULTILAYER_PARALLAX = 11, /*!< Enables EnvMap Mask(TS6), Layer(TS7), Parallax Layer Thickness, Parallax Refraction Scale, Parallax Inner Layer U Scale, Parallax Inner Layer V Scale, EnvMap Scale */
+	UNKNOWN_12 = 12, /*!< Unknown 12 */
+	WORLDMAP2 = 13, /*!< WorldMap2 */
+	SPARKLE_SNOW = 14, /*!< Enables SparkleParams */
+	WORLDMAP3 = 15, /*!< WorldMap3 */
+	EYE_ENVMAP = 16, /*!< Enables EnvMap Mask(TS6), Eye EnvMap Scale */
+	UNKNOWN_17 = 17, /*!< Unknown 17 */
+	WORLDMAP4 = 18, /*!< WorldMap4 */
+	WORLD_LOD_MULTITEXTURE = 19, /*!< World LOD Multitexture */
+};
+
+ostream & operator<<( ostream & out, BSLightingShaderPropertyShaderType const & val );
+
 /*! Determines decay function.  Used by NiPSysBombModifier. */
 enum DecayType {
 	DECAY_NONE = 0, /*!< No decay. */
@@ -780,6 +895,58 @@ enum EmitFrom {
 };
 
 ostream & operator<<( ostream & out, EmitFrom const & val );
+
+/*! Skyrim water shader property flags */
+enum SkyrimWaterShaderFlags {
+	SWSF1_UNKNOWN0 = 1, /*!< Unknown */
+	SWSF1_BYPASS_REFRACTION_MAP = 2, /*!< Bypasses refraction map when set to 1 */
+	SWSF1_WATER_TOGGLE = 4, /*!< Main water Layer on/off */
+	SWSF1_UNKNOWN3 = 8, /*!< Unknown */
+	SWSF1_UNKNOWN4 = 16, /*!< Unknown */
+	SWSF1_UNKNOWN5 = 32, /*!< Unknown */
+	SWSF1_HIGHLIGHT_LAYER_TOGGLE = 64, /*!< Reflection layer 2 on/off. (is this scene reflection?) */
+	SWSF1_ENABLED = 128, /*!< Water layer on/off */
+};
+
+ostream & operator<<( ostream & out, SkyrimWaterShaderFlags const & val );
+
+/*! Skyrim Shader Property Flags 1 */
+enum SkyrimShaderPropertyFlags1 {
+	SLSF1_SPECULAR = 1, /*!< Enables Specularity */
+	SLSF1_SKINNED = 2, /*!< Required For Skinned Meshes. */
+	SLSF1_TEMP_REFRACTION = 4, /*!< Unknown */
+	SLSF1_VERTEX_ALPHA = 8, /*!< Enables using alpha component of vertex colors. */
+	SLSF1_GREYSCALE_TO_PALETTECOLOR = 16, /*!< in EffectShaderProperty */
+	SLSF1_GREYSCALE_TO_PALETTEALPHA = 32, /*!< in EffectShaderProperty */
+	SLSF1_USE_FALLOFF = 64, /*!< Use Falloff value in EffectShaderProperty */
+	SLSF1_ENVIRONMENT_MAPPING = 128, /*!< Environment mapping (uses Envmap Scale). */
+	SLSF1_RECIEVE_SHADOWS = 256, /*!< Object can recieve shadows. */
+	SLSF1_CAST_SHADOWS = 512, /*!< Can cast shadows */
+	SLSF1_FACEGEN_DETAIL_MAP = 1024, /*!< Use a face detail map in the 4th texture slot. */
+	SLSF1_PARALLAX = 2048, /*!< Unused? */
+	SLSF1_MODEL_SPACE_NORMALS = 4096, /*!< Use Model space normals and an external Specular Map. */
+	SLSF1_NON_PROJECTIVE_SHADOWS = 8192, /*!< Unknown. */
+	SLSF1_LANDSCAPE = 16384, /*!< Unknown. */
+	SLSF1_REFRACTION = 32768, /*!< Use normal map for refraction effect. */
+	SLSF1_FIRE_REFRACTION = 65536, /*!< SLSF1_Fire_Refraction */
+	SLSF1_EYE_ENVIRONMENT_MAPPING = 131072, /*!< Eye Environment Mapping (Must use the Eye shader and the model must be skinned) */
+	SLSF1_HAIR_SOFT_LIGHTING = 262144, /*!< Keeps from going too bright under lights (hair shader only) */
+	SLSF1_SCREENDOOR_ALPHA_FADE = 524288, /*!< SLSF1_Screendoor_Alpha_Fade */
+	SLSF1_LOCALMAP_HIDE_SECRET = 1048576, /*!< Object and anything it is positioned above will not render on local map view. */
+	SLSF1_FACEGEN_RGB_TINT = 2097152, /*!< Use tintmask for Face. */
+	SLSF1_OWN_EMIT = 4194304, /*!< Provides its own emittance color. (will not absorb light/ambient color?) */
+	SLSF1_PROJECTED_UV = 8388608, /*!< Used for decalling? */
+	SLSF1_MULTIPLE_TEXTURES = 16777216, /*!< SLSF1_Multiple_Textures */
+	SLSF1_REMAPPABLE_TEXTURES = 33554432, /*!< SLSF1_Remappable_Textures */
+	SLSF1_DECAL = 67108864, /*!< SLSF1_Decal */
+	SLSF1_DYNAMIC_DECAL = 134217728, /*!< SLSF1_Dynamic_Decal */
+	SLSF1_PARALLAX_OCCLUSION = 268435456, /*!< SLSF1_Parallax_Occlusion */
+	SLSF1_EXTERNAL_EMITTANCE = 536870912, /*!< SLSF1_External_Emittance */
+	SLSF1_SOFT_EFFECT = 1073741824, /*!< SLSF1_Soft_Effect */
+	SLSF1_ZBUFFER_TEST = 2147483648, /*!< ZBuffer Test (1=on) */
+};
+
+ostream & operator<<( ostream & out, SkyrimShaderPropertyFlags1 const & val );
 
 /*! Shader Property Flags */
 enum BSShaderFlags {
@@ -819,6 +986,20 @@ enum BSShaderFlags {
 
 ostream & operator<<( ostream & out, BSShaderFlags const & val );
 
+/*!
+ * Furniture entry points. It specifies the direction(s) from where the actor is
+ * able to enter (and leave) the position.
+ */
+enum FurnitureEntryPoints {
+	FRONT = 1, /*!< front entry point */
+	BEHIND = 2, /*!< behind entry point */
+	RIGHT = 4, /*!< right entry point */
+	LEFT = 8, /*!< left entry point */
+	UP = 16, /*!< up entry point - unknown function. Used on some beds in Skyrim, probably for blocking of sleeping position. */
+};
+
+ostream & operator<<( ostream & out, FurnitureEntryPoints const & val );
+
 /*! Editor flags for the Body Partitions. */
 enum BSPartFlag {
 	PF_EDITOR_VISIBLE = 1, /*!< Visible in Editor */
@@ -826,82 +1007,6 @@ enum BSPartFlag {
 };
 
 ostream & operator<<( ostream & out, BSPartFlag const & val );
-
-/*! Skyrim Shader Property Flags 2 */
-enum SkyrimLightingShaderFlags2 {
-	SLSF2_ZBUFFER_WRITE = 1, /*!< Enables writing to the Z-Buffer */
-	SLSF2_1 = 2, /*!< SLSF2_1 */
-	SLSF2_2 = 4, /*!< SLSF2_2 */
-	SLSF2_3 = 8, /*!< SLSF2_3 */
-	SLSF2_DOUBLE_SIDED = 16, /*!< Double-sided rendering */
-	SLSF2_VERTEX_COLOR = 32, /*!< Has Vertex Colors (Maybe, could be Vertex Alpha?) */
-	SLSF2_GLOW_MAP = 64, /*!< Use Glow Map */
-	SLSF2_7 = 128, /*!< SLSF2_7 */
-	SLSF2_8 = 256, /*!< SLSF2_8 */
-	SLSF2_9 = 512, /*!< SLSF2_9 */
-	SLSF2_10 = 1024, /*!< SLSF2_10 */
-	SLSF2_11 = 2048, /*!< SLSF2_11 */
-	SLSF2_12 = 4096, /*!< SLSF2_12 */
-	SLSF2_13 = 8192, /*!< SLSF2_13 */
-	SLSF2_14 = 16384, /*!< SLSF2_14 */
-	SLSF2_15 = 32768, /*!< SLSF2_15 */
-	SLSF2_16 = 65536, /*!< Wireframe (Seems to only work on particles) */
-	SLSF2_17 = 131072, /*!< SLSF2_17 */
-	SLSF2_18 = 262144, /*!< SLSF2_18 */
-	SLSF2_19 = 524288, /*!< SLSF2_19 */
-	SLSF2_20 = 1048576, /*!< SLSF2_20 */
-	SLSF2_21 = 2097152, /*!< SLSF2_21 */
-	SLSF2_22 = 4194304, /*!< SLSF2_22 */
-	SLSF2_23 = 8388608, /*!< SLSF2_23 */
-	SLSF2_MULTI_LAYER = 16777216, /*!< Use Multilayer (inner-layer) Map */
-	SLSF2_SOFT_LIGHT = 33554432, /*!< Use Soft Lighting Map */
-	SLSF2_RIM_LIGHT = 67108864, /*!< Use Rim Lighting Map */
-	SLSF2_BACK_LIGHT = 134217728, /*!< Use Back Lighting Map */
-	SLSF2_28 = 268435456, /*!< SLSF2_28 */
-	SLSF2_VERTEX_ANIMATION = 536870912, /*!< Enables Vertex Animation */
-	SLSF2_30 = 1073741824, /*!< SLSF2_30 */
-	SLSF2_31 = 2147483648, /*!< SLSF2_31 */
-};
-
-ostream & operator<<( ostream & out, SkyrimLightingShaderFlags2 const & val );
-
-/*! Skyrim Shader Property Flags 1 */
-enum SkyrimLightingShaderFlags1 {
-	SLSF1_SPECULAR = 1, /*!< Enables Specularity */
-	SLSF1_SKINNED = 2, /*!< Required For Skinned Meshes */
-	SLSF1_2 = 4, /*!< SLSF1_2 */
-	SLSF1_3 = 8, /*!< SLSF1_3 */
-	SLSF1_4 = 16, /*!< SLSF1_4 */
-	SLSF1_5 = 32, /*!< SLSF1_5 */
-	SLSF1_6 = 64, /*!< SLSF1_6 */
-	SLSF1_ENVIRONMENT_MAPPING = 128, /*!< Environment mapping (uses Envmap Scale) */
-	SLSF1_8 = 256, /*!< SLSF1_8 */
-	SLSF1_CAST_SHADOWS = 512, /*!< Can cast shadows */
-	SLSF1_10 = 1024, /*!< SLSF1_10 */
-	SLSF1_11 = 2048, /*!< SLSF1_11 */
-	SLSF1_SPECULAR_MAP = 4096, /*!< Use Specular Map */
-	SLSF1_13 = 8192, /*!< SLSF1_13 */
-	SLSF1_14 = 16384, /*!< SLSF1_14 */
-	SLSF1_15 = 32768, /*!< SLSF1_15 */
-	SLSF1_16 = 65536, /*!< SLSF1_16 */
-	SLSF1_EYE_ENVIRONMENT_MAPPING = 131072, /*!< Eye Environment Mapping (Must use the Eye shader and the model must be skinned) */
-	SLSF1_18 = 262144, /*!< SLSF1_18 */
-	SLSF1_19 = 524288, /*!< SLSF1_19 */
-	SLSF1_20 = 1048576, /*!< SLSF1_20 */
-	SLSF1_21 = 2097152, /*!< SLSF1_21 */
-	SLSF1_22 = 4194304, /*!< SLSF1_22 */
-	SLSF1_23 = 8388608, /*!< SLSF1_23 */
-	SLSF1_24 = 16777216, /*!< SLSF1_24 */
-	SLSF1_25 = 33554432, /*!< SLSF1_25 */
-	SLSF1_26 = 67108864, /*!< SLSF1_26 */
-	SLSF1_27 = 134217728, /*!< SLSF1_27 */
-	SLSF1_28 = 268435456, /*!< SLSF1_28 */
-	SLSF1_29 = 536870912, /*!< SLSF1_29 */
-	SLSF1_30 = 1073741824, /*!< SLSF1_30 */
-	SLSF1_ZBUFFER_TEST = 2147483648, /*!< ZBuffer Test (1=on) */
-};
-
-ostream & operator<<( ostream & out, SkyrimLightingShaderFlags1 const & val );
 
 /*! Determines how the data stream is accessed? */
 enum DataStreamAccess {
@@ -917,32 +1022,42 @@ enum DataStreamAccess {
 ostream & operator<<( ostream & out, DataStreamAccess const & val );
 
 /*! Skyrim Shader Property Flags 2 */
-enum SkyrimEffectShaderFlags2 {
-	SESF2_TEXTURE_TRANSFORM_U = 1, /*!< Has Texture Transform (U?) */
-	SESF2_TEXTURE_TRANSFORM_V = 2, /*!< Has Texture Transform (V?) */
-	SESF2_2 = 4, /*!< SESF2_2 */
-	SESF2_3 = 8, /*!< SESF2_3 */
-	SESF2_4 = 16, /*!< SESF2_4 */
-	SESF2_5 = 32, /*!< SESF2_5 */
-	SESF2_6 = 64, /*!< SESF2_6 */
-	SESF2_7 = 128, /*!< SESF2_7 */
+enum SkyrimShaderPropertyFlags2 {
+	SLSF2_ZBUFFER_WRITE = 1, /*!< Enables writing to the Z-Buffer */
+	SLSF2_LOD_LANDSCAPE = 2, /*!< SLSF2_LOD_Landscape */
+	SLSF2_LOD_OBJECTS = 4, /*!< SLSF2_LOD_Objects */
+	SLSF2_NO_FADE = 8, /*!< SLSF2_No_Fade */
+	SLSF2_DOUBLE_SIDED = 16, /*!< Double-sided rendering. */
+	SLSF2_VERTEX_COLORS = 32, /*!< Has Vertex Colors. */
+	SLSF2_GLOW_MAP = 64, /*!< Use Glow Map in the third texture slot. */
+	SLSF2_ASSUME_SHADOWMASK = 128, /*!< SLSF2_Assume_Shadowmask */
+	SLSF2_PACKED_TANGENT = 256, /*!< SLSF2_Packed_Tangent */
+	SLSF2_MULTI_INDEX_SNOW = 512, /*!< SLSF2_Multi_Index_Snow */
+	SLSF2_VERTEX_LIGHTING = 1024, /*!< SLSF2_Vertex_Lighting */
+	SLSF2_UNIFORM_SCALE = 2048, /*!< SLSF2_Uniform_Scale */
+	SLSF2_FIT_SLOPE = 4096, /*!< SLSF2_Fit_Slope */
+	SLSF2_BILLBOARD = 8192, /*!< SLSF2_Billboard */
+	SLSF2_NO_LOD_LAND_BLEND = 16384, /*!< SLSF2_No_LOD_Land_Blend */
+	SLSF2_ENVMAP_LIGHT_FADE = 32768, /*!< SLSF2_EnvMap_Light_Fade */
+	SLSF2_WIREFRAME = 65536, /*!< Wireframe (Seems to only work on particles) */
+	SLSF2_WEAPON_BLOOD = 131072, /*!< Used for blood decals on weapons. */
+	SLSF2_HIDE_ON_LOCAL_MAP = 262144, /*!< Similar to hide secret, but only for self? */
+	SLSF2_PREMULT_ALPHA = 524288, /*!< Has Premultiplied Alpha */
+	SLSF2_CLOUD_LOD = 1048576, /*!< SLSF2_Cloud_LOD */
+	SLSF2_ANISOTROPIC_LIGHTING = 2097152, /*!< Hair only? */
+	SLSF2_NO_TRANSPARENCY_MULTISAMPLING = 4194304, /*!< SLSF2_No_Transparency_Multisampling */
+	SLSF2_UNUSED01 = 8388608, /*!< Unused? */
+	SLSF2_MULTI_LAYER_PARALLAX = 16777216, /*!< Use Multilayer (inner-layer) Map */
+	SLSF2_SOFT_LIGHTING = 33554432, /*!< Use Soft Lighting Map */
+	SLSF2_RIM_LIGHTING = 67108864, /*!< Use Rim Lighting Map */
+	SLSF2_BACK_LIGHTING = 134217728, /*!< Use Back Lighting Map */
+	SLSF2_UNUSED02 = 268435456, /*!< Unused? */
+	SLSF2_TREE_ANIM = 536870912, /*!< Enables Vertex Animation, Flutter Animation */
+	SLSF2_EFFECT_LIGHTING = 1073741824, /*!< SLSF2_Effect_Lighting */
+	SLSF2_HD_LOD_OBJECTS = 2147483648, /*!< SLSF2_HD_LOD_Objects */
 };
 
-ostream & operator<<( ostream & out, SkyrimEffectShaderFlags2 const & val );
-
-/*! Skyrim Shader Property Flags 1 */
-enum SkyrimEffectShaderFlags1 {
-	SESF1_0 = 1, /*!< SESF1_0 */
-	SESF1_1 = 2, /*!< SESF1_1 */
-	SESF1_2 = 4, /*!< SESF1_2 */
-	SESF1_3 = 8, /*!< SESF1_3 */
-	SESF1_DOUBLE_SIDED = 16, /*!< Draw textures double-sided */
-	SESF1_5 = 32, /*!< SESF1_5 */
-	SESF1_6 = 64, /*!< SESF1_6 */
-	SESF1_7 = 128, /*!< SESF1_7 */
-};
-
-ostream & operator<<( ostream & out, SkyrimEffectShaderFlags1 const & val );
+ostream & operator<<( ostream & out, SkyrimShaderPropertyFlags2 const & val );
 
 }
 #endif

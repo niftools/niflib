@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSSkyShaderProperty::TYPE("BSSkyShaderProperty", &NiProperty::TYPE );
 
-BSSkyShaderProperty::BSSkyShaderProperty() : unknownFloat1(0.0f), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0) {
+BSSkyShaderProperty::BSSkyShaderProperty() : shaderFlags1((SkyrimShaderPropertyFlags1)0), shaderFlags2((SkyrimShaderPropertyFlags2)0), uvScale(1.0, 1.0), skyObjectType((SkyObjectType)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,12 +46,12 @@ void BSSkyShaderProperty::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 
 	NiProperty::Read( in, link_stack, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownFloats, in, info );
-	NifStream( texture, in, info );
-	NifStream( unknownInt3, in, info );
+	NifStream( shaderFlags1, in, info );
+	NifStream( shaderFlags2, in, info );
+	NifStream( uvOffset, in, info );
+	NifStream( uvScale, in, info );
+	NifStream( sourceTexture, in, info );
+	NifStream( skyObjectType, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -64,12 +64,12 @@ void BSSkyShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned in
 	//--END CUSTOM CODE--//
 
 	NiProperty::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownFloats, out, info );
-	NifStream( texture, out, info );
-	NifStream( unknownInt3, out, info );
+	NifStream( shaderFlags1, out, info );
+	NifStream( shaderFlags2, out, info );
+	NifStream( uvOffset, out, info );
+	NifStream( uvScale, out, info );
+	NifStream( sourceTexture, out, info );
+	NifStream( skyObjectType, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -83,12 +83,12 @@ std::string BSSkyShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	out << NiProperty::asString();
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Floats:  " << unknownFloats << endl;
-	out << "  Texture:  " << texture << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Shader Flags 1:  " << shaderFlags1 << endl;
+	out << "  Shader Flags 2:  " << shaderFlags2 << endl;
+	out << "  UV Offset:  " << uvOffset << endl;
+	out << "  UV Scale:  " << uvScale << endl;
+	out << "  Source Texture:  " << sourceTexture << endl;
+	out << "  Sky Object Type:  " << skyObjectType << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

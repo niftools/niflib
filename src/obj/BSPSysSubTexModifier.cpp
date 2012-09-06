@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSPSysSubTexModifier::TYPE("BSPSysSubTexModifier", &NiPSysModifier::TYPE );
 
-BSPSysSubTexModifier::BSPSysSubTexModifier() : unknownInt1((unsigned int)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), unknownFloat6(0.0f) {
+BSPSysSubTexModifier::BSPSysSubTexModifier() : startFrame((unsigned int)0), startFrameFudge(0.0f), endFrame(0.0f), loopStartFrame(0.0f), loopStartFrameFudge(0.0f), frameCount(0.0f), frameCountFudge(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,13 +46,13 @@ void BSPSysSubTexModifier::Read( istream& in, list<unsigned int> & link_stack, c
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownFloat2, in, info );
-	NifStream( unknownFloat3, in, info );
-	NifStream( unknownFloat4, in, info );
-	NifStream( unknownFloat5, in, info );
-	NifStream( unknownFloat6, in, info );
+	NifStream( startFrame, in, info );
+	NifStream( startFrameFudge, in, info );
+	NifStream( endFrame, in, info );
+	NifStream( loopStartFrame, in, info );
+	NifStream( loopStartFrameFudge, in, info );
+	NifStream( frameCount, in, info );
+	NifStream( frameCountFudge, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -65,13 +65,13 @@ void BSPSysSubTexModifier::Write( ostream& out, const map<NiObjectRef,unsigned i
 	//--END CUSTOM CODE--//
 
 	NiPSysModifier::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownFloat2, out, info );
-	NifStream( unknownFloat3, out, info );
-	NifStream( unknownFloat4, out, info );
-	NifStream( unknownFloat5, out, info );
-	NifStream( unknownFloat6, out, info );
+	NifStream( startFrame, out, info );
+	NifStream( startFrameFudge, out, info );
+	NifStream( endFrame, out, info );
+	NifStream( loopStartFrame, out, info );
+	NifStream( loopStartFrameFudge, out, info );
+	NifStream( frameCount, out, info );
+	NifStream( frameCountFudge, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -85,13 +85,13 @@ std::string BSPSysSubTexModifier::asString( bool verbose ) const {
 
 	stringstream out;
 	out << NiPSysModifier::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
-	out << "  Unknown Float 3:  " << unknownFloat3 << endl;
-	out << "  Unknown Float 4:  " << unknownFloat4 << endl;
-	out << "  Unknown Float 5:  " << unknownFloat5 << endl;
-	out << "  Unknown Float 6:  " << unknownFloat6 << endl;
+	out << "  Start Frame:  " << startFrame << endl;
+	out << "  Start Frame Fudge:  " << startFrameFudge << endl;
+	out << "  End Frame:  " << endFrame << endl;
+	out << "  Loop Start Frame:  " << loopStartFrame << endl;
+	out << "  Loop Start Frame Fudge:  " << loopStartFrameFudge << endl;
+	out << "  Frame Count:  " << frameCount << endl;
+	out << "  Frame Count Fudge:  " << frameCountFudge << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

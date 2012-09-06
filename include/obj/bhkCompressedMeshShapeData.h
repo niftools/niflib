@@ -17,16 +17,16 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiObject.h"
 
 // Include structures
-#include "../gen/bhkCMSD_Something.h"
-#include "../gen/bhkCMSDData.h"
-#include "../gen/bhkCMSD_Shape.h"
-#include "../gen/bhkCMSDContainer.h"
+#include "../gen/bhkCMSDMaterial.h"
+#include "../gen/bhkCMSDTransform.h"
+#include "../gen/bhkCMSDBigTris.h"
+#include "../gen/bhkCMSDChunk.h"
 namespace Niflib {
 
 class bhkCompressedMeshShapeData;
 typedef Ref<bhkCompressedMeshShapeData> bhkCompressedMeshShapeDataRef;
 
-/*!  */
+/*! A compressed mesh shape for collision in Skyrim. */
 class bhkCompressedMeshShapeData : public NiObject {
 public:
 	/*! Constructor */
@@ -63,24 +63,29 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	unsigned int unknownInt1;
-	/*! Unknown */
-	unsigned int unknownInt2;
-	/*! Unknown */
-	unsigned short unknownShort1;
-	/*! Unknown */
-	unsigned short unknownShort2;
-	/*! Unknown */
-	unsigned short unknownShort3;
-	/*! Unknown */
-	unsigned short unknownShort4;
-	/*! Unknown. */
-	float unknownFloat1;
-	/*! Unknown. */
-	Vector4 unknownFloats1;
-	/*! Unknown. */
-	Vector4 unknownFloats2;
+	/*! Number of bits in the shape-key reserved for a triangle index */
+	unsigned int bitsPerIndex;
+	/*! Number of bits in the shape-key reserved for a triangle index and its winding */
+	unsigned int bitsPerWindex;
+	/*!
+	 * Mask used to get the triangle index and winding from a shape-key (common: 262143
+	 * = 0x3ffff)
+	 */
+	unsigned int windexmask;
+	/*! Mask used to get the triangle index from a shape-key (common: 131071 = 0x1ffff) */
+	unsigned int indexmask;
+	/*! The radius of the storage mesh shape? Quantization error? */
+	float radius_error_;
+	/*!
+	 * The minimum boundary of the AABB (the coordinates of the corner with the lowest
+	 * numerical values)
+	 */
+	Vector4 boundMin;
+	/*!
+	 * The maximum boundary of the AABB (the coordinates of the corner with the highest
+	 * numerical values)
+	 */
+	Vector4 boundMax;
 	/*! Unknown */
 	byte unknownByte1;
 	/*! Unknown */
@@ -91,48 +96,31 @@ protected:
 	unsigned int unknownInt5;
 	/*! Unknown */
 	byte unknownByte2;
-	/*! Number of bhkCMSDSomething */
-	mutable unsigned int somethingCount;
-	/*! Unknown */
-	vector<bhkCMSD_Something > unknownIntSomething;
+	/*! Number of chunk materials */
+	mutable unsigned int numMaterials;
+	/*! Table (array) with sets of materials. Chunks refers to this table by index. */
+	vector<bhkCMSDMaterial > chunkMaterials;
 	/*! Unknown */
 	unsigned int unknownInt6;
-	/*! Format for vertices/? */
-	mutable unsigned int numDataSet;
+	/*! Number of chunk transformations */
+	mutable unsigned int numTransforms;
+	/*!
+	 * Table (array) with sets of transformations. Chunks refers to this table by
+	 * index.
+	 */
+	vector<bhkCMSDTransform > chunkTransforms;
 	/*! Unknown */
-	unsigned int unknownInt7;
-	/*! Unknown */
-	unsigned int unknownInt8;
-	/*! Unknown */
-	unsigned int unknownInt9;
-	/*! Unknown */
-	vector<bhkCMSDData > dataSet1;
-	/*! Unknown */
-	vector<bhkCMSDData > dataSet2;
-	/*! Unknown */
-	float unknownFloat2;
-	/*! Unknown */
-	mutable unsigned int numVertices;
+	mutable unsigned int numBigVerts;
 	/*! Compressed Vertices? */
-	vector<Vector4 > vertices;
+	vector<Vector4 > bigVerts;
 	/*! Unknown */
-	mutable unsigned int numBytes2;
+	mutable unsigned int numBigTris;
 	/*! Unknown */
-	vector< array<12,byte > > unknownBytes;
+	vector<bhkCMSDBigTris > bigTris;
 	/*! Unknown */
-	mutable unsigned int numSubshapes;
-	/*! Unknown */
-	Vector3 unknownFloats3;
-	/*! Unknown */
-	unsigned int unknownInt10;
-	/*! Unknown */
-	unsigned int unknownInt11;
-	/*! Unknown */
-	float unknownFloat3;
-	/*! Unknown */
-	array<4,bhkCMSD_Shape > shapeSet1;
-	/*! Unknown, The first set is always present if 1. */
-	vector<bhkCMSDContainer > shapeSet2;
+	mutable unsigned int numChunks;
+	/*! Unknown. */
+	vector<bhkCMSDChunk > chunks;
 	/*! Unknown, end of block. */
 	unsigned int unknownInt12;
 public:

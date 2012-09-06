@@ -24,10 +24,10 @@ typedef Ref<BSLightingShaderPropertyFloatController> BSLightingShaderPropertyFlo
  * This controller is used to animate variables in
  * BSLightingShaderPropertyFloatController, target is a number in order they
  * appear:
- *     5: Texture Translation U
- *     6: Texture Translation V
- *     7: Texture Repeat U
- *     8: Texture Repeat V
+ *     5: U Offset
+ *     6: V Offset
+ *     7: U Scale
+ *     8: V Scale
  */
 class BSLightingShaderPropertyFloatController : public NiFloatInterpController {
 public:
@@ -65,7 +65,7 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
+	/*! Which variable in the shader to animate. */
 	unsigned int targetVariable;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

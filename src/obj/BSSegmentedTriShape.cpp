@@ -15,13 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSSegmentedTriShape.h"
-#include "../../include/gen/BSSegmentedTriangle.h"
+#include "../../include/gen/BSSegment.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSSegmentedTriShape::TYPE("BSSegmentedTriShape", &NiTriShape::TYPE );
 
-BSSegmentedTriShape::BSSegmentedTriShape() : numSegTriangles((int)0) {
+BSSegmentedTriShape::BSSegmentedTriShape() : numSegments((int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -47,12 +47,12 @@ void BSSegmentedTriShape::Read( istream& in, list<unsigned int> & link_stack, co
 	//--END CUSTOM CODE--//
 
 	NiTriShape::Read( in, link_stack, info );
-	NifStream( numSegTriangles, in, info );
-	segTriangles.resize(numSegTriangles);
-	for (unsigned int i1 = 0; i1 < segTriangles.size(); i1++) {
-		NifStream( segTriangles[i1].unknownInt1, in, info );
-		NifStream( segTriangles[i1].unknownInt2, in, info );
-		NifStream( segTriangles[i1].unknownByte1, in, info );
+	NifStream( numSegments, in, info );
+	segment.resize(numSegments);
+	for (unsigned int i1 = 0; i1 < segment.size(); i1++) {
+		NifStream( segment[i1].internalIndex, in, info );
+		NifStream( segment[i1].flags, in, info );
+		NifStream( segment[i1].unknownByte1, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -66,12 +66,12 @@ void BSSegmentedTriShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 	//--END CUSTOM CODE--//
 
 	NiTriShape::Write( out, link_map, missing_link_stack, info );
-	numSegTriangles = (int)(segTriangles.size());
-	NifStream( numSegTriangles, out, info );
-	for (unsigned int i1 = 0; i1 < segTriangles.size(); i1++) {
-		NifStream( segTriangles[i1].unknownInt1, out, info );
-		NifStream( segTriangles[i1].unknownInt2, out, info );
-		NifStream( segTriangles[i1].unknownByte1, out, info );
+	numSegments = (int)(segment.size());
+	NifStream( numSegments, out, info );
+	for (unsigned int i1 = 0; i1 < segment.size(); i1++) {
+		NifStream( segment[i1].internalIndex, out, info );
+		NifStream( segment[i1].flags, out, info );
+		NifStream( segment[i1].unknownByte1, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -87,17 +87,17 @@ std::string BSSegmentedTriShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiTriShape::asString();
-	numSegTriangles = (int)(segTriangles.size());
-	out << "  Num Seg Triangles:  " << numSegTriangles << endl;
+	numSegments = (int)(segment.size());
+	out << "  Num Segments:  " << numSegments << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < segTriangles.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < segment.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Unknown Int 1:  " << segTriangles[i1].unknownInt1 << endl;
-		out << "    Unknown Int 2:  " << segTriangles[i1].unknownInt2 << endl;
-		out << "    Unknown Byte 1:  " << segTriangles[i1].unknownByte1 << endl;
+		out << "    Internal index:  " << segment[i1].internalIndex << endl;
+		out << "    Flags:  " << segment[i1].flags << endl;
+		out << "    Unknown Byte 1:  " << segment[i1].unknownByte1 << endl;
 	};
 	return out.str();
 

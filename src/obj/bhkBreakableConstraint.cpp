@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkBreakableConstraint::TYPE("bhkBreakableConstraint", &bhkConstraint::TYPE );
 
-bhkBreakableConstraint::bhkBreakableConstraint() : unknownShort1((short)0), unknownInt1((unsigned int)0), numEntities2((unsigned int)0), priority2((unsigned int)1), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0), unknownFloat1(0.0f), unknownByte1((byte)0) {
+bhkBreakableConstraint::bhkBreakableConstraint() : unknownShort1((short)0), unknownInt1((unsigned int)0), numEntities2((unsigned int)0), priority2((unsigned int)1), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0), threshold(0.0f), unknownFloat1(0.0f), removeIfBroken((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -64,14 +64,14 @@ void bhkBreakableConstraint::Read( istream& in, list<unsigned int> & link_stack,
 		};
 		NifStream( priority2, in, info );
 		NifStream( unknownInt2, in, info );
-		NifStream( unknownFloats1, in, info );
-		NifStream( unknownFloats2, in, info );
+		NifStream( position, in, info );
+		NifStream( rotation, in, info );
 		NifStream( unknownInt3, in, info );
-		NifStream( unknownFloat1, in, info );
+		NifStream( threshold, in, info );
 		if ( (unknownInt1 >= 1) ) {
 			NifStream( unknownFloat1, in, info );
 		};
-		NifStream( unknownByte1, in, info );
+		NifStream( removeIfBroken, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -116,14 +116,14 @@ void bhkBreakableConstraint::Write( ostream& out, const map<NiObjectRef,unsigned
 		};
 		NifStream( priority2, out, info );
 		NifStream( unknownInt2, out, info );
-		NifStream( unknownFloats1, out, info );
-		NifStream( unknownFloats2, out, info );
+		NifStream( position, out, info );
+		NifStream( rotation, out, info );
 		NifStream( unknownInt3, out, info );
-		NifStream( unknownFloat1, out, info );
+		NifStream( threshold, out, info );
 		if ( (unknownInt1 >= 1) ) {
 			NifStream( unknownFloat1, out, info );
 		};
-		NifStream( unknownByte1, out, info );
+		NifStream( removeIfBroken, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -169,11 +169,14 @@ std::string bhkBreakableConstraint::asString( bool verbose ) const {
 	};
 	out << "  Priority 2:  " << priority2 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Floats 1:  " << unknownFloats1 << endl;
-	out << "  Unknown Floats 2:  " << unknownFloats2 << endl;
+	out << "  Position:  " << position << endl;
+	out << "  Rotation:  " << rotation << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Threshold:  " << threshold << endl;
+	if ( (unknownInt1 >= 1) ) {
+		out << "    Unknown Float 1:  " << unknownFloat1 << endl;
+	};
+	out << "  Remove if Broken:  " << removeIfBroken << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

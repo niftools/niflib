@@ -374,8 +374,14 @@ protected:
 	float linearDamping;
 	/*! Damping value for angular movement. */
 	float angularDamping;
+	/*! Unknown. */
+	float unknownTimefactorOrGravityfactor1;
+	/*! Unknown. */
+	float unknownTimefactorOrGravityfactor2;
 	/*! The body's friction. */
 	float friction;
+	/*! Unknown. */
+	float rollingfrictionmultiplier_;
 	/*!
 	 * The body's restitution (elasticity).
 	 *             If the restitution is not 0.0 the object will need extra CPU for all
@@ -384,12 +390,6 @@ protected:
 	 * buildings)
 	 */
 	float restitution;
-	/*! Unknown. */
-	float unknownFloat51;
-	/*! Unknown. */
-	float unknownFloat52;
-	/*! Unknown. */
-	float unknownFloat53;
 	/*! Maximal linear velocity. */
 	float maxLinearVelocity;
 	/*! Maximal angular velocity. Pi x 10? */

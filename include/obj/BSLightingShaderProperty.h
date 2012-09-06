@@ -25,10 +25,7 @@ class BSShaderTextureSet;
 class BSLightingShaderProperty;
 typedef Ref<BSLightingShaderProperty> BSLightingShaderPropertyRef;
 
-/*!
- * Bethesda-specific node, used in Skyrim to configure material/shader/texture
- * properties.
- */
+/*! Skyrim PP shader for assigning material/shader/texture. */
 class BSLightingShaderProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -65,55 +62,61 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Skyrim Shader Flag field 1 (will use SkyrimLightingShaderFlags1) */
-	unsigned int shaderFlags1;
-	/*! Skyrim Shader Flag field 2 (will use SkyrimLightingShaderFlags2) */
-	unsigned int shaderFlags2;
+	/*! Skyrim Shader Flags for setting render/shader options. */
+	SkyrimShaderPropertyFlags1 shaderFlags1;
+	/*! Skyrim Shader Flags for setting render/shader options. */
+	SkyrimShaderPropertyFlags2 shaderFlags2;
 	/*! Offset UVs */
-	TexCoord textureTranslation1;
-	/*! Offset UVs */
-	TexCoord textureRepeat;
-	/*! Texture Set */
+	TexCoord uvOffset;
+	/*! Offset UV Scale to repeat tiling textures, see above. */
+	TexCoord uvScale;
+	/*! Texture Set, can have override in an esm/esp */
 	Ref<BSShaderTextureSet > textureSet;
 	/*! Glow color and alpha */
 	Color3 emissiveColor;
-	/*! Unknown */
-	float emissiveSaturation;
-	/*! Unknown, always 3? */
-	unsigned int unknownInt7;
-	/*! The material transparency (1=non-transparent). */
+	/*! Multiplied emissive colors */
+	float emissiveMultiple;
+	/*! How to handle texture borders. */
+	TexClampMode textureClampMode;
+	/*! The materials opacity (1=non-transparent). */
 	float alpha;
 	/*! Unknown */
 	float unknownFloat2;
 	/*! The material's glossiness. (0-999) */
-	float glossiness;
+	float specularPower_Glossiness;
 	/*! Adds a colored highlight. */
 	Color3 specularColor;
 	/*! Brightness of specular highlight. (0=not visible) (0-999) */
 	float specularStrength;
-	/*! Unknown, related to backlight/rim/softlight effect */
+	/*! Controls strength for envmap/backlight/rim/softlight lighting effect? */
 	float lightingEffect1;
-	/*! Unknown, related to backlight/rim/softlight effect */
+	/*! Controls strength for envmap/backlight/rim/softlight lighting effect? */
 	float lightingEffect2;
+	/*! Scales the environment/cube map. (0-??) */
+	float environmentMapScale;
+	/*! Tints the base texture. Overridden by game settings. */
+	Color3 skinTintColor;
+	/*! Tints the base texture. Overridden by game settings. */
+	Color3 hairTintColor;
+	/*! Max Passes */
+	float maxPasses;
+	/*! Scale */
+	float scale;
+	/*! How far from the surface the inner layer appears to be. */
+	float parallaxInnerLayerThickness;
+	/*! Depth of inner parallax layer effect. */
+	float parallaxRefractionScale;
+	/*! Scales the inner parallax layer texture. */
+	TexCoord parallaxInnerLayerTextureScale;
 	/*! How strong the environment/cube map is. (0-??) */
-	float environmentMapStrength;
-	/*! Unknown, related to skin */
-	Vector3 unknownFloatSet1;
-	/*! Unknown, related to hair */
-	Color3 unknownColor1;
-	/*! Unknown */
-	array<2,float > unknownFloatSet3;
-	/*! Unknown, related to ice or parallax */
-	float unknownFloat9;
-	/*! Unknown, related to ice parallax */
-	Color4 unknownColor2;
-	/*! Unknown, also related to ice? */
-	Vector4 unknownFloatSet5;
-	/*! Eye(Skyrim) */
+	float parallaxEnvmapStrength;
+	/*! Unknown/unused?  CK lists "snow material" when used. */
+	Vector4 sparkleParamaters;
+	/*! Eye cubemap scale */
 	float eyeCubemapScale;
-	/*! Eye(Skyrim)Left Unknown */
+	/*! Offset to set center for left eye cubemap */
 	Vector3 leftEyeReflectionCenter;
-	/*! Eye(Skyrim)Right Unknown */
+	/*! Offset to set center for right eye cubemap */
 	Vector3 rightEyeReflectionCenter;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

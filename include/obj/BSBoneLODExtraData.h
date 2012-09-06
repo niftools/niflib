@@ -15,12 +15,15 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiExtraData.h"
+
+// Include structures
+#include "../gen/BoneLOD.h"
 namespace Niflib {
 
 class BSBoneLODExtraData;
 typedef Ref<BSBoneLODExtraData> BSBoneLODExtraDataRef;
 
-/*! Unkown */
+/*! Unknown */
 class BSBoneLODExtraData : public NiExtraData {
 public:
 	/*! Constructor */
@@ -57,12 +60,10 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!  */
-	mutable unsigned int unknownInt1;
-	/*!  */
-	vector<unsigned int > unknownIntA1;
-	/*!  */
-	vector<unsigned int > unknownIntA2;
+	/*! Number of bone entries */
+	mutable unsigned int bonelodCount;
+	/*! Bone Entry */
+	vector<BoneLOD > bonelodInfo;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

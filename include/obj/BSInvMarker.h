@@ -27,6 +27,8 @@ typedef Ref<BSInvMarker> BSInvMarkerRef;
  *         If not present, then Skyrim will still show the nif in inventory,
  *         using the default values.
  *         Name should be 'INV' (without the quotes).
+ *         For rotations, a short of "4712" appears as "4.712" but "959" appears as
+ * "0.959"  meshes\weapons\daedric\daedricbowskinned.nif
  */
 class BSInvMarker : public NiExtraData {
 public:
@@ -64,12 +66,14 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Up-down rotation, in radians * 1000. */
-	unsigned int rotation1;
-	/*! Left-right rotation, in radians * 1000. */
-	unsigned int rotation2;
-	/*! Zoom factor. 16000 is really far away, 16600 is really close by. */
-	unsigned short zoom;
+	/*! Unknown. */
+	unsigned short rotationX;
+	/*! Unknown. */
+	unsigned short rotationY;
+	/*! Unknown. */
+	unsigned short rotationZ;
+	/*! Zoom factor. */
+	float zoom;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

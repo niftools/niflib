@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSLODTriShape::TYPE("BSLODTriShape", &NiTriBasedGeom::TYPE );
 
-BSLODTriShape::BSLODTriShape() : unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0) {
+BSLODTriShape::BSLODTriShape() : level0Size((unsigned int)0), level1Size((unsigned int)0), level2Size((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,9 +46,9 @@ void BSLODTriShape::Read( istream& in, list<unsigned int> & link_stack, const Ni
 	//--END CUSTOM CODE--//
 
 	NiTriBasedGeom::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownInt3, in, info );
+	NifStream( level0Size, in, info );
+	NifStream( level1Size, in, info );
+	NifStream( level2Size, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -61,9 +61,9 @@ void BSLODTriShape::Write( ostream& out, const map<NiObjectRef,unsigned int> & l
 	//--END CUSTOM CODE--//
 
 	NiTriBasedGeom::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownInt3, out, info );
+	NifStream( level0Size, out, info );
+	NifStream( level1Size, out, info );
+	NifStream( level2Size, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -77,9 +77,9 @@ std::string BSLODTriShape::asString( bool verbose ) const {
 
 	stringstream out;
 	out << NiTriBasedGeom::asString();
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
+	out << "  Level 0 Size:  " << level0Size << endl;
+	out << "  Level 1 Size:  " << level1Size << endl;
+	out << "  Level 2 Size:  " << level2Size << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

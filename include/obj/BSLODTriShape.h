@@ -20,7 +20,7 @@ namespace Niflib {
 class BSLODTriShape;
 typedef Ref<BSLODTriShape> BSLODTriShapeRef;
 
-/*! Unkown */
+/*! A variation on NiTriShape, for visibility control over vertex groups. */
 class BSLODTriShape : public NiTriBasedGeom {
 public:
 	/*! Constructor */
@@ -58,11 +58,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	unsigned int unknownInt1;
+	unsigned int level0Size;
 	/*! Unknown */
-	unsigned int unknownInt2;
+	unsigned int level1Size;
 	/*! Unknown */
-	unsigned int unknownInt3;
+	unsigned int level2Size;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

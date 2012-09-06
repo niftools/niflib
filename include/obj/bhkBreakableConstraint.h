@@ -74,15 +74,17 @@ protected:
 	/*! Unknown */
 	unsigned int unknownInt2;
 	/*! Unknown */
-	Vector3 unknownFloats1;
+	Vector3 position;
 	/*! Unknown */
-	Vector3 unknownFloats2;
+	Vector3 rotation;
 	/*! Unknown */
 	unsigned int unknownInt3;
 	/*! Unknown */
+	float threshold;
+	/*! Unknown */
 	float unknownFloat1;
 	/*! Unknown */
-	byte unknownByte1;
+	byte removeIfBroken;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

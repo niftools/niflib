@@ -46,9 +46,8 @@ void BSMultiBoundAABB::Read( istream& in, list<unsigned int> & link_stack, const
 	//--END CUSTOM CODE--//
 
 	BSMultiBoundData::Read( in, link_stack, info );
-	for (unsigned int i1 = 0; i1 < 6; i1++) {
-		NifStream( unknownFloats1[i1], in, info );
-	};
+	NifStream( position, in, info );
+	NifStream( extent, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -61,9 +60,8 @@ void BSMultiBoundAABB::Write( ostream& out, const map<NiObjectRef,unsigned int> 
 	//--END CUSTOM CODE--//
 
 	BSMultiBoundData::Write( out, link_map, missing_link_stack, info );
-	for (unsigned int i1 = 0; i1 < 6; i1++) {
-		NifStream( unknownFloats1[i1], out, info );
-	};
+	NifStream( position, out, info );
+	NifStream( extent, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -76,20 +74,9 @@ std::string BSMultiBoundAABB::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << BSMultiBoundData::asString();
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < 6; i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Floats 1[" << i1 << "]:  " << unknownFloats1[i1] << endl;
-		array_output_count++;
-	};
+	out << "  Position:  " << position << endl;
+	out << "  Extent:  " << extent << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

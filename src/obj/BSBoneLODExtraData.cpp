@@ -15,12 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSBoneLODExtraData.h"
+#include "../../include/gen/BoneLOD.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
 const Type BSBoneLODExtraData::TYPE("BSBoneLODExtraData", &NiExtraData::TYPE );
 
-BSBoneLODExtraData::BSBoneLODExtraData() : unknownInt1((unsigned int)0) {
+BSBoneLODExtraData::BSBoneLODExtraData() : bonelodCount((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,16 +47,11 @@ void BSBoneLODExtraData::Read( istream& in, list<unsigned int> & link_stack, con
 	//--END CUSTOM CODE--//
 
 	NiExtraData::Read( in, link_stack, info );
-	NifStream( unknownInt1, in, info );
-	if ( (info.userVersion >= 12) ) {
-		unknownIntA1.resize(unknownInt1);
-		for (unsigned int i2 = 0; i2 < unknownIntA1.size(); i2++) {
-			NifStream( unknownIntA1[i2], in, info );
-		};
-		unknownIntA2.resize(unknownInt1);
-		for (unsigned int i2 = 0; i2 < unknownIntA2.size(); i2++) {
-			NifStream( unknownIntA2[i2], in, info );
-		};
+	NifStream( bonelodCount, in, info );
+	bonelodInfo.resize(bonelodCount);
+	for (unsigned int i1 = 0; i1 < bonelodInfo.size(); i1++) {
+		NifStream( bonelodInfo[i1].distance, in, info );
+		NifStream( bonelodInfo[i1].boneName, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -69,15 +65,11 @@ void BSBoneLODExtraData::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	NiExtraData::Write( out, link_map, missing_link_stack, info );
-	unknownInt1 = (unsigned int)(unknownIntA1.size());
-	NifStream( unknownInt1, out, info );
-	if ( (info.userVersion >= 12) ) {
-		for (unsigned int i2 = 0; i2 < unknownIntA1.size(); i2++) {
-			NifStream( unknownIntA1[i2], out, info );
-		};
-		for (unsigned int i2 = 0; i2 < unknownIntA2.size(); i2++) {
-			NifStream( unknownIntA2[i2], out, info );
-		};
+	bonelodCount = (unsigned int)(bonelodInfo.size());
+	NifStream( bonelodCount, out, info );
+	for (unsigned int i1 = 0; i1 < bonelodInfo.size(); i1++) {
+		NifStream( bonelodInfo[i1].distance, out, info );
+		NifStream( bonelodInfo[i1].boneName, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -93,31 +85,16 @@ std::string BSBoneLODExtraData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiExtraData::asString();
-	unknownInt1 = (unsigned int)(unknownIntA1.size());
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
+	bonelodCount = (unsigned int)(bonelodInfo.size());
+	out << "  BoneLOD Count:  " << bonelodCount << endl;
 	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownIntA1.size(); i1++) {
+	for (unsigned int i1 = 0; i1 < bonelodInfo.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Int A1[" << i1 << "]:  " << unknownIntA1[i1] << endl;
-		array_output_count++;
-	};
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < unknownIntA2.size(); i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Unknown Int A2[" << i1 << "]:  " << unknownIntA2[i1] << endl;
-		array_output_count++;
+		out << "    Distance:  " << bonelodInfo[i1].distance << endl;
+		out << "    Bone Name:  " << bonelodInfo[i1].boneName << endl;
 	};
 	return out.str();
 
