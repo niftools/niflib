@@ -17,7 +17,6 @@ src/gen/ArkTexture.cpp
 src/gen/AVObject.cpp
 src/gen/bhkCMSDBigTris.cpp
 src/gen/bhkCMSDChunk.cpp
-src/gen/bhkCMSDContainer.cpp
 src/gen/bhkCMSDData.cpp
 src/gen/bhkCMSDMaterial.cpp
 src/gen/bhkCMSDBigTris.cpp
