@@ -256,19 +256,19 @@ std::list<NiObject *> BSLightingShaderProperty::GetPtrs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-unsigned int BSLightingShaderProperty::getShaderFlags1() {
+SkyrimShaderPropertyFlags1 BSLightingShaderProperty::getShaderFlags1() {
 	return shaderFlags1;
 }
 
-void BSLightingShaderProperty::setShaderFlags1( unsigned int value ) {
+void BSLightingShaderProperty::setShaderFlags1( SkyrimShaderPropertyFlags1 value ) {
 	shaderFlags1 = value;
 }
 
-unsigned int BSLightingShaderProperty::getShaderFlags2() {
+SkyrimShaderPropertyFlags2 BSLightingShaderProperty::getShaderFlags2() {
 	return shaderFlags2;
 }
 
-void BSLightingShaderProperty::setShaderFlags2( unsigned int value ) {
+void BSLightingShaderProperty::setShaderFlags2( SkyrimShaderPropertyFlags2 value ) {
 	shaderFlags2 = value;
 }
 

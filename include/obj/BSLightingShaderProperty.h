@@ -64,25 +64,25 @@ public:
 	 * Shader flags used by Skyrim
 	 * \return The value of the shader flags
 	 */
-	NIFLIB_API unsigned int getShaderFlags1();
+	NIFLIB_API SkyrimShaderPropertyFlags1 getShaderFlags1();
 
 	/*!
 	 * Sets the value of the shader flags used by Skyrim
 	 * \param[in] The new value of the shader flags
 	 */
-	NIFLIB_API void setShaderFlags1(unsigned int value);
+	NIFLIB_API void setShaderFlags1(SkyrimShaderPropertyFlags1 value);
 
 	/*!
 	 * Gets the second set of shader flags used by Skyrim
 	 * \return The value of the second set of flags
 	 */
-	NIFLIB_API unsigned int getShaderFlags2();
+	NIFLIB_API SkyrimShaderPropertyFlags2 getShaderFlags2();
 
 	/*!
 	 * Sets the value of the second set of skyrim shader flags
 	 * \param[in] the value of the second set of flags
 	 */
-	NIFLIB_API void setShaderFlags2(unsigned int value); 
+	NIFLIB_API void setShaderFlags2(SkyrimShaderPropertyFlags2 value); 
 
 	/*!
 	 * Used to reposition the texture coordinates of the uv's
