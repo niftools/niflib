@@ -88,25 +88,25 @@ public:
 	 * Used to reposition the texture coordinates of the uv's
 	 * \return The texture translation the the uv's
 	 */
-	NIFLIB_API TexCoord getTextureTranslation1();
+	NIFLIB_API TexCoord getUVOffset();
 
 	/*!
 	 * Sets the value of the texture offset of the uv's
 	 * \param[in] The new value of the uv offsets
 	 */
-	NIFLIB_API void setTextureTranslation1(TexCoord value);
+	NIFLIB_API void setUVOffset(TexCoord value);
 
 	/*!
 	 * Used to get the offset of the texture coordinates or uv's
 	 * \return The second texture offsets for the uv
 	 */
-	NIFLIB_API TexCoord getTextureRepeat();
+	NIFLIB_API TexCoord getUVScale();
 
 	/*!
 	 * Used to set the second texture offsets
 	 * \param[in] The second texture offsets
 	 */
-	NIFLIB_API void setTextureRepeat(TexCoord value);
+	NIFLIB_API void setUVScale(TexCoord value);
 
 	/*!
 	 * Returns the current texture set used

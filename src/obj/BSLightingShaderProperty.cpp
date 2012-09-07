@@ -272,20 +272,20 @@ void BSLightingShaderProperty::setShaderFlags2( unsigned int value ) {
 	shaderFlags2 = value;
 }
 
-TexCoord BSLightingShaderProperty::getTextureTranslation1() {
-	return textureTranslation1;
+TexCoord BSLightingShaderProperty::getUVOffset() {
+	return uvOffset;
 }
 
-void BSLightingShaderProperty::setTextureTranslation1( TexCoord value ) {
-	textureTranslation1 = value;
+void BSLightingShaderProperty::setUVOffset( TexCoord value ) {
+	uvOffset = value;
 }
 
-TexCoord BSLightingShaderProperty::getTextureRepeat() {
-	return textureRepeat;
+TexCoord BSLightingShaderProperty::getUVScale() {
+	return uvScale;
 }
 
-void BSLightingShaderProperty::setTextureRepeat( TexCoord value ) {
-	textureRepeat = value;
+void BSLightingShaderProperty::setUVScale( TexCoord value ) {
+	uvScale = value;
 }
 
 Ref<BSShaderTextureSet > BSLightingShaderProperty::getTextureSet() {
