@@ -269,26 +269,26 @@ protected:
 	/*! Number of bits in the shape-key reserved for a triangle index */
 	unsigned int bitsPerIndex;
 	/*! Number of bits in the shape-key reserved for a triangle index and its winding */
-	unsigned int bitsPerWindex;
+	unsigned int bitsPerWIndex;
 	/*!
 	 * Mask used to get the triangle index and winding from a shape-key (common: 262143
 	 * = 0x3ffff)
 	 */
-	unsigned int windexmask;
+	unsigned int maskWIndex;
 	/*! Mask used to get the triangle index from a shape-key (common: 131071 = 0x1ffff) */
-	unsigned int indexmask;
+	unsigned int maskIndex;
 	/*! The radius of the storage mesh shape? Quantization error? */
-	float radius_error_;
+	float error;
 	/*!
 	 * The minimum boundary of the AABB (the coordinates of the corner with the lowest
 	 * numerical values)
 	 */
-	Vector4 boundMin;
+	Vector4 boundsMin;
 	/*!
 	 * The maximum boundary of the AABB (the coordinates of the corner with the highest
 	 * numerical values)
 	 */
-	Vector4 boundMax;
+	Vector4 boundsMax;
 	/*! Unknown */
 	byte unknownByte1;
 	/*! Unknown */

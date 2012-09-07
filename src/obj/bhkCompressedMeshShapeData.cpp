@@ -25,7 +25,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkCompressedMeshShapeData::TYPE("bhkCompressedMeshShapeData", &NiObject::TYPE );
 
-bhkCompressedMeshShapeData::bhkCompressedMeshShapeData() : bitsPerIndex((unsigned int)0), bitsPerWindex((unsigned int)0), windexmask((unsigned int)0), indexmask((unsigned int)0), radius_error_(0.0f), unknownByte1((byte)0), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownByte2((byte)0), numMaterials((unsigned int)0), unknownInt6((unsigned int)0), numTransforms((unsigned int)0), numBigVerts((unsigned int)0), numBigTris((unsigned int)0), numChunks((unsigned int)0), unknownInt12((unsigned int)0) {
+bhkCompressedMeshShapeData::bhkCompressedMeshShapeData() : bitsPerIndex((unsigned int)0), bitsPerWIndex((unsigned int)0), maskWIndex((unsigned int)0), maskIndex((unsigned int)0), error(0.0f), unknownByte1((byte)0), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownByte2((byte)0), numMaterials((unsigned int)0), unknownInt6((unsigned int)0), numTransforms((unsigned int)0), numBigVerts((unsigned int)0), numBigTris((unsigned int)0), numChunks((unsigned int)0), unknownInt12((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -52,12 +52,12 @@ void bhkCompressedMeshShapeData::Read( istream& in, list<unsigned int> & link_st
 
 	NiObject::Read( in, link_stack, info );
 	NifStream( bitsPerIndex, in, info );
-	NifStream( bitsPerWindex, in, info );
-	NifStream( windexmask, in, info );
-	NifStream( indexmask, in, info );
-	NifStream( radius_error_, in, info );
-	NifStream( boundMin, in, info );
-	NifStream( boundMax, in, info );
+	NifStream( bitsPerWIndex, in, info );
+	NifStream( maskWIndex, in, info );
+	NifStream( maskIndex, in, info );
+	NifStream( error, in, info );
+	NifStream( boundsMin, in, info );
+	NifStream( boundsMax, in, info );
 	NifStream( unknownByte1, in, info );
 	NifStream( unknownInt3, in, info );
 	NifStream( unknownInt4, in, info );
@@ -140,12 +140,12 @@ void bhkCompressedMeshShapeData::Write( ostream& out, const map<NiObjectRef,unsi
 	numTransforms = (unsigned int)(chunkTransforms.size());
 	numMaterials = (unsigned int)(chunkMaterials.size());
 	NifStream( bitsPerIndex, out, info );
-	NifStream( bitsPerWindex, out, info );
-	NifStream( windexmask, out, info );
-	NifStream( indexmask, out, info );
-	NifStream( radius_error_, out, info );
-	NifStream( boundMin, out, info );
-	NifStream( boundMax, out, info );
+	NifStream( bitsPerWIndex, out, info );
+	NifStream( maskWIndex, out, info );
+	NifStream( maskIndex, out, info );
+	NifStream( error, out, info );
+	NifStream( boundsMin, out, info );
+	NifStream( boundsMax, out, info );
 	NifStream( unknownByte1, out, info );
 	NifStream( unknownInt3, out, info );
 	NifStream( unknownInt4, out, info );
@@ -225,12 +225,12 @@ std::string bhkCompressedMeshShapeData::asString( bool verbose ) const {
 	numTransforms = (unsigned int)(chunkTransforms.size());
 	numMaterials = (unsigned int)(chunkMaterials.size());
 	out << "  Bits Per Index:  " << bitsPerIndex << endl;
-	out << "  Bits Per WIndex:  " << bitsPerWindex << endl;
-	out << "  WIndexMask:  " << windexmask << endl;
-	out << "  IndexMask:  " << indexmask << endl;
-	out << "  Radius?Error?:  " << radius_error_ << endl;
-	out << "  Bound Min:  " << boundMin << endl;
-	out << "  Bound Max:  " << boundMax << endl;
+	out << "  Bits Per W Index:  " << bitsPerWIndex << endl;
+	out << "  Mask W Index:  " << maskWIndex << endl;
+	out << "  Mask Index:  " << maskIndex << endl;
+	out << "  Error:  " << error << endl;
+	out << "  Bounds Min:  " << boundsMin << endl;
+	out << "  Bounds Max:  " << boundsMax << endl;
 	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
 	out << "  Unknown Int 4:  " << unknownInt4 << endl;
