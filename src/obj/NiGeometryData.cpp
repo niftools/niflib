@@ -79,7 +79,9 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 		NifStream( bsNumUvSets, in, info );
 	};
 	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
-		NifStream( unknownInt2, in, info );
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			NifStream( unknownInt2, in, info );
+		};
 	};
 	NifStream( hasNormals, in, info );
 	if ( hasNormals ) {
@@ -138,12 +140,23 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 			};
 		};
 	};
-	if ( info.version >= 0x0A000100 ) {
+	if ( ( info.version >= 0x0A000100 ) && ( (info.userVersion < 12) ) ) {
 		NifStream( consistencyFlags, in, info );
 	};
-	if ( info.version >= 0x14000004 ) {
+	if ( ( info.version >= 0x0A000100 ) && ( (info.userVersion >= 12) ) ) {
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			NifStream( consistencyFlags, in, info );
+		};
+	};
+	if ( ( info.version >= 0x14000004 ) && ( (info.userVersion < 12) ) ) {
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
+	};
+	if ( ( info.version >= 0x14000004 ) && ( (info.userVersion >= 12) ) ) {
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			NifStream( block_num, in, info );
+			link_stack.push_back( block_num );
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -191,7 +204,9 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 		NifStream( bsNumUvSets, out, info );
 	};
 	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
-		NifStream( unknownInt2, out, info );
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			NifStream( unknownInt2, out, info );
+		};
 	};
 	NifStream( hasNormals, out, info );
 	if ( hasNormals ) {
@@ -242,10 +257,15 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			};
 		};
 	};
-	if ( info.version >= 0x0A000100 ) {
+	if ( ( info.version >= 0x0A000100 ) && ( (info.userVersion < 12) ) ) {
 		NifStream( consistencyFlags, out, info );
 	};
-	if ( info.version >= 0x14000004 ) {
+	if ( ( info.version >= 0x0A000100 ) && ( (info.userVersion >= 12) ) ) {
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			NifStream( consistencyFlags, out, info );
+		};
+	};
+	if ( ( info.version >= 0x14000004 ) && ( (info.userVersion < 12) ) ) {
 		if ( info.version < VER_3_3_0_13 ) {
 			WritePtr32( &(*additionalData), out );
 		} else {
@@ -263,6 +283,27 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 				missing_link_stack.push_back( NULL );
 			}
 		}
+	};
+	if ( ( info.version >= 0x14000004 ) && ( (info.userVersion >= 12) ) ) {
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			if ( info.version < VER_3_3_0_13 ) {
+				WritePtr32( &(*additionalData), out );
+			} else {
+				if ( additionalData != NULL ) {
+					map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(additionalData) );
+					if (it != link_map.end()) {
+						NifStream( it->second, out, info );
+						missing_link_stack.push_back( NULL );
+					} else {
+						NifStream( 0xFFFFFFFF, out, info );
+						missing_link_stack.push_back( additionalData );
+					}
+				} else {
+					NifStream( 0xFFFFFFFF, out, info );
+					missing_link_stack.push_back( NULL );
+				}
+			}
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -305,7 +346,9 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	};
 	out << "  Num UV Sets:  " << numUvSets << endl;
 	out << "  BS Num UV Sets:  " << bsNumUvSets << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
+	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+		out << "    Unknown Int 2:  " << unknownInt2 << endl;
+	};
 	out << "  Has Normals:  " << hasNormals << endl;
 	if ( hasNormals ) {
 		array_output_count = 0;
@@ -404,8 +447,13 @@ void NiGeometryData::FixLinks( const map<unsigned int,NiObjectRef> & objects, li
 	//--END CUSTOM CODE--//
 
 	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	if ( info.version >= 0x14000004 ) {
+	if ( ( info.version >= 0x14000004 ) && ( (info.userVersion < 12) ) ) {
 		additionalData = FixLink<AbstractAdditionalGeometryData>( objects, link_stack, missing_link_stack, info );
+	};
+	if ( ( info.version >= 0x14000004 ) && ( (info.userVersion >= 12) ) ) {
+		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
+			additionalData = FixLink<AbstractAdditionalGeometryData>( objects, link_stack, missing_link_stack, info );
+		};
 	};
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//

@@ -120,6 +120,7 @@ NifInfo Header::Read( istream& in ) {
 
 	//Fill out and return NifInfo structure.
 	info.userVersion = userVersion;
+	info.userVersion2 = userVersion2;
 	info.endian = EndianType(endianType);
 	info.creator = exportInfo.creator.str;
 	info.exportInfo1 = exportInfo.exportInfo1.str;
