@@ -134,13 +134,13 @@ public:
 	* Gets the skyrim shader type
 	* \return The skyrim shader flag value
 	*/
-	NIFLIB_API unsigned int GetSkyrimShaderType();
+	NIFLIB_API BSLightingShaderPropertyShaderType GetSkyrimShaderType();
 
 	/*!
 	* Set the skyrim shader type
 	* \param[in] The new skyrim shader value
 	*/
-	NIFLIB_API void SetSkyrimShaderType(unsigned int value);
+	NIFLIB_API void SetSkyrimShaderType(BSLightingShaderPropertyShaderType value);
 
 	//--END CUSTOM CODE--//
 protected:
