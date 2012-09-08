@@ -136,13 +136,13 @@ public:
 	 * Get the emissive saturation
 	 * \return The emissive saturation
 	 */
-	NIFLIB_API float getEmissiveSaturation();
+	NIFLIB_API float getEmissiveMultiple();
 
 	/*!
 	 * Sets the emissive saturation of the material
 	 * \param[in] The new emissive saturation value
 	 */
-	NIFLIB_API void setEmissiveSaturation(float value);
+	NIFLIB_API void setEmissiveMultiple(float value);
 
 	/*!
 	 * Gets unknown unsigned int7

@@ -304,12 +304,12 @@ void BSLightingShaderProperty::setEmissiveColor( Color3 value ) {
 	emissiveColor = value;
 }
 
-float BSLightingShaderProperty::getEmissiveSaturation() {
-	return emissiveSaturation;
+float BSLightingShaderProperty::getEmissiveMultiple() {
+	return emissiveMultiple;
 }
 
-void BSLightingShaderProperty::setEmissiveSaturation( float value ) {
-	emissiveSaturation = value;
+void BSLightingShaderProperty::setEmissiveMultiple( float value ) {
+	emissiveMultiple = value;
 }
 
 unsigned int BSLightingShaderProperty::getUnkownInt7() {
