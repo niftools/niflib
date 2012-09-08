@@ -292,13 +292,13 @@ public:
 	 * Gets the unknown float set5 of the material
 	 * \return The unknown float set5 value
 	 */
-	NIFLIB_API Vector4 getUnknownFloatSet5();
+	NIFLIB_API Vector4 getSparkleParameters();
 
 	/*!
 	 * Sets the unknown float set5 of the material
 	 * \param[in] The new unknown float set5 value
 	 */
-	NIFLIB_API void setUnknownFloatSet5(Vector4 value);
+	NIFLIB_API void setSparkleParameters(Vector4 value);
 
 	/*!
 	 * Get the eye cubemap scale

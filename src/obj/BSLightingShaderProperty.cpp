@@ -410,12 +410,12 @@ void BSLightingShaderProperty::setUnknownColor2( Color4 value ) {
 	unknownColor2 = value;
 }
 
-Vector4 BSLightingShaderProperty::getUnknownFloatSet5() {
-	return unknownFloatSet5;
+Vector4 BSLightingShaderProperty::getSparkleParameters() {
+	return sparkleParameters;
 }
 
-void BSLightingShaderProperty::setUnknownFloatSet5( Vector4 value ) {
-	unknownFloatSet5 = value;
+void BSLightingShaderProperty::setSparkleParameters( Vector4 value ) {
+	sparkleParameters = value;
 }
 
 float BSLightingShaderProperty::getEyeCubemapScale() {
