@@ -13,7 +13,7 @@ All rights reserved.  Please see niflib.h for license. */
 namespace Niflib {
 
 
-/*!  */
+/*! Defines subshape chunks in bhkCompressedMeshShapeData */
 struct bhkCMSDChunk {
 	/*! Default Constructor */
 	NIFLIB_API bhkCMSDChunk();
@@ -23,31 +23,31 @@ struct bhkCMSDChunk {
 	NIFLIB_API bhkCMSDChunk( const bhkCMSDChunk & src );
 	/*! Copy Operator */
 	NIFLIB_API bhkCMSDChunk & operator=( const bhkCMSDChunk & src );
-	/*! Translation */
+	/*! Local translation */
 	Vector4 translation;
-	/*! Index in parents material list */
-	mutable unsigned int materialIndex;
-	/*! Unknown */
-	mutable unsigned short unknownShort1;
-	/*! Index of parents transformation list */
-	mutable unsigned short transformIndex;
-	/*! Number of vertices */
+	/*! Index of material in bhkCompressedMeshShapeData::Chunk Materials */
+	unsigned int materialIndex;
+	/*! Always 65535? */
+	unsigned short unknownShort1;
+	/*! Index of transformation in bhkCompressedMeshShapeData::Chunk Transforms */
+	unsigned short transformIndex;
+	/*! Number of compressed vertices */
 	mutable unsigned int numVertices;
-	/*! Vertices */
+	/*! Compressed vertices */
 	vector<unsigned short > vertices;
-	/*! Number of indices */
+	/*! Unknown. */
 	mutable unsigned int numIndices;
-	/*! indices */
+	/*! Unknown. */
 	vector<unsigned short > indices;
-	/*! Number of strips */
+	/*! Number of compressed strips */
 	mutable unsigned int numStrips;
-	/*! Strips */
+	/*! Compressed strips */
 	vector<unsigned short > strips;
-	/*! Number of indices2 (welding) */
+	/*! Number of */
 	mutable unsigned int numIndices2;
-	/*! Indices2 8welding) */
+	/*! Compressed */
 	vector<unsigned short > indices2;
-  //--BEGIN MISC CUSTOM CODE--//
+	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
 };

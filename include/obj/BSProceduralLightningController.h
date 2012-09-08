@@ -15,12 +15,21 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiFloatInterpController.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiInterpolator;
 class BSProceduralLightningController;
 typedef Ref<BSProceduralLightningController> BSProceduralLightningControllerRef;
 
-/*!  */
+/*!
+ * Skyrim, Paired with dummy TriShapes, this controller generates lightning shapes
+ * for special effects.
+ *     First interpolator controls Generation.
+ */
 class BSProceduralLightningController : public NiFloatInterpController {
 public:
 	/*! Constructor */
@@ -57,36 +66,36 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
+	/*! References interpolator for Mutation of strips */
+	Ref<NiInterpolator > interpolator2_Mutation;
 	/*! Unknown */
-	unsigned int unknownInt2;
+	Ref<NiInterpolator > interpolator3;
 	/*! Unknown */
-	unsigned int target___1;
+	Ref<NiInterpolator > interpolator4;
 	/*! Unknown */
-	unsigned int target___2;
+	Ref<NiInterpolator > interpolator5;
 	/*! Unknown */
-	unsigned int target___3;
+	Ref<NiInterpolator > interpolator6;
 	/*! Unknown */
-	unsigned int target___4;
+	Ref<NiInterpolator > interpolator7;
 	/*! Unknown */
-	unsigned int target___5;
-	/*! Unknown */
-	unsigned int target___6;
-	/*! Unknown */
-	unsigned int target___7;
+	Ref<NiInterpolator > interpolator8;
+	/*! References interpolator for Amplitutde control. 0=straight, 50=wide */
+	Ref<NiInterpolator > interpolator9_ArcOffset;
 	/*! Unknown */
 	unsigned short unknownShort1;
 	/*! Unknown */
 	unsigned short unknownShort2;
 	/*! Unknown */
 	unsigned short unknownShort3;
-	/*! Unknown */
-	float float1;
+	/*! How far lightning will stretch to. */
+	float distanceWeight;
 	/*! Unknown */
 	float float2;
-	/*! Unknown */
-	float float3;
-	/*! Unknown */
-	float float4;
+	/*! How wide the bolt will be */
+	float stripWidth;
+	/*! Influences forking behavior */
+	float fork;
 	/*! Unknown */
 	float float5;
 	/*! Unknown */
@@ -95,8 +104,8 @@ protected:
 	byte byte2;
 	/*! Unknown */
 	byte byte3;
-	/*! Unknown */
-	unsigned int target___8;
+	/*! Unknown, unsure if this is actually another interpolator link. */
+	Ref<NiInterpolator > interpolator10_;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

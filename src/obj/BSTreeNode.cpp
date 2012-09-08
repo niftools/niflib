@@ -15,14 +15,13 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/ObjectRegistry.h"
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/BSTreeNode.h"
-#include "../../include/obj/NiAVObject.h"
 #include "../../include/obj/NiNode.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type BSTreeNode::TYPE("BSTreeNode", &NiAVObject::TYPE );
+const Type BSTreeNode::TYPE("BSTreeNode", &NiNode::TYPE );
 
-BSTreeNode::BSTreeNode() : numChildren((unsigned int)0), unknownInt1((unsigned int)0), numBones1((unsigned int)0), numBones2((unsigned int)0) {
+BSTreeNode::BSTreeNode() : numBones1((unsigned int)0), numBones2((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -48,14 +47,7 @@ void BSTreeNode::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	//--END CUSTOM CODE--//
 
 	unsigned int block_num;
-	NiAVObject::Read( in, link_stack, info );
-	NifStream( numChildren, in, info );
-	children.resize(numChildren);
-	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-		NifStream( block_num, in, info );
-		link_stack.push_back( block_num );
-	};
-	NifStream( unknownInt1, in, info );
+	NiNode::Read( in, link_stack, info );
 	NifStream( numBones1, in, info );
 	bones1.resize(numBones1);
 	for (unsigned int i1 = 0; i1 < bones1.size(); i1++) {
@@ -79,31 +71,9 @@ void BSTreeNode::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 
 	//--END CUSTOM CODE--//
 
-	NiAVObject::Write( out, link_map, missing_link_stack, info );
+	NiNode::Write( out, link_map, missing_link_stack, info );
 	numBones2 = (unsigned int)(bones.size());
 	numBones1 = (unsigned int)(bones1.size());
-	numChildren = (unsigned int)(children.size());
-	NifStream( numChildren, out, info );
-	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-		if ( info.version < VER_3_3_0_13 ) {
-			WritePtr32( &(*children[i1]), out );
-		} else {
-			if ( children[i1] != NULL ) {
-				map<NiObjectRef,unsigned int>::const_iterator it = link_map.find( StaticCast<NiObject>(children[i1]) );
-				if (it != link_map.end()) {
-					NifStream( it->second, out, info );
-					missing_link_stack.push_back( NULL );
-				} else {
-					NifStream( 0xFFFFFFFF, out, info );
-					missing_link_stack.push_back( children[i1] );
-				}
-			} else {
-				NifStream( 0xFFFFFFFF, out, info );
-				missing_link_stack.push_back( NULL );
-			}
-		}
-	};
-	NifStream( unknownInt1, out, info );
 	NifStream( numBones1, out, info );
 	for (unsigned int i1 = 0; i1 < bones1.size(); i1++) {
 		if ( info.version < VER_3_3_0_13 ) {
@@ -157,24 +127,9 @@ std::string BSTreeNode::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiAVObject::asString();
+	out << NiNode::asString();
 	numBones2 = (unsigned int)(bones.size());
 	numBones1 = (unsigned int)(bones1.size());
-	numChildren = (unsigned int)(children.size());
-	out << "  Num Children:  " << numChildren << endl;
-	array_output_count = 0;
-	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-			break;
-		};
-		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-			break;
-		};
-		out << "    Children[" << i1 << "]:  " << children[i1] << endl;
-		array_output_count++;
-	};
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Num Bones 1:  " << numBones1 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < bones1.size(); i1++) {
@@ -213,10 +168,7 @@ void BSTreeNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 
 	//--END CUSTOM CODE--//
 
-	NiAVObject::FixLinks( objects, link_stack, missing_link_stack, info );
-	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-		children[i1] = FixLink<NiAVObject>( objects, link_stack, missing_link_stack, info );
-	};
+	NiNode::FixLinks( objects, link_stack, missing_link_stack, info );
 	for (unsigned int i1 = 0; i1 < bones1.size(); i1++) {
 		bones1[i1] = FixLink<NiNode>( objects, link_stack, missing_link_stack, info );
 	};
@@ -231,11 +183,7 @@ void BSTreeNode::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 
 std::list<NiObjectRef> BSTreeNode::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiAVObject::GetRefs();
-	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-		if ( children[i1] != NULL )
-			refs.push_back(StaticCast<NiObject>(children[i1]));
-	};
+	refs = NiNode::GetRefs();
 	for (unsigned int i1 = 0; i1 < bones1.size(); i1++) {
 		if ( bones1[i1] != NULL )
 			refs.push_back(StaticCast<NiObject>(bones1[i1]));
@@ -249,9 +197,7 @@ std::list<NiObjectRef> BSTreeNode::GetRefs() const {
 
 std::list<NiObject *> BSTreeNode::GetPtrs() const {
 	list<NiObject *> ptrs;
-	ptrs = NiAVObject::GetPtrs();
-	for (unsigned int i1 = 0; i1 < children.size(); i1++) {
-	};
+	ptrs = NiNode::GetPtrs();
 	for (unsigned int i1 = 0; i1 < bones1.size(); i1++) {
 	};
 	for (unsigned int i1 = 0; i1 < bones.size(); i1++) {

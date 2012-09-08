@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiParticlesData::TYPE("NiParticlesData", &NiGeometryData::TYPE );
 
-NiParticlesData::NiParticlesData() : numParticles((unsigned short)0), particleRadius(0.0f), hasRadii(false), numActive((unsigned short)0), hasSizes(false), hasRotations(false), unknownByte1((byte)0), unknownLink(NULL), hasRotationAngles(false), hasRotationAxes(false), hasUnknownStuff1(false), numUnknownStuff1((short)0) {
+NiParticlesData::NiParticlesData() : numParticles((unsigned short)0), particleRadius(0.0f), hasRadii(false), numActive((unsigned short)0), hasSizes(false), hasRotations(false), unknownByte1((byte)0), unknownLink(NULL), hasRotationAngles(false), hasRotationAxes(false), hasUvQuadrants(false), numUvQuadrants((byte)0), unknownByte2((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -110,14 +110,17 @@ void NiParticlesData::Read( istream& in, list<unsigned int> & link_stack, const 
 		};
 	};
 	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
-		NifStream( hasUnknownStuff1, in, info );
-		NifStream( numUnknownStuff1, in, info );
-		if ( hasUnknownStuff1 ) {
-			unknownStuff1.resize(numUnknownStuff1);
-			for (unsigned int i3 = 0; i3 < unknownStuff1.size(); i3++) {
-				NifStream( unknownStuff1[i3], in, info );
+		NifStream( hasUvQuadrants, in, info );
+		NifStream( numUvQuadrants, in, info );
+		if ( hasUvQuadrants ) {
+			uvQuadrants.resize(numUvQuadrants);
+			for (unsigned int i3 = 0; i3 < uvQuadrants.size(); i3++) {
+				NifStream( uvQuadrants[i3], in, info );
 			};
 		};
+	};
+	if ( ((info.version == 0x14020007) && (info.userVersion >= 11)) ) {
+		NifStream( unknownByte2, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -129,7 +132,7 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	//--END CUSTOM CODE--//
 
 	NiGeometryData::Write( out, link_map, missing_link_stack, info );
-	numUnknownStuff1 = (short)(unknownStuff1.size());
+	numUvQuadrants = (byte)(uvQuadrants.size());
 	if ( info.version <= 0x04000002 ) {
 		NifStream( numParticles, out, info );
 	};
@@ -206,13 +209,16 @@ void NiParticlesData::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		};
 	};
 	if ( ((info.version >= 0x14020007) && (info.userVersion == 11)) ) {
-		NifStream( hasUnknownStuff1, out, info );
-		NifStream( numUnknownStuff1, out, info );
-		if ( hasUnknownStuff1 ) {
-			for (unsigned int i3 = 0; i3 < unknownStuff1.size(); i3++) {
-				NifStream( unknownStuff1[i3], out, info );
+		NifStream( hasUvQuadrants, out, info );
+		NifStream( numUvQuadrants, out, info );
+		if ( hasUvQuadrants ) {
+			for (unsigned int i3 = 0; i3 < uvQuadrants.size(); i3++) {
+				NifStream( uvQuadrants[i3], out, info );
 			};
 		};
+	};
+	if ( ((info.version == 0x14020007) && (info.userVersion >= 11)) ) {
+		NifStream( unknownByte2, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -226,7 +232,7 @@ std::string NiParticlesData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiGeometryData::asString();
-	numUnknownStuff1 = (short)(unknownStuff1.size());
+	numUvQuadrants = (byte)(uvQuadrants.size());
 	out << "  Num Particles:  " << numParticles << endl;
 	out << "  Particle Radius:  " << particleRadius << endl;
 	out << "  Has Radii:  " << hasRadii << endl;
@@ -307,11 +313,11 @@ std::string NiParticlesData::asString( bool verbose ) const {
 			array_output_count++;
 		};
 	};
-	out << "  Has Unknown Stuff 1:  " << hasUnknownStuff1 << endl;
-	out << "  Num Unknown Stuff 1:  " << numUnknownStuff1 << endl;
-	if ( hasUnknownStuff1 ) {
+	out << "  Has UV Quadrants:  " << hasUvQuadrants << endl;
+	out << "  Num UV Quadrants:  " << numUvQuadrants << endl;
+	if ( hasUvQuadrants ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < unknownStuff1.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < uvQuadrants.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -319,10 +325,11 @@ std::string NiParticlesData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Unknown Stuff 1[" << i2 << "]:  " << unknownStuff1[i2] << endl;
+			out << "      UV Quadrants[" << i2 << "]:  " << uvQuadrants[i2] << endl;
 			array_output_count++;
 		};
 	};
+	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

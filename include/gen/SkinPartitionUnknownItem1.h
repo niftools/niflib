@@ -5,34 +5,36 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#ifndef _BHKCMSDBIGTRIS_H_
-#define _BHKCMSDBIGTRIS_H_
+#ifndef _SKINPARTITIONUNKNOWNITEM1_H_
+#define _SKINPARTITIONUNKNOWNITEM1_H_
 
 #include "../NIF_IO.h"
 
 namespace Niflib {
 
 
-/*! Triangle indices used in pair with "Big Verts" in a bhkCompressedMeshShapeData. */
-struct bhkCMSDBigTris {
+/*!  */
+struct SkinPartitionUnknownItem1 {
 	/*! Default Constructor */
-	NIFLIB_API bhkCMSDBigTris();
+	NIFLIB_API SkinPartitionUnknownItem1();
 	/*! Default Destructor */
-	NIFLIB_API ~bhkCMSDBigTris();
+	NIFLIB_API ~SkinPartitionUnknownItem1();
 	/*! Copy Constructor */
-	NIFLIB_API bhkCMSDBigTris( const bhkCMSDBigTris & src );
+	NIFLIB_API SkinPartitionUnknownItem1( const SkinPartitionUnknownItem1 & src );
 	/*! Copy Operator */
-	NIFLIB_API bhkCMSDBigTris & operator=( const bhkCMSDBigTris & src );
+	NIFLIB_API SkinPartitionUnknownItem1 & operator=( const SkinPartitionUnknownItem1 & src );
 	/*! Unknown. */
-	unsigned short triangle1;
+	unsigned int unknownFlags;
 	/*! Unknown. */
-	unsigned short triangle2;
+	float f1;
 	/*! Unknown. */
-	unsigned short triangle3;
-	/*! Always 0? */
-	unsigned int unknownInt1;
+	float f2;
 	/*! Unknown. */
-	unsigned short unknownShort1;
+	float f3;
+	/*! Unknown. */
+	float f4;
+	/*! Unknown. */
+	float f5;
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

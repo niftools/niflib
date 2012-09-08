@@ -330,10 +330,11 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/BSShaderLightingProperty.h"
 #include "../../include/obj/BSShaderNoLightingProperty.h"
 #include "../../include/obj/BSShaderPPLightingProperty.h"
-#include "../../include/obj/BSEffectShaderProperty.h"
 #include "../../include/obj/BSEffectShaderPropertyFloatController.h"
+#include "../../include/obj/BSEffectShaderPropertyColorController.h"
 #include "../../include/obj/BSLightingShaderPropertyFloatController.h"
 #include "../../include/obj/BSLightingShaderPropertyColorController.h"
+#include "../../include/obj/BSNiAlphaPropertyTestRefController.h"
 #include "../../include/obj/BSProceduralLightningController.h"
 #include "../../include/obj/BSShaderTextureSet.h"
 #include "../../include/obj/WaterShaderProperty.h"
@@ -346,6 +347,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/HairShaderProperty.h"
 #include "../../include/obj/Lighting30ShaderProperty.h"
 #include "../../include/obj/BSLightingShaderProperty.h"
+#include "../../include/obj/BSEffectShaderProperty.h"
+#include "../../include/obj/BSWaterShaderProperty.h"
+#include "../../include/obj/BSSkyShaderProperty.h"
 #include "../../include/obj/BSDismemberSkinInstance.h"
 #include "../../include/obj/BSDecalPlacementVectorExtraData.h"
 #include "../../include/obj/BSPSysSimpleColorModifier.h"
@@ -439,13 +443,9 @@ All rights reserved.  Please see niflib.h for license. */
 #include "../../include/obj/BSBehaviorGraphExtraData.h"
 #include "../../include/obj/BSLagBoneController.h"
 #include "../../include/obj/BSLODTriShape.h"
-#include "../../include/obj/BSNiAlphaPropertyTestRefController.h"
-#include "../../include/obj/BSEffectShaderPropertyColorController.h"
 #include "../../include/obj/BSFurnitureMarkerNode.h"
 #include "../../include/obj/BSLeafAnimNode.h"
 #include "../../include/obj/BSTreeNode.h"
-#include "../../include/obj/BSSkyShaderProperty.h"
-#include "../../include/obj/BSWaterShaderProperty.h"
 
 namespace Niflib {
 	void RegisterObjects() {
@@ -774,10 +774,11 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "BSShaderLightingProperty", BSShaderLightingProperty::Create );
 		ObjectRegistry::RegisterObject( "BSShaderNoLightingProperty", BSShaderNoLightingProperty::Create );
 		ObjectRegistry::RegisterObject( "BSShaderPPLightingProperty", BSShaderPPLightingProperty::Create );
-		ObjectRegistry::RegisterObject( "BSEffectShaderProperty", BSEffectShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "BSEffectShaderPropertyFloatController", BSEffectShaderPropertyFloatController::Create );
+		ObjectRegistry::RegisterObject( "BSEffectShaderPropertyColorController", BSEffectShaderPropertyColorController::Create );
 		ObjectRegistry::RegisterObject( "BSLightingShaderPropertyFloatController", BSLightingShaderPropertyFloatController::Create );
 		ObjectRegistry::RegisterObject( "BSLightingShaderPropertyColorController", BSLightingShaderPropertyColorController::Create );
+		ObjectRegistry::RegisterObject( "BSNiAlphaPropertyTestRefController", BSNiAlphaPropertyTestRefController::Create );
 		ObjectRegistry::RegisterObject( "BSProceduralLightningController", BSProceduralLightningController::Create );
 		ObjectRegistry::RegisterObject( "BSShaderTextureSet", BSShaderTextureSet::Create );
 		ObjectRegistry::RegisterObject( "WaterShaderProperty", WaterShaderProperty::Create );
@@ -790,6 +791,9 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "HairShaderProperty", HairShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "Lighting30ShaderProperty", Lighting30ShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "BSLightingShaderProperty", BSLightingShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSEffectShaderProperty", BSEffectShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSWaterShaderProperty", BSWaterShaderProperty::Create );
+		ObjectRegistry::RegisterObject( "BSSkyShaderProperty", BSSkyShaderProperty::Create );
 		ObjectRegistry::RegisterObject( "BSDismemberSkinInstance", BSDismemberSkinInstance::Create );
 		ObjectRegistry::RegisterObject( "BSDecalPlacementVectorExtraData", BSDecalPlacementVectorExtraData::Create );
 		ObjectRegistry::RegisterObject( "BSPSysSimpleColorModifier", BSPSysSimpleColorModifier::Create );
@@ -883,13 +887,9 @@ namespace Niflib {
 		ObjectRegistry::RegisterObject( "BSBehaviorGraphExtraData", BSBehaviorGraphExtraData::Create );
 		ObjectRegistry::RegisterObject( "BSLagBoneController", BSLagBoneController::Create );
 		ObjectRegistry::RegisterObject( "BSLODTriShape", BSLODTriShape::Create );
-		ObjectRegistry::RegisterObject( "BSNiAlphaPropertyTestRefController", BSNiAlphaPropertyTestRefController::Create );
-		ObjectRegistry::RegisterObject( "BSEffectShaderPropertyColorController", BSEffectShaderPropertyColorController::Create );
 		ObjectRegistry::RegisterObject( "BSFurnitureMarkerNode", BSFurnitureMarkerNode::Create );
 		ObjectRegistry::RegisterObject( "BSLeafAnimNode", BSLeafAnimNode::Create );
 		ObjectRegistry::RegisterObject( "BSTreeNode", BSTreeNode::Create );
-		ObjectRegistry::RegisterObject( "BSSkyShaderProperty", BSSkyShaderProperty::Create );
-		ObjectRegistry::RegisterObject( "BSWaterShaderProperty", BSWaterShaderProperty::Create );
 
 	}
 }

@@ -20,7 +20,7 @@ namespace Niflib {
 class BSLeafAnimNode;
 typedef Ref<BSLeafAnimNode> BSLeafAnimNodeRef;
 
-/*! Unkown, related to trees. */
+/*! Unknown, related to trees. */
 class BSLeafAnimNode : public NiNode {
 public:
 	/*! Constructor */

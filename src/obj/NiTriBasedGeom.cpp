@@ -332,5 +332,3 @@ void NiTriBasedGeom::UpdateTangentSpace(int method) {
 }
 
 //--END CUSTOM CODE--//
-
-

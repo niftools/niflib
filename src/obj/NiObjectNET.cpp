@@ -22,24 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiObjectNET::TYPE("NiObjectNET", &NiObject::TYPE );
 
-NiObjectNET::NiObjectNET() : skyrimShaderType((unsigned int)0), hasOldExtraData(false), oldExtraInternalId((unsigned int)0), unknownByte((byte)0), extraData(NULL), numExtraDataList((unsigned int)0), controller(NULL) {
-	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
-	//--END CUSTOM CODE--//
-}
-
-NiObjectNET::NiObjectNET(const NiObjectNET& src)
-	:	NiObject(src),
-		skyrimShaderType(src.skyrimShaderType),
-		name(src.name),
-		hasOldExtraData (src.hasOldExtraData),
-		oldExtraPropName(src.oldExtraPropName),
-		oldExtraInternalId(src.oldExtraInternalId),
-		oldExtraString(src.oldExtraString),
-		unknownByte(src.unknownByte),
-		extraData(NULL),
-		numExtraDataList((unsigned int)0),
-		controller(NULL)
-{
+NiObjectNET::NiObjectNET() : skyrimShaderType((BSLightingShaderPropertyShaderType)0), hasOldExtraData(false), oldExtraInternalId((unsigned int)0), unknownByte((byte)0), extraData(NULL), numExtraDataList((unsigned int)0), controller(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -422,14 +405,12 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 	return conts;
 }
 
-unsigned int NiObjectNET::GetSkyrimShaderType() {
+BSLightingShaderPropertyShaderType NiObjectNET::GetSkyrimShaderType() {
 	return skyrimShaderType;
 }
 
-void NiObjectNET::SetSkyrimShaderType( unsigned int value ) {
+void NiObjectNET::SetSkyrimShaderType( BSLightingShaderPropertyShaderType value ) {
 	skyrimShaderType = value;
 }
 
 //--END CUSTOM CODE--//
-
-

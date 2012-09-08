@@ -20,7 +20,10 @@ namespace Niflib {
 class BSWaterShaderProperty;
 typedef Ref<BSWaterShaderProperty> BSWaterShaderPropertyRef;
 
-/*! Water Shader Property, different from "WaterShaderProperty" */
+/*!
+ * Skyrim water shader property, different from "WaterShaderProperty" seen in
+ * Fallout.
+ */
 class BSWaterShaderProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -57,24 +60,26 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown, flag? */
-	unsigned short unknownShort1;
-	/*! Unknown, flag? */
-	unsigned short unknownShort2;
-	/*! Unknown */
-	unsigned int unknownInt1;
-	/*! Unknown */
-	unsigned int unknownInt2;
-	/*! Unknown */
-	unsigned int unknownInt3;
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	float unknownFloat2;
+	/*! Unknown. */
+	SkyrimShaderPropertyFlags1 shaderFlags1;
+	/*! Unknown. */
+	SkyrimShaderPropertyFlags2 shaderFlags2;
+	/*!
+	 * Offset UVs. Seems to be unused, but it fits with the other Skyrim shader
+	 * properties.
+	 */
+	TexCoord uvOffset;
+	/*! Offset UV Scale to repeat tiling textures, see above. */
+	TexCoord uvScale;
+	/*! Defines attributes for the water shader (will use SkyrimWaterShaderFlags) */
+	SkyrimWaterShaderFlags waterShaderFlags;
+	/*!
+	 * A bitflag, only the first/second bit controls water flow positive or negative
+	 * along UVs.
+	 */
+	byte waterDirection;
 	/*! Unknown, flag? */
 	unsigned short unknownShort3;
-	/*! Unknown, flag? */
-	unsigned short unknownShort4;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

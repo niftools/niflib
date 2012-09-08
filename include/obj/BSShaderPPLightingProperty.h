@@ -80,6 +80,8 @@ protected:
 	float unknownFloat4;
 	/*! Unknown */
 	float unknownFloat5;
+	/*! Glow color and alpha */
+	Color4 emissiveColor;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

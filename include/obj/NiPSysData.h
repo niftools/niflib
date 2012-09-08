@@ -68,16 +68,14 @@ protected:
 	unsigned short unknownShort1;
 	/*! Unknown. */
 	unsigned short unknownShort2;
-	/*! Unknown, probably a boolean. */
-	byte unknownByte2;
-	/*! Unknown, probably a boolean. */
-	byte hasVertexColors2;
-	/*! Num bytes per */
-	mutable unsigned int numVertexColors2;
-	/*! Unknown */
-	unsigned int unknownInt3;
-	/*! Unknown */
-	vector<Color4 > vertexColors;
+	/*! Boolean for Num Subtexture Offset UVs */
+	bool hasSubtextureOffsetUvs;
+	/*! How many quads to use in BSPSysSubTexModifier for texture atlasing */
+	mutable unsigned int numSubtextureOffsetUvs;
+	/*! Sets aspect ratio for Subtexture Offset UV quads */
+	float aspectRatio;
+	/*! Defines UV offsets */
+	vector<Vector4 > subtextureOffsetUvs;
 	/*! Unknown */
 	unsigned int unknownInt4;
 	/*! Unknown */

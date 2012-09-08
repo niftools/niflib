@@ -14,20 +14,19 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiAVObject.h"
+#include "NiNode.h"
 
 // Include structures
 #include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
-class NiAVObject;
 class NiNode;
 class BSTreeNode;
 typedef Ref<BSTreeNode> BSTreeNodeRef;
 
 /*! Node for handling Trees, Switches branch configurations for variation? */
-class BSTreeNode : public NiAVObject {
+class BSTreeNode : public NiNode {
 public:
 	/*! Constructor */
 	NIFLIB_API BSTreeNode();
@@ -63,12 +62,6 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! The number of child objects. */
-	mutable unsigned int numChildren;
-	/*! List of child node object indices. */
-	vector<Ref<NiAVObject > > children;
-	/*! Unknown */
-	unsigned int unknownInt1;
 	/*! Unknown */
 	mutable unsigned int numBones1;
 	/*! Unknown */

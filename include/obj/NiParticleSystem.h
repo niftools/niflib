@@ -61,9 +61,9 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	unsigned short unknownShort1;
-	/*! Unknown */
 	unsigned short unknownShort2;
+	/*! Unknown */
+	unsigned short unknownShort3;
 	/*! Unknown */
 	unsigned int unknownInt1;
 	/*!

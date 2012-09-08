@@ -65,7 +65,7 @@ NifInfo Header::Read( istream& in ) {
 		NifStream( numBlocks, in, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion >= 10) ) {
+		if ( ((userVersion >= 10) || ((userVersion == 1) && (version != 0x0A020000))) ) {
 			NifStream( userVersion2, in, info );
 		};
 	};
@@ -81,7 +81,7 @@ NifInfo Header::Read( istream& in ) {
 		NifStream( exportInfo.exportInfo2, in, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion >= 10) ) {
+		if ( ((userVersion >= 10) || ((userVersion == 1) && (version != 0x0A020000))) ) {
 			if ( info.version <= 0x0A000102 ) {
 				NifStream( exportInfo.unknown, in, info );
 			};
@@ -124,6 +124,7 @@ NifInfo Header::Read( istream& in ) {
 
 	//Fill out and return NifInfo structure.
 	info.userVersion = userVersion;
+	info.userVersion2 = userVersion2;
 	info.endian = EndianType(endianType);
 	info.creator = exportInfo.creator.str;
 	info.exportInfo1 = exportInfo.exportInfo1.str;
@@ -156,7 +157,7 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 		NifStream( numBlocks, out, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion >= 10) ) {
+		if ( ((userVersion >= 10) || ((userVersion == 1) && (version != 0x0A020000))) ) {
 			NifStream( userVersion2, out, info );
 		};
 	};
@@ -172,7 +173,7 @@ void Header::Write( ostream& out, const NifInfo & info ) const {
 		NifStream( exportInfo.exportInfo2, out, info );
 	};
 	if ( info.version >= 0x0A010000 ) {
-		if ( (userVersion >= 10) ) {
+		if ( ((userVersion >= 10) || ((userVersion == 1) && (version != 0x0A020000))) ) {
 			if ( info.version <= 0x0A000102 ) {
 				NifStream( exportInfo.unknown, out, info );
 			};
@@ -230,7 +231,7 @@ string Header::asString( bool verbose ) const {
 	out << "  Endian Type:  " << endianType << endl;
 	out << "  User Version:  " << userVersion << endl;
 	out << "  Num Blocks:  " << numBlocks << endl;
-	if ( (userVersion >= 10) ) {
+	if ( ((userVersion >= 10) || ((userVersion == 1) && (version != 0x0A020000))) ) {
 		out << "    User Version 2:  " << userVersion2 << endl;
 	};
 	out << "  Unknown Int 3:  " << unknownInt3 << endl;
@@ -325,5 +326,3 @@ vector<unsigned short> Niflib::Header::getBlockTypeIndex() {
 }
 
 //--END CUSTOM CODE--//
-
-

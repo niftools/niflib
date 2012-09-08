@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiPSysData::TYPE("NiPSysData", &NiRotatingParticlesData::TYPE );
 
-NiPSysData::NiPSysData() : hasUnknownFloats3(false), unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownByte2((byte)0), hasVertexColors2((byte)0), numVertexColors2((unsigned int)0), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownInt6((unsigned int)0), unknownShort3((unsigned short)0), unknownByte4((byte)0) {
+NiPSysData::NiPSysData() : hasUnknownFloats3(false), unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), hasSubtextureOffsetUvs(false), numSubtextureOffsetUvs((unsigned int)0), aspectRatio(0.0f), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownInt6((unsigned int)0), unknownShort3((unsigned short)0), unknownByte4((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -43,18 +43,20 @@ void NiPSysData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	//--END CUSTOM CODE--//
 
 	NiRotatingParticlesData::Read( in, link_stack, info );
-	particleDescriptions.resize(numVertices);
-	for (unsigned int i1 = 0; i1 < particleDescriptions.size(); i1++) {
-		NifStream( particleDescriptions[i1].translation, in, info );
-		if ( info.version <= 0x0A040001 ) {
-			for (unsigned int i3 = 0; i3 < 3; i3++) {
-				NifStream( particleDescriptions[i1].unknownFloats1[i3], in, info );
+	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
+		particleDescriptions.resize(numVertices);
+		for (unsigned int i2 = 0; i2 < particleDescriptions.size(); i2++) {
+			NifStream( particleDescriptions[i2].translation, in, info );
+			if ( info.version <= 0x0A040001 ) {
+				for (unsigned int i4 = 0; i4 < 3; i4++) {
+					NifStream( particleDescriptions[i2].unknownFloats1[i4], in, info );
+				};
 			};
+			NifStream( particleDescriptions[i2].unknownFloat1, in, info );
+			NifStream( particleDescriptions[i2].unknownFloat2, in, info );
+			NifStream( particleDescriptions[i2].unknownFloat3, in, info );
+			NifStream( particleDescriptions[i2].unknownInt1, in, info );
 		};
-		NifStream( particleDescriptions[i1].unknownFloat1, in, info );
-		NifStream( particleDescriptions[i1].unknownFloat2, in, info );
-		NifStream( particleDescriptions[i1].unknownFloat3, in, info );
-		NifStream( particleDescriptions[i1].unknownInt1, in, info );
 	};
 	if ( ( info.version >= 0x14000004 ) && ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) ) {
 		NifStream( hasUnknownFloats3, in, info );
@@ -65,21 +67,18 @@ void NiPSysData::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 			};
 		};
 	};
-	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
+	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
 		NifStream( unknownShort1, in, info );
 		NifStream( unknownShort2, in, info );
 	};
 	if ( ((info.version >= 0x14020007) && (info.userVersion >= 12)) ) {
-		NifStream( unknownByte2, in, info );
-		NifStream( unknownShort1, in, info );
-		NifStream( unknownShort2, in, info );
-		NifStream( hasVertexColors2, in, info );
-		NifStream( numVertexColors2, in, info );
-		NifStream( unknownInt3, in, info );
-		if ( (hasVertexColors2 == 1) ) {
-			vertexColors.resize(numVertexColors2);
-			for (unsigned int i3 = 0; i3 < vertexColors.size(); i3++) {
-				NifStream( vertexColors[i3], in, info );
+		NifStream( hasSubtextureOffsetUvs, in, info );
+		NifStream( numSubtextureOffsetUvs, in, info );
+		NifStream( aspectRatio, in, info );
+		if ( (hasSubtextureOffsetUvs == 1) ) {
+			subtextureOffsetUvs.resize(numSubtextureOffsetUvs);
+			for (unsigned int i3 = 0; i3 < subtextureOffsetUvs.size(); i3++) {
+				NifStream( subtextureOffsetUvs[i3], in, info );
 			};
 		};
 		NifStream( unknownInt4, in, info );
@@ -98,18 +97,20 @@ void NiPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	//--END CUSTOM CODE--//
 
 	NiRotatingParticlesData::Write( out, link_map, missing_link_stack, info );
-	numVertexColors2 = (unsigned int)(vertexColors.size());
-	for (unsigned int i1 = 0; i1 < particleDescriptions.size(); i1++) {
-		NifStream( particleDescriptions[i1].translation, out, info );
-		if ( info.version <= 0x0A040001 ) {
-			for (unsigned int i3 = 0; i3 < 3; i3++) {
-				NifStream( particleDescriptions[i1].unknownFloats1[i3], out, info );
+	numSubtextureOffsetUvs = (unsigned int)(subtextureOffsetUvs.size());
+	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
+		for (unsigned int i2 = 0; i2 < particleDescriptions.size(); i2++) {
+			NifStream( particleDescriptions[i2].translation, out, info );
+			if ( info.version <= 0x0A040001 ) {
+				for (unsigned int i4 = 0; i4 < 3; i4++) {
+					NifStream( particleDescriptions[i2].unknownFloats1[i4], out, info );
+				};
 			};
+			NifStream( particleDescriptions[i2].unknownFloat1, out, info );
+			NifStream( particleDescriptions[i2].unknownFloat2, out, info );
+			NifStream( particleDescriptions[i2].unknownFloat3, out, info );
+			NifStream( particleDescriptions[i2].unknownInt1, out, info );
 		};
-		NifStream( particleDescriptions[i1].unknownFloat1, out, info );
-		NifStream( particleDescriptions[i1].unknownFloat2, out, info );
-		NifStream( particleDescriptions[i1].unknownFloat3, out, info );
-		NifStream( particleDescriptions[i1].unknownInt1, out, info );
 	};
 	if ( ( info.version >= 0x14000004 ) && ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) ) {
 		NifStream( hasUnknownFloats3, out, info );
@@ -119,20 +120,17 @@ void NiPSysData::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 			};
 		};
 	};
-	if ( (!((info.version >= 0x14020007) && (info.userVersion >= 11))) ) {
+	if ( (!((info.version >= 0x14020007) && (info.userVersion == 11))) ) {
 		NifStream( unknownShort1, out, info );
 		NifStream( unknownShort2, out, info );
 	};
 	if ( ((info.version >= 0x14020007) && (info.userVersion >= 12)) ) {
-		NifStream( unknownByte2, out, info );
-		NifStream( unknownShort1, out, info );
-		NifStream( unknownShort2, out, info );
-		NifStream( hasVertexColors2, out, info );
-		NifStream( numVertexColors2, out, info );
-		NifStream( unknownInt3, out, info );
-		if ( (hasVertexColors2 == 1) ) {
-			for (unsigned int i3 = 0; i3 < vertexColors.size(); i3++) {
-				NifStream( vertexColors[i3], out, info );
+		NifStream( hasSubtextureOffsetUvs, out, info );
+		NifStream( numSubtextureOffsetUvs, out, info );
+		NifStream( aspectRatio, out, info );
+		if ( (hasSubtextureOffsetUvs == 1) ) {
+			for (unsigned int i3 = 0; i3 < subtextureOffsetUvs.size(); i3++) {
+				NifStream( subtextureOffsetUvs[i3], out, info );
 			};
 		};
 		NifStream( unknownInt4, out, info );
@@ -153,7 +151,7 @@ std::string NiPSysData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiRotatingParticlesData::asString();
-	numVertexColors2 = (unsigned int)(vertexColors.size());
+	numSubtextureOffsetUvs = (unsigned int)(subtextureOffsetUvs.size());
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < particleDescriptions.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -195,13 +193,12 @@ std::string NiPSysData::asString( bool verbose ) const {
 	};
 	out << "  Unknown Short 1:  " << unknownShort1 << endl;
 	out << "  Unknown Short 2:  " << unknownShort2 << endl;
-	out << "  Unknown Byte 2:  " << unknownByte2 << endl;
-	out << "  Has Vertex Colors 2:  " << hasVertexColors2 << endl;
-	out << "  Num Vertex Colors 2:  " << numVertexColors2 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	if ( (hasVertexColors2 == 1) ) {
+	out << "  Has Subtexture Offset UVs:  " << hasSubtextureOffsetUvs << endl;
+	out << "  Num Subtexture Offset UVs:  " << numSubtextureOffsetUvs << endl;
+	out << "  Aspect Ratio:  " << aspectRatio << endl;
+	if ( (hasSubtextureOffsetUvs == 1) ) {
 		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < vertexColors.size(); i2++) {
+		for (unsigned int i2 = 0; i2 < subtextureOffsetUvs.size(); i2++) {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 				break;
@@ -209,7 +206,7 @@ std::string NiPSysData::asString( bool verbose ) const {
 			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
 				break;
 			};
-			out << "      Vertex Colors[" << i2 << "]:  " << vertexColors[i2] << endl;
+			out << "      Subtexture Offset UVs[" << i2 << "]:  " << subtextureOffsetUvs[i2] << endl;
 			array_output_count++;
 		};
 	};

@@ -5,27 +5,27 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#include "../../include/gen/bhkCMSDTransform.h"
-#include "../../include/gen/QuaternionXYZW.h"
+#include "../../include/gen/QTransform.h"
 using namespace Niflib;
 
 //Constructor
-bhkCMSDTransform::bhkCMSDTransform() {};
+QTransform::QTransform() : scale(0.0f) {};
 
 //Copy Constructor
-bhkCMSDTransform::bhkCMSDTransform( const bhkCMSDTransform & src ) {
+QTransform::QTransform( const QTransform & src ) {
 	*this = src;
 };
 
 //Copy Operator
-bhkCMSDTransform & bhkCMSDTransform::operator=( const bhkCMSDTransform & src ) {
+QTransform & QTransform::operator=( const QTransform & src ) {
 	this->translation = src.translation;
 	this->rotation = src.rotation;
+	this->scale = src.scale;
 	return *this;
 };
 
 //Destructor
-bhkCMSDTransform::~bhkCMSDTransform() {};
+QTransform::~QTransform() {};
 
 //--BEGIN MISC CUSTOM CODE--//
 

@@ -5,26 +5,26 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#include "../../include/gen/bhkCMSD_Something.h"
+#include "../../include/gen/bhkCMSDMaterial.h"
 using namespace Niflib;
 
 //Constructor
-bhkCMSD_Something::bhkCMSD_Something() : largeInt((unsigned int)0), unknownInteger((unsigned int)0) {};
+bhkCMSDMaterial::bhkCMSDMaterial() : material((HavokMaterial)0), unknownInteger((unsigned int)0) {};
 
 //Copy Constructor
-bhkCMSD_Something::bhkCMSD_Something( const bhkCMSD_Something & src ) {
+bhkCMSDMaterial::bhkCMSDMaterial( const bhkCMSDMaterial & src ) {
 	*this = src;
 };
 
 //Copy Operator
-bhkCMSD_Something & bhkCMSD_Something::operator=( const bhkCMSD_Something & src ) {
-	this->largeInt = src.largeInt;
+bhkCMSDMaterial & bhkCMSDMaterial::operator=( const bhkCMSDMaterial & src ) {
+	this->material = src.material;
 	this->unknownInteger = src.unknownInteger;
 	return *this;
 };
 
 //Destructor
-bhkCMSD_Something::~bhkCMSD_Something() {};
+bhkCMSDMaterial::~bhkCMSDMaterial() {};
 
 //--BEGIN MISC CUSTOM CODE--//
 

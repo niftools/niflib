@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSWaterShaderProperty::TYPE("BSWaterShaderProperty", &NiProperty::TYPE );
 
-BSWaterShaderProperty::BSWaterShaderProperty() : unknownShort1((unsigned short)0), unknownShort2((unsigned short)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownInt3((unsigned int)0), unknownFloat1(0.0f), unknownFloat2(0.0f), unknownShort3((unsigned short)0), unknownShort4((unsigned short)0) {
+BSWaterShaderProperty::BSWaterShaderProperty() : shaderFlags1((SkyrimShaderPropertyFlags1)0), shaderFlags2((SkyrimShaderPropertyFlags2)0), uvScale(1.0, 1.0), waterShaderFlags((SkyrimWaterShaderFlags)0), waterDirection((byte)3), unknownShort3((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,15 +46,13 @@ void BSWaterShaderProperty::Read( istream& in, list<unsigned int> & link_stack, 
 	//--END CUSTOM CODE--//
 
 	NiProperty::Read( in, link_stack, info );
-	NifStream( unknownShort1, in, info );
-	NifStream( unknownShort2, in, info );
-	NifStream( unknownInt1, in, info );
-	NifStream( unknownInt2, in, info );
-	NifStream( unknownInt3, in, info );
-	NifStream( unknownFloat1, in, info );
-	NifStream( unknownFloat2, in, info );
+	NifStream( shaderFlags1, in, info );
+	NifStream( shaderFlags2, in, info );
+	NifStream( uvOffset, in, info );
+	NifStream( uvScale, in, info );
+	NifStream( waterShaderFlags, in, info );
+	NifStream( waterDirection, in, info );
 	NifStream( unknownShort3, in, info );
-	NifStream( unknownShort4, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -67,15 +65,13 @@ void BSWaterShaderProperty::Write( ostream& out, const map<NiObjectRef,unsigned 
 	//--END CUSTOM CODE--//
 
 	NiProperty::Write( out, link_map, missing_link_stack, info );
-	NifStream( unknownShort1, out, info );
-	NifStream( unknownShort2, out, info );
-	NifStream( unknownInt1, out, info );
-	NifStream( unknownInt2, out, info );
-	NifStream( unknownInt3, out, info );
-	NifStream( unknownFloat1, out, info );
-	NifStream( unknownFloat2, out, info );
+	NifStream( shaderFlags1, out, info );
+	NifStream( shaderFlags2, out, info );
+	NifStream( uvOffset, out, info );
+	NifStream( uvScale, out, info );
+	NifStream( waterShaderFlags, out, info );
+	NifStream( waterDirection, out, info );
 	NifStream( unknownShort3, out, info );
-	NifStream( unknownShort4, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -89,15 +85,13 @@ std::string BSWaterShaderProperty::asString( bool verbose ) const {
 
 	stringstream out;
 	out << NiProperty::asString();
-	out << "  Unknown Short 1:  " << unknownShort1 << endl;
-	out << "  Unknown Short 2:  " << unknownShort2 << endl;
-	out << "  Unknown Int 1:  " << unknownInt1 << endl;
-	out << "  Unknown Int 2:  " << unknownInt2 << endl;
-	out << "  Unknown Int 3:  " << unknownInt3 << endl;
-	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
-	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
+	out << "  Shader Flags 1:  " << shaderFlags1 << endl;
+	out << "  Shader Flags 2:  " << shaderFlags2 << endl;
+	out << "  UV Offset:  " << uvOffset << endl;
+	out << "  UV Scale:  " << uvScale << endl;
+	out << "  Water Shader Flags:  " << waterShaderFlags << endl;
+	out << "  Water Direction:  " << waterDirection << endl;
 	out << "  Unknown Short 3:  " << unknownShort3 << endl;
-	out << "  Unknown Short 4:  " << unknownShort4 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

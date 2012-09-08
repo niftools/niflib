@@ -25,17 +25,11 @@ class BSShaderTextureSet;
 class BSLightingShaderProperty;
 typedef Ref<BSLightingShaderProperty> BSLightingShaderPropertyRef;
 
-/*!
- * Bethesda-specific node, used in Skyrim to configure material/shader/texture
- * properties.
- */
+/*! Skyrim PP shader for assigning material/shader/texture. */
 class BSLightingShaderProperty : public NiProperty {
 public:
 	/*! Constructor */
 	NIFLIB_API BSLightingShaderProperty();
-
-	/*! Copy constructor */
-	NIFLIB_API BSLightingShaderProperty(const BSLightingShaderProperty& src);
 
 	/*! Destructor */
 	NIFLIB_API virtual ~BSLightingShaderProperty();
@@ -70,49 +64,49 @@ public:
 	 * Shader flags used by Skyrim
 	 * \return The value of the shader flags
 	 */
-	NIFLIB_API unsigned int getShaderFlags1();
+	NIFLIB_API SkyrimShaderPropertyFlags1 getShaderFlags1();
 
 	/*!
 	 * Sets the value of the shader flags used by Skyrim
 	 * \param[in] The new value of the shader flags
 	 */
-	NIFLIB_API void setShaderFlags1(unsigned int value);
+	NIFLIB_API void setShaderFlags1(SkyrimShaderPropertyFlags1 value);
 
 	/*!
 	 * Gets the second set of shader flags used by Skyrim
 	 * \return The value of the second set of flags
 	 */
-	NIFLIB_API unsigned int getShaderFlags2();
+	NIFLIB_API SkyrimShaderPropertyFlags2 getShaderFlags2();
 
 	/*!
 	 * Sets the value of the second set of skyrim shader flags
 	 * \param[in] the value of the second set of flags
 	 */
-	NIFLIB_API void setShaderFlags2(unsigned int value); 
+	NIFLIB_API void setShaderFlags2(SkyrimShaderPropertyFlags2 value); 
 
 	/*!
 	 * Used to reposition the texture coordinates of the uv's
 	 * \return The texture translation the the uv's
 	 */
-	NIFLIB_API TexCoord getTextureTranslation1();
+	NIFLIB_API TexCoord getUVOffset();
 
 	/*!
 	 * Sets the value of the texture offset of the uv's
 	 * \param[in] The new value of the uv offsets
 	 */
-	NIFLIB_API void setTextureTranslation1(TexCoord value);
+	NIFLIB_API void setUVOffset(TexCoord value);
 
 	/*!
 	 * Used to get the offset of the texture coordinates or uv's
 	 * \return The second texture offsets for the uv
 	 */
-	NIFLIB_API TexCoord getTextureRepeat();
+	NIFLIB_API TexCoord getUVScale();
 
 	/*!
 	 * Used to set the second texture offsets
 	 * \param[in] The second texture offsets
 	 */
-	NIFLIB_API void setTextureRepeat(TexCoord value);
+	NIFLIB_API void setUVScale(TexCoord value);
 
 	/*!
 	 * Returns the current texture set used
@@ -142,25 +136,25 @@ public:
 	 * Get the emissive saturation
 	 * \return The emissive saturation
 	 */
-	NIFLIB_API float getEmissiveSaturation();
+	NIFLIB_API float getEmissiveMultiple();
 
 	/*!
 	 * Sets the emissive saturation of the material
 	 * \param[in] The new emissive saturation value
 	 */
-	NIFLIB_API void setEmissiveSaturation(float value);
+	NIFLIB_API void setEmissiveMultiple(float value);
 
 	/*!
 	 * Gets unknown unsigned int7
 	 * \return The current value
 	 */
-	NIFLIB_API unsigned int  getUnkownInt7();
+	NIFLIB_API TexClampMode  getTextureClampMode();
 
 	/*!
 	 * Sets the unknown int7 of this material
 	 * \param[in] The new value
 	 */
-	NIFLIB_API void setUnknownInt7(unsigned int value);
+	NIFLIB_API void setTextureClampMode(TexClampMode value);
 
 	/*!
 	 * Get the transparency or "alpha" of this material
@@ -176,12 +170,14 @@ public:
 
 	/*!
 	 * Get the unknown float2 of the material
+	 * WARNING: API not stable
 	 * \return The unknown float2 value
 	 */
 	NIFLIB_API float getUnknownFloat2();
 
 	/*!
 	 * Sets the unknown float2 of the material
+	 * WARNING: API not stable
 	 * \param[in] The new unknown float2 value
 	 */
 	 NIFLIB_API void setUnknownFloat2(float value);
@@ -250,61 +246,25 @@ public:
 	 * Gets the environment map strength of the material
 	 * \return The environment map strength
 	 */
-	NIFLIB_API float getEnvironmentMapStrength();
+	NIFLIB_API float getEnvironmentMapScale();
 
 	/*!
 	 * Sets the environment map strength of the material
 	 * \param[in] The new environment map strength value
 	 */
-	NIFLIB_API void setEnvironmentMapStrength(float value);
-
-	/*!
-	 * Sets unknown float set3 of the material related to hair
-	 * \return The unknown float set3 value
-	 */
-	NIFLIB_API array<2, float> getUnknownFloatSet3();
-
-	/*!
-	 * Sets the unknown float set3 of the material
-	 * \param[in] The new unknown float set3 value 
-	 */
-	NIFLIB_API void setUnknownFloatSet3(array<2, float> value);
-
-	/*!
-	 * Gets the unknown float9 of the material
-	 * \return The unknown float9 value
-	 */
-	NIFLIB_API float getUnknownFloat9();
-
-	/*!
-	 * Sets the unknown float9 of the material
-	 * \param[in] The new unknown float9 value
-	 */
-	NIFLIB_API void setUnknownFloat9(float value);
-
-	/*!
-	 * Gets the unknown color2 of the material
-	 * \return The unknown color2 value
-	 */
-	NIFLIB_API Color4 getUnknownColor2();
-
-	/*!
-	 * Sets the unknown color2 of the material
-	 * \param[in] The new unknown color2 value
-	 */
-	NIFLIB_API void setUnknownColor2(Color4 value);
+	NIFLIB_API void setEnvironmentMapScale(float value);
 
 	/*!
 	 * Gets the unknown float set5 of the material
 	 * \return The unknown float set5 value
 	 */
-	NIFLIB_API Vector4 getUnknownFloatSet5();
+	NIFLIB_API Vector4 getSparkleParameters();
 
 	/*!
 	 * Sets the unknown float set5 of the material
 	 * \param[in] The new unknown float set5 value
 	 */
-	NIFLIB_API void setUnknownFloatSet5(Vector4 value);
+	NIFLIB_API void setSparkleParameters(Vector4 value);
 
 	/*!
 	 * Get the eye cubemap scale
@@ -344,55 +304,61 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Skyrim Shader Flag field 1 (will use SkyrimLightingShaderFlags1) */
-	unsigned int shaderFlags1;
-	/*! Skyrim Shader Flag field 2 (will use SkyrimLightingShaderFlags2) */
-	unsigned int shaderFlags2;
+	/*! Skyrim Shader Flags for setting render/shader options. */
+	SkyrimShaderPropertyFlags1 shaderFlags1;
+	/*! Skyrim Shader Flags for setting render/shader options. */
+	SkyrimShaderPropertyFlags2 shaderFlags2;
 	/*! Offset UVs */
-	TexCoord textureTranslation1;
-	/*! Offset UVs */
-	TexCoord textureRepeat;
-	/*! Texture Set */
+	TexCoord uvOffset;
+	/*! Offset UV Scale to repeat tiling textures, see above. */
+	TexCoord uvScale;
+	/*! Texture Set, can have override in an esm/esp */
 	Ref<BSShaderTextureSet > textureSet;
 	/*! Glow color and alpha */
 	Color3 emissiveColor;
-	/*! Unknown */
-	float emissiveSaturation;
-	/*! Unknown, always 3? */
-	unsigned int unknownInt7;
-	/*! The material transparency (1=non-transparent). */
+	/*! Multiplied emissive colors */
+	float emissiveMultiple;
+	/*! How to handle texture borders. */
+	TexClampMode textureClampMode;
+	/*! The materials opacity (1=non-transparent). */
 	float alpha;
 	/*! Unknown */
 	float unknownFloat2;
-	/*! The material's glossiness. (0-999) */
+	/*! The material's specular power, or glossiness (0-999). */
 	float glossiness;
 	/*! Adds a colored highlight. */
 	Color3 specularColor;
 	/*! Brightness of specular highlight. (0=not visible) (0-999) */
 	float specularStrength;
-	/*! Unknown, related to backlight/rim/softlight effect */
+	/*! Controls strength for envmap/backlight/rim/softlight lighting effect? */
 	float lightingEffect1;
-	/*! Unknown, related to backlight/rim/softlight effect */
+	/*! Controls strength for envmap/backlight/rim/softlight lighting effect? */
 	float lightingEffect2;
+	/*! Scales the environment/cube map. (0-??) */
+	float environmentMapScale;
+	/*! Tints the base texture. Overridden by game settings. */
+	Color3 skinTintColor;
+	/*! Tints the base texture. Overridden by game settings. */
+	Color3 hairTintColor;
+	/*! Max Passes */
+	float maxPasses;
+	/*! Scale */
+	float scale;
+	/*! How far from the surface the inner layer appears to be. */
+	float parallaxInnerLayerThickness;
+	/*! Depth of inner parallax layer effect. */
+	float parallaxRefractionScale;
+	/*! Scales the inner parallax layer texture. */
+	TexCoord parallaxInnerLayerTextureScale;
 	/*! How strong the environment/cube map is. (0-??) */
-	float environmentMapStrength;
-	/*! Unknown, related to skin */
-	Vector3 unknownFloatSet1;
-	/*! Unknown, related to hair */
-	Color3 unknownColor1;
-	/*! Unknown */
-	array<2,float > unknownFloatSet3;
-	/*! Unknown, related to ice or parallax */
-	float unknownFloat9;
-	/*! Unknown, related to ice parallax */
-	Color4 unknownColor2;
-	/*! Unknown, also related to ice? */
-	Vector4 unknownFloatSet5;
-	/*! Eye(Skyrim) */
+	float parallaxEnvmapStrength;
+	/*! Unknown/unused?  CK lists "snow material" when used. */
+	Vector4 sparkleParameters;
+	/*! Eye cubemap scale */
 	float eyeCubemapScale;
-	/*! Eye(Skyrim)Left Unknown */
+	/*! Offset to set center for left eye cubemap */
 	Vector3 leftEyeReflectionCenter;
-	/*! Eye(Skyrim)Right Unknown */
+	/*! Offset to set center for right eye cubemap */
 	Vector3 rightEyeReflectionCenter;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */

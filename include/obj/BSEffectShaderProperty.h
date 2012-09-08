@@ -20,7 +20,7 @@ namespace Niflib {
 class BSEffectShaderProperty;
 typedef Ref<BSEffectShaderProperty> BSEffectShaderPropertyRef;
 
-/*!  */
+/*! Skyrim non-PP shader model, used primarily for transparency effects. */
 class BSEffectShaderProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -57,42 +57,34 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! 8/16? (nope, also 122,atronachflame) */
-	byte unknownByte1;
-	/*!  */
-	unsigned short unknownShort1;
-	/*! always 80? */
-	byte unknownByte2;
-	/*! Shader options, will use SkyrimEffectShaderFlags1 */
-	unsigned int effectShaderFlags1;
+	/*! Unknown. */
+	SkyrimShaderPropertyFlags1 shaderFlags1;
+	/*! Unknown. */
+	SkyrimShaderPropertyFlags2 shaderFlags2;
 	/*! Offset UVs */
-	TexCoord textureTranslation1;
-	/*! Offset UVs */
-	TexCoord textureTranslation2;
+	TexCoord uvOffset;
+	/*! Offset UV Scale to repeat tiling textures */
+	TexCoord uvScale;
 	/*! points to an external texture. */
 	string sourceTexture;
-	/*! hader options, will use SkyrimEffectShaderFlags12 */
-	unsigned short effectShaderFlags2;
-	/*! Unknown */
-	unsigned short unknownShort2;
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	float unknownFloat2;
-	/*! Unknown */
-	float unknownFloat3;
-	/*! Unknown */
-	float unknownFloat4;
-	/*! Color */
-	Color3 diffuseColor;
-	/*! The material's transparency */
-	float alpha;
-	/*! Adds a glow effect */
-	float emissive;
-	/*! Unknown */
-	float unknownFloat5;
+	/*! How to handle texture borders. */
+	unsigned int textureClampMode;
+	/*! Unknown. */
+	float falloffStartAngle;
+	/*! Unknown. */
+	float falloffStopAngle;
+	/*! Texture will fade in within this proximity. */
+	float falloffStartOpacity;
+	/*! Unknown. */
+	float falloffStopOpacity;
+	/*! Emissive color */
+	Color4 emissiveColor;
+	/*! Multipled Emissive Colors */
+	float emissiveMultiple;
+	/*! Unknown. */
+	float softFalloffDepth;
 	/*! points to an external texture. */
-	string gradientTexture;
+	string greyscaleTexture;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

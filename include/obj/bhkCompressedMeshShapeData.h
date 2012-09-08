@@ -17,19 +17,16 @@ All rights reserved.  Please see niflib.h for license. */
 #include "NiObject.h"
 
 // Include structures
-#include "../gen/bhkCMSD_Something.h"
-#include "../gen/bhkCMSDData.h"
-#include "../gen/bhkCMSD_Shape.h"
-#include "../gen/bhkCMSDContainer.h"
-#include "../gen/bhkCMSDChunk.h"
-#include "../gen/bhkCMSDBigTris.h"
+#include "../gen/bhkCMSDMaterial.h"
 #include "../gen/bhkCMSDTransform.h"
+#include "../gen/bhkCMSDBigTris.h"
+#include "../gen/bhkCMSDChunk.h"
 namespace Niflib {
 
 class bhkCompressedMeshShapeData;
 typedef Ref<bhkCompressedMeshShapeData> bhkCompressedMeshShapeDataRef;
 
-/*!  */
+/*! A compressed mesh shape for collision in Skyrim. */
 class bhkCompressedMeshShapeData : public NiObject {
 public:
 	/*! Constructor */
@@ -163,13 +160,13 @@ public:
 	 * Retrieve list of chunkMaterials
 	 * \return List of the chunkMaterials
      */
-	NIFLIB_API virtual const vector<bhkCMSD_Something> & GetChunkMaterials() const;
+	NIFLIB_API virtual const vector<bhkCMSDMaterial> & GetChunkMaterials() const;
 	
 	/*!
 	 * Set list of chunkMaterials 
 	 * \param[in] List of the chunkMaterials
      */
-	NIFLIB_API virtual unsigned int SetChunkMaterials(vector<bhkCMSD_Something>& theChunkMaterials);
+	NIFLIB_API virtual unsigned int SetChunkMaterials(vector<bhkCMSDMaterial>& theChunkMaterials);
 
 	/*!
 	 * Retrieve numTransforms
@@ -269,20 +266,28 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Number of bits defining index in shapeKey */
+	/*! Number of bits in the shape-key reserved for a triangle index */
 	unsigned int bitsPerIndex;
-	/*! Number of bits defining index and winding in shapeKey */
+	/*! Number of bits in the shape-key reserved for a triangle index and its winding */
 	unsigned int bitsPerWIndex;
-	/*! Mask for retrieving index and winding from shapeKey */
+	/*!
+	 * Mask used to get the triangle index and winding from a shape-key (common: 262143
+	 * = 0x3ffff)
+	 */
 	unsigned int maskWIndex;
-	/*! Mask for retrieving index from shapeKey */
+	/*! Mask used to get the triangle index from a shape-key (common: 131071 = 0x1ffff) */
 	unsigned int maskIndex;
-
-	/*! error correction/? */
+	/*! The radius of the storage mesh shape? Quantization error? */
 	float error;
-	/*! minimum AABB */
+	/*!
+	 * The minimum boundary of the AABB (the coordinates of the corner with the lowest
+	 * numerical values)
+	 */
 	Vector4 boundsMin;
-	/*! masimum AABB */
+	/*!
+	 * The maximum boundary of the AABB (the coordinates of the corner with the highest
+	 * numerical values)
+	 */
 	Vector4 boundsMax;
 	/*! Unknown */
 	byte unknownByte1;
@@ -294,28 +299,31 @@ protected:
 	unsigned int unknownInt5;
 	/*! Unknown */
 	byte unknownByte2;
-	/*! Number of bhkCMSDSomething */
+	/*! Number of chunk materials */
 	mutable unsigned int numMaterials;
-	/*! Chunk materials */
-	vector<bhkCMSD_Something > chunkMaterials;
+	/*! Table (array) with sets of materials. Chunks refers to this table by index. */
+	vector<bhkCMSDMaterial > chunkMaterials;
 	/*! Unknown */
 	unsigned int unknownInt6;
-	/*! Number of transformations */
+	/*! Number of chunk transformations */
 	mutable unsigned int numTransforms;
-	/*! Chunk transformations */
-  vector<bhkCMSDTransform > chunkTransforms;
-	/*! Number of BigVerts */
+	/*!
+	 * Table (array) with sets of transformations. Chunks refers to this table by
+	 * index.
+	 */
+	vector<bhkCMSDTransform > chunkTransforms;
+	/*! Unknown */
 	mutable unsigned int numBigVerts;
-	/*! Vertices */
+	/*! Compressed Vertices? */
 	vector<Vector4 > bigVerts;
-	/*! Number of triangles defind by vertices */
+	/*! Unknown */
 	mutable unsigned int numBigTris;
-	/*! Triangles defining faces */
+	/*! Unknown */
 	vector<bhkCMSDBigTris > bigTris;
-	/*! Number of chunks */
+	/*! Unknown */
 	mutable unsigned int numChunks;
-	/*! Chunks */
-	vector< bhkCMSDChunk > chunks;
+	/*! Unknown. */
+	vector<bhkCMSDChunk > chunks;
 	/*! Unknown, end of block. */
 	unsigned int unknownInt12;
 public:

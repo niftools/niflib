@@ -31,9 +31,6 @@ public:
 	/*! Constructor */
 	NIFLIB_API NiObjectNET();
 
-	/*! Copy constructor */
-	NIFLIB_API NiObjectNET(const NiObjectNET& src);
-
 	/*! Destructor */
 	NIFLIB_API virtual ~NiObjectNET();
 
@@ -137,21 +134,18 @@ public:
 	* Gets the skyrim shader type
 	* \return The skyrim shader flag value
 	*/
-	NIFLIB_API unsigned int GetSkyrimShaderType();
+	NIFLIB_API BSLightingShaderPropertyShaderType GetSkyrimShaderType();
 
 	/*!
 	* Set the skyrim shader type
 	* \param[in] The new skyrim shader value
 	*/
-	NIFLIB_API void SetSkyrimShaderType(unsigned int value);
+	NIFLIB_API void SetSkyrimShaderType(BSLightingShaderPropertyShaderType value);
 
 	//--END CUSTOM CODE--//
 protected:
-	/*!
-	 * Skyrim's shaders: 0=default 1=EnvMap, 2=Glow, 5=Skin, 6=Hair, 7=Unknown,
-	 * 11=Ice/Parallax, 15=Eye.
-	 */
-	unsigned int skyrimShaderType;
+	/*! Configures the main shader path */
+	BSLightingShaderPropertyShaderType skyrimShaderType;
 	/*! Name of this controllable object, used to refer to the object in .kf files. */
 	IndexString name;
 	/*! Extra data for pre-3.0 versions. */

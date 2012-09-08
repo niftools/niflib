@@ -5,28 +5,28 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#ifndef _BHKCMSD_SHAPE_H_
-#define _BHKCMSD_SHAPE_H_
+#ifndef _BONELOD_H_
+#define _BONELOD_H_
 
 #include "../NIF_IO.h"
 
 namespace Niflib {
 
 
-/*!  */
-struct bhkCMSD_Shape {
+/*! Stores Bone Level of Detail info in a BSBoneLODExtraData */
+struct BoneLOD {
 	/*! Default Constructor */
-	NIFLIB_API bhkCMSD_Shape();
+	NIFLIB_API BoneLOD();
 	/*! Default Destructor */
-	NIFLIB_API ~bhkCMSD_Shape();
+	NIFLIB_API ~BoneLOD();
 	/*! Copy Constructor */
-	NIFLIB_API bhkCMSD_Shape( const bhkCMSD_Shape & src );
+	NIFLIB_API BoneLOD( const BoneLOD & src );
 	/*! Copy Operator */
-	NIFLIB_API bhkCMSD_Shape & operator=( const bhkCMSD_Shape & src );
-	/*! Unknown */
-	mutable unsigned int numShape;
-	/*! Unknown */
-	vector<unsigned short > shape;
+	NIFLIB_API BoneLOD & operator=( const BoneLOD & src );
+	/*! Distance to cull? */
+	unsigned int distance;
+	/*! The bones name */
+	IndexString boneName;
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

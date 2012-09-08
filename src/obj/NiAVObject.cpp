@@ -28,24 +28,6 @@ NiAVObject::NiAVObject() : flags((unsigned short)0), unknownShort1((unsigned sho
 
 	parent = NULL;
 
-	//--END CUSTOM CODE--//
-}
-
-NiAVObject::NiAVObject(const NiAVObject& src)
-	:	NiObjectNET(src),
-		flags(src.flags),
-		unknownShort1(src.unknownShort1),
-		scale(src.scale),
-		numProperties((unsigned int)0),
-		unknown2(src.unknown2),
-		hasBoundingBox(src.hasBoundingBox),
-		collisionObject(NULL),
-		translation(src.translation),
-		velocity(src.velocity),
-		rotation(src.rotation),
-		boundingBox(src.boundingBox)
-{
-	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	parent = NULL;
 
@@ -92,7 +74,7 @@ void NiAVObject::Read( istream& in, list<unsigned int> & link_stack, const NifIn
 	if ( info.version <= 0x04020200 ) {
 		NifStream( velocity, in, info );
 	};
-	if ( (info.userVersion <= 11) ) {
+	if ( ((info.version < 0x14020007) || (info.userVersion <= 11)) ) {
 		NifStream( numProperties, in, info );
 		properties.resize(numProperties);
 		for (unsigned int i2 = 0; i2 < properties.size(); i2++) {
@@ -142,7 +124,7 @@ void NiAVObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & link
 	if ( info.version <= 0x04020200 ) {
 		NifStream( velocity, out, info );
 	};
-	if ( (info.userVersion <= 11) ) {
+	if ( ((info.version < 0x14020007) || (info.userVersion <= 11)) ) {
 		NifStream( numProperties, out, info );
 		for (unsigned int i2 = 0; i2 < properties.size(); i2++) {
 			if ( info.version < VER_3_3_0_13 ) {
@@ -262,7 +244,7 @@ void NiAVObject::FixLinks( const map<unsigned int,NiObjectRef> & objects, list<u
 	//--END CUSTOM CODE--//
 
 	NiObjectNET::FixLinks( objects, link_stack, missing_link_stack, info );
-	if ( (info.userVersion <= 11) ) {
+	if ( ((info.version < 0x14020007) || (info.userVersion <= 11)) ) {
 		for (unsigned int i2 = 0; i2 < properties.size(); i2++) {
 			properties[i2] = FixLink<NiProperty>( objects, link_stack, missing_link_stack, info );
 		};

@@ -57,8 +57,10 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	array<6,float > unknownFloats1;
+	/*! Position of the AABB's center */
+	Vector3 position;
+	/*! Extent of the AABB in all directions */
+	Vector3 extent;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

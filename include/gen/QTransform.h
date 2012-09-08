@@ -5,28 +5,30 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#ifndef _BHKCMSD_SOMETHING_H_
-#define _BHKCMSD_SOMETHING_H_
+#ifndef _QTRANSFORM_H_
+#define _QTRANSFORM_H_
 
 #include "../NIF_IO.h"
 
 namespace Niflib {
 
 
-/*! Unknown, used in bhkCompressedMeshShapeData */
-struct bhkCMSD_Something {
+/*!  */
+struct QTransform {
 	/*! Default Constructor */
-	NIFLIB_API bhkCMSD_Something();
+	NIFLIB_API QTransform();
 	/*! Default Destructor */
-	NIFLIB_API ~bhkCMSD_Something();
+	NIFLIB_API ~QTransform();
 	/*! Copy Constructor */
-	NIFLIB_API bhkCMSD_Something( const bhkCMSD_Something & src );
+	NIFLIB_API QTransform( const QTransform & src );
 	/*! Copy Operator */
-	NIFLIB_API bhkCMSD_Something & operator=( const bhkCMSD_Something & src );
-	/*! Unknown */
-	unsigned int largeInt;
-	/*! Always 1? */
-	unsigned int unknownInteger;
+	NIFLIB_API QTransform & operator=( const QTransform & src );
+	/*! Translation. */
+	Vector3 translation;
+	/*! Rotation. */
+	Quaternion rotation;
+	/*! Scale. */
+	float scale;
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

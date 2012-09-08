@@ -49,7 +49,6 @@ void NiTriShapeData::Read( istream& in, list<unsigned int> & link_stack, const N
 	};
 	if ( info.version <= 0x0A000102 ) {
 		triangles.resize(numTriangles);
-		hasTriangles = (triangles.size() > 0);
 		for (unsigned int i2 = 0; i2 < triangles.size(); i2++) {
 			NifStream( triangles[i2], in, info );
 		};

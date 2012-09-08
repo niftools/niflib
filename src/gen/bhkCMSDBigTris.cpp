@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-bhkCMSDBigTris::bhkCMSDBigTris() {};
+bhkCMSDBigTris::bhkCMSDBigTris() : triangle1((unsigned short)0), triangle2((unsigned short)0), triangle3((unsigned short)0), unknownInt1((unsigned int)0), unknownShort1((unsigned short)0) {};
 
 //Copy Constructor
 bhkCMSDBigTris::bhkCMSDBigTris( const bhkCMSDBigTris & src ) {

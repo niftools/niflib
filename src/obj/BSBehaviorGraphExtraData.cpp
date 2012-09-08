@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSBehaviorGraphExtraData::TYPE("BSBehaviorGraphExtraData", &NiExtraData::TYPE );
 
-BSBehaviorGraphExtraData::BSBehaviorGraphExtraData() : unknownByte1((byte)0) {
+BSBehaviorGraphExtraData::BSBehaviorGraphExtraData() : controlsBaseSkeleton((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -47,7 +47,7 @@ void BSBehaviorGraphExtraData::Read( istream& in, list<unsigned int> & link_stac
 
 	NiExtraData::Read( in, link_stack, info );
 	NifStream( behaviourGraphFile, in, info );
-	NifStream( unknownByte1, in, info );
+	NifStream( controlsBaseSkeleton, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -61,7 +61,7 @@ void BSBehaviorGraphExtraData::Write( ostream& out, const map<NiObjectRef,unsign
 
 	NiExtraData::Write( out, link_map, missing_link_stack, info );
 	NifStream( behaviourGraphFile, out, info );
-	NifStream( unknownByte1, out, info );
+	NifStream( controlsBaseSkeleton, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -76,7 +76,7 @@ std::string BSBehaviorGraphExtraData::asString( bool verbose ) const {
 	stringstream out;
 	out << NiExtraData::asString();
 	out << "  Behaviour Graph File:  " << behaviourGraphFile << endl;
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
+	out << "  Controls Base Skeleton:  " << controlsBaseSkeleton << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//

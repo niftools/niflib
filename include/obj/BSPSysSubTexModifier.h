@@ -20,7 +20,10 @@ namespace Niflib {
 class BSPSysSubTexModifier;
 typedef Ref<BSPSysSubTexModifier> BSPSysSubTexModifierRef;
 
-/*!  */
+/*!
+ * Similar to a Flip Controller, this handles particle texture animation on a
+ * single texture atlas
+ */
 class BSPSysSubTexModifier : public NiPSysModifier {
 public:
 	/*! Constructor */
@@ -57,20 +60,20 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
+	/*! Starting frame/position on atlas */
+	unsigned int startFrame;
+	/*! Random chance to start on a different frame? */
+	float startFrameFudge;
+	/*! Ending frame/position on atlas */
+	float endFrame;
+	/*! Frame to start looping */
+	float loopStartFrame;
+	/*! Unknown. */
+	float loopStartFrameFudge;
 	/*! Unknown */
-	unsigned int unknownInt1;
-	/*! These seem to relate to the texture slots in a TextureSet */
-	float unknownFloat1;
+	float frameCount;
 	/*! Unknown */
-	float unknownFloat2;
-	/*! Unknown */
-	float unknownFloat3;
-	/*! Unknown */
-	float unknownFloat4;
-	/*! Unknown */
-	float unknownFloat5;
-	/*! Unknown */
-	float unknownFloat6;
+	float frameCountFudge;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

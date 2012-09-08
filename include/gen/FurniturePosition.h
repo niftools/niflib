@@ -37,10 +37,12 @@ struct FurniturePosition {
 	 * Ref 1.
 	 */
 	byte positionRef2;
+	/*! Similar to Orientation, in float form. */
+	float heading;
 	/*! Unknown */
-	unsigned short unknownShort1;
-	/*! Unknown */
-	unsigned short unknownShort2;
+	AnimationType animationType;
+	/*! Unknown/unused in nif? */
+	FurnitureEntryPoints entryProperties;
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 };

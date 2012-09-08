@@ -9,12 +9,13 @@ All rights reserved.  Please see niflib.h for license. */
 #define _BHKCMSDTRANSFORM_H_
 
 #include "../NIF_IO.h"
-#include "QuaternionXYZW.h"
 
+// Include structures
+#include "QuaternionXYZW.h"
 namespace Niflib {
 
 
-/*!  */
+/*! A set of transformation data: translation and rotation */
 struct bhkCMSDTransform {
 	/*! Default Constructor */
 	NIFLIB_API bhkCMSDTransform();
@@ -24,10 +25,10 @@ struct bhkCMSDTransform {
 	NIFLIB_API bhkCMSDTransform( const bhkCMSDTransform & src );
 	/*! Copy Operator */
 	NIFLIB_API bhkCMSDTransform & operator=( const bhkCMSDTransform & src );
-	/*! Translation */
-	Vector4   translation;
-	/*! Rotation */
-	QuaternionXYZW  rotation;
+	/*! A vector that moves the chunk by the specified amount. W is not used. */
+	Vector4 translation;
+	/*! Rotation. Reference point for rotation is bhkRigidBody translation. */
+	QuaternionXYZW rotation;
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

@@ -21,39 +21,9 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSLightingShaderProperty::TYPE("BSLightingShaderProperty", &NiProperty::TYPE );
 
-BSLightingShaderProperty::BSLightingShaderProperty() : shaderFlags1((unsigned int)0), shaderFlags2((unsigned int)0), textureSet(NULL), emissiveSaturation(0.0f), unknownInt7((unsigned int)0), alpha(0.0f), unknownFloat2(0.0f), glossiness(0.0f), specularStrength(0.0f), lightingEffect1(0.0f), lightingEffect2(0.0f), environmentMapStrength(0.0f), unknownFloat9(0.0f), eyeCubemapScale(0.0f) {
+BSLightingShaderProperty::BSLightingShaderProperty() : shaderFlags1((SkyrimShaderPropertyFlags1)2185233153), shaderFlags2((SkyrimShaderPropertyFlags2)32801), uvScale(1.0, 1.0), textureSet(NULL), emissiveMultiple(0.0f), textureClampMode((TexClampMode)0), alpha(1.0f), unknownFloat2(0.0f), glossiness(0.0f), specularStrength(1.0f), lightingEffect1(0.0f), lightingEffect2(0.0f), environmentMapScale(0.0f), maxPasses(0.0f), scale(0.0f), parallaxInnerLayerThickness(0.0f), parallaxRefractionScale(0.0f), parallaxEnvmapStrength(0.0f), eyeCubemapScale(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
-	//--END CUSTOM CODE--//
-}
-
-BSLightingShaderProperty::BSLightingShaderProperty(const BSLightingShaderProperty& src)
-	:	shaderFlags1(src.shaderFlags1),
-		shaderFlags2(src.shaderFlags2),
-		textureSet(NULL),
-		emissiveSaturation(src.emissiveSaturation),
-		unknownInt7(src.unknownInt7),
-		alpha(src.alpha),
-		unknownFloat2(src.unknownFloat2),
-		glossiness(src.glossiness),
-		specularStrength(src.specularStrength),
-		lightingEffect1(src.lightingEffect1),
-		lightingEffect2(src.lightingEffect2),
-		environmentMapStrength(src.environmentMapStrength),
-		unknownFloat9(src.unknownFloat9),
-		eyeCubemapScale(src.eyeCubemapScale),
-		emissiveColor(src.emissiveColor),
-		specularColor(src.specularColor),
-		unknownColor1(src.unknownColor1),
-		unknownColor2(src.unknownColor2),
-		unknownFloatSet1(src.unknownFloatSet1),
-		unknownFloatSet5(src.unknownFloatSet5),
-		leftEyeReflectionCenter(src.leftEyeReflectionCenter),
-		rightEyeReflectionCenter(src.rightEyeReflectionCenter),
-		textureTranslation1(src.textureTranslation1),
-		textureRepeat(src.textureRepeat)
-{
-	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
 
@@ -82,13 +52,13 @@ void BSLightingShaderProperty::Read( istream& in, list<unsigned int> & link_stac
 		NifStream( shaderFlags1, in, info );
 		NifStream( shaderFlags2, in, info );
 	};
-	NifStream( textureTranslation1, in, info );
-	NifStream( textureRepeat, in, info );
+	NifStream( uvOffset, in, info );
+	NifStream( uvScale, in, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 	NifStream( emissiveColor, in, info );
-	NifStream( emissiveSaturation, in, info );
-	NifStream( unknownInt7, in, info );
+	NifStream( emissiveMultiple, in, info );
+	NifStream( textureClampMode, in, info );
 	NifStream( alpha, in, info );
 	NifStream( unknownFloat2, in, info );
 	NifStream( glossiness, in, info );
@@ -97,25 +67,26 @@ void BSLightingShaderProperty::Read( istream& in, list<unsigned int> & link_stac
 	NifStream( lightingEffect1, in, info );
 	NifStream( lightingEffect2, in, info );
 	if ( (skyrimShaderType == 1) ) {
-		NifStream( environmentMapStrength, in, info );
+		NifStream( environmentMapScale, in, info );
 	};
 	if ( (skyrimShaderType == 5) ) {
-		NifStream( unknownFloatSet1, in, info );
+		NifStream( skinTintColor, in, info );
 	};
 	if ( (skyrimShaderType == 6) ) {
-		NifStream( unknownColor1, in, info );
+		NifStream( hairTintColor, in, info );
 	};
 	if ( (skyrimShaderType == 7) ) {
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			NifStream( unknownFloatSet3[i2], in, info );
-		};
+		NifStream( maxPasses, in, info );
+		NifStream( scale, in, info );
 	};
 	if ( (skyrimShaderType == 11) ) {
-		NifStream( unknownFloat9, in, info );
-		NifStream( unknownColor2, in, info );
+		NifStream( parallaxInnerLayerThickness, in, info );
+		NifStream( parallaxRefractionScale, in, info );
+		NifStream( parallaxInnerLayerTextureScale, in, info );
+		NifStream( parallaxEnvmapStrength, in, info );
 	};
 	if ( (skyrimShaderType == 14) ) {
-		NifStream( unknownFloatSet5, in, info );
+		NifStream( sparkleParameters, in, info );
 	};
 	if ( (skyrimShaderType == 16) ) {
 		NifStream( eyeCubemapScale, in, info );
@@ -138,8 +109,8 @@ void BSLightingShaderProperty::Write( ostream& out, const map<NiObjectRef,unsign
 		NifStream( shaderFlags1, out, info );
 		NifStream( shaderFlags2, out, info );
 	};
-	NifStream( textureTranslation1, out, info );
-	NifStream( textureRepeat, out, info );
+	NifStream( uvOffset, out, info );
+	NifStream( uvScale, out, info );
 	if ( info.version < VER_3_3_0_13 ) {
 		WritePtr32( &(*textureSet), out );
 	} else {
@@ -158,8 +129,8 @@ void BSLightingShaderProperty::Write( ostream& out, const map<NiObjectRef,unsign
 		}
 	}
 	NifStream( emissiveColor, out, info );
-	NifStream( emissiveSaturation, out, info );
-	NifStream( unknownInt7, out, info );
+	NifStream( emissiveMultiple, out, info );
+	NifStream( textureClampMode, out, info );
 	NifStream( alpha, out, info );
 	NifStream( unknownFloat2, out, info );
 	NifStream( glossiness, out, info );
@@ -168,25 +139,26 @@ void BSLightingShaderProperty::Write( ostream& out, const map<NiObjectRef,unsign
 	NifStream( lightingEffect1, out, info );
 	NifStream( lightingEffect2, out, info );
 	if ( (skyrimShaderType == 1) ) {
-		NifStream( environmentMapStrength, out, info );
+		NifStream( environmentMapScale, out, info );
 	};
 	if ( (skyrimShaderType == 5) ) {
-		NifStream( unknownFloatSet1, out, info );
+		NifStream( skinTintColor, out, info );
 	};
 	if ( (skyrimShaderType == 6) ) {
-		NifStream( unknownColor1, out, info );
+		NifStream( hairTintColor, out, info );
 	};
 	if ( (skyrimShaderType == 7) ) {
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			NifStream( unknownFloatSet3[i2], out, info );
-		};
+		NifStream( maxPasses, out, info );
+		NifStream( scale, out, info );
 	};
 	if ( (skyrimShaderType == 11) ) {
-		NifStream( unknownFloat9, out, info );
-		NifStream( unknownColor2, out, info );
+		NifStream( parallaxInnerLayerThickness, out, info );
+		NifStream( parallaxRefractionScale, out, info );
+		NifStream( parallaxInnerLayerTextureScale, out, info );
+		NifStream( parallaxEnvmapStrength, out, info );
 	};
 	if ( (skyrimShaderType == 14) ) {
-		NifStream( unknownFloatSet5, out, info );
+		NifStream( sparkleParameters, out, info );
 	};
 	if ( (skyrimShaderType == 16) ) {
 		NifStream( eyeCubemapScale, out, info );
@@ -205,16 +177,15 @@ std::string BSLightingShaderProperty::asString( bool verbose ) const {
 	//--END CUSTOM CODE--//
 
 	stringstream out;
-	unsigned int array_output_count = 0;
 	out << NiProperty::asString();
 	out << "  Shader Flags 1:  " << shaderFlags1 << endl;
 	out << "  Shader Flags 2:  " << shaderFlags2 << endl;
-	out << "  Texture Translation 1:  " << textureTranslation1 << endl;
-	out << "  Texture Repeat:  " << textureRepeat << endl;
+	out << "  UV Offset:  " << uvOffset << endl;
+	out << "  UV Scale:  " << uvScale << endl;
 	out << "  Texture Set:  " << textureSet << endl;
 	out << "  Emissive Color:  " << emissiveColor << endl;
-	out << "  Emissive Saturation:  " << emissiveSaturation << endl;
-	out << "  Unknown Int 7:  " << unknownInt7 << endl;
+	out << "  Emissive Multiple:  " << emissiveMultiple << endl;
+	out << "  Texture Clamp Mode:  " << textureClampMode << endl;
 	out << "  Alpha:  " << alpha << endl;
 	out << "  Unknown Float 2:  " << unknownFloat2 << endl;
 	out << "  Glossiness:  " << glossiness << endl;
@@ -223,34 +194,26 @@ std::string BSLightingShaderProperty::asString( bool verbose ) const {
 	out << "  Lighting Effect 1:  " << lightingEffect1 << endl;
 	out << "  Lighting Effect 2:  " << lightingEffect2 << endl;
 	if ( (skyrimShaderType == 1) ) {
-		out << "    Environment Map Strength:  " << environmentMapStrength << endl;
+		out << "    Environment Map Scale:  " << environmentMapScale << endl;
 	};
 	if ( (skyrimShaderType == 5) ) {
-		out << "    Unknown Float Set 1:  " << unknownFloatSet1 << endl;
+		out << "    Skin Tint Color:  " << skinTintColor << endl;
 	};
 	if ( (skyrimShaderType == 6) ) {
-		out << "    Unknown Color 1:  " << unknownColor1 << endl;
+		out << "    Hair Tint Color:  " << hairTintColor << endl;
 	};
 	if ( (skyrimShaderType == 7) ) {
-		array_output_count = 0;
-		for (unsigned int i2 = 0; i2 < 2; i2++) {
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
-				break;
-			};
-			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
-				break;
-			};
-			out << "      Unknown Float Set 3[" << i2 << "]:  " << unknownFloatSet3[i2] << endl;
-			array_output_count++;
-		};
+		out << "    Max Passes:  " << maxPasses << endl;
+		out << "    Scale:  " << scale << endl;
 	};
 	if ( (skyrimShaderType == 11) ) {
-		out << "    Unknown Float 9:  " << unknownFloat9 << endl;
-		out << "    Unknown Color 2:  " << unknownColor2 << endl;
+		out << "    Parallax Inner Layer Thickness:  " << parallaxInnerLayerThickness << endl;
+		out << "    Parallax Refraction Scale:  " << parallaxRefractionScale << endl;
+		out << "    Parallax Inner Layer Texture Scale:  " << parallaxInnerLayerTextureScale << endl;
+		out << "    Parallax Envmap Strength:  " << parallaxEnvmapStrength << endl;
 	};
 	if ( (skyrimShaderType == 14) ) {
-		out << "    Unknown Float Set 5:  " << unknownFloatSet5 << endl;
+		out << "    Sparkle Parameters:  " << sparkleParameters << endl;
 	};
 	if ( (skyrimShaderType == 16) ) {
 		out << "    Eye Cubemap Scale:  " << eyeCubemapScale << endl;
@@ -293,36 +256,36 @@ std::list<NiObject *> BSLightingShaderProperty::GetPtrs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-unsigned int BSLightingShaderProperty::getShaderFlags1() {
+SkyrimShaderPropertyFlags1 BSLightingShaderProperty::getShaderFlags1() {
 	return shaderFlags1;
 }
 
-void BSLightingShaderProperty::setShaderFlags1( unsigned int value ) {
+void BSLightingShaderProperty::setShaderFlags1( SkyrimShaderPropertyFlags1 value ) {
 	shaderFlags1 = value;
 }
 
-unsigned int BSLightingShaderProperty::getShaderFlags2() {
+SkyrimShaderPropertyFlags2 BSLightingShaderProperty::getShaderFlags2() {
 	return shaderFlags2;
 }
 
-void BSLightingShaderProperty::setShaderFlags2( unsigned int value ) {
+void BSLightingShaderProperty::setShaderFlags2( SkyrimShaderPropertyFlags2 value ) {
 	shaderFlags2 = value;
 }
 
-TexCoord BSLightingShaderProperty::getTextureTranslation1() {
-	return textureTranslation1;
+TexCoord BSLightingShaderProperty::getUVOffset() {
+	return uvOffset;
 }
 
-void BSLightingShaderProperty::setTextureTranslation1( TexCoord value ) {
-	textureTranslation1 = value;
+void BSLightingShaderProperty::setUVOffset( TexCoord value ) {
+	uvOffset = value;
 }
 
-TexCoord BSLightingShaderProperty::getTextureRepeat() {
-	return textureRepeat;
+TexCoord BSLightingShaderProperty::getUVScale() {
+	return uvScale;
 }
 
-void BSLightingShaderProperty::setTextureRepeat( TexCoord value ) {
-	textureRepeat = value;
+void BSLightingShaderProperty::setUVScale( TexCoord value ) {
+	uvScale = value;
 }
 
 Ref<BSShaderTextureSet > BSLightingShaderProperty::getTextureSet() {
@@ -341,20 +304,20 @@ void BSLightingShaderProperty::setEmissiveColor( Color3 value ) {
 	emissiveColor = value;
 }
 
-float BSLightingShaderProperty::getEmissiveSaturation() {
-	return emissiveSaturation;
+float BSLightingShaderProperty::getEmissiveMultiple() {
+	return emissiveMultiple;
 }
 
-void BSLightingShaderProperty::setEmissiveSaturation( float value ) {
-	emissiveSaturation = value;
+void BSLightingShaderProperty::setEmissiveMultiple( float value ) {
+	emissiveMultiple = value;
 }
 
-unsigned int BSLightingShaderProperty::getUnkownInt7() {
-	return unknownInt7;
+TexClampMode BSLightingShaderProperty::getTextureClampMode() {
+	return textureClampMode;
 }
 
-void BSLightingShaderProperty::setUnknownInt7( unsigned int value ) {
-	unknownInt7 = value;
+void BSLightingShaderProperty::setTextureClampMode( TexClampMode value ) {
+	textureClampMode = value;
 }
 
 float BSLightingShaderProperty::getAlpha() {
@@ -415,44 +378,20 @@ void BSLightingShaderProperty::setLightningEffect2( float value ) {
 	lightingEffect2 = value;
 }
 
-float BSLightingShaderProperty::getEnvironmentMapStrength() {
-	return environmentMapStrength;
+float BSLightingShaderProperty::getEnvironmentMapScale() {
+	return environmentMapScale;
 }
 
-void BSLightingShaderProperty::setEnvironmentMapStrength( float value ) {
-	environmentMapStrength = value;
+void BSLightingShaderProperty::setEnvironmentMapScale( float value ) {
+	environmentMapScale = value;
 }
 
-array<2, float> BSLightingShaderProperty::getUnknownFloatSet3() {
-	return unknownFloatSet3;
+Vector4 BSLightingShaderProperty::getSparkleParameters() {
+	return sparkleParameters;
 }
 
-void BSLightingShaderProperty::setUnknownFloatSet3( array<2, float> value ) {
-	unknownFloatSet3 = value;
-}
-
-float BSLightingShaderProperty::getUnknownFloat9() {
-	return unknownFloat9;
-}
-
-void BSLightingShaderProperty::setUnknownFloat9( float value ) {
-	unknownFloat9 = value;
-}
-
-Color4 BSLightingShaderProperty::getUnknownColor2() {
-	return unknownColor2;
-}
-
-void BSLightingShaderProperty::setUnknownColor2( Color4 value ) {
-	unknownColor2 = value;
-}
-
-Vector4 BSLightingShaderProperty::getUnknownFloatSet5() {
-	return unknownFloatSet5;
-}
-
-void BSLightingShaderProperty::setUnknownFloatSet5( Vector4 value ) {
-	unknownFloatSet5 = value;
+void BSLightingShaderProperty::setSparkleParameters( Vector4 value ) {
+	sparkleParameters = value;
 }
 
 float BSLightingShaderProperty::getEyeCubemapScale() {
@@ -480,5 +419,3 @@ void BSLightingShaderProperty::setRightEyeReflectionCenter( Vector3 value ) {
 }
 
 //--END CUSTOM CODE--//
-
-

@@ -22,62 +22,8 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkRigidBody::TYPE("bhkRigidBody", &bhkEntity::TYPE );
 
-bhkRigidBody::bhkRigidBody() : unknownInt1((int)0), unknownInt2((int)0x00000001), unknown3Ints(3,(int)0,(int)0,(int)0x80000000), collisionResponse_((hkResponseType)RESPONSE_SIMPLE_CONTACT), unknownByte((byte)0xbe), processContactCallbackDelay_((unsigned short)0xffff), unknown2Shorts(2,(unsigned short)35899,(unsigned short)16336), layerCopy((OblivionLayer)OL_STATIC), colFilterCopy((byte)0), unknown7Shorts(7,(unsigned short)0,(unsigned short)21280,(unsigned short)2481,(unsigned short)62977,(unsigned short)65535,(unsigned short)44,(unsigned short)0), mass(1.0f), linearDamping(0.1f), angularDamping(0.05f), friction(0.3f), restitution(0.3f), unknownFloat51(0.0f), unknownFloat52(0.0f), unknownFloat53(0.0f), maxLinearVelocity(250.0f), maxAngularVelocity(31.4159f), penetrationDepth(0.15f), motionSystem((MotionSystem)MO_SYS_DYNAMIC), deactivatorType((DeactivatorType)DEACTIVATOR_NEVER), solverDeactivation((SolverDeactivation)SOLVER_DEACTIVATION_OFF), qualityType((MotionQuality)MO_QUAL_FIXED), unknownInt6((unsigned int)512), unknownInt7((unsigned int)160), unknownInt8((unsigned int)161), unknownInt81((unsigned int)0), numConstraints((unsigned int)0), unknownInt9((unsigned int)0), unknownInt91((unsigned short)0) {
+bhkRigidBody::bhkRigidBody() : unknownInt1((int)0), unknownInt2((int)0x00000001), unknown3Ints(3,(int)0,(int)0,(int)0x80000000), collisionResponse_((hkResponseType)RESPONSE_SIMPLE_CONTACT), unknownByte((byte)0xbe), processContactCallbackDelay_((unsigned short)0xffff), unknown2Shorts(2,(unsigned short)35899,(unsigned short)16336), layerCopy((OblivionLayer)OL_STATIC), colFilterCopy((byte)0), unknown7Shorts(7,(unsigned short)0,(unsigned short)21280,(unsigned short)2481,(unsigned short)62977,(unsigned short)65535,(unsigned short)44,(unsigned short)0), mass(1.0f), linearDamping(0.1f), angularDamping(0.05f), unknownTimefactorOrGravityfactor1(0.0f), unknownTimefactorOrGravityfactor2(0.0f), friction(0.3f), rollingfrictionmultiplier_(0.0f), restitution(0.3f), maxLinearVelocity(250.0f), maxAngularVelocity(31.4159f), penetrationDepth(0.15f), motionSystem((MotionSystem)MO_SYS_DYNAMIC), deactivatorType((DeactivatorType)DEACTIVATOR_NEVER), solverDeactivation((SolverDeactivation)SOLVER_DEACTIVATION_OFF), qualityType((MotionQuality)MO_QUAL_FIXED), unknownInt6((unsigned int)512), unknownInt7((unsigned int)160), unknownInt8((unsigned int)161), unknownInt81((unsigned int)0), numConstraints((unsigned int)0), unknownInt9((unsigned int)0), unknownInt91((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
-	//--END CUSTOM CODE--//
-}
-
-bhkRigidBody::bhkRigidBody(const bhkRigidBody& src)
-	:	unknownInt1(src.unknownInt1),
-		unknownInt2(src.unknownInt2),
-		collisionResponse_(src.collisionResponse_),
-		unknownByte(src.unknownByte),
-		processContactCallbackDelay_(src.processContactCallbackDelay_),
-		layerCopy(src.layerCopy),
-		colFilterCopy(src.colFilterCopy),
-		translation(src.translation),
-		rotation(src.rotation),
-		linearVelocity(src.linearVelocity),
-		angularVelocity(src.angularVelocity),
-		inertia(src.inertia),
-		center(src.center),
-		mass(src.mass),
-		linearDamping(src.linearDamping),
-		angularDamping(src.angularDamping),
-		friction(src.friction),
-		restitution(src.restitution),
-		unknownFloat51(src.unknownFloat51),
-		unknownFloat52(src.unknownFloat52),
-		unknownFloat53(src.unknownFloat53),
-		maxLinearVelocity(src.maxLinearVelocity),
-		maxAngularVelocity(src.maxAngularVelocity),
-		penetrationDepth(src.penetrationDepth),
-		motionSystem(src.motionSystem),
-		deactivatorType(src.deactivatorType),
-		solverDeactivation(src.solverDeactivation),
-		qualityType(src.qualityType),
-		unknownInt6(src.unknownInt6),
-		unknownInt7(src.unknownInt7),
-		unknownInt8(src.unknownInt8),
-		unknownInt81(src.unknownInt81),
-		numConstraints(src.numConstraints),
-		unknownInt9(src.unknownInt9),
-		unknownInt91(src.unknownInt91)
-{
-	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
-	for (short i(0); i < 3; ++i)
-	{
-		unknown3Ints[i] = src.unknown3Ints[i];
-	}
-	for (short i(0); i < 2; ++i)
-	{
-		unknown2Shorts[i] = src.unknown2Shorts[i];
-	}
-	for (short i(0); i < 7; ++i)
-	{
-		unknown7Shorts[i] = src.unknown7Shorts[i];
-	}
-	//vector<Ref<bhkSerializable > > constraints;	vector<Ref<bhkSerializable > > constraints;
 	//--END CUSTOM CODE--//
 }
 
@@ -128,13 +74,15 @@ void bhkRigidBody::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	NifStream( mass, in, info );
 	NifStream( linearDamping, in, info );
 	NifStream( angularDamping, in, info );
-	NifStream( friction, in, info );
-	NifStream( restitution, in, info );
 	if ( (info.userVersion >= 12) ) {
-		NifStream( unknownFloat51, in, info );
-		NifStream( unknownFloat52, in, info );
-		NifStream( unknownFloat53, in, info );
+		NifStream( unknownTimefactorOrGravityfactor1, in, info );
+		NifStream( unknownTimefactorOrGravityfactor2, in, info );
 	};
+	NifStream( friction, in, info );
+	if ( (info.userVersion >= 12) ) {
+		NifStream( rollingfrictionmultiplier_, in, info );
+	};
+	NifStream( restitution, in, info );
 	NifStream( maxLinearVelocity, in, info );
 	NifStream( maxAngularVelocity, in, info );
 	NifStream( penetrationDepth, in, info );
@@ -199,13 +147,15 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	NifStream( mass, out, info );
 	NifStream( linearDamping, out, info );
 	NifStream( angularDamping, out, info );
-	NifStream( friction, out, info );
-	NifStream( restitution, out, info );
 	if ( (info.userVersion >= 12) ) {
-		NifStream( unknownFloat51, out, info );
-		NifStream( unknownFloat52, out, info );
-		NifStream( unknownFloat53, out, info );
+		NifStream( unknownTimefactorOrGravityfactor1, out, info );
+		NifStream( unknownTimefactorOrGravityfactor2, out, info );
 	};
+	NifStream( friction, out, info );
+	if ( (info.userVersion >= 12) ) {
+		NifStream( rollingfrictionmultiplier_, out, info );
+	};
+	NifStream( restitution, out, info );
 	NifStream( maxLinearVelocity, out, info );
 	NifStream( maxAngularVelocity, out, info );
 	NifStream( penetrationDepth, out, info );
@@ -313,11 +263,11 @@ std::string bhkRigidBody::asString( bool verbose ) const {
 	out << "  Mass:  " << mass << endl;
 	out << "  Linear Damping:  " << linearDamping << endl;
 	out << "  Angular Damping:  " << angularDamping << endl;
+	out << "  Unknown TimeFactor or GravityFactor 1:  " << unknownTimefactorOrGravityfactor1 << endl;
+	out << "  Unknown TimeFactor or GravityFactor 2:  " << unknownTimefactorOrGravityfactor2 << endl;
 	out << "  Friction:  " << friction << endl;
+	out << "  RollingFrictionMultiplier?:  " << rollingfrictionmultiplier_ << endl;
 	out << "  Restitution:  " << restitution << endl;
-	out << "  Unknown Float 51:  " << unknownFloat51 << endl;
-	out << "  Unknown Float 52:  " << unknownFloat52 << endl;
-	out << "  Unknown Float 53:  " << unknownFloat53 << endl;
 	out << "  Max Linear Velocity:  " << maxLinearVelocity << endl;
 	out << "  Max Angular Velocity:  " << maxAngularVelocity << endl;
 	out << "  Penetration Depth:  " << penetrationDepth << endl;

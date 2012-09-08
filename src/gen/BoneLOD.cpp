@@ -5,26 +5,26 @@ All rights reserved.  Please see niflib.h for license. */
 
 //To change this file, alter the niftools/docsys/gen_niflib.py Python script.
 
-#include "../../include/gen/bhkCMSD_Shape.h"
+#include "../../include/gen/BoneLOD.h"
 using namespace Niflib;
 
 //Constructor
-bhkCMSD_Shape::bhkCMSD_Shape() : numShape((unsigned int)0) {};
+BoneLOD::BoneLOD() : distance((unsigned int)0) {};
 
 //Copy Constructor
-bhkCMSD_Shape::bhkCMSD_Shape( const bhkCMSD_Shape & src ) {
+BoneLOD::BoneLOD( const BoneLOD & src ) {
 	*this = src;
 };
 
 //Copy Operator
-bhkCMSD_Shape & bhkCMSD_Shape::operator=( const bhkCMSD_Shape & src ) {
-	this->numShape = src.numShape;
-	this->shape = src.shape;
+BoneLOD & BoneLOD::operator=( const BoneLOD & src ) {
+	this->distance = src.distance;
+	this->boneName = src.boneName;
 	return *this;
 };
 
 //Destructor
-bhkCMSD_Shape::~bhkCMSD_Shape() {};
+BoneLOD::~BoneLOD() {};
 
 //--BEGIN MISC CUSTOM CODE--//
 

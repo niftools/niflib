@@ -34,9 +34,6 @@ public:
 	/*! Constructor */
 	NIFLIB_API NiNode();
 
-	/*! Copy constructor */
-	NIFLIB_API NiNode(const NiNode& src);
-
 	/*! Destructor */
 	NIFLIB_API virtual ~NiNode();
 

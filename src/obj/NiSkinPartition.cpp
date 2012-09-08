@@ -44,6 +44,7 @@ typedef vector<SkinPartition> PartitionList;
 #include "../../include/NIF_IO.h"
 #include "../../include/obj/NiSkinPartition.h"
 #include "../../include/gen/SkinPartition.h"
+#include "../../include/gen/SkinPartitionUnknownItem1.h"
 using namespace Niflib;
 
 //Definition of TYPE constant
@@ -180,6 +181,23 @@ void NiSkinPartition::Read( istream& in, list<unsigned int> & link_stack, const 
 		if ( (info.userVersion >= 12) ) {
 			NifStream( skinPartitionBlocks[i1].unknownShort, in, info );
 		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) && ( (info.userVersion == 1) ) ) {
+			NifStream( skinPartitionBlocks[i1].unknown83C3, in, info );
+			NifStream( skinPartitionBlocks[i1].unknown00001, in, info );
+			NifStream( skinPartitionBlocks[i1].numVertices2, in, info );
+			NifStream( skinPartitionBlocks[i1].unknown00002, in, info );
+			NifStream( skinPartitionBlocks[i1].unknown00003, in, info );
+			NifStream( skinPartitionBlocks[i1].unknown00004, in, info );
+			skinPartitionBlocks[i1].unknownArr1.resize(skinPartitionBlocks[i1].numVertices2);
+			for (unsigned int i3 = 0; i3 < skinPartitionBlocks[i1].unknownArr1.size(); i3++) {
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].unknownFlags, in, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f1, in, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f2, in, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f3, in, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f4, in, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f5, in, info );
+			};
+		};
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -194,6 +212,7 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 	numSkinPartitionBlocks = (unsigned int)(skinPartitionBlocks.size());
 	NifStream( numSkinPartitionBlocks, out, info );
 	for (unsigned int i1 = 0; i1 < skinPartitionBlocks.size(); i1++) {
+		skinPartitionBlocks[i1].numVertices2 = (unsigned short)(skinPartitionBlocks[i1].unknownArr1.size());
 		for (unsigned int i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++)
 			skinPartitionBlocks[i1].stripLengths[i2] = (unsigned short)(skinPartitionBlocks[i1].strips[i2].size());
 		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
@@ -290,6 +309,22 @@ void NiSkinPartition::Write( ostream& out, const map<NiObjectRef,unsigned int> &
 		if ( (info.userVersion >= 12) ) {
 			NifStream( skinPartitionBlocks[i1].unknownShort, out, info );
 		};
+		if ( ( info.version >= 0x0A020000 ) && ( info.version <= 0x0A020000 ) && ( (info.userVersion == 1) ) ) {
+			NifStream( skinPartitionBlocks[i1].unknown83C3, out, info );
+			NifStream( skinPartitionBlocks[i1].unknown00001, out, info );
+			NifStream( skinPartitionBlocks[i1].numVertices2, out, info );
+			NifStream( skinPartitionBlocks[i1].unknown00002, out, info );
+			NifStream( skinPartitionBlocks[i1].unknown00003, out, info );
+			NifStream( skinPartitionBlocks[i1].unknown00004, out, info );
+			for (unsigned int i3 = 0; i3 < skinPartitionBlocks[i1].unknownArr1.size(); i3++) {
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].unknownFlags, out, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f1, out, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f2, out, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f3, out, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f4, out, info );
+				NifStream( skinPartitionBlocks[i1].unknownArr1[i3].f5, out, info );
+			};
+		};
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -311,6 +346,7 @@ std::string NiSkinPartition::asString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
+		skinPartitionBlocks[i1].numVertices2 = (unsigned short)(skinPartitionBlocks[i1].unknownArr1.size());
 		for (unsigned int i2 = 0; i2 < skinPartitionBlocks[i1].strips.size(); i2++)
 			skinPartitionBlocks[i1].stripLengths[i2] = (unsigned short)(skinPartitionBlocks[i1].strips[i2].size());
 		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
@@ -424,6 +460,25 @@ std::string NiSkinPartition::asString( bool verbose ) const {
 			};
 		};
 		out << "    Unknown Short:  " << skinPartitionBlocks[i1].unknownShort << endl;
+		out << "    Unknown 83 C3:  " << skinPartitionBlocks[i1].unknown83C3 << endl;
+		out << "    Unknown 00 00 1:  " << skinPartitionBlocks[i1].unknown00001 << endl;
+		out << "    Num Vertices 2:  " << skinPartitionBlocks[i1].numVertices2 << endl;
+		out << "    Unknown 00 00 2:  " << skinPartitionBlocks[i1].unknown00002 << endl;
+		out << "    Unknown 00 00 3:  " << skinPartitionBlocks[i1].unknown00003 << endl;
+		out << "    Unknown 00 00 4:  " << skinPartitionBlocks[i1].unknown00004 << endl;
+		array_output_count = 0;
+		for (unsigned int i2 = 0; i2 < skinPartitionBlocks[i1].unknownArr1.size(); i2++) {
+			if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
+				out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
+				break;
+			};
+			out << "      Unknown Flags:  " << skinPartitionBlocks[i1].unknownArr1[i2].unknownFlags << endl;
+			out << "      f1:  " << skinPartitionBlocks[i1].unknownArr1[i2].f1 << endl;
+			out << "      f2:  " << skinPartitionBlocks[i1].unknownArr1[i2].f2 << endl;
+			out << "      f3:  " << skinPartitionBlocks[i1].unknownArr1[i2].f3 << endl;
+			out << "      f4:  " << skinPartitionBlocks[i1].unknownArr1[i2].f4 << endl;
+			out << "      f5:  " << skinPartitionBlocks[i1].unknownArr1[i2].f5 << endl;
+		};
 	};
 	return out.str();
 

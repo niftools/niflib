@@ -20,7 +20,7 @@ namespace Niflib {
 class BSSkyShaderProperty;
 typedef Ref<BSSkyShaderProperty> BSSkyShaderPropertyRef;
 
-/*!  */
+/*! Skyrim Sky shader block. */
 class BSSkyShaderProperty : public NiProperty {
 public:
 	/*! Constructor */
@@ -57,18 +57,21 @@ public:
 
 	//--END CUSTOM CODE--//
 protected:
-	/*! Unknown */
-	float unknownFloat1;
-	/*! Unknown */
-	unsigned int unknownInt1;
-	/*! Unknown */
-	unsigned int unknownInt2;
-	/*! Unknown */
-	Vector3 unknownFloats;
-	/*! Unknown */
-	string texture;
-	/*! Unknown */
-	unsigned int unknownInt3;
+	/*! Unknown. */
+	SkyrimShaderPropertyFlags1 shaderFlags1;
+	/*! Unknown. */
+	SkyrimShaderPropertyFlags2 shaderFlags2;
+	/*!
+	 * Offset UVs. Seems to be unused, but it fits with the other Skyrim shader
+	 * properties.
+	 */
+	TexCoord uvOffset;
+	/*! Offset UV Scale to repeat tiling textures, see above. */
+	TexCoord uvScale;
+	/*! points to an external texture. */
+	string sourceTexture;
+	/*! Sky Object Type */
+	SkyObjectType skyObjectType;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

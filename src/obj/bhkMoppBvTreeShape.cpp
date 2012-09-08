@@ -25,24 +25,6 @@ bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)
 	//--END CUSTOM CODE--//
 }
 
-bhkMoppBvTreeShape::bhkMoppBvTreeShape(const bhkMoppBvTreeShape& src)
-	:	shape(NULL),
-		material(src.material),
-		unknownInt1(src.unknownInt1),
-		unknownInt2(src.unknownInt2),
-		unknownFloat(src.unknownFloat),
-		moppDataSize(src.moppDataSize),
-		scale(src.scale),
-		unknownByte1(src.unknownByte1),
-		origin(src.origin)
-{
-	moppData.resize(src.moppData.size());
-	for (unsigned int i(0); i < src.moppData.size(); ++i)
-	{
-		moppData[i] = src.moppData[i];
-	}
-}
-
 bhkMoppBvTreeShape::~bhkMoppBvTreeShape() {
 	//--BEGIN DESTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
@@ -83,7 +65,7 @@ void bhkMoppBvTreeShape::Read( istream& in, list<unsigned int> & link_stack, con
 			NifStream( moppData[i2], in, info );
 		};
 	};
-	if ( (info.userVersion >= 12) ) {
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
 		NifStream( unknownByte1, in, info );
 	};
 
@@ -97,9 +79,6 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 
 	bhkBvTreeShape::Write( out, link_map, missing_link_stack, info );
 	moppDataSize = (unsigned int)(oldMoppData.size());
-	if ( info.version >= 0x0A000102 ) {
-		moppDataSize = (unsigned int)(moppData.size());
-	}
 	if ( info.version < VER_3_3_0_13 ) {
 		WritePtr32( &(*shape), out );
 	} else {
@@ -134,7 +113,7 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 			NifStream( moppData[i2], out, info );
 		};
 	};
-	if ( (info.userVersion >= 12) ) {
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
 		NifStream( unknownByte1, out, info );
 	};
 
