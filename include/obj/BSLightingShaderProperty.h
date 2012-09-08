@@ -148,13 +148,13 @@ public:
 	 * Gets unknown unsigned int7
 	 * \return The current value
 	 */
-	NIFLIB_API unsigned int  getUnkownInt7();
+	NIFLIB_API TexClampMode  getTextureClampMode();
 
 	/*!
 	 * Sets the unknown int7 of this material
 	 * \param[in] The new value
 	 */
-	NIFLIB_API void setUnknownInt7(unsigned int value);
+	NIFLIB_API void setTextureClampMode(TexClampMode value);
 
 	/*!
 	 * Get the transparency or "alpha" of this material

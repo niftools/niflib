@@ -312,12 +312,12 @@ void BSLightingShaderProperty::setEmissiveMultiple( float value ) {
 	emissiveMultiple = value;
 }
 
-unsigned int BSLightingShaderProperty::getUnkownInt7() {
-	return unknownInt7;
+TexClampMode BSLightingShaderProperty::getTextureClampMode() {
+	return textureClampMode;
 }
 
-void BSLightingShaderProperty::setUnknownInt7( unsigned int value ) {
-	unknownInt7 = value;
+void BSLightingShaderProperty::setTextureClampMode( TexClampMode value ) {
+	textureClampMode = value;
 }
 
 float BSLightingShaderProperty::getAlpha() {
