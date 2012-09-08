@@ -58,6 +58,26 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+
+	/*!
+	 * Adds a single geometry to the collection. The collection will expand if necessary.
+	 * \param[in] mesh The shape to add to the collection.
+	 */
+	NIFLIB_API bool AddEmitterMesh( Ref<NiTriBasedGeom > mesh );
+
+	/*!
+	 * Remove a single geometry from the collection.
+	 * \param[in] mesh The shape remove from the collection.
+	 */
+	NIFLIB_API bool RemoveEmitterMesh( Ref<NiTriBasedGeom > mesh );
+
+	/*!
+	 * Replace a single geometry by another in the specified shape group.
+	 * \param[in] newmesh The geometry put into the collection.
+	 * \param[in] oldmesh The geometry remove from collection.
+	 */
+	NIFLIB_API bool ReplaceEmitterMesh( Ref<NiTriBasedGeom > newmesh, Ref<NiTriBasedGeom > oldmesh );
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The number of references to emitter meshes that follow. */

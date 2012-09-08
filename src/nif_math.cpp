@@ -57,10 +57,24 @@ Vector3 Vector3::operator+( const Vector3 & rh) const {
 	return v;
 }
 
+Vector3 Vector3::operator+( const float & rh) const {
+	Vector3 v(*this);
+	v += rh;
+	return v;
+}
+
 Vector3 & Vector3::operator+=( const Vector3 & rh ) {
 	x += rh.x;
 	y += rh.y;
 	z += rh.z;
+
+	return *this;
+}
+
+Vector3 & Vector3::operator+=( const float & rh ) {
+	x += rh;
+	y += rh;
+	z += rh;
 
 	return *this;
 }
@@ -71,10 +85,24 @@ Vector3 Vector3::operator-( const Vector3 & rh) const {
 	return v;
 }
 
+Vector3 Vector3::operator-( const float & rh) const {
+	Vector3 v(*this);
+	v -= rh;
+	return v;
+}
+
 Vector3 & Vector3::operator-=( const Vector3 & rh ) {
 	x -= rh.x;
 	y -= rh.y;
 	z -= rh.z;
+
+	return *this;
+}
+
+Vector3 & Vector3::operator-=( const float & rh ) {
+	x -= rh;
+	y -= rh;
+	z -= rh;
 
 	return *this;
 }
