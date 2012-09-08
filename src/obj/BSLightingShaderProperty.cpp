@@ -378,12 +378,12 @@ void BSLightingShaderProperty::setLightningEffect2( float value ) {
 	lightingEffect2 = value;
 }
 
-float BSLightingShaderProperty::getEnvironmentMapStrength() {
-	return environmentMapStrength;
+float BSLightingShaderProperty::getEnvironmentMapScale() {
+	return environmentMapScale;
 }
 
-void BSLightingShaderProperty::setEnvironmentMapStrength( float value ) {
-	environmentMapStrength = value;
+void BSLightingShaderProperty::setEnvironmentMapScale( float value ) {
+	environmentMapScale = value;
 }
 
 array<2, float> BSLightingShaderProperty::getUnknownFloatSet3() {

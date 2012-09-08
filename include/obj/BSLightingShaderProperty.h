@@ -244,13 +244,13 @@ public:
 	 * Gets the environment map strength of the material
 	 * \return The environment map strength
 	 */
-	NIFLIB_API float getEnvironmentMapStrength();
+	NIFLIB_API float getEnvironmentMapScale();
 
 	/*!
 	 * Sets the environment map strength of the material
 	 * \param[in] The new environment map strength value
 	 */
-	NIFLIB_API void setEnvironmentMapStrength(float value);
+	NIFLIB_API void setEnvironmentMapScale(float value);
 
 	/*!
 	 * Sets unknown float set3 of the material related to hair
