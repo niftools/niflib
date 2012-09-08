@@ -386,30 +386,6 @@ void BSLightingShaderProperty::setEnvironmentMapScale( float value ) {
 	environmentMapScale = value;
 }
 
-array<2, float> BSLightingShaderProperty::getUnknownFloatSet3() {
-	return unknownFloatSet3;
-}
-
-void BSLightingShaderProperty::setUnknownFloatSet3( array<2, float> value ) {
-	unknownFloatSet3 = value;
-}
-
-float BSLightingShaderProperty::getUnknownFloat9() {
-	return unknownFloat9;
-}
-
-void BSLightingShaderProperty::setUnknownFloat9( float value ) {
-	unknownFloat9 = value;
-}
-
-Color4 BSLightingShaderProperty::getUnknownColor2() {
-	return unknownColor2;
-}
-
-void BSLightingShaderProperty::setUnknownColor2( Color4 value ) {
-	unknownColor2 = value;
-}
-
 Vector4 BSLightingShaderProperty::getSparkleParameters() {
 	return sparkleParameters;
 }

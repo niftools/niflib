@@ -170,12 +170,14 @@ public:
 
 	/*!
 	 * Get the unknown float2 of the material
+	 * WARNING: API not stable
 	 * \return The unknown float2 value
 	 */
 	NIFLIB_API float getUnknownFloat2();
 
 	/*!
 	 * Sets the unknown float2 of the material
+	 * WARNING: API not stable
 	 * \param[in] The new unknown float2 value
 	 */
 	 NIFLIB_API void setUnknownFloat2(float value);
@@ -251,42 +253,6 @@ public:
 	 * \param[in] The new environment map strength value
 	 */
 	NIFLIB_API void setEnvironmentMapScale(float value);
-
-	/*!
-	 * Sets unknown float set3 of the material related to hair
-	 * \return The unknown float set3 value
-	 */
-	NIFLIB_API array<2, float> getUnknownFloatSet3();
-
-	/*!
-	 * Sets the unknown float set3 of the material
-	 * \param[in] The new unknown float set3 value 
-	 */
-	NIFLIB_API void setUnknownFloatSet3(array<2, float> value);
-
-	/*!
-	 * Gets the unknown float9 of the material
-	 * \return The unknown float9 value
-	 */
-	NIFLIB_API float getUnknownFloat9();
-
-	/*!
-	 * Sets the unknown float9 of the material
-	 * \param[in] The new unknown float9 value
-	 */
-	NIFLIB_API void setUnknownFloat9(float value);
-
-	/*!
-	 * Gets the unknown color2 of the material
-	 * \return The unknown color2 value
-	 */
-	NIFLIB_API Color4 getUnknownColor2();
-
-	/*!
-	 * Sets the unknown color2 of the material
-	 * \param[in] The new unknown color2 value
-	 */
-	NIFLIB_API void setUnknownColor2(Color4 value);
 
 	/*!
 	 * Gets the unknown float set5 of the material
