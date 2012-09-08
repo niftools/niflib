@@ -358,8 +358,8 @@ protected:
 	float alpha;
 	/*! Unknown */
 	float unknownFloat2;
-	/*! The material's glossiness. (0-999) */
-	float specularPower_Glossiness;
+	/*! The material's specular power, or glossiness (0-999). */
+	float glossiness;
 	/*! Adds a colored highlight. */
 	Color3 specularColor;
 	/*! Brightness of specular highlight. (0=not visible) (0-999) */
@@ -387,7 +387,7 @@ protected:
 	/*! How strong the environment/cube map is. (0-??) */
 	float parallaxEnvmapStrength;
 	/*! Unknown/unused?  CK lists "snow material" when used. */
-	Vector4 sparkleParamaters;
+	Vector4 sparkleParameters;
 	/*! Eye cubemap scale */
 	float eyeCubemapScale;
 	/*! Offset to set center for left eye cubemap */

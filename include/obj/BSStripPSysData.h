@@ -58,13 +58,13 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	short unknownShort3;
+	short unknownShort5;
 	/*! Unknown */
-	byte unknownByte1;
+	byte unknownByte6;
 	/*! Unknown */
-	int unknownInt2;
+	int unknownInt7;
 	/*! Unknown */
-	int unknownInt3;
+	float unknownFloat8;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
