@@ -17,6 +17,8 @@ All rights reserved.  Please see niflib.h for license. */
 
 // Include structures
 #include "../Ref.h"
+#include "NiExtraData.h"
+#include "NiTimeController.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
