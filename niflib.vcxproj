@@ -300,6 +300,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gen\bhkCMSDBigTris.cpp" />
+    <ClCompile Include="src\gen\BoneLOD.cpp" />
+    <ClCompile Include="src\gen\BSSegment.cpp" />
+    <ClCompile Include="src\gen\SkinPartitionUnknownItem1.cpp" />
     <ClCompile Include="src\obj\BSMultiBoundData.cpp" />
     <ClCompile Include="src\Inertia.cpp" />
     <ClCompile Include="src\kfm.cpp" />
@@ -764,11 +768,8 @@
     <ClCompile Include="src\gen\AdditionalDataInfo.cpp" />
     <ClCompile Include="src\gen\ArkTexture.cpp" />
     <ClCompile Include="src\gen\AVObject.cpp" />
-    <ClCompile Include="src\gen\bhkCMSDBigTris.cpp" />
     <ClCompile Include="src\gen\bhkCMSDMaterial.cpp" />
-    <ClCompile Include="src\gen\bhkCMSDBigTris.cpp" />
     <ClCompile Include="src\gen\bhkCMSDChunk.cpp" />
-    <ClCompile Include="src\gen\bhkCMSDContainer.cpp" />
     <ClCompile Include="src\gen\bhkCMSDData.cpp" />
     <ClCompile Include="src\gen\bhkCMSDTransform.cpp" />
     <ClCompile Include="src\gen\BodyPartList.cpp" />
@@ -846,6 +847,9 @@
     <ClCompile Include="TriStripper\tri_stripper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\gen\BoneLOD.h" />
+    <ClInclude Include="include\gen\BSSegment.h" />
+    <ClInclude Include="include\gen\SkinPartitionUnknownItem1.h" />
     <ClInclude Include="include\obj\BSMultiBoundData.h" />
     <ClInclude Include="include\ComplexShape.h" />
     <ClInclude Include="include\dll_export.h" />
@@ -1312,7 +1316,6 @@
     <ClInclude Include="include\gen\bhkCMSDMaterial.h" />
     <ClInclude Include="include\gen\bhkCMSDBigTris.h" />
     <ClInclude Include="include\gen\bhkCMSDChunk.h" />
-    <ClInclude Include="include\gen\bhkCMSDContainer.h" />
     <ClInclude Include="include\gen\bhkCMSDData.h" />
     <ClInclude Include="include\gen\bhkCMSDTransform.h" />
     <ClInclude Include="include\gen\BodyPartList.h" />

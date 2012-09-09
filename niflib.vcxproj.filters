@@ -1407,9 +1407,6 @@
     <ClCompile Include="src\gen\AVObject.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
-    <ClCompile Include="src\gen\bhkCMSDBigTris.cpp">
-      <Filter>Source Files\gen</Filter>
-    </ClCompile>
     <ClCompile Include="src\gen\bhkCMSDMaterial.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
@@ -1417,9 +1414,6 @@
       <Filter>Source Files\gen</Filter>
     </ClCompile>
     <ClCompile Include="src\gen\bhkCMSDChunk.cpp">
-      <Filter>Source Files\gen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gen\bhkCMSDContainer.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
     <ClCompile Include="src\gen\bhkCMSDData.cpp">
@@ -1646,6 +1640,18 @@
     </ClCompile>
     <ClCompile Include="TriStripper\tri_stripper.cpp">
       <Filter>Source Files\TriStripper</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gen\SkinPartitionUnknownItem1.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gen\BoneLOD.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gen\bhkCMSDBigTris.cpp">
+      <Filter>Source Files\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gen\BSSegment.cpp">
+      <Filter>Source Files\gen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3047,9 +3053,6 @@
     <ClInclude Include="include\gen\bhkCMSDChunk.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
-    <ClInclude Include="include\gen\bhkCMSDContainer.h">
-      <Filter>Header Files\gen</Filter>
-    </ClInclude>
     <ClInclude Include="include\gen\bhkCMSDData.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
@@ -3292,6 +3295,18 @@
     </ClInclude>
     <ClInclude Include="NvTriStrip\VertexCache.h">
       <Filter>Header Files\NvTriStrip</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gen\bhkCMSDBigTris.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gen\SkinPartitionUnknownItem1.h">
+      <Filter>Header Files\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gen\BoneLOD.h">
+      <Filter>Header Files\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gen\BSSegment.h">
+      <Filter>Header Files\gen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
