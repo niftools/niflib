@@ -847,6 +847,7 @@
     <ClCompile Include="TriStripper\tri_stripper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\gen\bhkCMSDBigTris.h" />
     <ClInclude Include="include\gen\BoneLOD.h" />
     <ClInclude Include="include\gen\BSSegment.h" />
     <ClInclude Include="include\gen\SkinPartitionUnknownItem1.h" />
@@ -1312,9 +1313,7 @@
     <ClInclude Include="include\gen\AdditionalDataInfo.h" />
     <ClInclude Include="include\gen\ArkTexture.h" />
     <ClInclude Include="include\gen\AVObject.h" />
-    <ClInclude Include="include\gen\bhkCMSDBigTris.h" />
     <ClInclude Include="include\gen\bhkCMSDMaterial.h" />
-    <ClInclude Include="include\gen\bhkCMSDBigTris.h" />
     <ClInclude Include="include\gen\bhkCMSDChunk.h" />
     <ClInclude Include="include\gen\bhkCMSDData.h" />
     <ClInclude Include="include\gen\bhkCMSDTransform.h" />

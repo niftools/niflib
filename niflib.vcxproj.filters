@@ -1644,13 +1644,13 @@
     <ClCompile Include="src\gen\SkinPartitionUnknownItem1.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
+    <ClCompile Include="src\gen\BSSegment.cpp">
+      <Filter>Source Files\obj</Filter>
+    </ClCompile>
     <ClCompile Include="src\gen\BoneLOD.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
     <ClCompile Include="src\gen\bhkCMSDBigTris.cpp">
-      <Filter>Source Files\gen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gen\BSSegment.cpp">
       <Filter>Source Files\gen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3041,9 +3041,6 @@
     <ClInclude Include="include\gen\AVObject.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
-    <ClInclude Include="include\gen\bhkCMSDBigTris.h">
-      <Filter>Header Files\gen</Filter>
-    </ClInclude>
     <ClInclude Include="include\gen\bhkCMSDMaterial.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
@@ -3302,10 +3299,13 @@
     <ClInclude Include="include\gen\SkinPartitionUnknownItem1.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
+    <ClInclude Include="include\gen\BSSegment.h">
+      <Filter>Header Files\gen</Filter>
+    </ClInclude>
     <ClInclude Include="include\gen\BoneLOD.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
-    <ClInclude Include="include\gen\BSSegment.h">
+    <ClInclude Include="include\gen\bhkCMSDBigTris.h">
       <Filter>Header Files\gen</Filter>
     </ClInclude>
   </ItemGroup>
