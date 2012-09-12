@@ -255,6 +255,10 @@ public:
    // \param[in] value The new value.
    NIFLIB_API void SetTangents( const vector<Vector3 >& value );
 
+private:
+   unsigned short numUvSetsCalc() const;
+   unsigned short bsNumUvSetsCalc() const;
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown identifier. Always 0. */
@@ -275,13 +279,13 @@ protected:
 	 * Methods for saving binormals and tangents saved in upper byte.  Texture flags in
 	 * lower byte.
 	 */
-	unsigned short numUvSets;
+	mutable unsigned short numUvSets;
 	/*!
 	 * Bethesda's version of this field for nif versions 20.2.0.7 and up. Only a single
 	 * bit denotes whether uv's are present. For example, see
 	 * meshes/architecture/megaton/megatonrampturn45sml.nif in Fallout 3.
 	 */
-	unsigned short bsNumUvSets;
+	mutable unsigned short bsNumUvSets;
 	/*! Unknown, seen in Skyrim. */
 	unsigned int unknownInt2;
 	/*!

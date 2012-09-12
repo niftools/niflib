@@ -719,4 +719,12 @@ void NiGeometryData::SetTangents( const vector<Vector3 >& value ) {
    tangents = value;
 }
 
+unsigned short NiGeometryData::numUvSetsCalc() const {
+  return (numUvSets & (~63))  | (unsigned short)(uvSets.size() & 63);
+}
+
+unsigned short NiGeometryData::bsNumUvSetsCalc() const {
+  return (numUvSets & (~1))  | (unsigned short)(uvSets.size() & 1);
+}
+
 //--END CUSTOM CODE--//
