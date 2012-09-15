@@ -1,3 +1,8 @@
+Version 0.8.0
+=============
+
+* Fully updated for Skyrim.
+
 Version 0.7.3
 =============
 
