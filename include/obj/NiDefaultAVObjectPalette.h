@@ -68,6 +68,25 @@ public:
 	 * \return The new AV Objects to be stored in this palette.
 	 */
 	NIFLIB_API void SetObjs( const vector< Ref<NiAVObject> > & value );
+	
+	/*!
+	 * Adds a single object to the collection. The collection will expand if necessary.
+	 * \param[in] mesh The object to add to the collection.
+	 */
+	NIFLIB_API bool AddObj( Ref<NiAVObject> obj );
+
+	/*!
+	 * Remove a single object from the collection.
+	 * \param[in] mesh The object remove from the collection.
+	 */
+	NIFLIB_API bool RemoveObj( Ref<NiAVObject> obj );
+
+	/*!
+	 * Replace a single object by another in the collection.
+	 * \param[in] newobj The object put into the collection.
+	 * \param[in] oldobj The object remove from the collection.
+	 */
+	NIFLIB_API void ReplaceObj( const Ref<NiAVObject> newobj, const Ref<NiAVObject> oldobj );
 
 	//--END CUSTOM CODE--//
 protected:

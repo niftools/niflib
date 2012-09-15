@@ -107,6 +107,12 @@ public:
 	NIFLIB_API void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & weights, Vector3 center, float radius );
 	
 	/*!
+	 * Sets the skin weights for a particular bone, without changing center and radius
+	 * \sa NiSkinData::SetBoneWeights
+	 */
+	NIFLIB_API void SetBoneWeights( unsigned int bone_index, const vector<SkinWeight> & weights );
+
+	/*!
 	 * Returns a reference to the hardware skin partition data object, if any.
 	 * \return The hardware skin partition data, or NULL if none is used.
 	 */

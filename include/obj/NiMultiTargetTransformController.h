@@ -67,6 +67,25 @@ public:
 	 * \param[in] value The new NiAVObject targets to be controlled.
 	 */
 	NIFLIB_API void SetExtraTargets( const vector< Ref<NiAVObject> > & value );
+	
+	/*!
+	 * Adds a single extra target to the collection. The collection will expand if necessary.
+	 * \param[in] mesh The avobject to add to the collection.
+	 */
+	NIFLIB_API bool AddExtraTarget( NiAVObject* target );
+
+	/*!
+	 * Remove a single extra target from the collection.
+	 * \param[in] mesh The avobject remove from the collection.
+	 */
+	NIFLIB_API bool RemoveExtraTarget( NiAVObject* target );
+
+	/*!
+	 * Replace a single extra target by another in the specified extra target group.
+	 * \param[in] newmesh The avobject put into the collection.
+	 * \param[in] oldmesh The avobject remove from collection.
+	 */
+	NIFLIB_API bool ReplaceExtraTarget( NiAVObject* newtarget, NiAVObject* oldtarget );
 
 	//--END CUSTOM CODE--//
 protected:

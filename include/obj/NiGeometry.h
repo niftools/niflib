@@ -97,6 +97,12 @@ public:
 	 * \return The NiSkinInstance object used by this geometry node, or NULL if none is used.
 	 */
 	NIFLIB_API Ref<NiSkinInstance> GetSkinInstance() const;
+	
+	/*!
+	 * Sets the NiSkinInstance object used by this geometry node.
+	 * \param[in] skin The NiSkinInstance object to be used by this geometry node, or NULL if none is to be used.
+	 */
+	NIFLIB_API void SetSkinInstance(Ref<NiSkinInstance> skin);
 
 	/*!
 	 * Retrieves the geometry data object used by this geometry node, if any.  This contains the vertices, normals, etc. and can be shared among several geometry nodes.

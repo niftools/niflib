@@ -106,6 +106,25 @@ public:
 	 * Clears all node groups.
 	 */
 	NIFLIB_API void ClearNodeGroups();
+	
+	/*!
+	 * Adds a single shape to the specified group. The group list will expand if necessary.
+	 * \param[in] shape The shape to add to the group.
+	 */
+	NIFLIB_API bool AddShapeToGroup( Ref<NiTriBasedGeom > shape );
+
+	/*!
+	 * Remove a single shape from the specified shape group.
+	 * \param[in] shape The shape remove from the group.
+	 */
+	NIFLIB_API bool RemoveShapeFromGroup( Ref<NiTriBasedGeom > shape );
+
+	/*!
+	 * Replace a single shape by another in the specified shape group.
+	 * \param[in] newshape The shape put from the group.
+	 * \param[in] oldshape The shape remove from the group.
+	 */
+	NIFLIB_API bool ReplaceShapeInGroup( Ref<NiTriBasedGeom > newshape, Ref<NiTriBasedGeom > oldshape );
 
 	//--END CUSTOM CODE--//
 protected:
