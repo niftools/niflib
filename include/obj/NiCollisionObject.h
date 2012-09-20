@@ -71,7 +71,7 @@ public:
 	NIFLIB_API Ref<NiAVObject> GetTarget() const;
 
 	/*! NIFLIB_HIDDEN function.  For internal use only */
-	NIFLIB_HIDDEN void SetTarget( NiAVObject * value );
+	NIFLIB_API void SetTarget( NiAVObject * value );
 
 	//--END CUSTOM CODE--//
 protected:
