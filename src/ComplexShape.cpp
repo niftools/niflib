@@ -258,7 +258,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		vector<NiPropertyRef> current_property_group =  (*geom)->GetProperties();
 
 		//Special code to handle the Bethesda Skyrim properties
-		array<2, NiPropertyRef> bs_properties = (*geom)->getBSProperties();
+		array<2, NiPropertyRef> bs_properties = (*geom)->GetBSProperties();
 		if(bs_properties[0] != NULL) {
 			current_property_group.push_back(bs_properties[0]);
 		}
@@ -396,14 +396,14 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		if(niProp != NULL) {
 			bsTexProp = DynamicCast<BSShaderTextureSet>(niProp);
 		}
-		niProp = (*geom)->getBSProperties()[0];
+		niProp = (*geom)->GetBSProperties()[0];
 		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
 			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
 			if(bs_shader->getTextureSet() != NULL) {
 				bsTexProp = bs_shader->getTextureSet();
 			}
 		}
-		niProp = (*geom)->getBSProperties()[1];
+		niProp = (*geom)->GetBSProperties()[1];
 		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
 			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
 			if(bs_shader->getTextureSet() != NULL) {
@@ -952,7 +952,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 				array<2, NiPropertyRef> bs_properties;
 				bs_properties[0] = shader_property;
 				bs_properties[1] = alpha_property;
-				shapes[shape_num]->setBSProperties(bs_properties);
+				shapes[shape_num]->SetBSProperties(bs_properties);
 			}
 		}
 

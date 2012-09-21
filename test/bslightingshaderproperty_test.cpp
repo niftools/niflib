@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_CASE(write_incomplete_tree_test)
   // create a simple nif tree with BSLightingShaderProperty
   NiTriShapeRef shape = new NiTriShape;
   BSLightingShaderPropertyRef prop = new BSLightingShaderProperty;
-  shape->setBSProperty(0, prop);
+  shape->SetBSProperty(0, StaticCast<NiPropertyRef>(prop));
   BOOST_CHECK_NO_THROW(WriteNifTree(ss, shape));
   ss.seekg(0);
   NiObjectRef root;
