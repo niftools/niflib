@@ -11,9 +11,9 @@
 using namespace Niflib;
 using namespace std;
 
-BOOST_AUTO_TEST_SUITE(write_test_suite)
+BOOST_AUTO_TEST_SUITE(bslightingshaderproperty_test_suite)
 
-BOOST_AUTO_TEST_CASE(write_incomplete_tree_test)
+BOOST_AUTO_TEST_CASE(bslightingshaderproperty_test)
 {
   stringstream ss;
 
