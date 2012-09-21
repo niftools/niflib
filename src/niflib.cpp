@@ -307,18 +307,6 @@ vector<NiObjectRef> ReadNifList( istream & in, list<NiObjectRef> & missing_link_
 					break;
 				}
 			}
-
-			if ( (objectType[0] != 'N' || objectType[1] != 'i') && (objectType[0] != 'R' || objectType[1] != 'o') && (objectType[0] != 'A' || objectType[1] != 'v')) {
-				errStream << "Read failue - Bad object position.  Invalid Type Name:  " << objectType << endl;
-				if ( new_obj != NULL ) {
-					errStream << "Last successfuly read object was:  " << endl;
-					errStream << "====[ " << "Object " << i - 1 << " | " << new_obj->GetType().GetTypeName() << " ]====" << endl;
-					errStream << new_obj->asString();
-				} else {
-					errStream << "No objects were read successfully." << endl;
-				}
-				throw runtime_error( errStream.str() );
-			}
 		}
 
 		//Create object of the type that was found
