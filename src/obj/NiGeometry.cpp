@@ -319,6 +319,10 @@ Ref<NiSkinInstance> NiGeometry::GetSkinInstance() const {
 	return skinInstance;
 }
 
+void NiGeometry::SetSkinInstance(Ref<NiSkinInstance> skin) {
+	skinInstance = skin;
+}
+
 void NiGeometry::BindSkin( vector< Ref<NiNode> >& bone_nodes ) {
    BindSkinWith(bone_nodes, NULL);
 }

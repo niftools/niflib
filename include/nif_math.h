@@ -203,22 +203,26 @@ struct Vector3 {
 	 * \return The result of the addition.
 	 */
 	NIFLIB_API Vector3 operator+( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator+( const float & rh ) const;
 
 	/* Adds the two vectors and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
 	NIFLIB_API Vector3 & operator+=( const Vector3 & rh );
+	NIFLIB_API Vector3 & operator+=( const float & rh );
 
 	/* Allows the subtraction of vectors.  Each component, x, y, y, is subtracted from
 	 * the same component of the other vector.
 	 * \return The result of the subtraction.
 	 */
 	NIFLIB_API Vector3 operator-( const Vector3 & rh ) const;
+	NIFLIB_API Vector3 operator-( const float & rh ) const;
 
 	/* This operator subtracts the two vectors and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
 	NIFLIB_API Vector3 & operator-=( const Vector3 & rh);
+	NIFLIB_API Vector3 & operator-=( const float & rh );
 
 	/* Allows scaler multiplication, that is multipying all components of the
 	 * vector, x, y and z, by the same number.
@@ -1009,6 +1013,39 @@ struct Color4 {
 		return ret;
 	}
 
+	NIFLIB_API Color4 operator-(const Color4& rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r -= rhs.r;
+		ret.g -= rhs.g;
+		ret.b -= rhs.b;
+		ret.a -= rhs.a;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator+(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r += rhs;
+		ret.g += rhs;
+		ret.b += rhs;
+		ret.a += rhs;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator-(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r -= rhs;
+		ret.g -= rhs;
+		ret.b -= rhs;
+		ret.a -= rhs;
+		return ret;
+	}
+
 	NIFLIB_API Color4 operator*(const float rhs) const
 	{
 		Color4 ret;
@@ -1017,6 +1054,17 @@ struct Color4 {
 		ret.g *= rhs;
 		ret.b *= rhs;
 		ret.a *= rhs;
+		return ret;
+	}
+
+	NIFLIB_API Color4 operator/(const float rhs) const
+	{
+		Color4 ret;
+		ret = *this;
+		ret.r /= rhs;
+		ret.g /= rhs;
+		ret.b /= rhs;
+		ret.a /= rhs;
 		return ret;
 	}
 
@@ -1082,6 +1130,41 @@ struct Quaternion {
 		this->x = x;
 		this->y = y;
 		this->z = z;
+	}
+
+	/* Dot-product */
+	NIFLIB_API float Dot(const Quaternion &rhs) const {
+		return  x * rhs.x + 
+			y * rhs.y + 
+			z * rhs.z + 
+			w * rhs.w;
+	}
+
+	/* Multiplication */
+	NIFLIB_API Quaternion operator*(const float &rhs) const {
+		Quaternion ret;
+		ret = *this;
+		ret.x *= rhs;
+		ret.y *= rhs;
+		ret.z *= rhs;
+		ret.w *= rhs;
+		return ret;
+	}
+
+	/* Addition */
+	NIFLIB_API Quaternion operator+(const Quaternion &rhs) const {
+		Quaternion ret;
+		ret = *this;
+		ret.x += rhs.x;
+		ret.y += rhs.y;
+		ret.z += rhs.z;
+		ret.w += rhs.w;
+		return ret;
+	}
+
+	/* Equality */
+	NIFLIB_API bool operator==( const Quaternion & n ) const {
+		return ( x == n.x && y == n.y && z == n.z && w == n.w );
 	}
 
 	/*! This function can be used to set all values in the structure at the same time.

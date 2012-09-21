@@ -255,6 +255,10 @@ public:
    // \param[in] value The new value.
    NIFLIB_API void SetTangents( const vector<Vector3 >& value );
 
+private:
+   unsigned short numUvSetsCalc() const;
+   unsigned short bsNumUvSetsCalc() const;
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown identifier. Always 0. */

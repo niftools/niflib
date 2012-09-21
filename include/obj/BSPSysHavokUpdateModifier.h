@@ -15,8 +15,14 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiPSysModifier.h"
+
+// Include structures
+#include "../Ref.h"
 namespace Niflib {
 
+// Forward define of referenced NIF objects
+class NiNode;
+class NiPSysModifier;
 class BSPSysHavokUpdateModifier;
 typedef Ref<BSPSysHavokUpdateModifier> BSPSysHavokUpdateModifierRef;
 
@@ -58,11 +64,11 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	unsigned int unknownInt1;
+	mutable unsigned int numNodes;
+	/*! Group of target NiNodes? */
+	vector<Ref<NiNode > > nodes;
 	/*! Unknown */
-	unsigned int unknownInt2;
-	/*! Unknown */
-	unsigned int unknownInt3;
+	Ref<NiPSysModifier > modifier;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

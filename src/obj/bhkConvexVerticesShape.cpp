@@ -198,12 +198,13 @@ vector<float> bhkConvexVerticesShape::GetDistToCenter() const
 
 void bhkConvexVerticesShape::SetVertices( const vector<Vector3> & in )
 {
-	int size = in.size();
+	size_t size = in.size();
 	vertices.resize(size);
-	for (int i=0; i<size; ++i)
+	for (size_t i=0; i<size; ++i)
 	{
 		Vector4 &f = vertices[i];
 		const Vector3 &v = in[i];
+
 		f[0] = v.x;
 		f[1] = v.y;
 		f[2] = v.z;
@@ -213,12 +214,13 @@ void bhkConvexVerticesShape::SetVertices( const vector<Vector3> & in )
 
 void bhkConvexVerticesShape::SetNormals( const vector<Vector3> & in )
 {
-	int size = in.size();
+	size_t size = in.size();
 	normals.resize(size);
-	for (int i=0; i<size; ++i)
+	for (size_t i=0; i<size; ++i)
 	{
 		Vector4 &f = normals[i];
 		const Vector3 &v = in[i];
+
 		f[0] = v.x;
 		f[1] = v.y;
 		f[2] = v.z;
@@ -231,11 +233,13 @@ void bhkConvexVerticesShape::SetDistToCenter( const vector<float> & in )
 	if ( in.size() != normals.size() ) {
 		throw runtime_error("Distance vector size does not match normal size.");
 	}
-	int size = in.size();
+
+	size_t size = in.size();
 	normals.resize(size);
-	for (int i=0; i<size; ++i)
+	for (size_t i=0; i<size; ++i)
 	{
 		Vector4 &f = normals[i];
+
 		f[3] = in[i];
 	}
 }

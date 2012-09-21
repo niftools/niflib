@@ -8,6 +8,7 @@ All rights reserved.  Please see niflib.h for license. */
 //-----------------------------------NOTICE----------------------------------//
 
 //--BEGIN FILE HEAD CUSTOM CODE--//
+#include <algorithm>
 //--END CUSTOM CODE--//
 
 #include "../../include/FixLink.h"
@@ -154,4 +155,43 @@ std::list<NiObject *> NiPSysMeshEmitter::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+
+bool NiPSysMeshEmitter::AddEmitterMesh( Ref<NiTriBasedGeom > mesh ) {
+  vector<Ref<NiTriBasedGeom > >& meshes = emitterMeshes;
+  vector<Ref<NiTriBasedGeom > >::iterator itr = std::find(meshes.begin(), meshes.end(), mesh);
+  if (itr == meshes.end()) {
+    meshes.push_back(mesh);
+    numEmitterMeshes++;
+
+    return true;
+  }
+
+  return false;
+}
+
+bool NiPSysMeshEmitter::RemoveEmitterMesh( Ref<NiTriBasedGeom > mesh ) {
+  vector<Ref<NiTriBasedGeom > >& meshes = emitterMeshes;
+  vector<Ref<NiTriBasedGeom > >::iterator itr = std::find(meshes.begin(), meshes.end(), mesh);
+  if (itr == meshes.end()) {
+    meshes.erase(itr);
+    numEmitterMeshes--;
+
+    return true;
+  }
+
+  return false;
+}
+
+bool NiPSysMeshEmitter::ReplaceEmitterMesh( Ref<NiTriBasedGeom > newmesh, Ref<NiTriBasedGeom > oldmesh ) {
+  vector<Ref<NiTriBasedGeom > >& meshes = emitterMeshes;
+  vector<Ref<NiTriBasedGeom > >::iterator itr = std::find(meshes.begin(), meshes.end(), oldmesh);
+  if (itr != meshes.end()) {
+    *itr = newmesh;
+
+    return true;
+  }
+
+  return false;
+}
+
 //--END CUSTOM CODE--//
