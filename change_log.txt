@@ -3,6 +3,12 @@ Version 0.8.1
 
 * Release script.
 
+* Compile fixes (contributed by skyfox).
+
+* Fix bug which prevented reading a wide variety of blocks.
+
+* API rename: GetBSProperty, SetBSProperty, GetBSProperties, SetBSProperties.
+
 Version 0.8.0
 =============
 
