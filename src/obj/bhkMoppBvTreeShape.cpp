@@ -78,7 +78,7 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 	//--END CUSTOM CODE--//
 
 	bhkBvTreeShape::Write( out, link_map, missing_link_stack, info );
-	moppDataSize = (unsigned int)(oldMoppData.size());
+	moppDataSize = moppDataSizeCalc();
 	if ( info.version < VER_3_3_0_13 ) {
 		WritePtr32( &(*shape), out );
 	} else {
@@ -128,7 +128,7 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkBvTreeShape::asString();
-	moppDataSize = (unsigned int)(oldMoppData.size());
+	moppDataSize = moppDataSizeCalc();
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;

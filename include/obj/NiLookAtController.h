@@ -14,9 +14,6 @@ All rights reserved.  Please see niflib.h for license. */
 //--END CUSTOM CODE--//
 
 #include "NiTimeController.h"
-
-// Include structures
-#include "../Ref.h"
 namespace Niflib {
 
 // Forward define of referenced NIF objects
@@ -63,7 +60,7 @@ protected:
 	/*! Unknown. */
 	unsigned short unknown1;
 	/*! Link to the node to look at? */
-	Ref<NiNode > lookAtNode;
+	NiNode * lookAtNode;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
