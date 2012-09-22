@@ -140,6 +140,11 @@ public:
 	 */
 	NIFLIB_API virtual void CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia);
 
+private:
+	unsigned int moppDataSizeCalc() const {
+		return (unsigned int)((info.version <= 0x0A000100) ? (oldMoppData.size() + 1) : moppData.size());
+	};
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! The shape. */
