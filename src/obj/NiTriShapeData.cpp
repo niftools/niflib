@@ -123,7 +123,6 @@ std::string NiTriShapeData::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << NiTriBasedGeomData::asString();
 	numMatchGroups = (unsigned short)(matchGroups.size());
-	hasTriangles = hasTrianglesCalc(info);
 	out << "  Num Triangle Points:  " << numTrianglePoints << endl;
 	out << "  Has Triangles:  " << hasTriangles << endl;
 	array_output_count = 0;

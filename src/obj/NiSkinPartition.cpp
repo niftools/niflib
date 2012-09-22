@@ -352,7 +352,6 @@ std::string NiSkinPartition::asString( bool verbose ) const {
 		skinPartitionBlocks[i1].numWeightsPerVertex = (unsigned short)((skinPartitionBlocks[i1].vertexWeights.size() > 0) ? skinPartitionBlocks[i1].vertexWeights[0].size() : 0);
 		skinPartitionBlocks[i1].numStrips = (unsigned short)(skinPartitionBlocks[i1].stripLengths.size());
 		skinPartitionBlocks[i1].numBones = (unsigned short)(skinPartitionBlocks[i1].bones.size());
-		skinPartitionBlocks[i1].numTriangles = skinPartitionBlocks[i1].numTrianglesCalc(info);
 		skinPartitionBlocks[i1].numVertices = (unsigned short)(skinPartitionBlocks[i1].vertexMap.size());
 		out << "    Num Vertices:  " << skinPartitionBlocks[i1].numVertices << endl;
 		out << "    Num Triangles:  " << skinPartitionBlocks[i1].numTriangles << endl;

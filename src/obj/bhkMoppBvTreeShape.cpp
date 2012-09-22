@@ -128,7 +128,6 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << bhkBvTreeShape::asString();
-	moppDataSize = moppDataSizeCalc(info);
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;

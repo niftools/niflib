@@ -297,8 +297,6 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	bsNumUvSets = bsNumUvSetsCalc(info);
-	numUvSets = numUvSetsCalc(info);
 	numVertices = (unsigned short)(vertices.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
