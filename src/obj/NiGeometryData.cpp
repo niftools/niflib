@@ -157,8 +157,8 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	//--END CUSTOM CODE--//
 
 	NiObject::Write( out, link_map, missing_link_stack, info );
-	bsNumUvSets = bsNumUvSetsCalc();
-	numUvSets = numUvSetsCalc();
+	bsNumUvSets = bsNumUvSetsCalc(info);
+	numUvSets = numUvSetsCalc(info);
 	numVertices = (unsigned short)(vertices.size());
 	if ( info.version >= 0x0A020000 ) {
 		NifStream( unknownInt, out, info );
@@ -297,8 +297,8 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	stringstream out;
 	unsigned int array_output_count = 0;
 	out << NiObject::asString();
-	bsNumUvSets = bsNumUvSetsCalc();
-	numUvSets = numUvSetsCalc();
+	bsNumUvSets = bsNumUvSetsCalc(info);
+	numUvSets = numUvSetsCalc(info);
 	numVertices = (unsigned short)(vertices.size());
 	out << "  Unknown Int:  " << unknownInt << endl;
 	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
