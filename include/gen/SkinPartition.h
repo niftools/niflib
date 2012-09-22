@@ -86,6 +86,7 @@ struct SkinPartition {
 	//--BEGIN MISC CUSTOM CODE--//
 	/*! Calculate proper value of numTriangles field. */
 	unsigned short numTrianglesCalc() const;
+	unsigned short numTrianglesCalc(const NifInfo &) const;
 	//--END CUSTOM CODE--//
 };
 
