@@ -109,6 +109,11 @@ public:
 	 */
 	NIFLIB_API virtual void SetTriangles( const vector<Triangle> & in );
 
+private:
+	bool hasTrianglesCalc(const NifInfo & info) const {
+		return (triangles.size() > 0);
+	};
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Num Triangles times 3. */
