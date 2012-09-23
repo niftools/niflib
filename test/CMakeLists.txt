@@ -12,7 +12,9 @@ foreach(TEST
         skin_test
         missing_link_stack_test
         trishape_test
-        numuvsets_test)
+        numuvsets_test
+        bslightingshaderproperty_test
+        )
     add_executable(${TEST} ${TEST}.cpp)
     target_link_libraries(${TEST} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY} niflib)
     add_test(niflib::${TEST} ${TEST})

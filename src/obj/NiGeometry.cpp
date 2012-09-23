@@ -637,23 +637,23 @@ bool NiGeometry::HasShader() const {
    return hasShader;
 }
 
-Ref<NiProperty> NiGeometry::getBSProperty(short index) {
+Ref<NiProperty> NiGeometry::GetBSProperty(short index) {
 	if ((index < 0) || (index > 1))   return NULL;
 	return bsProperties[index];
 }
 
-void NiGeometry::setBSProperty(short index, Niflib::Ref<NiProperty> value) {
+void NiGeometry::SetBSProperty(short index, Niflib::Ref<NiProperty> value) {
 	if ((index >= 0) && (index <= 1))
 	{
 		bsProperties[index] = value;
 	}
 }
 
-array<2,Ref<NiProperty > > Niflib::NiGeometry::getBSProperties() {
+array<2,Ref<NiProperty > > Niflib::NiGeometry::GetBSProperties() {
 	return this->bsProperties;
 }
 
-void Niflib::NiGeometry::setBSProperties( array<2, Ref<NiProperty> > value ) {
+void Niflib::NiGeometry::SetBSProperties( array<2, Ref<NiProperty> > value ) {
 	this->bsProperties = value;
 }
 

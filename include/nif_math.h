@@ -233,7 +233,7 @@ struct Vector3 {
 	/* Multipies a vector by a scalar and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
-	Vector3 & operator*=( const float & rh );
+	NIFLIB_API Vector3 & operator*=( const float & rh );
 
 	/* Multiplies a vector by a vector using the dot product
 	 * \return The dot product of the two vectors.
@@ -254,7 +254,7 @@ struct Vector3 {
 	/* Divides a vector by a scalar and then sets the result to the left-hand vector.
 	 * \return This vector is returned.
 	 */
-	Vector3 & operator/=( const float & rh );
+	NIFLIB_API Vector3 & operator/=( const float & rh );
 
 	/* Sets the components of this Vector3 to those of another Vector3 
 	 * \return This vector is returned.
