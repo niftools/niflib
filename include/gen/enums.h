@@ -117,6 +117,21 @@ enum HavokMaterial {
 	SKY_HAV_MAT_MATERIALSTONEASSTAIRS = 1886078335, /*!< Material Stone As Stairs */
 	SKY_HAV_MAT_MATERIAL_BLADE_2HAND = 2022742644, /*!< Material Blade 2Hand */
 	SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL = 2025794648, /*!< MaterialBottleSmall */
+	SKY_HAV_MAT_SAND = 2168343821, /*!< Sand */
+	SKY_HAV_MAT_HEAVY_METAL = 2229413539, /*!< Heavy Metal */
+	SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL = 2617944780, /*!< Material Blade 1Hand Small, */
+	SKY_HAV_MAT_STAIRSBROKENSTONE = 2892392795, /*!< Stairs Broken Stone */
+	SKY_HAV_MAT_ORGANIC = 2974920155, /*!< Organic */
+	SKY_HAV_MAT_HEAVY_WOOD = 3070783559, /*!< Heavy Wood */
+	SKY_HAV_MAT_MATERIAL_CHAIN = 3074114406, /*!< MaterialChain */
+	SKY_HAV_MAT_DIRT = 3106094762, /*!< Dirt */
+	SKY_HAV_MAT_MATERIALCOIN = 3589100606, /*!< Material Coin */
+	SKY_HAV_MAT_MATERIALARROW = 3725505938, /*!< MaterialArrow */
+	SKY_HAV_MAT_GLASS = 3739830338, /*!< GLASS */
+	SKY_HAV_MAT_STONE = 3741512247, /*!< Stone */
+	SKY_HAV_MAT_CLOTH = 3839073443, /*!< Cloth */
+	SKY_HAV_MAT_MATERIAL_BLUNT_2HAND = 3969592277, /*!< Material Blunt 2Hand */
+	SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM = 4283869410, /*!< MaterialBoulderMedium */
 };
 
 ostream & operator<<( ostream & out, HavokMaterial const & val );
@@ -491,7 +506,7 @@ enum AlphaFormat {
 ostream & operator<<( ostream & out, AlphaFormat const & val );
 
 enum BoundVolumeType {
-	BASE_BV = -1, /*!< Default */
+	BASE_BV = 0xffffffff, /*!< Default */
 	SPHERE_BV = 0, /*!< Sphere */
 	BOX_BV = 1, /*!< Box */
 	CAPSULE_BV = 2, /*!< Capsule */
