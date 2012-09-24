@@ -523,7 +523,7 @@ void WriteNifTree( ostream & out, list<NiObjectRef> const & roots, list<NiObject
 		for ( unsigned int i = 0; i < objects.size(); ++i ) {
 			ostr.reset();
 			objects[i]->Write( ostr, link_map, missing_link_stack, info );
-			header.blockSize[i] = ostr.tellp();
+			header.blockSize[i] = (unsigned int) ostr.tellp();
 		}
 		header.numStrings = header.strings.size();
 	}
