@@ -219,11 +219,11 @@ public:
 	// \param[in] value The new value.
 	NIFLIB_API void SetConsistencyFlags( const ConsistencyType & value );
 
-   // Methods for saving binormals and tangents saved in upper byte.
+   // Methods for saving bitangents and tangents saved in upper byte.
    // \return The current value.
    NIFLIB_API byte GetTspaceFlag() const;
 
-   // Methods for saving binormals and tangents saved in upper byte.
+   // Methods for saving bitangents and tangents saved in upper byte.
    // \param[in] value The new value.
    NIFLIB_API void SetTspaceFlag( byte value );
 
@@ -240,12 +240,12 @@ public:
    // Unknown. Binormal & tangents? has_normals must be set as well for this field to
    // be present.
    // \return The current value.
-   NIFLIB_API vector<Vector3 > GetBinormals() const;
+   NIFLIB_API vector<Vector3 > GetBitangents() const;
 
    // Unknown. Binormal & tangents? has_normals must be set as well for this field to
    // be present.
    // \param[in] value The new value.
-   NIFLIB_API void SetBinormals( const vector<Vector3 >& value );
+   NIFLIB_API void SetBitangents( const vector<Vector3 >& value );
 
    // Unknown. Binormal & tangents?
    // \return The current value.
@@ -276,7 +276,7 @@ protected:
 	/*! The mesh vertices. */
 	vector<Vector3 > vertices;
 	/*!
-	 * Methods for saving binormals and tangents saved in upper byte.  Texture flags in
+	 * Methods for saving bitangents and tangents saved in upper byte.  Texture flags in
 	 * lower byte.
 	 */
 	mutable unsigned short numUvSets;

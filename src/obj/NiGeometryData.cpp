@@ -701,12 +701,12 @@ void NiGeometryData::SetHasNormals( bool value ) {
    hasNormals = value;
 }
 
-vector<Vector3 > NiGeometryData::GetBinormals() const {
-   return binormals;
+vector<Vector3 > NiGeometryData::GetBitangents() const {
+   return bitangents;
 }
 
-void NiGeometryData::SetBinormals( const vector<Vector3 >& value ) {
-   binormals = value;
+void NiGeometryData::SetBitangents( const vector<Vector3 >& value ) {
+   bitangents = value;
 }
 
 vector<Vector3 > NiGeometryData::GetTangents() const {

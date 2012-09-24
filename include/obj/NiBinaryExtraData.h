@@ -22,7 +22,7 @@ namespace Niflib {
 class NiBinaryExtraData;
 typedef Ref<NiBinaryExtraData> NiBinaryExtraDataRef;
 
-/*! Binary extra data object. Used to store normals and binormals in Oblivion. */
+/*! Binary extra data object. Used to store normals and bitangents in Oblivion. */
 class NiBinaryExtraData : public NiExtraData {
 public:
 	/*! Constructor */
