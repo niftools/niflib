@@ -275,10 +275,7 @@ protected:
 	bool hasVertices;
 	/*! The mesh vertices. */
 	vector<Vector3 > vertices;
-	/*!
-	 * Methods for saving bitangents and tangents saved in upper byte.  Texture flags in
-	 * lower byte.
-	 */
+	/*! Flag for tangents and bitangents in upper byte. Texture flags in lower byte. */
 	mutable unsigned short numUvSets;
 	/*!
 	 * Bethesda's version of this field for nif versions 20.2.0.7 and up. Only a single
