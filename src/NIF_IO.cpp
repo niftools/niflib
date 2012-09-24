@@ -212,6 +212,8 @@ void WritePtr32( void * val, ostream& out ){
       unsigned int id2;
     };
   } ptr;
+  ptr.id1 = 0;		//  just for compiler warning C4700 (VS2010)
+  ptr.id2 = 0;		//  just for compiler warning C4700 (VS2010)
   ptr.ptr = val;
   // xor the two parts
   // (maybe a more advanced hash function would be better, experience will tell)

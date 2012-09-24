@@ -914,7 +914,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 			for(unsigned int x = 0; x < current_dismember_partitions.size(); x++) {
 				if (used_dismember_groups[x] == false) {
 					for(unsigned int y = 0; y < current_dismember_partitions_faces.size(); y++) {
-						if(current_dismember_partitions_faces[y] > x) {
+						if(current_dismember_partitions_faces[y] > ((int) x)) {
 							current_dismember_partitions_faces[y]--;
 						}
 					}
