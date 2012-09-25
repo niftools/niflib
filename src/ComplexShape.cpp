@@ -145,11 +145,11 @@ void ComplexShape::SetSkinInfluences( const vector< Ref<NiNode> > & n ) {
 	skinInfluences = n;
 }
 
-vector<int> ComplexShape::GetDismemberPartitionsFaces() const {
+vector<unsigned int> ComplexShape::GetDismemberPartitionsFaces() const {
 	return dismemberPartitionsFaces;
 }
 
-void ComplexShape::SetDismemberPartitionsFaces(const vector<int>& value ) {
+void ComplexShape::SetDismemberPartitionsFaces(const vector<unsigned int>& value ) {
 	dismemberPartitionsFaces.resize(value.size());
 
 	for(unsigned int i = 0; i < dismemberPartitionsFaces.size(); i++) {
@@ -794,7 +794,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		vector<BodyPartList> current_dismember_partitions = dismemberPartitionsBodyParts;
 
 		//create a map betweem the faces and the dismember groups
-		vector<int> current_dismember_partitions_faces;
+		vector<unsigned int> current_dismember_partitions_faces;
 
 		//since we might have dismember partitions the face index is also required
 		int current_face_index = 0;
