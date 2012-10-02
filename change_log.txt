@@ -9,6 +9,8 @@ Version 0.8.1
 
 * API rename: GetBSProperty, SetBSProperty, GetBSProperties, SetBSProperties.
 
+* DismemberPartitionsFaces is now a vector of unsigned integers.
+
 Version 0.8.0
 =============
 
