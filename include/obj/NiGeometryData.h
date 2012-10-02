@@ -256,8 +256,8 @@ public:
    NIFLIB_API void SetTangents( const vector<Vector3 >& value );
 
 private:
-   unsigned short numUvSetsCalc() const;
-   unsigned short bsNumUvSetsCalc() const;
+   unsigned short numUvSetsCalc(const NifInfo &) const;
+   unsigned short bsNumUvSetsCalc(const NifInfo &) const;
 
 	//--END CUSTOM CODE--//
 protected:

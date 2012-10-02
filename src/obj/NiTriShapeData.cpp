@@ -83,6 +83,7 @@ void NiTriShapeData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 
 	NiTriBasedGeomData::Write( out, link_map, missing_link_stack, info );
 	numMatchGroups = (unsigned short)(matchGroups.size());
+	hasTriangles = hasTrianglesCalc(info);
 	NifStream( numTrianglePoints, out, info );
 	if ( info.version >= 0x0A010000 ) {
 		NifStream( hasTriangles, out, info );

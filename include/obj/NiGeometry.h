@@ -175,24 +175,24 @@ public:
    // BSProperty
    // \param[in] index Index of property to be retrieved.
    // \return The propterty.
-   NIFLIB_API Ref<NiProperty> getBSProperty(short index);
+   NIFLIB_API Ref<NiProperty> GetBSProperty(short index);
 
    // BSProperty
    // \param[in] index Index of property to be set.
    // \param[in] index Property to be set.
-   NIFLIB_API void setBSProperty(short index, Ref<NiProperty> value);
+   NIFLIB_API void SetBSProperty(short index, Ref<NiProperty> value);
 
    /*
 	 * Returns the array of the only 2 properties that are specific to Bethesda
 	 * \return Returns the array of the 2 properties
 	 */
-   NIFLIB_API array<2,Ref<NiProperty > > getBSProperties();
+   NIFLIB_API array<2,Ref<NiProperty > > GetBSProperties();
 
    /*
 	 * Sets the array of the only 2 properties that are specific to Bethesda
 	 * \param[in] The new array of properties
 	 */
-   NIFLIB_API void setBSProperties( array<2, Ref<NiProperty> > value);
+   NIFLIB_API void SetBSProperties( array<2, Ref<NiProperty> > value);
 
 	//--END CUSTOM CODE--//
 protected:

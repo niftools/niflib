@@ -202,6 +202,21 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 		case SKY_HAV_MAT_MATERIALSTONEASSTAIRS: return out << "SKY_HAV_MAT_MATERIALSTONEASSTAIRS";
 		case SKY_HAV_MAT_MATERIAL_BLADE_2HAND: return out << "SKY_HAV_MAT_MATERIAL_BLADE_2HAND";
 		case SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL: return out << "SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL";
+		case SKY_HAV_MAT_SAND: return out << "SKY_HAV_MAT_SAND";
+		case SKY_HAV_MAT_HEAVY_METAL: return out << "SKY_HAV_MAT_HEAVY_METAL";
+		case SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL: return out << "SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL";
+		case SKY_HAV_MAT_STAIRSBROKENSTONE: return out << "SKY_HAV_MAT_STAIRSBROKENSTONE";
+		case SKY_HAV_MAT_ORGANIC: return out << "SKY_HAV_MAT_ORGANIC";
+		case SKY_HAV_MAT_HEAVY_WOOD: return out << "SKY_HAV_MAT_HEAVY_WOOD";
+		case SKY_HAV_MAT_MATERIAL_CHAIN: return out << "SKY_HAV_MAT_MATERIAL_CHAIN";
+		case SKY_HAV_MAT_DIRT: return out << "SKY_HAV_MAT_DIRT";
+		case SKY_HAV_MAT_MATERIALCOIN: return out << "SKY_HAV_MAT_MATERIALCOIN";
+		case SKY_HAV_MAT_MATERIALARROW: return out << "SKY_HAV_MAT_MATERIALARROW";
+		case SKY_HAV_MAT_GLASS: return out << "SKY_HAV_MAT_GLASS";
+		case SKY_HAV_MAT_STONE: return out << "SKY_HAV_MAT_STONE";
+		case SKY_HAV_MAT_CLOTH: return out << "SKY_HAV_MAT_CLOTH";
+		case SKY_HAV_MAT_MATERIAL_BLUNT_2HAND: return out << "SKY_HAV_MAT_MATERIAL_BLUNT_2HAND";
+		case SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM: return out << "SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

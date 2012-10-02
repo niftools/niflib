@@ -301,13 +301,13 @@ public:
 	 * Gets the association between the faces in the complex shape and the corresponding body parts
 	 * \return A vector depicting the association
 	 */
-	NIFLIB_API vector<int> GetDismemberPartitionsFaces() const;
+	NIFLIB_API vector<unsigned int> GetDismemberPartitionsFaces() const;
 
 	/*
 	 * Sets the association between the body parts and the faces in the complex shape
 	 * \param[in] The new association meaning that the face at the position of the index corresponds to the body part group given by the value at the position of the index of the face
 	 */
-	NIFLIB_API void SetDismemberPartitionsFaces( const vector<int>& value );
+	NIFLIB_API void SetDismemberPartitionsFaces( const vector<unsigned int>& value );
 
 	/*
 	 * Gets a list of the dismember groups
@@ -323,7 +323,7 @@ public:
 
 private:
 	vector<BodyPartList> dismemberPartitionsBodyParts;
-	vector<int> dismemberPartitionsFaces;
+	vector<unsigned int> dismemberPartitionsFaces;
 	vector<WeightedVertex> vertices;
 	vector<Color4> colors;
 	vector<Vector3> normals;

@@ -68,4 +68,8 @@ unsigned short SkinPartition::numTrianglesCalc() const {
 	return len;
 };
 
+unsigned short SkinPartition::numTrianglesCalc(const NifInfo & info) const {
+	return numTrianglesCalc();
+}
+
 //--END CUSTOM CODE--//

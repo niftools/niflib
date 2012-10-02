@@ -1,3 +1,16 @@
+Version 0.8.1
+=============
+
+* Release script.
+
+* Compile fixes (contributed by skyfox).
+
+* Fix bug which prevented reading a wide variety of blocks.
+
+* API rename: GetBSProperty, SetBSProperty, GetBSProperties, SetBSProperties.
+
+* DismemberPartitionsFaces is now a vector of unsigned integers.
+
 Version 0.8.0
 =============
 
@@ -5,7 +18,7 @@ Version 0.8.0
   now fully supports Skyrim, and has plenty of new access functions.
 
 * Fix for tangent space flag in NiGeometryData::numUvSets (and
-  bsNumUvSets) getting erased when nifs were writing nif.
+  bsNumUvSets) getting erased when nifs were written.
 
 * Fix for NiSkinPartition::numTriangles getting erased when writing
   nif.

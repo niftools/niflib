@@ -145,11 +145,11 @@ void ComplexShape::SetSkinInfluences( const vector< Ref<NiNode> > & n ) {
 	skinInfluences = n;
 }
 
-vector<int> ComplexShape::GetDismemberPartitionsFaces() const {
+vector<unsigned int> ComplexShape::GetDismemberPartitionsFaces() const {
 	return dismemberPartitionsFaces;
 }
 
-void ComplexShape::SetDismemberPartitionsFaces(const vector<int>& value ) {
+void ComplexShape::SetDismemberPartitionsFaces(const vector<unsigned int>& value ) {
 	dismemberPartitionsFaces.resize(value.size());
 
 	for(unsigned int i = 0; i < dismemberPartitionsFaces.size(); i++) {
@@ -258,7 +258,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		vector<NiPropertyRef> current_property_group =  (*geom)->GetProperties();
 
 		//Special code to handle the Bethesda Skyrim properties
-		array<2, NiPropertyRef> bs_properties = (*geom)->getBSProperties();
+		array<2, NiPropertyRef> bs_properties = (*geom)->GetBSProperties();
 		if(bs_properties[0] != NULL) {
 			current_property_group.push_back(bs_properties[0]);
 		}
@@ -396,14 +396,14 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		if(niProp != NULL) {
 			bsTexProp = DynamicCast<BSShaderTextureSet>(niProp);
 		}
-		niProp = (*geom)->getBSProperties()[0];
+		niProp = (*geom)->GetBSProperties()[0];
 		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
 			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
 			if(bs_shader->getTextureSet() != NULL) {
 				bsTexProp = bs_shader->getTextureSet();
 			}
 		}
-		niProp = (*geom)->getBSProperties()[1];
+		niProp = (*geom)->GetBSProperties()[1];
 		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
 			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
 			if(bs_shader->getTextureSet() != NULL) {
@@ -794,7 +794,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 		vector<BodyPartList> current_dismember_partitions = dismemberPartitionsBodyParts;
 
 		//create a map betweem the faces and the dismember groups
-		vector<int> current_dismember_partitions_faces;
+		vector<unsigned int> current_dismember_partitions_faces;
 
 		//since we might have dismember partitions the face index is also required
 		int current_face_index = 0;
@@ -952,7 +952,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 				array<2, NiPropertyRef> bs_properties;
 				bs_properties[0] = shader_property;
 				bs_properties[1] = alpha_property;
-				shapes[shape_num]->setBSProperties(bs_properties);
+				shapes[shape_num]->SetBSProperties(bs_properties);
 			}
 		}
 
