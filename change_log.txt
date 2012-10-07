@@ -1,7 +1,7 @@
 Version 0.8.2 (in development)
 ==============================
 
-* Add CPack support for creating binary releases.
+* Add CPack support for creating source and binary releases.
 
 Version 0.8.1
 =============
