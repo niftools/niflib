@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 project(niflib)
+file(STRINGS "VERSION" VERSION)
+
+# enable CPack
+set(CPACK_PACKAGE_VERSION ${VERSION})
+include(CPack)
 
 include_directories("include")
 
@@ -554,3 +559,16 @@ PROPERTIES DEFINE_SYMBOL BUILDING_NIFLIB_DLL)
 # build the tests, this needs boost
 enable_testing()
 add_subdirectory(test)
+
+# install
+install(
+    TARGETS niflib
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+install(
+    DIRECTORY include/
+    DESTINATION include
+)
