@@ -328,7 +328,7 @@ void BSLightingShaderProperty::SetAlpha( float value ) {
 	alpha = value;
 }
 
-float BSLightingShaderProperty::GetUnknownFloat2() {
+float BSLightingShaderProperty::GetUnknownFloat2() const {
 	return unknownFloat2;
 }
 

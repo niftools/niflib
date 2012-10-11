@@ -399,15 +399,15 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		niProp = (*geom)->GetBSProperties()[0];
 		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
 			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
-			if(bs_shader->getTextureSet() != NULL) {
-				bsTexProp = bs_shader->getTextureSet();
+			if(bs_shader->GetTextureSet() != NULL) {
+				bsTexProp = bs_shader->GetTextureSet();
 			}
 		}
 		niProp = (*geom)->GetBSProperties()[1];
 		if(niProp != NULL &&  niProp->GetType().IsSameType(BSLightingShaderProperty::TYPE)) {
 			BSLightingShaderPropertyRef bs_shader = DynamicCast<BSLightingShaderProperty>(niProp);
-			if(bs_shader->getTextureSet() != NULL) {
-				bsTexProp = bs_shader->getTextureSet();
+			if(bs_shader->GetTextureSet() != NULL) {
+				bsTexProp = bs_shader->GetTextureSet();
 			}
 		}
 
