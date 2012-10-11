@@ -405,7 +405,7 @@ list< Ref<NiTimeController> > NiObjectNET::GetControllers() const {
 	return conts;
 }
 
-BSLightingShaderPropertyShaderType NiObjectNET::GetSkyrimShaderType() {
+BSLightingShaderPropertyShaderType NiObjectNET::GetSkyrimShaderType() const {
 	return skyrimShaderType;
 }
 

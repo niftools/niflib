@@ -3,6 +3,17 @@ Version 0.8.2 (in development)
 
 * Add CPack support for creating source and binary releases.
 
+* Merge parts of figment's branch, from theru's clone. This affects
+  the BSLightingShaderProperty and BSShaderTextureSet API:
+
+  - Rename get/set methods to start with Get/Set.
+
+  - New BSLightingShaderProperty Get/Set methods.
+
+  - Get methods are now const.
+
+  - In NiObjectNET, GetSkyrimShaderType is now also const.
+
 Version 0.8.1
 =============
 

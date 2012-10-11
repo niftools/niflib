@@ -256,165 +256,229 @@ std::list<NiObject *> BSLightingShaderProperty::GetPtrs() const {
 
 //--BEGIN MISC CUSTOM CODE--//
 
-SkyrimShaderPropertyFlags1 BSLightingShaderProperty::getShaderFlags1() {
+SkyrimShaderPropertyFlags1 BSLightingShaderProperty::GetShaderFlags1() const {
 	return shaderFlags1;
 }
 
-void BSLightingShaderProperty::setShaderFlags1( SkyrimShaderPropertyFlags1 value ) {
+void BSLightingShaderProperty::SetShaderFlags1( SkyrimShaderPropertyFlags1 value ) {
 	shaderFlags1 = value;
 }
 
-SkyrimShaderPropertyFlags2 BSLightingShaderProperty::getShaderFlags2() {
+SkyrimShaderPropertyFlags2 BSLightingShaderProperty::GetShaderFlags2() const {
 	return shaderFlags2;
 }
 
-void BSLightingShaderProperty::setShaderFlags2( SkyrimShaderPropertyFlags2 value ) {
+void BSLightingShaderProperty::SetShaderFlags2( SkyrimShaderPropertyFlags2 value ) {
 	shaderFlags2 = value;
 }
 
-TexCoord BSLightingShaderProperty::getUVOffset() {
+TexCoord BSLightingShaderProperty::GetUVOffset() const {
 	return uvOffset;
 }
 
-void BSLightingShaderProperty::setUVOffset( TexCoord value ) {
+void BSLightingShaderProperty::SetUVOffset( const TexCoord & value ) {
 	uvOffset = value;
 }
 
-TexCoord BSLightingShaderProperty::getUVScale() {
+TexCoord BSLightingShaderProperty::GetUVScale() const {
 	return uvScale;
 }
 
-void BSLightingShaderProperty::setUVScale( TexCoord value ) {
+void BSLightingShaderProperty::SetUVScale( const TexCoord & value ) {
 	uvScale = value;
 }
 
-Ref<BSShaderTextureSet > BSLightingShaderProperty::getTextureSet() {
+Ref<BSShaderTextureSet > BSLightingShaderProperty::GetTextureSet() const {
 	return textureSet;
 }
 
-void BSLightingShaderProperty::setTextureSet( BSShaderTextureSet * value ) {
+void BSLightingShaderProperty::SetTextureSet( Ref<BSShaderTextureSet > value ) {
 	textureSet = value;
 }
 
-Color3 BSLightingShaderProperty::getEmissiveColor() {
+Color3 BSLightingShaderProperty::GetEmissiveColor() const {
 	return emissiveColor;
 }
 
-void BSLightingShaderProperty::setEmissiveColor( Color3 value ) {
+void BSLightingShaderProperty::SetEmissiveColor( const Color3 & value ) {
 	emissiveColor = value;
 }
 
-float BSLightingShaderProperty::getEmissiveMultiple() {
+float BSLightingShaderProperty::GetEmissiveMultiple() const {
 	return emissiveMultiple;
 }
 
-void BSLightingShaderProperty::setEmissiveMultiple( float value ) {
+void BSLightingShaderProperty::SetEmissiveMultiple( float value ) {
 	emissiveMultiple = value;
 }
 
-TexClampMode BSLightingShaderProperty::getTextureClampMode() {
+TexClampMode BSLightingShaderProperty::GetTextureClampMode() const {
 	return textureClampMode;
 }
 
-void BSLightingShaderProperty::setTextureClampMode( TexClampMode value ) {
+void BSLightingShaderProperty::SetTextureClampMode( TexClampMode value ) {
 	textureClampMode = value;
 }
 
-float BSLightingShaderProperty::getAlpha() {
+float BSLightingShaderProperty::GetAlpha() const {
 	return alpha;
 }
 
-void BSLightingShaderProperty::setAlpha( float value ) {
+void BSLightingShaderProperty::SetAlpha( float value ) {
 	alpha = value;
 }
 
-float BSLightingShaderProperty::getUnknownFloat2() {
+float BSLightingShaderProperty::GetUnknownFloat2() const {
 	return unknownFloat2;
 }
 
 
-void BSLightingShaderProperty::setUnknownFloat2( float value ) {
+void BSLightingShaderProperty::SetUnknownFloat2( float value ) {
 	unknownFloat2 = value;
 }
 
 
-float BSLightingShaderProperty::getGlossiness() {
+float BSLightingShaderProperty::GetGlossiness() const {
 	return glossiness;
 }
 
-void BSLightingShaderProperty::setGlossiness( float value ) {
+void BSLightingShaderProperty::SetGlossiness( float value ) {
 	glossiness = value;
 }
 
-Color3 BSLightingShaderProperty::getSpecularColor() {
+Color3 BSLightingShaderProperty::GetSpecularColor() const {
 	return specularColor;
 }
 
-void BSLightingShaderProperty::setSpecularColor( Color3 value ) {
+void BSLightingShaderProperty::SetSpecularColor( const Color3 & value ) {
 	specularColor = value;
 }
 
-float BSLightingShaderProperty::getSpecularStrength() {
+float BSLightingShaderProperty::GetSpecularStrength() const {
 	return specularStrength;
 }
 
-void BSLightingShaderProperty::setSpecularStrength( float value ) {
+void BSLightingShaderProperty::SetSpecularStrength( float value ) {
 	specularStrength = value;
 }
 
-float BSLightingShaderProperty::getLightningEffect1() {
+float BSLightingShaderProperty::GetLightingEffect1() const {
 	return lightingEffect1;
 }
 
-void BSLightingShaderProperty::setLightningEffect1( float value ) {
+void BSLightingShaderProperty::SetLightingEffect1( float value ) {
 	lightingEffect1 = value;
 }
 
-float BSLightingShaderProperty::getLightningEffect2() {
+float BSLightingShaderProperty::GetLightingEffect2() const {
 	return lightingEffect2;
 }
 
-void BSLightingShaderProperty::setLightningEffect2( float value ) {
+void BSLightingShaderProperty::SetLightingEffect2( float value ) {
 	lightingEffect2 = value;
 }
 
-float BSLightingShaderProperty::getEnvironmentMapScale() {
+float BSLightingShaderProperty::GetEnvironmentMapScale() const {
 	return environmentMapScale;
 }
 
-void BSLightingShaderProperty::setEnvironmentMapScale( float value ) {
+void BSLightingShaderProperty::SetEnvironmentMapScale( float value ) {
 	environmentMapScale = value;
 }
 
-Vector4 BSLightingShaderProperty::getSparkleParameters() {
+Color3 BSLightingShaderProperty::GetSkinTintColor() const {
+   return skinTintColor;
+}
+
+void BSLightingShaderProperty::SetSkinTintColor( const Color3 & value ) {
+   skinTintColor = value;
+}
+
+Color3 BSLightingShaderProperty::GetHairTintColor() const {
+   return hairTintColor;
+}
+
+void BSLightingShaderProperty::SetHairTintColor( const Color3 & value ) {
+   hairTintColor = value;
+}
+
+float BSLightingShaderProperty::GetMaxPasses() const {
+   return maxPasses;
+}
+
+void BSLightingShaderProperty::SetMaxPasses( float value ) {
+   maxPasses = value;
+}
+
+float BSLightingShaderProperty::GetScale() const {
+   return scale;
+}
+
+void BSLightingShaderProperty::SetScale( float value ) {
+   scale = value;
+}
+
+float BSLightingShaderProperty::GetParallaxInnerLayerThickness() const {
+   return parallaxInnerLayerThickness;
+}
+
+void BSLightingShaderProperty::SetParallaxInnerLayerThickness( float value ) {
+   parallaxInnerLayerThickness = value;
+}
+
+float BSLightingShaderProperty::GetParallaxRefractionScale() const {
+   return parallaxRefractionScale;
+}
+
+void BSLightingShaderProperty::SetParallaxRefractionScale( float value ) {
+   parallaxRefractionScale = value;
+}
+
+TexCoord BSLightingShaderProperty::GetParallaxInnerLayerTextureScale() const {
+   return parallaxInnerLayerTextureScale;
+}
+
+void BSLightingShaderProperty::SetParallaxInnerLayerTextureScale( const TexCoord & value ) {
+   parallaxInnerLayerTextureScale = value;
+}
+
+float BSLightingShaderProperty::GetParallaxEnvmapStrength() const {
+   return parallaxEnvmapStrength;
+}
+
+void BSLightingShaderProperty::SetParallaxEnvmapStrength( float value ) {
+   parallaxEnvmapStrength = value;
+}
+
+Vector4 BSLightingShaderProperty::GetSparkleParameters() const {
 	return sparkleParameters;
 }
 
-void BSLightingShaderProperty::setSparkleParameters( Vector4 value ) {
+void BSLightingShaderProperty::SetSparkleParameters( const Vector4 & value ) {
 	sparkleParameters = value;
 }
 
-float BSLightingShaderProperty::getEyeCubemapScale() {
+float BSLightingShaderProperty::GetEyeCubemapScale() const {
 	return eyeCubemapScale;
 }
 
-void BSLightingShaderProperty::setEyeCubemapScale( float value ) {
+void BSLightingShaderProperty::SetEyeCubemapScale( float value ) {
 	eyeCubemapScale = value;
 }
 
-Vector3 BSLightingShaderProperty::getLeftEyeReflectionCenter() {
+Vector3 BSLightingShaderProperty::GetLeftEyeReflectionCenter() const {
 	return leftEyeReflectionCenter;
 }
 
-void BSLightingShaderProperty::setLeftEyeReflectionCenter( Vector3 value ) {
+void BSLightingShaderProperty::SetLeftEyeReflectionCenter( const Vector3 & value ) {
 	leftEyeReflectionCenter = value;
 }
 
-Vector3 BSLightingShaderProperty::getRightEyeReflectionCenter() {
+Vector3 BSLightingShaderProperty::GetRightEyeReflectionCenter() const {
 	return rightEyeReflectionCenter;
 }
 
-void BSLightingShaderProperty::setRightEyeReflectionCenter( Vector3 value ) {
+void BSLightingShaderProperty::SetRightEyeReflectionCenter( const Vector3 & value ) {
 	rightEyeReflectionCenter = value;
 }
 
