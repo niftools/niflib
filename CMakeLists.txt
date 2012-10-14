@@ -19,8 +19,7 @@ include(CPack)
 
 include_directories("include")
 
-# set to STATIC for static library build
-add_library(niflib SHARED
+SET(sources
 src/RefObject.cpp
 src/kfm.cpp
 NvTriStrip/NvTriStrip.cpp
@@ -564,8 +563,16 @@ TriStripper/policy.cpp
 TriStripper/tri_stripper.cpp
 )
 
+add_library(niflib SHARED ${sources})
+
 set_target_properties(niflib
 PROPERTIES DEFINE_SYMBOL BUILDING_NIFLIB_DLL)
+
+add_library(niflib_static STATIC ${sources})
+
+set_target_properties(niflib_static
+   PROPERTIES
+   COMPILE_DEFINITIONS NIFLIB_STATIC_LINK)
 
 # build the tests, this needs boost
 enable_testing()
@@ -574,6 +581,13 @@ add_subdirectory(test)
 # install
 install(
     TARGETS niflib
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+install(
+    TARGETS niflib_static
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
