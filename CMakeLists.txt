@@ -2,21 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 project(niflib)
 file(STRINGS "VERSION" VERSION)
 
-# enable CPack
-set(CPACK_PACKAGE_VERSION ${VERSION})
-set(CPACK_GENERATOR ZIP)
-set(CPACK_SOURCE_PACKAGE_FILE_NAME "niflib-${VERSION}-src")
-set(CPACK_SOURCE_GENERATOR ZIP)
-set(CPACK_SOURCE_IGNORE_FILES
-    "~$"
-    /\\\\.git/
-    \\\\.*project$
-    \\\\.*gitmodules$
-    \\\\.*gitattributes$
-    \\\\.*gitignore$
-)
-include(CPack)
-
 include_directories("include")
 
 SET(sources
@@ -597,3 +582,18 @@ install(
     DIRECTORY include/
     DESTINATION include
 )
+
+# enable CPack
+set(CPACK_PACKAGE_VERSION ${VERSION})
+set(CPACK_GENERATOR ZIP)
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "niflib-${VERSION}-src")
+set(CPACK_SOURCE_GENERATOR ZIP)
+set(CPACK_SOURCE_IGNORE_FILES
+    "~$"
+    /\\\\.git/
+    \\\\.*project$
+    \\\\.*gitmodules$
+    \\\\.*gitattributes$
+    \\\\.*gitignore$
+)
+include(CPack)
