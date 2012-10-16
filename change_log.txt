@@ -14,6 +14,9 @@ Version 0.8.2 (in development)
 
   - In NiObjectNET, GetSkyrimShaderType is now also const.
 
+* CMake also builds static library, named "niflib_static" to avoid
+  confusion with niflib import lib.
+
 Version 0.8.1
 =============
 
