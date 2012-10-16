@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkCompressedMeshShape::TYPE("bhkCompressedMeshShape", &bhkShape::TYPE );
 
-bhkCompressedMeshShape::bhkCompressedMeshShape() : target(NULL), material((HavokMaterial)0), unknownFloat1(0.0f), radius(0.0f), scale(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), data(NULL) {
+bhkCompressedMeshShape::bhkCompressedMeshShape() : target(NULL), skyrimMaterial((SkyrimHavokMaterial)0), unknownFloat1(0.0f), radius(0.0f), scale(0.0f), unknownFloat3(0.0f), unknownFloat4(0.0f), unknownFloat5(0.0f), data(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -51,7 +51,7 @@ void bhkCompressedMeshShape::Read( istream& in, list<unsigned int> & link_stack,
 	bhkShape::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( material, in, info );
+	NifStream( skyrimMaterial, in, info );
 	NifStream( unknownFloat1, in, info );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		NifStream( unknown4Bytes[i1], in, info );
@@ -93,7 +93,7 @@ void bhkCompressedMeshShape::Write( ostream& out, const map<NiObjectRef,unsigned
 			missing_link_stack.push_back( NULL );
 		}
 	}
-	NifStream( material, out, info );
+	NifStream( skyrimMaterial, out, info );
 	NifStream( unknownFloat1, out, info );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
 		NifStream( unknown4Bytes[i1], out, info );
@@ -136,7 +136,7 @@ std::string bhkCompressedMeshShape::asString( bool verbose ) const {
 	unsigned int array_output_count = 0;
 	out << bhkShape::asString();
 	out << "  Target:  " << target << endl;
-	out << "  Material:  " << material << endl;
+	out << "  Skyrim Material:  " << skyrimMaterial << endl;
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 4; i1++) {

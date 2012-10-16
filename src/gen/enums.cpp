@@ -178,45 +178,6 @@ ostream & operator<<( ostream & out, HavokMaterial const & val ) {
 		case HAV_MAT_SNOW_STAIRS: return out << "HAV_MAT_SNOW_STAIRS";
 		case HAV_MAT_ELEVATOR: return out << "HAV_MAT_ELEVATOR";
 		case HAV_MAT_RUBBER: return out << "HAV_MAT_RUBBER";
-		case SKY_HAV_MAT_LIGHT_WOOD: return out << "SKY_HAV_MAT_LIGHT_WOOD";
-		case SKY_HAV_MAT_BROKEN_STONE: return out << "SKY_HAV_MAT_BROKEN_STONE";
-		case SKY_HAV_MAT_SNOW: return out << "SKY_HAV_MAT_SNOW";
-		case SKY_HAV_MAT_GRAVEL: return out << "SKY_HAV_MAT_GRAVEL";
-		case SKY_HAV_MAT_MATERIAL_CHAIN_METAL: return out << "SKY_HAV_MAT_MATERIAL_CHAIN_METAL";
-		case SKY_HAV_MAT_WOOD: return out << "SKY_HAV_MAT_WOOD";
-		case SKY_HAV_MAT_BARREL: return out << "SKY_HAV_MAT_BARREL";
-		case SKY_HAV_MAT_MATERIAL_BASKET: return out << "SKY_HAV_MAT_MATERIAL_BASKET";
-		case SKY_HAV_MAT_ICE: return out << "SKY_HAV_MAT_ICE";
-		case SKY_HAV_MAT_STAIRSSTONE: return out << "SKY_HAV_MAT_STAIRSSTONE";
-		case SKY_HAV_MAT_MATERIAL_BLADE_1HAND: return out << "SKY_HAV_MAT_MATERIAL_BLADE_1HAND";
-		case SKY_HAV_MAT_MATERIALBOOK: return out << "SKY_HAV_MAT_MATERIALBOOK";
-		case SKY_HAV_MAT_SOLID_METAL: return out << "SKY_HAV_MAT_SOLID_METAL";
-		case SKY_HAV_MAT_MATERIAL_AXE_1HAND: return out << "SKY_HAV_MAT_MATERIAL_AXE_1HAND";
-		case SKY_HAV_MAT_STAIRS_WOOD: return out << "SKY_HAV_MAT_STAIRS_WOOD";
-		case SKY_HAV_MAT_MUD: return out << "SKY_HAV_MAT_MUD";
-		case SKY_HAV_MAT_STAIRSSNOW: return out << "SKY_HAV_MAT_STAIRSSNOW";
-		case SKY_HAV_MAT_UNKNOWN: return out << "SKY_HAV_MAT_UNKNOWN";
-		case SKY_HAV_MAT_MATERIAL_BOWS_STAVES: return out << "SKY_HAV_MAT_MATERIAL_BOWS_STAVES";
-		case SKY_HAV_MAT_GRASS: return out << "SKY_HAV_MAT_GRASS";
-		case SKY_HAV_MAT_MATERIAL_BOULDER_LARGE: return out << "SKY_HAV_MAT_MATERIAL_BOULDER_LARGE";
-		case SKY_HAV_MAT_MATERIALSTONEASSTAIRS: return out << "SKY_HAV_MAT_MATERIALSTONEASSTAIRS";
-		case SKY_HAV_MAT_MATERIAL_BLADE_2HAND: return out << "SKY_HAV_MAT_MATERIAL_BLADE_2HAND";
-		case SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL: return out << "SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL";
-		case SKY_HAV_MAT_SAND: return out << "SKY_HAV_MAT_SAND";
-		case SKY_HAV_MAT_HEAVY_METAL: return out << "SKY_HAV_MAT_HEAVY_METAL";
-		case SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL: return out << "SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL";
-		case SKY_HAV_MAT_STAIRSBROKENSTONE: return out << "SKY_HAV_MAT_STAIRSBROKENSTONE";
-		case SKY_HAV_MAT_ORGANIC: return out << "SKY_HAV_MAT_ORGANIC";
-		case SKY_HAV_MAT_HEAVY_WOOD: return out << "SKY_HAV_MAT_HEAVY_WOOD";
-		case SKY_HAV_MAT_MATERIAL_CHAIN: return out << "SKY_HAV_MAT_MATERIAL_CHAIN";
-		case SKY_HAV_MAT_DIRT: return out << "SKY_HAV_MAT_DIRT";
-		case SKY_HAV_MAT_MATERIALCOIN: return out << "SKY_HAV_MAT_MATERIALCOIN";
-		case SKY_HAV_MAT_MATERIALARROW: return out << "SKY_HAV_MAT_MATERIALARROW";
-		case SKY_HAV_MAT_GLASS: return out << "SKY_HAV_MAT_GLASS";
-		case SKY_HAV_MAT_STONE: return out << "SKY_HAV_MAT_STONE";
-		case SKY_HAV_MAT_CLOTH: return out << "SKY_HAV_MAT_CLOTH";
-		case SKY_HAV_MAT_MATERIAL_BLUNT_2HAND: return out << "SKY_HAV_MAT_MATERIAL_BLUNT_2HAND";
-		case SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM: return out << "SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
@@ -479,6 +440,37 @@ ostream & operator<<( ostream & out, SyncPoint const & val ) {
 }
 
 
+//--TexType--//
+
+void NifStream( TexType & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = TexType(temp);
+}
+
+void NifStream( TexType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, TexType const & val ) {
+	switch ( val ) {
+		case BASE_MAP: return out << "BASE_MAP";
+		case DARK_MAP: return out << "DARK_MAP";
+		case DETAIL_MAP: return out << "DETAIL_MAP";
+		case GLOSS_MAP: return out << "GLOSS_MAP";
+		case GLOW_MAP: return out << "GLOW_MAP";
+		case BUMP_MAP: return out << "BUMP_MAP";
+		case NORMAL_MAP: return out << "NORMAL_MAP";
+		case UNKNOWN2_MAP: return out << "UNKNOWN2_MAP";
+		case DECAL_0_MAP: return out << "DECAL_0_MAP";
+		case DECAL_1_MAP: return out << "DECAL_1_MAP";
+		case DECAL_2_MAP: return out << "DECAL_2_MAP";
+		case DECAL_3_MAP: return out << "DECAL_3_MAP";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--BSDismemberBodyPartType--//
 
 void NifStream( BSDismemberBodyPartType & val, istream& in, const NifInfo & info ) {
@@ -521,12 +513,23 @@ ostream & operator<<( ostream & out, BSDismemberBodyPartType const & val ) {
 		case SBP_41_LONGHAIR: return out << "SBP_41_LONGHAIR";
 		case SBP_42_CIRCLET: return out << "SBP_42_CIRCLET";
 		case SBP_43_EARS: return out << "SBP_43_EARS";
-		case SBP_44_BLOODHEAD: return out << "SBP_44_BLOODHEAD";
-		case SBP_45_BLOODWINGL: return out << "SBP_45_BLOODWINGL";
-		case SBP_46_BLOODWINGR: return out << "SBP_46_BLOODWINGR";
-		case SBP_47_BLOODTAIL: return out << "SBP_47_BLOODTAIL";
+		case SBP_44_DRAGON_BLOODHEAD_OR_MOD_MOUTH: return out << "SBP_44_DRAGON_BLOODHEAD_OR_MOD_MOUTH";
+		case SBP_45_DRAGON_BLOODWINGL_OR_MOD_NECK: return out << "SBP_45_DRAGON_BLOODWINGL_OR_MOD_NECK";
+		case SBP_46_DRAGON_BLOODWINGR_OR_MOD_CHEST_PRIMARY: return out << "SBP_46_DRAGON_BLOODWINGR_OR_MOD_CHEST_PRIMARY";
+		case SBP_47_DRAGON_BLOODTAIL_OR_MOD_BACK: return out << "SBP_47_DRAGON_BLOODTAIL_OR_MOD_BACK";
+		case SBP_48_MOD_MISC1: return out << "SBP_48_MOD_MISC1";
+		case SBP_49_MOD_PELVIS_PRIMARY: return out << "SBP_49_MOD_PELVIS_PRIMARY";
 		case SBP_50_DECAPITATEDHEAD: return out << "SBP_50_DECAPITATEDHEAD";
 		case SBP_51_DECAPITATE: return out << "SBP_51_DECAPITATE";
+		case SBP_52_MOD_PELVIS_SECONDARY: return out << "SBP_52_MOD_PELVIS_SECONDARY";
+		case SBP_53_MOD_LEG_RIGHT: return out << "SBP_53_MOD_LEG_RIGHT";
+		case SBP_54_MOD_LEG_LEFT: return out << "SBP_54_MOD_LEG_LEFT";
+		case SBP_55_MOD_FACE_JEWELRY: return out << "SBP_55_MOD_FACE_JEWELRY";
+		case SBP_56_MOD_CHEST_SECONDARY: return out << "SBP_56_MOD_CHEST_SECONDARY";
+		case SBP_57_MOD_SHOULDER: return out << "SBP_57_MOD_SHOULDER";
+		case SBP_58_MOD_ARM_LEFT: return out << "SBP_58_MOD_ARM_LEFT";
+		case SBP_59_MOD_ARM_RIGHT: return out << "SBP_59_MOD_ARM_RIGHT";
+		case SBP_60_MOD_MISC2: return out << "SBP_60_MOD_MISC2";
 		case SBP_61_FX01: return out << "SBP_61_FX01";
 		case BP_SECTIONCAP_HEAD: return out << "BP_SECTIONCAP_HEAD";
 		case BP_SECTIONCAP_HEAD2: return out << "BP_SECTIONCAP_HEAD2";
@@ -1120,32 +1123,74 @@ ostream & operator<<( ostream & out, TargetColor const & val ) {
 }
 
 
-//--TexType--//
+//--SkyrimHavokMaterial--//
 
-void NifStream( TexType & val, istream& in, const NifInfo & info ) {
+void NifStream( SkyrimHavokMaterial & val, istream& in, const NifInfo & info ) {
 	unsigned int temp;
 	NifStream( temp, in, info );
-	val = TexType(temp);
+	val = SkyrimHavokMaterial(temp);
 }
 
-void NifStream( TexType const & val, ostream& out, const NifInfo & info ) {
+void NifStream( SkyrimHavokMaterial const & val, ostream& out, const NifInfo & info ) {
 	NifStream( (unsigned int)(val), out, info );
 }
 
-ostream & operator<<( ostream & out, TexType const & val ) {
+ostream & operator<<( ostream & out, SkyrimHavokMaterial const & val ) {
 	switch ( val ) {
-		case BASE_MAP: return out << "BASE_MAP";
-		case DARK_MAP: return out << "DARK_MAP";
-		case DETAIL_MAP: return out << "DETAIL_MAP";
-		case GLOSS_MAP: return out << "GLOSS_MAP";
-		case GLOW_MAP: return out << "GLOW_MAP";
-		case BUMP_MAP: return out << "BUMP_MAP";
-		case NORMAL_MAP: return out << "NORMAL_MAP";
-		case UNKNOWN2_MAP: return out << "UNKNOWN2_MAP";
-		case DECAL_0_MAP: return out << "DECAL_0_MAP";
-		case DECAL_1_MAP: return out << "DECAL_1_MAP";
-		case DECAL_2_MAP: return out << "DECAL_2_MAP";
-		case DECAL_3_MAP: return out << "DECAL_3_MAP";
+		case SKY_HAV_MAT_LIGHT_WOOD: return out << "SKY_HAV_MAT_LIGHT_WOOD";
+		case SKY_HAV_MAT_BROKEN_STONE: return out << "SKY_HAV_MAT_BROKEN_STONE";
+		case SKY_HAV_MAT_SNOW: return out << "SKY_HAV_MAT_SNOW";
+		case SKY_HAV_MAT_GRAVEL: return out << "SKY_HAV_MAT_GRAVEL";
+		case SKY_HAV_MAT_MATERIAL_CHAIN_METAL: return out << "SKY_HAV_MAT_MATERIAL_CHAIN_METAL";
+		case SKY_HAV_MAT_WOOD: return out << "SKY_HAV_MAT_WOOD";
+		case SKY_HAV_MAT_SKIN: return out << "SKY_HAV_MAT_SKIN";
+		case SKY_HAV_MAT_BARREL: return out << "SKY_HAV_MAT_BARREL";
+		case SKY_HAV_MAT_MATERIAL_CERAMIC_MEDIUM: return out << "SKY_HAV_MAT_MATERIAL_CERAMIC_MEDIUM";
+		case SKY_HAV_MAT_MATERIAL_BASKET: return out << "SKY_HAV_MAT_MATERIAL_BASKET";
+		case SKY_HAV_MAT_ICE: return out << "SKY_HAV_MAT_ICE";
+		case SKY_HAV_MAT_STAIRS_STONE: return out << "SKY_HAV_MAT_STAIRS_STONE";
+		case SKY_HAV_MAT_MATERIAL_BLADE_1HAND: return out << "SKY_HAV_MAT_MATERIAL_BLADE_1HAND";
+		case SKY_HAV_MAT_WATER: return out << "SKY_HAV_MAT_WATER";
+		case SKY_HAV_MAT_UNKNOWN_1028101969: return out << "SKY_HAV_MAT_UNKNOWN_1028101969";
+		case SKY_HAV_MAT_MATERIAL_BOOK: return out << "SKY_HAV_MAT_MATERIAL_BOOK";
+		case SKY_HAV_MAT_SOLID_METAL: return out << "SKY_HAV_MAT_SOLID_METAL";
+		case SKY_HAV_MAT_MATERIAL_AXE_1HAND: return out << "SKY_HAV_MAT_MATERIAL_AXE_1HAND";
+		case SKY_HAV_MAT_UNKNOWN_1440721808: return out << "SKY_HAV_MAT_UNKNOWN_1440721808";
+		case SKY_HAV_MAT_STAIRS_WOOD: return out << "SKY_HAV_MAT_STAIRS_WOOD";
+		case SKY_HAV_MAT_MUD: return out << "SKY_HAV_MAT_MUD";
+		case SKY_HAV_MAT_STAIRS_SNOW: return out << "SKY_HAV_MAT_STAIRS_SNOW";
+		case SKY_HAV_MAT_UNKNOWN_1574477864: return out << "SKY_HAV_MAT_UNKNOWN_1574477864";
+		case SKY_HAV_MAT_UNKNOWN_1591009235: return out << "SKY_HAV_MAT_UNKNOWN_1591009235";
+		case SKY_HAV_MAT_MATERIAL_BOWS_STAVES: return out << "SKY_HAV_MAT_MATERIAL_BOWS_STAVES";
+		case SKY_HAV_MAT_MATERIAL_WOOD_AS_STAIRS: return out << "SKY_HAV_MAT_MATERIAL_WOOD_AS_STAIRS";
+		case SKY_HAV_MAT_GRASS: return out << "SKY_HAV_MAT_GRASS";
+		case SKY_HAV_MAT_MATERIAL_BOULDER_LARGE: return out << "SKY_HAV_MAT_MATERIAL_BOULDER_LARGE";
+		case SKY_HAV_MAT_MATERIAL_STONE_AS_STAIRS: return out << "SKY_HAV_MAT_MATERIAL_STONE_AS_STAIRS";
+		case SKY_HAV_MAT_MATERIAL_BLADE_2HAND: return out << "SKY_HAV_MAT_MATERIAL_BLADE_2HAND";
+		case SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL: return out << "SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL";
+		case SKY_HAV_MAT_SAND: return out << "SKY_HAV_MAT_SAND";
+		case SKY_HAV_MAT_HEAVY_METAL: return out << "SKY_HAV_MAT_HEAVY_METAL";
+		case SKY_HAV_MAT_DRAGON: return out << "SKY_HAV_MAT_DRAGON";
+		case SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL: return out << "SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL";
+		case SKY_HAV_MAT_MATERIAL_SKIN_SMALL: return out << "SKY_HAV_MAT_MATERIAL_SKIN_SMALL";
+		case SKY_HAV_MAT_STAIRS_BROKEN_STONE: return out << "SKY_HAV_MAT_STAIRS_BROKEN_STONE";
+		case SKY_HAV_MAT_MATERIAL_SKIN_LARGE: return out << "SKY_HAV_MAT_MATERIAL_SKIN_LARGE";
+		case SKY_HAV_MAT_ORGANIC: return out << "SKY_HAV_MAT_ORGANIC";
+		case SKY_HAV_MAT_MATERIAL_BONE: return out << "SKY_HAV_MAT_MATERIAL_BONE";
+		case SKY_HAV_MAT_HEAVY_WOOD: return out << "SKY_HAV_MAT_HEAVY_WOOD";
+		case SKY_HAV_MAT_MATERIAL_CHAIN: return out << "SKY_HAV_MAT_MATERIAL_CHAIN";
+		case SKY_HAV_MAT_DIRT: return out << "SKY_HAV_MAT_DIRT";
+		case SKY_HAV_MAT_MATERIAL_ARMOR_LIGHT: return out << "SKY_HAV_MAT_MATERIAL_ARMOR_LIGHT";
+		case SKY_HAV_MAT_MATERIAL_SHIELD_LIGHT: return out << "SKY_HAV_MAT_MATERIAL_SHIELD_LIGHT";
+		case SKY_HAV_MAT_MATERIAL_COIN: return out << "SKY_HAV_MAT_MATERIAL_COIN";
+		case SKY_HAV_MAT_MATERIAL_SHIELD_HEAVY: return out << "SKY_HAV_MAT_MATERIAL_SHIELD_HEAVY";
+		case SKY_HAV_MAT_MATERIAL_ARMOR_HEAVY: return out << "SKY_HAV_MAT_MATERIAL_ARMOR_HEAVY";
+		case SKY_HAV_MAT_MATERIAL_ARROW: return out << "SKY_HAV_MAT_MATERIAL_ARROW";
+		case SKY_HAV_MAT_GLASS: return out << "SKY_HAV_MAT_GLASS";
+		case SKY_HAV_MAT_STONE: return out << "SKY_HAV_MAT_STONE";
+		case SKY_HAV_MAT_CLOTH: return out << "SKY_HAV_MAT_CLOTH";
+		case SKY_HAV_MAT_MATERIAL_BLUNT_2HAND: return out << "SKY_HAV_MAT_MATERIAL_BLUNT_2HAND";
+		case SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM: return out << "SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }

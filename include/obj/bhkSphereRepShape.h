@@ -95,6 +95,8 @@ public:
 protected:
 	/*! The shape's material. */
 	HavokMaterial material;
+	/*! The shape's material. */
+	SkyrimHavokMaterial skyrimMaterial;
 	/*! The radius of the sphere that encloses the shape. */
 	float radius;
 public:

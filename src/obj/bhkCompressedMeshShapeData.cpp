@@ -66,7 +66,7 @@ void bhkCompressedMeshShapeData::Read( istream& in, list<unsigned int> & link_st
 	NifStream( numMaterials, in, info );
 	chunkMaterials.resize(numMaterials);
 	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
-		NifStream( chunkMaterials[i1].material, in, info );
+		NifStream( chunkMaterials[i1].skyrimMaterial, in, info );
 		NifStream( chunkMaterials[i1].unknownInteger, in, info );
 	};
 	NifStream( unknownInt6, in, info );
@@ -153,7 +153,7 @@ void bhkCompressedMeshShapeData::Write( ostream& out, const map<NiObjectRef,unsi
 	NifStream( unknownByte2, out, info );
 	NifStream( numMaterials, out, info );
 	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
-		NifStream( chunkMaterials[i1].material, out, info );
+		NifStream( chunkMaterials[i1].skyrimMaterial, out, info );
 		NifStream( chunkMaterials[i1].unknownInteger, out, info );
 	};
 	NifStream( unknownInt6, out, info );
@@ -243,7 +243,7 @@ std::string bhkCompressedMeshShapeData::asString( bool verbose ) const {
 			out << "<Data Truncated. Use verbose mode to see complete listing.>" << endl;
 			break;
 		};
-		out << "    Material:  " << chunkMaterials[i1].material << endl;
+		out << "    Skyrim Material:  " << chunkMaterials[i1].skyrimMaterial << endl;
 		out << "    Unknown Integer:  " << chunkMaterials[i1].unknownInteger << endl;
 	};
 	out << "  Unknown Int 6:  " << unknownInt6 << endl;

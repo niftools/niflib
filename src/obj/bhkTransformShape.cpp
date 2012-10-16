@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkTransformShape::TYPE("bhkTransformShape", &bhkShape::TYPE );
 
-bhkTransformShape::bhkTransformShape() : shape(NULL), material((HavokMaterial)0), unknownFloat1(0.0f) {
+bhkTransformShape::bhkTransformShape() : shape(NULL), material((HavokMaterial)0), skyrimMaterial((SkyrimHavokMaterial)0), unknownFloat1(0.0f) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -46,7 +46,12 @@ void bhkTransformShape::Read( istream& in, list<unsigned int> & link_stack, cons
 	bhkShape::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( material, in, info );
+	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+		NifStream( material, in, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( skyrimMaterial, in, info );
+	};
 	NifStream( unknownFloat1, in, info );
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
 		NifStream( unknown8Bytes[i1], in, info );
@@ -79,7 +84,12 @@ void bhkTransformShape::Write( ostream& out, const map<NiObjectRef,unsigned int>
 			missing_link_stack.push_back( NULL );
 		}
 	}
-	NifStream( material, out, info );
+	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+		NifStream( material, out, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( skyrimMaterial, out, info );
+	};
 	NifStream( unknownFloat1, out, info );
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
 		NifStream( unknown8Bytes[i1], out, info );
@@ -99,6 +109,7 @@ std::string bhkTransformShape::asString( bool verbose ) const {
 	out << bhkShape::asString();
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
+	out << "  Skyrim Material:  " << skyrimMaterial << endl;
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 8; i1++) {
