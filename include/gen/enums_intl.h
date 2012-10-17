@@ -106,6 +106,12 @@ void NifStream( SyncPoint & val, istream& in, const NifInfo & info = NifInfo() )
 void NifStream( SyncPoint const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---TexType---//
+
+void NifStream( TexType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( TexType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---BSDismemberBodyPartType---//
 
 void NifStream( BSDismemberBodyPartType & val, istream& in, const NifInfo & info = NifInfo() );
@@ -219,11 +225,8 @@ void NifStream( ZCompareMode const & val, ostream& out, const NifInfo & info = N
 void NifStream( TargetColor & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( TargetColor const & val, ostream& out, const NifInfo & info = NifInfo() );
 
-
-//---TexType---//
-
-void NifStream( TexType & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( TexType const & val, ostream& out, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimHavokMaterial & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimHavokMaterial const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 void NifStream( ChannelConvention & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( ChannelConvention const & val, ostream& out, const NifInfo & info = NifInfo() );

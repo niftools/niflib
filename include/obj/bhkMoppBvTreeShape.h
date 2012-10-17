@@ -151,6 +151,8 @@ protected:
 	Ref<bhkShape > shape;
 	/*! The shape's material. */
 	HavokMaterial material;
+	/*! The shape's material. */
+	SkyrimHavokMaterial skyrimMaterial;
 	/*! Unknown */
 	unsigned int unknownInt1;
 	/*! Unknown */

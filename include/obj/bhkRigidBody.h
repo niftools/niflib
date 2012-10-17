@@ -342,7 +342,12 @@ protected:
 	OblivionLayer layerCopy;
 	/*! Copy of Col Filter value? */
 	byte colFilterCopy;
-	/*! Unknown. */
+	/*!
+	 * Unknown.
+	 *             Oblivion defaults: 0 21280 2481 62977 65535 44 0
+	 *             Skyrim defaults: 0 56896 1343 0 0 1 65535 (fourth and fifth element
+	 * *must* be zero)
+	 */
 	array<7,unsigned short > unknown7Shorts;
 	/*!
 	 * A vector that moves the body by the specified amount. Only enabled in

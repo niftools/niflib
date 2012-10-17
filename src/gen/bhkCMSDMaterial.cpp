@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-bhkCMSDMaterial::bhkCMSDMaterial() : material((HavokMaterial)0), unknownInteger((unsigned int)0) {};
+bhkCMSDMaterial::bhkCMSDMaterial() : skyrimMaterial((SkyrimHavokMaterial)0), unknownInteger((unsigned int)0) {};
 
 //Copy Constructor
 bhkCMSDMaterial::bhkCMSDMaterial( const bhkCMSDMaterial & src ) {
@@ -18,7 +18,7 @@ bhkCMSDMaterial::bhkCMSDMaterial( const bhkCMSDMaterial & src ) {
 
 //Copy Operator
 bhkCMSDMaterial & bhkCMSDMaterial::operator=( const bhkCMSDMaterial & src ) {
-	this->material = src.material;
+	this->skyrimMaterial = src.skyrimMaterial;
 	this->unknownInteger = src.unknownInteger;
 	return *this;
 };

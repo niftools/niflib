@@ -93,45 +93,6 @@ enum HavokMaterial {
 	HAV_MAT_SNOW_STAIRS = 29, /*!< Snow Stairs */
 	HAV_MAT_ELEVATOR = 30, /*!< Elevator */
 	HAV_MAT_RUBBER = 31, /*!< Rubber */
-	SKY_HAV_MAT_LIGHT_WOOD = 365420259, /*!< Light Wood */
-	SKY_HAV_MAT_BROKEN_STONE = 131151687, /*!< Broken Stone */
-	SKY_HAV_MAT_SNOW = 398949039, /*!< Snow */
-	SKY_HAV_MAT_GRAVEL = 428587608, /*!< Gravel */
-	SKY_HAV_MAT_MATERIAL_CHAIN_METAL = 438912228, /*!< MaterialChainMetal */
-	SKY_HAV_MAT_WOOD = 500811281, /*!< Wood */
-	SKY_HAV_MAT_BARREL = 732141076, /*!< Barrel */
-	SKY_HAV_MAT_MATERIAL_BASKET = 790784366, /*!< Material Basket */
-	SKY_HAV_MAT_ICE = 873356572, /*!< Ice */
-	SKY_HAV_MAT_STAIRSSTONE = 899511101, /*!< Stairs Stone */
-	SKY_HAV_MAT_MATERIAL_BLADE_1HAND = 1060167844, /*!< Material Blade 1 Hand */
-	SKY_HAV_MAT_MATERIALBOOK = 1264672850, /*!< Material Book */
-	SKY_HAV_MAT_SOLID_METAL = 1288358971, /*!< Solid Metal */
-	SKY_HAV_MAT_MATERIAL_AXE_1HAND = 1305674443, /*!< Material Axe 1Hand */
-	SKY_HAV_MAT_STAIRS_WOOD = 1461712277, /*!< Stairs Wood */
-	SKY_HAV_MAT_MUD = 1486385281, /*!< Mud */
-	SKY_HAV_MAT_STAIRSSNOW = 1560365355, /*!< Stairs Snow */
-	SKY_HAV_MAT_UNKNOWN = 1591009235, /*!< Unknown material in Creation Kit v1.5.24.0. Found in trap objects. */
-	SKY_HAV_MAT_MATERIAL_BOWS_STAVES = 1607128641, /*!< Material Bows Staves */
-	SKY_HAV_MAT_GRASS = 1848600814, /*!< Grass */
-	SKY_HAV_MAT_MATERIAL_BOULDER_LARGE = 1885326971, /*!< MaterialBoulderLarge */
-	SKY_HAV_MAT_MATERIALSTONEASSTAIRS = 1886078335, /*!< Material Stone As Stairs */
-	SKY_HAV_MAT_MATERIAL_BLADE_2HAND = 2022742644, /*!< Material Blade 2Hand */
-	SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL = 2025794648, /*!< MaterialBottleSmall */
-	SKY_HAV_MAT_SAND = 2168343821, /*!< Sand */
-	SKY_HAV_MAT_HEAVY_METAL = 2229413539, /*!< Heavy Metal */
-	SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL = 2617944780, /*!< Material Blade 1Hand Small, */
-	SKY_HAV_MAT_STAIRSBROKENSTONE = 2892392795, /*!< Stairs Broken Stone */
-	SKY_HAV_MAT_ORGANIC = 2974920155, /*!< Organic */
-	SKY_HAV_MAT_HEAVY_WOOD = 3070783559, /*!< Heavy Wood */
-	SKY_HAV_MAT_MATERIAL_CHAIN = 3074114406, /*!< MaterialChain */
-	SKY_HAV_MAT_DIRT = 3106094762, /*!< Dirt */
-	SKY_HAV_MAT_MATERIALCOIN = 3589100606, /*!< Material Coin */
-	SKY_HAV_MAT_MATERIALARROW = 3725505938, /*!< MaterialArrow */
-	SKY_HAV_MAT_GLASS = 3739830338, /*!< GLASS */
-	SKY_HAV_MAT_STONE = 3741512247, /*!< Stone */
-	SKY_HAV_MAT_CLOTH = 3839073443, /*!< Cloth */
-	SKY_HAV_MAT_MATERIAL_BLUNT_2HAND = 3969592277, /*!< Material Blunt 2Hand */
-	SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM = 4283869410, /*!< MaterialBoulderMedium */
 };
 
 ostream & operator<<( ostream & out, HavokMaterial const & val );
@@ -264,6 +225,24 @@ enum SyncPoint {
 
 ostream & operator<<( ostream & out, SyncPoint const & val );
 
+/*! The type of texture. */
+enum TexType {
+	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
+	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */
+	DETAIL_MAP = 2, /*!< Combined with base map for added detail.  Usually tiled over the mesh many times for close-up view. */
+	GLOSS_MAP = 3, /*!< Allows the specularity (glossyness) of an object to differ across its surface. */
+	GLOW_MAP = 4, /*!< Creates a glowing effect.  Basically an incandescence map. */
+	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */
+	NORMAL_MAP = 6, /*!< Used to make the object appear to have more detail than it really does. */
+	UNKNOWN2_MAP = 7, /*!< Unknown map. */
+	DECAL_0_MAP = 8, /*!< For placing images on the object like stickers. */
+	DECAL_1_MAP = 9, /*!< For placing images on the object like stickers. */
+	DECAL_2_MAP = 10, /*!< For placing images on the object like stickers. */
+	DECAL_3_MAP = 11, /*!< For placing images on the object like stickers. */
+};
+
+ostream & operator<<( ostream & out, TexType const & val );
+
 /*!
  * Biped bodypart data used for visibility control of triangles.  Options are
  * Fallout 3, except where marked for Skyrim (uses SBP prefix)
@@ -299,12 +278,23 @@ enum BSDismemberBodyPartType {
 	SBP_41_LONGHAIR = 41, /*!< Skyrim, Long Hair(Human), Skeleton02(Dragon),FXParticles(Dragonpriest) */
 	SBP_42_CIRCLET = 42, /*!< Skyrim, Circlet(Human, MouthFireEffect(Dragon) */
 	SBP_43_EARS = 43, /*!< Skyrim, Ears */
-	SBP_44_BLOODHEAD = 44, /*!< Skyrim, Bloodied dragon head */
-	SBP_45_BLOODWINGL = 45, /*!< Skyrim, Left Bloodied dragon wing, Saddle(Horse) */
-	SBP_46_BLOODWINGR = 46, /*!< Skyrim, Right Bloodied dragon wing */
-	SBP_47_BLOODTAIL = 47, /*!< Skyrim, Bloodied dragon tail */
+	SBP_44_DRAGON_BLOODHEAD_OR_MOD_MOUTH = 44, /*!< Skyrim, Bloodied dragon head, or NPC face/mouth */
+	SBP_45_DRAGON_BLOODWINGL_OR_MOD_NECK = 45, /*!< Skyrim, Left Bloodied dragon wing, Saddle(Horse), or NPC cape, scarf, shawl, neck-tie, etc. */
+	SBP_46_DRAGON_BLOODWINGR_OR_MOD_CHEST_PRIMARY = 46, /*!< Skyrim, Right Bloodied dragon wing, or NPC chest primary or outergarment */
+	SBP_47_DRAGON_BLOODTAIL_OR_MOD_BACK = 47, /*!< Skyrim, Bloodied dragon tail, or NPC backpack/wings/... */
+	SBP_48_MOD_MISC1 = 48, /*!< Anything that does not fit in the list */
+	SBP_49_MOD_PELVIS_PRIMARY = 49, /*!< Pelvis primary or outergarment */
 	SBP_50_DECAPITATEDHEAD = 50, /*!< Skyrim, Decapitated Head */
 	SBP_51_DECAPITATE = 51, /*!< Skyrim, Decapitate, neck gore */
+	SBP_52_MOD_PELVIS_SECONDARY = 52, /*!< Pelvis secondary or undergarment */
+	SBP_53_MOD_LEG_RIGHT = 53, /*!< Leg primary or outergarment or right leg */
+	SBP_54_MOD_LEG_LEFT = 54, /*!< Leg secondary or undergarment or left leg */
+	SBP_55_MOD_FACE_JEWELRY = 55, /*!< Face alternate or jewelry */
+	SBP_56_MOD_CHEST_SECONDARY = 56, /*!< Chest secondary or undergarment */
+	SBP_57_MOD_SHOULDER = 57, /*!< Shoulder */
+	SBP_58_MOD_ARM_LEFT = 58, /*!< Arm secondary or undergarment or left arm */
+	SBP_59_MOD_ARM_RIGHT = 59, /*!< Arm primary or outergarment or right arm */
+	SBP_60_MOD_MISC2 = 60, /*!< Anything that does not fit in the list */
 	SBP_61_FX01 = 61, /*!< Skyrim, FX01(Humanoid) */
 	BP_SECTIONCAP_HEAD = 101, /*!< Section Cap | Head */
 	BP_SECTIONCAP_HEAD2 = 102, /*!< Section Cap | Head 2 */
@@ -653,23 +643,64 @@ enum TargetColor {
 
 ostream & operator<<( ostream & out, TargetColor const & val );
 
-/*! The type of texture. */
-enum TexType {
-	BASE_MAP = 0, /*!< The basic texture used by most meshes. */
-	DARK_MAP = 1, /*!< Used to darken the model with false lighting. */
-	DETAIL_MAP = 2, /*!< Combined with base map for added detail.  Usually tiled over the mesh many times for close-up view. */
-	GLOSS_MAP = 3, /*!< Allows the specularity (glossyness) of an object to differ across its surface. */
-	GLOW_MAP = 4, /*!< Creates a glowing effect.  Basically an incandescence map. */
-	BUMP_MAP = 5, /*!< Used to make the object appear to have more detail than it really does. */
-	NORMAL_MAP = 6, /*!< Used to make the object appear to have more detail than it really does. */
-	UNKNOWN2_MAP = 7, /*!< Unknown map. */
-	DECAL_0_MAP = 8, /*!< For placing images on the object like stickers. */
-	DECAL_1_MAP = 9, /*!< For placing images on the object like stickers. */
-	DECAL_2_MAP = 10, /*!< For placing images on the object like stickers. */
-	DECAL_3_MAP = 11, /*!< For placing images on the object like stickers. */
+enum SkyrimHavokMaterial {
+	SKY_HAV_MAT_LIGHT_WOOD = 365420259, /*!< Light Wood */
+	SKY_HAV_MAT_BROKEN_STONE = 131151687, /*!< Broken Stone */
+	SKY_HAV_MAT_SNOW = 398949039, /*!< Snow */
+	SKY_HAV_MAT_GRAVEL = 428587608, /*!< Gravel */
+	SKY_HAV_MAT_MATERIAL_CHAIN_METAL = 438912228, /*!< Material Chain Metal */
+	SKY_HAV_MAT_WOOD = 500811281, /*!< Wood */
+	SKY_HAV_MAT_SKIN = 591247106, /*!< Skin */
+	SKY_HAV_MAT_BARREL = 732141076, /*!< Barrel */
+	SKY_HAV_MAT_MATERIAL_CERAMIC_MEDIUM = 781661019, /*!< Material Ceramic Medium */
+	SKY_HAV_MAT_MATERIAL_BASKET = 790784366, /*!< Material Basket */
+	SKY_HAV_MAT_ICE = 873356572, /*!< Ice */
+	SKY_HAV_MAT_STAIRS_STONE = 899511101, /*!< Stairs Stone */
+	SKY_HAV_MAT_MATERIAL_BLADE_1HAND = 1060167844, /*!< Material Blade 1 Hand */
+	SKY_HAV_MAT_WATER = 1024582599, /*!< Water */
+	SKY_HAV_MAT_UNKNOWN_1028101969 = 1028101969, /*!< Unknown in Creation Kit v1.6.89.0. Found in actors\draugr\character assets\skeletons.nif. */
+	SKY_HAV_MAT_MATERIAL_BOOK = 1264672850, /*!< Material Book */
+	SKY_HAV_MAT_SOLID_METAL = 1288358971, /*!< Solid Metal */
+	SKY_HAV_MAT_MATERIAL_AXE_1HAND = 1305674443, /*!< Material Axe 1Hand */
+	SKY_HAV_MAT_UNKNOWN_1440721808 = 1440721808, /*!< Unknown in Creation Kit v1.6.89.0. Found in armor\draugr\draugrbootsfemale_go.nif or armor\amuletsandrings\amuletgnd.nif. */
+	SKY_HAV_MAT_STAIRS_WOOD = 1461712277, /*!< Stairs Wood */
+	SKY_HAV_MAT_MUD = 1486385281, /*!< Mud */
+	SKY_HAV_MAT_STAIRS_SNOW = 1560365355, /*!< Stairs Snow */
+	SKY_HAV_MAT_UNKNOWN_1574477864 = 1574477864, /*!< Unknown in Creation Kit v1.6.89.0. Found in actors\dragon\character assets\skeleton.nif. */
+	SKY_HAV_MAT_UNKNOWN_1591009235 = 1591009235, /*!< Unknown in Creation Kit v1.6.89.0. Found in trap objects or clutter\displaycases\displaycaselgangled01.nif or actors\deer\character assets\skeleton.nif. */
+	SKY_HAV_MAT_MATERIAL_BOWS_STAVES = 1607128641, /*!< Material Bows Staves */
+	SKY_HAV_MAT_MATERIAL_WOOD_AS_STAIRS = 1803571212, /*!< Material Wood As Stairs */
+	SKY_HAV_MAT_GRASS = 1848600814, /*!< Grass */
+	SKY_HAV_MAT_MATERIAL_BOULDER_LARGE = 1885326971, /*!< Material Boulder Large */
+	SKY_HAV_MAT_MATERIAL_STONE_AS_STAIRS = 1886078335, /*!< Material Stone As Stairs */
+	SKY_HAV_MAT_MATERIAL_BLADE_2HAND = 2022742644, /*!< Material Blade 2Hand */
+	SKY_HAV_MAT_MATERIAL_BOTTLE_SMALL = 2025794648, /*!< Material Bottle Small */
+	SKY_HAV_MAT_SAND = 2168343821, /*!< Sand */
+	SKY_HAV_MAT_HEAVY_METAL = 2229413539, /*!< Heavy Metal */
+	SKY_HAV_MAT_DRAGON = 2518321175, /*!< Dragon */
+	SKY_HAV_MAT_MATERIAL_BLADE_1HAND_SMALL = 2617944780, /*!< Material Blade 1Hand Small */
+	SKY_HAV_MAT_MATERIAL_SKIN_SMALL = 2632367422, /*!< Material Skin Small */
+	SKY_HAV_MAT_STAIRS_BROKEN_STONE = 2892392795, /*!< Stairs Broken Stone */
+	SKY_HAV_MAT_MATERIAL_SKIN_LARGE = 2965929619, /*!< Material Skin Large */
+	SKY_HAV_MAT_ORGANIC = 2974920155, /*!< Organic */
+	SKY_HAV_MAT_MATERIAL_BONE = 3049421844, /*!< Material Bone */
+	SKY_HAV_MAT_HEAVY_WOOD = 3070783559, /*!< Heavy Wood */
+	SKY_HAV_MAT_MATERIAL_CHAIN = 3074114406, /*!< Material Chain */
+	SKY_HAV_MAT_DIRT = 3106094762, /*!< Dirt */
+	SKY_HAV_MAT_MATERIAL_ARMOR_LIGHT = 3424720541, /*!< Material Armor Light */
+	SKY_HAV_MAT_MATERIAL_SHIELD_LIGHT = 3448167928, /*!< Material Shield Light */
+	SKY_HAV_MAT_MATERIAL_COIN = 3589100606, /*!< Material Coin */
+	SKY_HAV_MAT_MATERIAL_SHIELD_HEAVY = 3702389584, /*!< Material Shield Heavy */
+	SKY_HAV_MAT_MATERIAL_ARMOR_HEAVY = 3708432437, /*!< Material Armor Heavy */
+	SKY_HAV_MAT_MATERIAL_ARROW = 3725505938, /*!< Material Arrow */
+	SKY_HAV_MAT_GLASS = 3739830338, /*!< Glass */
+	SKY_HAV_MAT_STONE = 3741512247, /*!< Stone */
+	SKY_HAV_MAT_CLOTH = 3839073443, /*!< Cloth */
+	SKY_HAV_MAT_MATERIAL_BLUNT_2HAND = 3969592277, /*!< Material Blunt 2Hand */
+	SKY_HAV_MAT_MATERIAL_BOULDER_MEDIUM = 4283869410, /*!< Material Boulder Medium */
 };
 
-ostream & operator<<( ostream & out, TexType const & val );
+ostream & operator<<( ostream & out, SkyrimHavokMaterial const & val );
 
 enum ChannelConvention {
 	CC_FIXED = 0, /*!< Fixed */

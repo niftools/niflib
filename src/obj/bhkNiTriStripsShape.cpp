@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkNiTriStripsShape::TYPE("bhkNiTriStripsShape", &bhkShapeCollection::TYPE );
 
-bhkNiTriStripsShape::bhkNiTriStripsShape() : material((HavokMaterial)0), unknownFloat1(0.1f), unknownInt1((unsigned int)0x004ABE60), unknownInt2((unsigned int)1), scale(1.0, 1.0, 1.0), unknownInt3((unsigned int)0), numStripsData((unsigned int)0), numDataLayers((unsigned int)0) {
+bhkNiTriStripsShape::bhkNiTriStripsShape() : material((HavokMaterial)0), skyrimMaterial((SkyrimHavokMaterial)0), unknownFloat1(0.1f), unknownInt1((unsigned int)0x004ABE60), unknownInt2((unsigned int)1), scale(1.0, 1.0, 1.0), unknownInt3((unsigned int)0), numStripsData((unsigned int)0), numDataLayers((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -46,7 +46,12 @@ void bhkNiTriStripsShape::Read( istream& in, list<unsigned int> & link_stack, co
 
 	unsigned int block_num;
 	bhkShapeCollection::Read( in, link_stack, info );
-	NifStream( material, in, info );
+	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+		NifStream( material, in, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( skyrimMaterial, in, info );
+	};
 	NifStream( unknownFloat1, in, info );
 	NifStream( unknownInt1, in, info );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
@@ -80,7 +85,12 @@ void bhkNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 	bhkShapeCollection::Write( out, link_map, missing_link_stack, info );
 	numDataLayers = (unsigned int)(dataLayers.size());
 	numStripsData = (unsigned int)(stripsData.size());
-	NifStream( material, out, info );
+	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+		NifStream( material, out, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( skyrimMaterial, out, info );
+	};
 	NifStream( unknownFloat1, out, info );
 	NifStream( unknownInt1, out, info );
 	for (unsigned int i1 = 0; i1 < 4; i1++) {
@@ -130,6 +140,7 @@ std::string bhkNiTriStripsShape::asString( bool verbose ) const {
 	numDataLayers = (unsigned int)(dataLayers.size());
 	numStripsData = (unsigned int)(stripsData.size());
 	out << "  Material:  " << material << endl;
+	out << "  Skyrim Material:  " << skyrimMaterial << endl;
 	out << "  Unknown Float 1:  " << unknownFloat1 << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	array_output_count = 0;

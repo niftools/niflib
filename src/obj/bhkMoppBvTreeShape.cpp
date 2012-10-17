@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &bhkBvTreeShape::TYPE );
 
-bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f), unknownByte1((byte)0) {
+bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)0), skyrimMaterial((SkyrimHavokMaterial)0), unknownInt1((unsigned int)0), unknownInt2((unsigned int)0), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f), unknownByte1((byte)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -46,7 +46,12 @@ void bhkMoppBvTreeShape::Read( istream& in, list<unsigned int> & link_stack, con
 	bhkBvTreeShape::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	NifStream( material, in, info );
+	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+		NifStream( material, in, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( skyrimMaterial, in, info );
+	};
 	NifStream( unknownInt1, in, info );
 	NifStream( unknownInt2, in, info );
 	NifStream( unknownFloat, in, info );
@@ -96,7 +101,12 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 			missing_link_stack.push_back( NULL );
 		}
 	}
-	NifStream( material, out, info );
+	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+		NifStream( material, out, info );
+	};
+	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+		NifStream( skyrimMaterial, out, info );
+	};
 	NifStream( unknownInt1, out, info );
 	NifStream( unknownInt2, out, info );
 	NifStream( unknownFloat, out, info );
@@ -130,6 +140,7 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 	out << bhkBvTreeShape::asString();
 	out << "  Shape:  " << shape << endl;
 	out << "  Material:  " << material << endl;
+	out << "  Skyrim Material:  " << skyrimMaterial << endl;
 	out << "  Unknown Int 1:  " << unknownInt1 << endl;
 	out << "  Unknown Int 2:  " << unknownInt2 << endl;
 	out << "  Unknown Float:  " << unknownFloat << endl;

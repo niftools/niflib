@@ -17,6 +17,9 @@ Version 0.8.2 (in development)
 * CMake also builds static library, named "niflib_static" to avoid
   confusion with niflib import lib.
 
+* New skyrimMaterial field, and SkyrimHavokMaterial enum, to separate
+  the different havok material systems.
+
 Version 0.8.1
 =============
 
