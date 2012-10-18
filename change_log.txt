@@ -20,6 +20,8 @@ Version 0.8.2 (in development)
 * New skyrimMaterial field, and SkyrimHavokMaterial enum, to separate
   the different havok material systems.
 
+* API rename: Binormals -> Bitangents.
+
 Version 0.8.1
 =============
 
