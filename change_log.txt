@@ -22,6 +22,8 @@ Version 0.8.2 (in development)
 
 * API rename: Binormals -> Bitangents.
 
+* Fix bhkCompressedMeshShapeData block order (reported by ttl269).
+
 Version 0.8.1
 =============
 
