@@ -23,7 +23,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Definition of TYPE constant
-const Type bhkCompressedMeshShapeData::TYPE("bhkCompressedMeshShapeData", &NiObject::TYPE );
+const Type bhkCompressedMeshShapeData::TYPE("bhkCompressedMeshShapeData", &bhkRefObject::TYPE );
 
 bhkCompressedMeshShapeData::bhkCompressedMeshShapeData() : bitsPerIndex((unsigned int)0), bitsPerWIndex((unsigned int)0), maskWIndex((unsigned int)0), maskIndex((unsigned int)0), error(0.0f), unknownByte1((byte)0), unknownInt3((unsigned int)0), unknownInt4((unsigned int)0), unknownInt5((unsigned int)0), unknownByte2((byte)0), numMaterials((unsigned int)0), unknownInt6((unsigned int)0), numTransforms((unsigned int)0), numBigVerts((unsigned int)0), numBigTris((unsigned int)0), numChunks((unsigned int)0), unknownInt12((unsigned int)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
@@ -50,7 +50,7 @@ void bhkCompressedMeshShapeData::Read( istream& in, list<unsigned int> & link_st
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Read( in, link_stack, info );
+	bhkRefObject::Read( in, link_stack, info );
 	NifStream( bitsPerIndex, in, info );
 	NifStream( bitsPerWIndex, in, info );
 	NifStream( maskWIndex, in, info );
@@ -133,7 +133,7 @@ void bhkCompressedMeshShapeData::Write( ostream& out, const map<NiObjectRef,unsi
 
 	//--END CUSTOM CODE--//
 
-	NiObject::Write( out, link_map, missing_link_stack, info );
+	bhkRefObject::Write( out, link_map, missing_link_stack, info );
 	numChunks = (unsigned int)(chunks.size());
 	numBigTris = (unsigned int)(bigTris.size());
 	numBigVerts = (unsigned int)(bigVerts.size());
@@ -218,7 +218,7 @@ std::string bhkCompressedMeshShapeData::asString( bool verbose ) const {
 
 	stringstream out;
 	unsigned int array_output_count = 0;
-	out << NiObject::asString();
+	out << bhkRefObject::asString();
 	numChunks = (unsigned int)(chunks.size());
 	numBigTris = (unsigned int)(bigTris.size());
 	numBigVerts = (unsigned int)(bigVerts.size());
@@ -367,7 +367,7 @@ void bhkCompressedMeshShapeData::FixLinks( const map<unsigned int,NiObjectRef> &
 
 	//--END CUSTOM CODE--//
 
-	NiObject::FixLinks( objects, link_stack, missing_link_stack, info );
+	bhkRefObject::FixLinks( objects, link_stack, missing_link_stack, info );
 
 	//--BEGIN POST-FIXLINKS CUSTOM CODE--//
 
@@ -376,13 +376,13 @@ void bhkCompressedMeshShapeData::FixLinks( const map<unsigned int,NiObjectRef> &
 
 std::list<NiObjectRef> bhkCompressedMeshShapeData::GetRefs() const {
 	list<Ref<NiObject> > refs;
-	refs = NiObject::GetRefs();
+	refs = bhkRefObject::GetRefs();
 	return refs;
 }
 
 std::list<NiObject *> bhkCompressedMeshShapeData::GetPtrs() const {
 	list<NiObject *> ptrs;
-	ptrs = NiObject::GetPtrs();
+	ptrs = bhkRefObject::GetPtrs();
 	return ptrs;
 }
 
