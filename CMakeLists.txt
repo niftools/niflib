@@ -582,7 +582,10 @@ install(
     DIRECTORY include/
     DESTINATION include
 )
-
+install(
+    FILES license.txt change_log.txt VERSION
+    DESTINATION .
+)
 # enable CPack
 set(CPACK_PACKAGE_VERSION ${VERSION})
 set(CPACK_GENERATOR ZIP)
