@@ -589,6 +589,17 @@ install(
 # enable CPack
 set(CPACK_PACKAGE_VERSION ${VERSION})
 set(CPACK_GENERATOR ZIP)
+if(MSVC)
+  include(CMakeDetermineVSServicePack)
+  DetermineVSServicePack(VCTAG)
+  if(VCTAG)
+    if(CMAKE_CL_64)
+      set(CPACK_SYSTEM_NAME win64-${VCTAG})
+    else()
+      set(CPACK_SYSTEM_NAME win32-${VCTAG})
+    endif()
+  endif()
+endif()
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "niflib-${VERSION}-src")
 set(CPACK_SOURCE_GENERATOR ZIP)
 set(CPACK_SOURCE_IGNORE_FILES
