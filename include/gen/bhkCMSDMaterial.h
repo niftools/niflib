@@ -23,8 +23,8 @@ struct bhkCMSDMaterial {
 	NIFLIB_API bhkCMSDMaterial( const bhkCMSDMaterial & src );
 	/*! Copy Operator */
 	NIFLIB_API bhkCMSDMaterial & operator=( const bhkCMSDMaterial & src );
-	/*! The shape's material. */
-	HavokMaterial material;
+	/*! Material. */
+	SkyrimHavokMaterial skyrimMaterial;
 	/*! Always 1? */
 	unsigned int unknownInteger;
 	//--BEGIN MISC CUSTOM CODE--//

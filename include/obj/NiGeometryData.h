@@ -219,11 +219,11 @@ public:
 	// \param[in] value The new value.
 	NIFLIB_API void SetConsistencyFlags( const ConsistencyType & value );
 
-   // Methods for saving binormals and tangents saved in upper byte.
+   // Methods for saving bitangents and tangents saved in upper byte.
    // \return The current value.
    NIFLIB_API byte GetTspaceFlag() const;
 
-   // Methods for saving binormals and tangents saved in upper byte.
+   // Methods for saving bitangents and tangents saved in upper byte.
    // \param[in] value The new value.
    NIFLIB_API void SetTspaceFlag( byte value );
 
@@ -240,12 +240,12 @@ public:
    // Unknown. Binormal & tangents? has_normals must be set as well for this field to
    // be present.
    // \return The current value.
-   NIFLIB_API vector<Vector3 > GetBinormals() const;
+   NIFLIB_API vector<Vector3 > GetBitangents() const;
 
    // Unknown. Binormal & tangents? has_normals must be set as well for this field to
    // be present.
    // \param[in] value The new value.
-   NIFLIB_API void SetBinormals( const vector<Vector3 >& value );
+   NIFLIB_API void SetBitangents( const vector<Vector3 >& value );
 
    // Unknown. Binormal & tangents?
    // \return The current value.
@@ -275,10 +275,7 @@ protected:
 	bool hasVertices;
 	/*! The mesh vertices. */
 	vector<Vector3 > vertices;
-	/*!
-	 * Methods for saving binormals and tangents saved in upper byte.  Texture flags in
-	 * lower byte.
-	 */
+	/*! Flag for tangents and bitangents in upper byte. Texture flags in lower byte. */
 	mutable unsigned short numUvSets;
 	/*!
 	 * Bethesda's version of this field for nif versions 20.2.0.7 and up. Only a single
@@ -295,13 +292,10 @@ protected:
 	bool hasNormals;
 	/*! The lighting normals. */
 	vector<Vector3 > normals;
-	/*! Unknown. Binormal & tangents? */
+	/*! Tangent vectors. */
 	vector<Vector3 > tangents;
-	/*!
-	 * Unknown. Binormal & tangents? has_normals must be set as well for this field to
-	 * be present.
-	 */
-	vector<Vector3 > binormals;
+	/*! Bitangent vectors. */
+	vector<Vector3 > bitangents;
 	/*!
 	 * Center of the bounding box (smallest box that contains all vertices) of the
 	 * mesh.

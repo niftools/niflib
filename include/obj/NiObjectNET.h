@@ -134,7 +134,7 @@ public:
 	* Gets the skyrim shader type
 	* \return The skyrim shader flag value
 	*/
-	NIFLIB_API BSLightingShaderPropertyShaderType GetSkyrimShaderType();
+	NIFLIB_API BSLightingShaderPropertyShaderType GetSkyrimShaderType() const;
 
 	/*!
 	* Set the skyrim shader type

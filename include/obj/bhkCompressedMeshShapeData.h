@@ -14,7 +14,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 //--END CUSTOM CODE--//
 
-#include "NiObject.h"
+#include "bhkRefObject.h"
 
 // Include structures
 #include "../gen/bhkCMSDMaterial.h"
@@ -27,7 +27,7 @@ class bhkCompressedMeshShapeData;
 typedef Ref<bhkCompressedMeshShapeData> bhkCompressedMeshShapeDataRef;
 
 /*! A compressed mesh shape for collision in Skyrim. */
-class bhkCompressedMeshShapeData : public NiObject {
+class bhkCompressedMeshShapeData : public bhkRefObject {
 public:
 	/*! Constructor */
 	NIFLIB_API bhkCompressedMeshShapeData();

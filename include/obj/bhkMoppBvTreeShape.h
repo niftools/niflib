@@ -151,10 +151,10 @@ protected:
 	Ref<bhkShape > shape;
 	/*! The shape's material. */
 	HavokMaterial material;
-	/*! Unknown */
-	unsigned int unknownInt1;
-	/*! Unknown */
-	unsigned int unknownInt2;
+	/*! The shape's material. */
+	SkyrimHavokMaterial skyrimMaterial;
+	/*! Unknown bytes. */
+	array<8,byte > unknown8Bytes;
 	/*! Unknown float, might be scale. */
 	float unknownFloat;
 	/*! Number of bytes for MOPP data. */

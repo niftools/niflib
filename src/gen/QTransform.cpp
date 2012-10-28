@@ -9,7 +9,7 @@ All rights reserved.  Please see niflib.h for license. */
 using namespace Niflib;
 
 //Constructor
-QTransform::QTransform() : scale(0.0f) {};
+QTransform::QTransform() : scale(1.0f) {};
 
 //Copy Constructor
 QTransform::QTransform( const QTransform & src ) {

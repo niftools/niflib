@@ -2,3 +2,4 @@
 *.h	text
 CMakeLists.txt	text
 *.sh	eol=lf
+*.bat	eol=crlf

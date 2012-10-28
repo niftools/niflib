@@ -340,6 +340,8 @@ private:
     char *pbase( ) const { return NULL; }
     char *pptr( ) const { return NULL; }
     char *epptr( ) const { return NULL; }
+    // disable spurious msvc warning about xsgetn
+    #pragma warning (disable : 4996)
     virtual streamsize xsgetn( char_type *_Ptr, streamsize _Count ) { return 0; }
     virtual streamsize xsputn(const char_type *_Ptr, streamsize _Count);
 	virtual streampos seekoff(streamoff, ios_base::seekdir, ios_base::openmode = ios_base::in | ios_base::out);

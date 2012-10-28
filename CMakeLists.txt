@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 project(niflib)
+file(STRINGS "VERSION" VERSION)
 
 include_directories("include")
 
-# set to STATIC for static library build
-add_library(niflib SHARED
+SET(sources
 src/RefObject.cpp
 src/kfm.cpp
 NvTriStrip/NvTriStrip.cpp
@@ -548,9 +548,66 @@ TriStripper/policy.cpp
 TriStripper/tri_stripper.cpp
 )
 
+add_library(niflib SHARED ${sources})
+
 set_target_properties(niflib
 PROPERTIES DEFINE_SYMBOL BUILDING_NIFLIB_DLL)
+
+add_library(niflib_static STATIC ${sources})
+
+set_target_properties(niflib_static
+   PROPERTIES
+   COMPILE_DEFINITIONS NIFLIB_STATIC_LINK)
 
 # build the tests, this needs boost
 enable_testing()
 add_subdirectory(test)
+
+# install
+install(
+    TARGETS niflib
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+install(
+    TARGETS niflib_static
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+install(
+    DIRECTORY include/
+    DESTINATION include
+)
+install(
+    FILES license.txt change_log.txt VERSION
+    DESTINATION .
+)
+# enable CPack
+set(CPACK_PACKAGE_VERSION ${VERSION})
+set(CPACK_GENERATOR ZIP)
+if(MSVC)
+  include(CMakeDetermineVSServicePack)
+  DetermineVSServicePack(VCTAG)
+  if(VCTAG)
+    if(CMAKE_CL_64)
+      set(CPACK_SYSTEM_NAME win64-${VCTAG})
+    else()
+      set(CPACK_SYSTEM_NAME win32-${VCTAG})
+    endif()
+  endif()
+endif()
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "niflib-${VERSION}-src")
+set(CPACK_SOURCE_GENERATOR ZIP)
+set(CPACK_SOURCE_IGNORE_FILES
+    "~$"
+    /\\\\.git/
+    \\\\.*project$
+    \\\\.*gitmodules$
+    \\\\.*gitattributes$
+    \\\\.*gitignore$
+)
+include(CPack)

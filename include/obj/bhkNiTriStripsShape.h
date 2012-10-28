@@ -145,6 +145,8 @@ public:
 protected:
 	/*! The shape's material. */
 	HavokMaterial material;
+	/*! The shape's material. */
+	SkyrimHavokMaterial skyrimMaterial;
 	/*! Unknown. */
 	float unknownFloat1;
 	/*! Unknown. */

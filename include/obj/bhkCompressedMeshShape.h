@@ -89,7 +89,7 @@ protected:
 	/*! Points to root node? */
 	NiAVObject * target;
 	/*! The shape's material. */
-	HavokMaterial material;
+	SkyrimHavokMaterial skyrimMaterial;
 	/*! Unknown. */
 	float unknownFloat1;
 	/*! Unknown. */

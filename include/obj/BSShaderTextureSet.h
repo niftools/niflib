@@ -57,20 +57,20 @@ public:
 
 	// Textures
 	// \return The current value.
-	NIFLIB_API vector<string > getTextures() const;
+	NIFLIB_API vector<string > GetTextures() const;
 
 	// Textures
 	// \param[in] value The new value.
-	NIFLIB_API void setTextures( const vector<string >& value );
+	NIFLIB_API void SetTextures( const vector<string >& value );
 
 	// Textures
 	// \return The current value.
-	NIFLIB_API string getTexture( size_t i ) const;
+	NIFLIB_API string GetTexture( size_t i ) const;
 
 	// Textures
 	// \param[in] i Index of texture to set
 	// \param[in] value The new value.
-	NIFLIB_API void setTexture( size_t i, const string& value);
+	NIFLIB_API void SetTexture( size_t i, const string& value);
 
 	//--END CUSTOM CODE--//
 protected:
