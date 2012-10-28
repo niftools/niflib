@@ -3,9 +3,9 @@
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
-PROJECT_NAME           = Niflib
-PROJECT_NUMBER         = 0.8.0
-OUTPUT_DIRECTORY       = doc
+PROJECT_NAME           = @PROJECT_NAME@
+PROJECT_NUMBER         = @VERSION@
+OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/doc
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 USE_WINDOWS_ENCODING   = YES
@@ -111,7 +111,7 @@ FILE_PATTERNS          = *.c \
                          *.dox \
                          *.py
 RECURSIVE              = YES
-EXCLUDE                = 
+EXCLUDE                = docsys qhull test NvTriStrip TriStripper
 EXCLUDE_SYMLINKS       = NO
 EXCLUDE_PATTERNS       = 
 EXAMPLE_PATH           = 
