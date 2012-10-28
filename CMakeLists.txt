@@ -584,8 +584,8 @@ if(DOXYGEN_FOUND)
     ADDITIONAL_MAKE_CLEAN_FILES doc
   )
   install(
-    DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/html
-    DESTINATION share/doc/${PROJECT_NAME}
+    DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/html/
+    DESTINATION share/doc/${PROJECT_NAME}/apidocs
   )
 endif(DOXYGEN_FOUND)
 
