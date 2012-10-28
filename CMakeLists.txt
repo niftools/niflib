@@ -576,6 +576,13 @@ if(DOXYGEN_FOUND)
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generating API documentation with Doxygen" VERBATIM
   )
+  set_directory_properties(PROPERTIES
+    ADDITIONAL_MAKE_CLEAN_FILES doc
+  )
+  install(
+    DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/html/
+    DESTINATION doc
+  )
 endif(DOXYGEN_FOUND)
 
 # install
