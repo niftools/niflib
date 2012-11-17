@@ -630,10 +630,10 @@ set(CPACK_SOURCE_PACKAGE_FILE_NAME "niflib-${VERSION}-src")
 set(CPACK_SOURCE_GENERATOR ZIP)
 set(CPACK_SOURCE_IGNORE_FILES
     "~$"
-    /\\\\.git/
-    \\\\.*project$
-    \\\\.*gitmodules$
-    \\\\.*gitattributes$
-    \\\\.*gitignore$
+    "/\\\\.git"
+    "/\\\\.project$"
+    "/\\\\.gitmodules$"
+    "/\\\\.gitattributes$"
+    "/\\\\.gitignore$"
 )
 include(CPack)
