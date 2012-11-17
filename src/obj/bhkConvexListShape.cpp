@@ -54,10 +54,10 @@ void bhkConvexListShape::Read( istream& in, list<unsigned int> & link_stack, con
 		NifStream( block_num, in, info );
 		link_stack.push_back( block_num );
 	};
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, in, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, in, info );
 	};
 	for (unsigned int i1 = 0; i1 < 6; i1++) {
@@ -98,10 +98,10 @@ void bhkConvexListShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 			}
 		}
 	};
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, out, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, out, info );
 	};
 	for (unsigned int i1 = 0; i1 < 6; i1++) {

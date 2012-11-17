@@ -46,10 +46,10 @@ void bhkTransformShape::Read( istream& in, list<unsigned int> & link_stack, cons
 	bhkShape::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, in, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, in, info );
 	};
 	NifStream( unknownFloat1, in, info );
@@ -84,10 +84,10 @@ void bhkTransformShape::Write( ostream& out, const map<NiObjectRef,unsigned int>
 			missing_link_stack.push_back( NULL );
 		}
 	}
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, out, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, out, info );
 	};
 	NifStream( unknownFloat1, out, info );

@@ -238,12 +238,6 @@ void NifStream( ImageType & val, istream& in, const NifInfo & info = NifInfo() )
 void NifStream( ImageType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
-//---BSSegmentFlags---//
-
-void NifStream( BSSegmentFlags & val, istream& in, const NifInfo & info = NifInfo() );
-void NifStream( BSSegmentFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
-
-
 //---PixelLayout---//
 
 void NifStream( PixelLayout & val, istream& in, const NifInfo & info = NifInfo() );
@@ -359,6 +353,12 @@ void NifStream( DataStreamAccess const & val, ostream& out, const NifInfo & info
 
 void NifStream( SkyrimShaderPropertyFlags2 & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( SkyrimShaderPropertyFlags2 const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
+//---BSSegmentFlags---//
+
+void NifStream( BSSegmentFlags & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( BSSegmentFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 }
 #endif

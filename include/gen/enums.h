@@ -719,13 +719,6 @@ enum ImageType {
 
 ostream & operator<<( ostream & out, ImageType const & val );
 
-/*! An unsigned 32-bit integer, describing what's inside the segment. */
-enum BSSegmentFlags {
-	BSSEG_WATER = 9, /*!< Contains water. */
-};
-
-ostream & operator<<( ostream & out, BSSegmentFlags const & val );
-
 /*! An unsigned 32-bit integer, describing the color depth of a texture. */
 enum PixelLayout {
 	PIX_LAY_PALETTISED = 0, /*!< Texture is in 8-bit paletized format. */
@@ -1104,6 +1097,13 @@ enum SkyrimShaderPropertyFlags2 {
 };
 
 ostream & operator<<( ostream & out, SkyrimShaderPropertyFlags2 const & val );
+
+/*! An unsigned 32-bit integer, describing what's inside the segment. */
+enum BSSegmentFlags {
+	BSSEG_WATER = 512, /*!< Contains water. */
+};
+
+ostream & operator<<( ostream & out, BSSegmentFlags const & val );
 
 }
 #endif

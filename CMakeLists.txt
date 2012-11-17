@@ -563,6 +563,32 @@ set_target_properties(niflib_static
 enable_testing()
 add_subdirectory(test)
 
+# build documentation
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+  SET(DOXYGEN_INPUT ${CMAKE_BINARY_DIR}/Doxyfile)
+  SET(DOXYGEN_OUTPUT ${CMAKE_BINARY_DIR}/doc/html/index.html)
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+    ${DOXYGEN_INPUT}
+    @ONLY
+  )
+  add_custom_command(
+    OUTPUT ${DOXYGEN_OUTPUT}
+    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_INPUT}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generating API documentation with Doxygen" VERBATIM
+  )
+  add_custom_target(apidocs ALL DEPENDS ${DOXYGEN_OUTPUT})
+  set_directory_properties(PROPERTIES
+    ADDITIONAL_MAKE_CLEAN_FILES doc
+  )
+  install(
+    DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/html/
+    DESTINATION share/doc/${PROJECT_NAME}/apidocs
+  )
+endif(DOXYGEN_FOUND)
+
 # install
 install(
     TARGETS niflib
@@ -584,7 +610,7 @@ install(
 )
 install(
     FILES license.txt change_log.txt VERSION
-    DESTINATION .
+    DESTINATION share/doc/${PROJECT_NAME}
 )
 # enable CPack
 set(CPACK_PACKAGE_VERSION ${VERSION})
@@ -604,10 +630,10 @@ set(CPACK_SOURCE_PACKAGE_FILE_NAME "niflib-${VERSION}-src")
 set(CPACK_SOURCE_GENERATOR ZIP)
 set(CPACK_SOURCE_IGNORE_FILES
     "~$"
-    /\\\\.git/
-    \\\\.*project$
-    \\\\.*gitmodules$
-    \\\\.*gitattributes$
-    \\\\.*gitignore$
+    "/\\\\.git"
+    "/\\\\.project$"
+    "/\\\\.gitmodules$"
+    "/\\\\.gitattributes$"
+    "/\\\\.gitignore$"
 )
 include(CPack)
