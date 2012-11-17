@@ -43,10 +43,10 @@ void bhkSphereRepShape::Read( istream& in, list<unsigned int> & link_stack, cons
 	//--END CUSTOM CODE--//
 
 	bhkShape::Read( in, link_stack, info );
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, in, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, in, info );
 	};
 	NifStream( radius, in, info );
@@ -60,10 +60,10 @@ void bhkSphereRepShape::Write( ostream& out, const map<NiObjectRef,unsigned int>
 	//--END CUSTOM CODE--//
 
 	bhkShape::Write( out, link_map, missing_link_stack, info );
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, out, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, out, info );
 	};
 	NifStream( radius, out, info );

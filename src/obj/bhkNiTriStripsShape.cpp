@@ -46,10 +46,10 @@ void bhkNiTriStripsShape::Read( istream& in, list<unsigned int> & link_stack, co
 
 	unsigned int block_num;
 	bhkShapeCollection::Read( in, link_stack, info );
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, in, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, in, info );
 	};
 	NifStream( unknownFloat1, in, info );
@@ -85,10 +85,10 @@ void bhkNiTriStripsShape::Write( ostream& out, const map<NiObjectRef,unsigned in
 	bhkShapeCollection::Write( out, link_map, missing_link_stack, info );
 	numDataLayers = (unsigned int)(dataLayers.size());
 	numStripsData = (unsigned int)(stripsData.size());
-	if ( ((info.version != 0x14020007) && ((info.userVersion != 12) && (info.userVersion2 != 83))) ) {
+	if ( (info.userVersion < 12) ) {
 		NifStream( material, out, info );
 	};
-	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
+	if ( (info.userVersion >= 12) ) {
 		NifStream( skyrimMaterial, out, info );
 	};
 	NifStream( unknownFloat1, out, info );

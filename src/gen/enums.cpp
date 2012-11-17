@@ -1240,26 +1240,6 @@ ostream & operator<<( ostream & out, ImageType const & val ) {
 }
 
 
-//--BSSegmentFlags--//
-
-void NifStream( BSSegmentFlags & val, istream& in, const NifInfo & info ) {
-	unsigned int temp;
-	NifStream( temp, in, info );
-	val = BSSegmentFlags(temp);
-}
-
-void NifStream( BSSegmentFlags const & val, ostream& out, const NifInfo & info ) {
-	NifStream( (unsigned int)(val), out, info );
-}
-
-ostream & operator<<( ostream & out, BSSegmentFlags const & val ) {
-	switch ( val ) {
-		case BSSEG_WATER: return out << "BSSEG_WATER";
-		default: return out << "Invalid Value! - " << (unsigned int)(val);
-	}
-}
-
-
 //--PixelLayout--//
 
 void NifStream( PixelLayout & val, istream& in, const NifInfo & info ) {
@@ -1886,6 +1866,26 @@ ostream & operator<<( ostream & out, SkyrimShaderPropertyFlags2 const & val ) {
 		case SLSF2_TREE_ANIM: return out << "SLSF2_Tree_Anim";
 		case SLSF2_EFFECT_LIGHTING: return out << "SLSF2_Effect_Lighting";
 		case SLSF2_HD_LOD_OBJECTS: return out << "SLSF2_HD_LOD_Objects";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+//--BSSegmentFlags--//
+
+void NifStream( BSSegmentFlags & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = BSSegmentFlags(temp);
+}
+
+void NifStream( BSSegmentFlags const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, BSSegmentFlags const & val ) {
+	switch ( val ) {
+		case BSSEG_WATER: return out << "BSSEG_WATER";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
