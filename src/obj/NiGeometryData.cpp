@@ -722,7 +722,7 @@ unsigned short NiGeometryData::numUvSetsCalc(const NifInfo & info) const {
 }
 
 unsigned short NiGeometryData::bsNumUvSetsCalc(const NifInfo & info) const {
-  return (numUvSets & (~1))  | (unsigned short)(uvSets.size() & 1);
+  return (numUvSets & (~1)) | (bsNumUvSets & (~1)) | (unsigned short)(uvSets.size() & 1);
 }
 
 //--END CUSTOM CODE--//
