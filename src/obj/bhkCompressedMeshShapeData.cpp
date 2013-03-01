@@ -67,7 +67,7 @@ void bhkCompressedMeshShapeData::Read( istream& in, list<unsigned int> & link_st
 	chunkMaterials.resize(numMaterials);
 	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
 		NifStream( chunkMaterials[i1].skyrimMaterial, in, info );
-		NifStream( chunkMaterials[i1].unknownInteger, in, info );
+		NifStream( chunkMaterials[i1].skyrimLayer, in, info );
 	};
 	NifStream( unknownInt6, in, info );
 	NifStream( numTransforms, in, info );
@@ -154,7 +154,7 @@ void bhkCompressedMeshShapeData::Write( ostream& out, const map<NiObjectRef,unsi
 	NifStream( numMaterials, out, info );
 	for (unsigned int i1 = 0; i1 < chunkMaterials.size(); i1++) {
 		NifStream( chunkMaterials[i1].skyrimMaterial, out, info );
-		NifStream( chunkMaterials[i1].unknownInteger, out, info );
+		NifStream( chunkMaterials[i1].skyrimLayer, out, info );
 	};
 	NifStream( unknownInt6, out, info );
 	NifStream( numTransforms, out, info );
@@ -244,7 +244,7 @@ std::string bhkCompressedMeshShapeData::asString( bool verbose ) const {
 			break;
 		};
 		out << "    Skyrim Material:  " << chunkMaterials[i1].skyrimMaterial << endl;
-		out << "    Unknown Integer:  " << chunkMaterials[i1].unknownInteger << endl;
+		out << "    Unknown Integer:  " << chunkMaterials[i1].skyrimLayer << endl;
 	};
 	out << "  Unknown Int 6:  " << unknownInt6 << endl;
 	out << "  Num Transforms:  " << numTransforms << endl;

@@ -22,7 +22,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkRigidBody::TYPE("bhkRigidBody", &bhkEntity::TYPE );
 
-bhkRigidBody::bhkRigidBody() : unknownInt1((int)0), unknownInt2((int)0x00000001), unknown3Ints(3,(int)0,(int)0,(int)0x80000000), collisionResponse_((hkResponseType)RESPONSE_SIMPLE_CONTACT), unknownByte((byte)0xbe), processContactCallbackDelay_((unsigned short)0xffff), unknown2Shorts(2,(unsigned short)35899,(unsigned short)16336), layerCopy((OblivionLayer)OL_STATIC), colFilterCopy((byte)0), unknown7Shorts(7,(unsigned short)0,(unsigned short)21280,(unsigned short)2481,(unsigned short)62977,(unsigned short)65535,(unsigned short)44,(unsigned short)0), mass(1.0f), linearDamping(0.1f), angularDamping(0.05f), unknownTimefactorOrGravityfactor1(0.0f), unknownTimefactorOrGravityfactor2(0.0f), friction(0.3f), rollingfrictionmultiplier_(0.0f), restitution(0.3f), maxLinearVelocity(250.0f), maxAngularVelocity(31.4159f), penetrationDepth(0.15f), motionSystem((MotionSystem)MO_SYS_DYNAMIC), deactivatorType((DeactivatorType)DEACTIVATOR_NEVER), solverDeactivation((SolverDeactivation)SOLVER_DEACTIVATION_OFF), qualityType((MotionQuality)MO_QUAL_FIXED), unknownInt6((unsigned int)512), unknownInt7((unsigned int)160), unknownInt8((unsigned int)161), unknownInt81((unsigned int)0), numConstraints((unsigned int)0), unknownInt9((unsigned int)0), unknownInt91((unsigned short)0) {
+bhkRigidBody::bhkRigidBody() : unknownInt1((int)0), unknownInt2((int)0x00000001), unknown3Ints(3,(int)0,(int)0,(int)0x80000000), collisionResponse_((hkResponseType)RESPONSE_SIMPLE_CONTACT), unknownByte((byte)0xbe), processContactCallbackDelay_((unsigned short)0xffff), unknown2Shorts(2,(unsigned short)35899,(unsigned short)16336), layerCopy((OblivionLayer)OL_STATIC), colFilterCopy((byte)0), skyrimLayerCopy((SkyrimLayer)SKYL_STATIC), flagsAndPartNumberCopy((byte)0), unknown7Shorts(7,(unsigned short)0,(unsigned short)21280,(unsigned short)2481,(unsigned short)62977,(unsigned short)65535,(unsigned short)44,(unsigned short)0), mass(1.0f), linearDamping(0.1f), angularDamping(0.05f), unknownTimefactorOrGravityfactor1(0.0f), unknownTimefactorOrGravityfactor2(0.0f), friction(0.3f), rollingfrictionmultiplier_(0.0f), restitution(0.3f), maxLinearVelocity(250.0f), maxAngularVelocity(31.4159f), penetrationDepth(0.15f), motionSystem((MotionSystem)MO_SYS_DYNAMIC), deactivatorType((DeactivatorType)DEACTIVATOR_NEVER), solverDeactivation((SolverDeactivation)SOLVER_DEACTIVATION_OFF), qualityType((MotionQuality)MO_QUAL_FIXED), unknownInt6((unsigned int)512), unknownInt7((unsigned int)160), unknownInt8((unsigned int)161), unknownInt81((unsigned int)0), numConstraints((unsigned int)0), unknownInt9((unsigned int)0), unknownInt91((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -57,8 +57,13 @@ void bhkRigidBody::Read( istream& in, list<unsigned int> & link_stack, const Nif
 	for (unsigned int i1 = 0; i1 < 2; i1++) {
 		NifStream( unknown2Shorts[i1], in, info );
 	};
+	if ( (info.userVersion >= 12) ) {
+		NifStream( skyrimLayerCopy, in, info );
+		NifStream( flagsAndPartNumberCopy, in, info );
+	} else {
 	NifStream( layerCopy, in, info );
 	NifStream( colFilterCopy, in, info );
+	}
 	for (unsigned int i1 = 0; i1 < 7; i1++) {
 		NifStream( unknown7Shorts[i1], in, info );
 	};
@@ -130,8 +135,13 @@ void bhkRigidBody::Write( ostream& out, const map<NiObjectRef,unsigned int> & li
 	for (unsigned int i1 = 0; i1 < 2; i1++) {
 		NifStream( unknown2Shorts[i1], out, info );
 	};
+	if ( (info.userVersion >= 12) ) {
+		NifStream( skyrimLayerCopy, out, info );
+		NifStream( flagsAndPartNumberCopy, out, info );
+	} else {
 	NifStream( layerCopy, out, info );
 	NifStream( colFilterCopy, out, info );
+	}
 	for (unsigned int i1 = 0; i1 < 7; i1++) {
 		NifStream( unknown7Shorts[i1], out, info );
 	};
@@ -239,6 +249,8 @@ std::string bhkRigidBody::asString( bool verbose ) const {
 	};
 	out << "  Layer Copy:  " << layerCopy << endl;
 	out << "  Col Filter Copy:  " << colFilterCopy << endl;
+	out << "  Skyrim Layer Copy:  " << skyrimLayerCopy << endl;
+	out << "  Flags And PartNumber Copy:  " << flagsAndPartNumberCopy << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < 7; i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -339,6 +351,14 @@ OblivionLayer bhkRigidBody::GetLayerCopy() const {
 
 void bhkRigidBody::SetLayerCopy( OblivionLayer value ) {
 	layerCopy = value;
+}
+
+SkyrimLayer bhkRigidBody::GetSkyrimLayerCopy() const {
+	return skyrimLayerCopy;
+}
+
+void bhkRigidBody::SetSkyrimLayerCopy( SkyrimLayer value ) {
+	skyrimLayerCopy = value;
 }
 
 Vector4 bhkRigidBody::GetTranslation() const {

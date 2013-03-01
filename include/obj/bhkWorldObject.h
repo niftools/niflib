@@ -83,6 +83,8 @@ public:
 	 */
 	NIFLIB_API void SetLayer( OblivionLayer value );
 
+	NIFLIB_API SkyrimLayer GetSkyrimLayer() const;
+	NIFLIB_API void SetSkyrimLayer( SkyrimLayer value );
 
 	//--END CUSTOM CODE--//
 protected:
@@ -90,6 +92,8 @@ protected:
 	Ref<bhkShape > shape;
 	/*! Sets mesh color in Oblivion Construction Set. */
 	OblivionLayer layer;
+	/*! Physical purpose of collision object? The setting affects objetct's havok behavior in game. */
+	SkyrimLayer skyrimLayer;
 	/*!
 	 * The first bit sets the LINK property and controls whether this body is
 	 * physically linked to others. The next bit turns collision off. Then, the next
@@ -97,6 +101,9 @@ protected:
 	 * of this part in a linked body list.
 	 */
 	byte colFilter;
+	/*!
+	*/
+	byte flagsAndPartNumber;
 	/*! Unknown. */
 	unsigned short unknownShort;
 public:
