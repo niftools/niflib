@@ -710,6 +710,73 @@ ostream & operator<<( ostream & out, OblivionLayer const & val ) {
 }
 
 
+//--SkyrimLayer--//
+
+void NifStream( SkyrimLayer & val, istream& in, const NifInfo & info ) {
+	byte temp;
+	NifStream( temp, in, info );
+	val = SkyrimLayer(temp);
+}
+
+void NifStream( SkyrimLayer const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, SkyrimLayer const & val ) {
+	switch ( val ) {
+		case SKYL_UNIDENTIFIED: return out << "SKYL_UNIDENTIFIED";
+		case SKYL_STATIC: return out << "SKYL_STATIC";
+		case SKYL_ANIMSTATIC: return out << "SKYL_ANIMSTATIC";
+		case SKYL_TRANSPARENT: return out << "SKYL_TRANSPARENT";
+		case SKYL_CLUTTER: return out << "SKYL_CLUTTER";
+		case SKYL_WEAPON: return out << "SKYL_WEAPON";
+		case SKYL_PROJECTILE: return out << "SKYL_PROJECTILE";
+		case SKYL_SPELL: return out << "SKYL_SPELL";
+		case SKYL_BIPED: return out << "SKYL_BIPED";
+		case SKYL_TREES: return out << "SKYL_TREES";
+		case SKYL_PROPS: return out << "SKYL_PROPS";
+		case SKYL_WATER: return out << "SKYL_WATER";
+		case SKYL_TRIGGER: return out << "SKYL_TRIGGER";
+		case SKYL_TERRAIN: return out << "SKYL_TERRAIN";
+		case SKYL_TRAP: return out << "SKYL_TRAP";
+		case SKYL_NONCOLLIDABLE: return out << "SKYL_NONCOLLIDABLE";
+		case SKYL_CLOUD_TRAP: return out << "SKYL_CLOUD_TRAP";
+		case SKYL_GROUND: return out << "SKYL_GROUND";
+		case SKYL_PORTAL: return out << "SKYL_PORTAL";
+		case SKYL_DEBRIS_SMALL: return out << "SKYL_DEBRIS_SMALL";
+		case SKYL_DEBRIS_LARGE: return out << "SKYL_DEBRIS_LARGE";
+		case SKYL_ACOUSTIC_SPACE: return out << "SKYL_ACOUSTIC_SPACE";
+		case SKYL_ACTORZONE: return out << "SKYL_ACTORZONE";
+		case SKYL_PROJECTILEZONE: return out << "SKYL_PROJECTILEZONE";
+		case SKYL_GASTRAP: return out << "SKYL_GASTRAP";
+		case SKYL_SHELLCASING: return out << "SKYL_SHELLCASING";
+		case SKYL_TRANSPARENT_SMALL: return out << "SKYL_TRANSPARENT_SMALL";
+		case SKYL_INVISIBLE_WALL: return out << "SKYL_INVISIBLE_WALL";
+		case SKYL_TRANSPARENT_SMALL_ANIM: return out << "SKYL_TRANSPARENT_SMALL_ANIM";
+		case SKYL_WARD: return out << "SKYL_WARD";
+		case SKYL_CHARCONTROLLER: return out << "SKYL_CHARCONTROLLER";
+		case SKYL_STAIRHELPER: return out << "SKYL_STAIRHELPER";
+		case SKYL_DEADBIP: return out << "SKYL_DEADBIP";
+		case SKYL_BIPED_NO_CC: return out << "SKYL_BIPED_NO_CC";
+		case SKYL_AVOIDBOX: return out << "SKYL_AVOIDBOX";
+		case SKYL_COLLISIONBOX: return out << "SKYL_COLLISIONBOX";
+		case SKYL_CAMERASHPERE: return out << "SKYL_CAMERASHPERE";
+		case SKYL_DOORDETECTION: return out << "SKYL_DOORDETECTION";
+		case SKYL_CONEPROJECTILE: return out << "SKYL_CONEPROJECTILE";
+		case SKYL_CAMERAPICK: return out << "SKYL_CAMERAPICK";
+		case SKYL_ITEMPICK: return out << "SKYL_ITEMPICK";
+		case SKYL_LINEOFSIGHT: return out << "SKYL_LINEOFSIGHT";
+		case SKYL_PATHPICK: return out << "SKYL_PATHPICK";
+		case SKYL_CUSTOMPICK1: return out << "SKYL_CUSTOMPICK1";
+		case SKYL_CUSTOMPICK2: return out << "SKYL_CUSTOMPICK2";
+		case SKYL_SPELLEXPLOSION: return out << "SKYL_SPELLEXPLOSION";
+		case SKYL_DROPPINGPICK: return out << "SKYL_DROPPINGPICK";
+		case SKYL_NULL: return out << "SKYL_NULL";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
 //--PSLoopBehavior--//
 
 void NifStream( PSLoopBehavior & val, istream& in, const NifInfo & info ) {

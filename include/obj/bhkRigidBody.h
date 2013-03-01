@@ -80,6 +80,9 @@ public:
 	 */
 	NIFLIB_API void SetLayerCopy( OblivionLayer value );
 
+	NIFLIB_API SkyrimLayer GetSkyrimLayerCopy() const;
+	NIFLIB_API void SetSkyrimLayerCopy( SkyrimLayer value );
+
 	/*!
 	 * Gets the current translation of this rigid body.
 	 * \return The translation of this rigid body.
@@ -342,6 +345,10 @@ protected:
 	OblivionLayer layerCopy;
 	/*! Copy of Col Filter value? */
 	byte colFilterCopy;
+	/*! Copy of Layer value? */
+	SkyrimLayer skyrimLayerCopy;
+	/*! Copy of  value? */
+	byte flagsAndPartNumberCopy;
 	/*!
 	 * Unknown.
 	 *             Oblivion defaults: 0 21280 2481 62977 65535 44 0

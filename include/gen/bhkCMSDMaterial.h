@@ -26,7 +26,7 @@ struct bhkCMSDMaterial {
 	/*! Material. */
 	SkyrimHavokMaterial skyrimMaterial;
 	/*! Always 1? */
-	unsigned int unknownInteger;
+	unsigned int skyrimLayer;
 	//--BEGIN MISC CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//

@@ -136,6 +136,12 @@ void NifStream( PSLoopBehavior & val, istream& in, const NifInfo & info = NifInf
 void NifStream( PSLoopBehavior const & val, ostream& out, const NifInfo & info = NifInfo() );
 
 
+//---SkyrimLayer---//
+
+void NifStream( SkyrimLayer & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( SkyrimLayer const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+
 //---SolverDeactivation---//
 
 void NifStream( SolverDeactivation & val, istream& in, const NifInfo & info = NifInfo() );

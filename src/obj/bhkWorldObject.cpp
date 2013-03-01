@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkWorldObject::TYPE("bhkWorldObject", &bhkSerializable::TYPE );
 
-bhkWorldObject::bhkWorldObject() : shape(NULL), layer((OblivionLayer)OL_STATIC), colFilter((byte)0), unknownShort((unsigned short)0) {
+bhkWorldObject::bhkWorldObject() : shape(NULL), layer((OblivionLayer)OL_STATIC), skyrimLayer((SkyrimLayer)SKYL_STATIC), colFilter((byte)0), flagsAndPartNumber((byte) 0), unknownShort((unsigned short)0) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -46,8 +46,13 @@ void bhkWorldObject::Read( istream& in, list<unsigned int> & link_stack, const N
 	bhkSerializable::Read( in, link_stack, info );
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
+	if ( info.version < VER_20_2_0_7) {
 	NifStream( layer, in, info );
 	NifStream( colFilter, in, info );
+	} else {
+		NifStream( skyrimLayer, in, info );
+		NifStream( flagsAndPartNumber, in, info );
+	}
 	NifStream( unknownShort, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -76,8 +81,13 @@ void bhkWorldObject::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 			missing_link_stack.push_back( NULL );
 		}
 	}
+	if ( info.version < VER_20_2_0_7) {
 	NifStream( layer, out, info );
 	NifStream( colFilter, out, info );
+	} else {
+		NifStream( skyrimLayer, out, info );
+		NifStream( flagsAndPartNumber, out, info );
+	}
 	NifStream( unknownShort, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -93,6 +103,8 @@ std::string bhkWorldObject::asString( bool verbose ) const {
 	out << "  Shape:  " << shape << endl;
 	out << "  Layer:  " << layer << endl;
 	out << "  Col Filter:  " << colFilter << endl;
+	out << "  SkyrimLayer:  " << skyrimLayer << endl;
+	out << "  Flags and PartNumber:  " << flagsAndPartNumber << endl;
 	out << "  Unknown Short:  " << unknownShort << endl;
 	return out.str();
 
@@ -141,6 +153,14 @@ OblivionLayer bhkWorldObject::GetLayer() const {
 
 void bhkWorldObject::SetLayer( OblivionLayer value ) {
 	layer = value;
+}
+
+SkyrimLayer bhkWorldObject::GetSkyrimLayer() const {
+	return skyrimLayer;
+}
+
+void bhkWorldObject::SetSkyrimLayer( SkyrimLayer value ) {
+	skyrimLayer = value;
 }
 
 //--END CUSTOM CODE--//
