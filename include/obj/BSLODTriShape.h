@@ -55,6 +55,10 @@ public:
 
 	//--BEGIN MISC CUSTOM CODE--//
 
+	NIFLIB_API virtual unsigned int GetLODLevelSize(const unsigned int level) const;
+
+	NIFLIB_API virtual void SetLODLevelSize(const unsigned int level, unsigned int size);
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
