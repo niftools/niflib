@@ -36,6 +36,26 @@ const Type & BSLODTriShape::GetType() const {
 	return TYPE;
 }
 
+unsigned int BSLODTriShape::GetLODLevelSize(const unsigned int level) const {
+	switch (level)
+	{
+		case 0:		return level0Size;
+		case 1:		return level1Size;
+		case 2:		return level2Size;
+	}
+
+	return 0;
+}
+
+void BSLODTriShape::SetLODLevelSize(const unsigned int level, unsigned int size) {
+	switch (level)
+	{
+		case 0:		{ level0Size = size; break; }
+		case 1:		{ level1Size = size; break; }
+		case 2:		{ level2Size = size; break; }
+	}
+}			
+
 NiObject * BSLODTriShape::Create() {
 	return new BSLODTriShape;
 }
