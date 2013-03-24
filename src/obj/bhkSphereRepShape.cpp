@@ -119,6 +119,14 @@ void bhkSphereRepShape::SetMaterial( HavokMaterial value ) {
 	material = value;
 }
 
+SkyrimHavokMaterial bhkSphereRepShape::GetSkyrimMaterial() const {
+	return skyrimMaterial;
+}
+
+void bhkSphereRepShape::SetSkyrimMaterial( SkyrimHavokMaterial value ) {
+	skyrimMaterial = value;
+}
+
 float bhkSphereRepShape::GetRadius() const {
 	return radius;
 }
