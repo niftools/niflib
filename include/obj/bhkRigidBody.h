@@ -322,6 +322,18 @@ public:
 	//  is given then the density argument is ignored.
 	NIFLIB_API void UpdateMassProperties(float density = 1.0f, bool solid = true, float mass = 0.0f);
 
+	/*!
+	 * Returns the unknown 7 shorts
+	 * \return An array containing the 7 unknown shorts within this object.
+	 */
+	NIFLIB_API virtual array<7,unsigned short > GetUnknown7Shorts() const;
+
+	/*! Replaces the unknown 7 shorts with new data
+	 * \param in An array containing the new data.  Size is 7.
+	 */
+	NIFLIB_API virtual void SetUnknown7Shorts( const array<7,unsigned short > & in );
+
+
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. Could be 2 shorts corresponding to Unknown 7 Shorts[1] and [2]. */

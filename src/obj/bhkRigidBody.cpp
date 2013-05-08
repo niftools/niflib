@@ -569,4 +569,12 @@ void bhkRigidBody::UpdateMassProperties(float density, bool solid, float mass)
 	}
 }
 
+array<7,unsigned short> bhkRigidBody::GetUnknown7Shorts() const {
+	return unknown7Shorts;
+}
+
+void bhkRigidBody::SetUnknown7Shorts(const array<7,unsigned short> & in ) {
+	unknown7Shorts = in;
+}
+
 //--END CUSTOM CODE--//
