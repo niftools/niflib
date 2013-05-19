@@ -21,7 +21,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type NiGeometryData::TYPE("NiGeometryData", &NiObject::TYPE );
 
-NiGeometryData::NiGeometryData() : unknownInt((int)0), numVertices((unsigned short)0), bsMaxVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), bsNumUvSets((unsigned short)0), unknownInt2((unsigned int)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
+NiGeometryData::NiGeometryData() : unknownInt((int)0), numVertices((unsigned short)0), bsMaxVertices((unsigned short)0), keepFlags((byte)0), compressFlags((byte)0), hasVertices(1), numUvSets((unsigned short)0), bsNumUvSets((unsigned short)0), skyrimMaterial((SkyrimHavokMaterial)0), hasNormals(false), radius(0.0f), hasVertexColors(false), hasUv(false), consistencyFlags((ConsistencyType)CT_MUTABLE), additionalData(NULL) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -80,7 +80,7 @@ void NiGeometryData::Read( istream& in, list<unsigned int> & link_stack, const N
 	};
 	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
 		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
-			NifStream( unknownInt2, in, info );
+			NifStream( skyrimMaterial, in, info );
 		};
 	};
 	NifStream( hasNormals, in, info );
@@ -194,7 +194,7 @@ void NiGeometryData::Write( ostream& out, const map<NiObjectRef,unsigned int> & 
 	};
 	if ( ( info.version >= 0x14020007 ) && ( info.userVersion == 12 ) ) {
 		if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
-			NifStream( unknownInt2, out, info );
+			NifStream( skyrimMaterial, out, info );
 		};
 	};
 	NifStream( hasNormals, out, info );
@@ -325,7 +325,7 @@ std::string NiGeometryData::asString( bool verbose ) const {
 	out << "  Num UV Sets:  " << numUvSets << endl;
 	out << "  BS Num UV Sets:  " << bsNumUvSets << endl;
 	if ( (!IsDerivedType(NiPSysData::TYPE)) ) {
-		out << "    Unknown Int 2:  " << unknownInt2 << endl;
+		out << "    skyrimMaterial:  " << skyrimMaterial << endl;
 	};
 	out << "  Has Normals:  " << hasNormals << endl;
 	if ( hasNormals ) {
@@ -725,4 +725,7 @@ unsigned short NiGeometryData::bsNumUvSetsCalc(const NifInfo & info) const {
   return (numUvSets & (~1)) | (bsNumUvSets & (~1)) | (unsigned short)(uvSets.size() & 1);
 }
 
+SkyrimHavokMaterial NiGeometryData::GetSkyrimMaterial() const {
+	return skyrimMaterial;
+}
 //--END CUSTOM CODE--//

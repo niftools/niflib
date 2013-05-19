@@ -255,6 +255,8 @@ public:
    // \param[in] value The new value.
    NIFLIB_API void SetTangents( const vector<Vector3 >& value );
 
+   NIFLIB_API SkyrimHavokMaterial GetSkyrimMaterial() const;
+
 private:
    unsigned short numUvSetsCalc(const NifInfo &) const;
    unsigned short bsNumUvSetsCalc(const NifInfo &) const;
@@ -284,7 +286,7 @@ protected:
 	 */
 	mutable unsigned short bsNumUvSets;
 	/*! Unknown, seen in Skyrim. */
-	unsigned int unknownInt2;
+	SkyrimHavokMaterial skyrimMaterial;
 	/*!
 	 * Do we have lighting normals? These are essential for proper lighting: if not
 	 * present, the model will only be influenced by ambient light.
