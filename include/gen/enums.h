@@ -1162,5 +1162,14 @@ enum BSSegmentFlags {
 
 ostream & operator<<( ostream & out, BSSegmentFlags const & val );
 
+enum MoppDataBuildType {
+	BUILT_WITH_CHUNK_SUBDIVISION = 0, /*!< Organized in chunks for PS3 */
+	BUILT_WITHOUT_CHUNK_SUBDIVISION = 1, /*!< Not organized in chunks for PC */
+	BUILD_NOT_SET = 2 /*!< Build type not set yet */
+};
+
+ostream & operator<<( ostream & out, MoppDataBuildType const & val );
+
+
 }
 #endif

@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type bhkMoppBvTreeShape::TYPE("bhkMoppBvTreeShape", &bhkBvTreeShape::TYPE );
 
-bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)0), skyrimMaterial((SkyrimHavokMaterial)0), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f), unknownByte1((byte)0) {
+bhkMoppBvTreeShape::bhkMoppBvTreeShape() : shape(NULL), material((HavokMaterial)0), skyrimMaterial((SkyrimHavokMaterial)0), unknownFloat(1.0f), moppDataSize((unsigned int)0), scale(0.0f), buildType(BUILT_WITHOUT_CHUNK_SUBDIVISION) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 }
@@ -65,14 +65,14 @@ void bhkMoppBvTreeShape::Read( istream& in, list<unsigned int> & link_stack, con
 			NifStream( oldMoppData[i2], in, info );
 		};
 	};
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
+		NifStream( buildType, in, info );
+	};
 	if ( info.version >= 0x0A000102 ) {
 		moppData.resize(moppDataSize);
 		for (unsigned int i2 = 0; i2 < moppData.size(); i2++) {
 			NifStream( moppData[i2], in, info );
 		};
-	};
-	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
-		NifStream( unknownByte1, in, info );
 	};
 
 	//--BEGIN POST-READ CUSTOM CODE--//
@@ -120,13 +120,13 @@ void bhkMoppBvTreeShape::Write( ostream& out, const map<NiObjectRef,unsigned int
 			NifStream( oldMoppData[i2], out, info );
 		};
 	};
+	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
+		NifStream( buildType, out, info );
+	};
 	if ( info.version >= 0x0A000102 ) {
 		for (unsigned int i2 = 0; i2 < moppData.size(); i2++) {
 			NifStream( moppData[i2], out, info );
 		};
-	};
-	if ( ( info.version >= 0x14020007 ) && ( (info.userVersion >= 12) ) ) {
-		NifStream( unknownByte1, out, info );
 	};
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
@@ -171,6 +171,7 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 		out << "    Old MOPP Data[" << i1 << "]:  " << oldMoppData[i1] << endl;
 		array_output_count++;
 	};
+	out << "  Build Type:  " << buildType << endl;
 	array_output_count = 0;
 	for (unsigned int i1 = 0; i1 < moppData.size(); i1++) {
 		if ( !verbose && ( array_output_count > MAXARRAYDUMP ) ) {
@@ -183,7 +184,6 @@ std::string bhkMoppBvTreeShape::asString( bool verbose ) const {
 		out << "    MOPP Data[" << i1 << "]:  " << moppData[i1] << endl;
 		array_output_count++;
 	};
-	out << "  Unknown Byte 1:  " << unknownByte1 << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -256,6 +256,14 @@ float bhkMoppBvTreeShape::GetMoppScale() const {
 
 void bhkMoppBvTreeShape::SetMoppScale( float value ) {
 	scale = value;
+}
+
+MoppDataBuildType bhkMoppBvTreeShape::GetBuildType() const {
+	return buildType;
+}
+
+void bhkMoppBvTreeShape::SetBuildType(MoppDataBuildType value) {
+	buildType = value;
 }
 
 void bhkMoppBvTreeShape::CalcMassProperties( float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia )

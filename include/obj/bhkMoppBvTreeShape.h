@@ -140,6 +140,11 @@ public:
 	 */
 	NIFLIB_API virtual void CalcMassProperties(float density, bool solid, float &mass, float &volume, Vector3 &center, InertiaMatrix& inertia);
 
+	NIFLIB_API MoppDataBuildType GetBuildType() const;
+
+	NIFLIB_API void SetBuildType(MoppDataBuildType value);
+
+
 private:
 	unsigned int moppDataSizeCalc(const NifInfo & info) const {
 		return (unsigned int)((info.version <= 0x0A000100) ? (oldMoppData.size() + 1) : moppData.size());
@@ -176,10 +181,11 @@ protected:
 	 * script).
 	 */
 	vector<byte > oldMoppData;
+	/*! Defines wether moppData is organized into chunks (PS3) or not (PC) */
+	MoppDataBuildType	buildType;
 	/*! The tree of bounding volume data. */
 	vector<byte > moppData;
-	/*! Unknown */
-	byte unknownByte1;
+
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
