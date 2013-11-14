@@ -1957,4 +1957,27 @@ ostream & operator<<( ostream & out, BSSegmentFlags const & val ) {
 	}
 }
 
+//--MoppDataBuildType--//
+
+void NifStream( MoppDataBuildType & val, istream& in, const NifInfo & info ) {
+	byte temp;
+	NifStream( temp, in, info );
+	val = MoppDataBuildType(temp);
+}
+
+void NifStream( MoppDataBuildType const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (byte)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, MoppDataBuildType const & val ) {
+	switch ( val ) {
+		case BUILT_WITH_CHUNK_SUBDIVISION: return out << "BUILT_WITH_CHUNK_SUBDIVISION";
+		case BUILT_WITHOUT_CHUNK_SUBDIVISION: return out << "BUILT_WITHOUT_CHUNK_SUBDIVISION";
+		case BUILD_NOT_SET: return out << "BUILD_NOT_SET";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+
 }

@@ -366,5 +366,10 @@ void NifStream( SkyrimShaderPropertyFlags2 const & val, ostream& out, const NifI
 void NifStream( BSSegmentFlags & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( BSSegmentFlags const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+//---MoppDataBuildType---//
+
+void NifStream( MoppDataBuildType & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( MoppDataBuildType const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 }
 #endif
