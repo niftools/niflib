@@ -371,5 +371,19 @@ void NifStream( BSSegmentFlags const & val, ostream& out, const NifInfo & info =
 void NifStream( MoppDataBuildType & val, istream& in, const NifInfo & info = NifInfo() );
 void NifStream( MoppDataBuildType const & val, ostream& out, const NifInfo & info = NifInfo() );
 
+//---ShaderControlled---//
+
+void NifStream( EffectShaderControlledVariable & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( EffectShaderControlledVariable const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( EffectShaderControlledColor & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( EffectShaderControlledColor const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( LightingShaderControlledVariable & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( LightingShaderControlledVariable const & val, ostream& out, const NifInfo & info = NifInfo() );
+
+void NifStream( LightingShaderControlledColor & val, istream& in, const NifInfo & info = NifInfo() );
+void NifStream( LightingShaderControlledColor const & val, ostream& out, const NifInfo & info = NifInfo() );
+
 }
 #endif

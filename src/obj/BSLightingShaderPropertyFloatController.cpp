@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSLightingShaderPropertyFloatController::TYPE("BSLightingShaderPropertyFloatController", &NiFloatInterpController::TYPE );
 
-BSLightingShaderPropertyFloatController::BSLightingShaderPropertyFloatController() : targetVariable((unsigned int)0) {
+BSLightingShaderPropertyFloatController::BSLightingShaderPropertyFloatController() : targetVariable(LSCV_UNKNOWN_FLOAT_2) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -106,5 +106,11 @@ std::list<NiObject *> BSLightingShaderPropertyFloatController::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+LightingShaderControlledVariable BSLightingShaderPropertyFloatController::GetTargetVariable() const {
+	return targetVariable;
+}
 
+void BSLightingShaderPropertyFloatController::SetTargetVariable(LightingShaderControlledVariable value) {
+	targetVariable = value;
+}
 //--END CUSTOM CODE--//

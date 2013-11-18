@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSLightingShaderPropertyColorController::TYPE("BSLightingShaderPropertyColorController", &NiFloatInterpController::TYPE );
 
-BSLightingShaderPropertyColorController::BSLightingShaderPropertyColorController() : targetVariable((unsigned int)0) {
+BSLightingShaderPropertyColorController::BSLightingShaderPropertyColorController() : targetColor(LSCC_SPECULAR_COLOR) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -46,7 +46,7 @@ void BSLightingShaderPropertyColorController::Read( istream& in, list<unsigned i
 	//--END CUSTOM CODE--//
 
 	NiFloatInterpController::Read( in, link_stack, info );
-	NifStream( targetVariable, in, info );
+	NifStream( targetColor, in, info );
 
 	//--BEGIN POST-READ CUSTOM CODE--//
 
@@ -59,7 +59,7 @@ void BSLightingShaderPropertyColorController::Write( ostream& out, const map<NiO
 	//--END CUSTOM CODE--//
 
 	NiFloatInterpController::Write( out, link_map, missing_link_stack, info );
-	NifStream( targetVariable, out, info );
+	NifStream( targetColor, out, info );
 
 	//--BEGIN POST-WRITE CUSTOM CODE--//
 
@@ -73,7 +73,7 @@ std::string BSLightingShaderPropertyColorController::asString( bool verbose ) co
 
 	stringstream out;
 	out << NiFloatInterpController::asString();
-	out << "  Target Variable:  " << targetVariable << endl;
+	out << "  targetColor:  " << targetColor << endl;
 	return out.str();
 
 	//--BEGIN POST-STRING CUSTOM CODE--//
@@ -106,5 +106,11 @@ std::list<NiObject *> BSLightingShaderPropertyColorController::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+LightingShaderControlledColor BSLightingShaderPropertyColorController::GetTargetColor() const {
+	return targetColor;
+}
 
+void BSLightingShaderPropertyColorController::SetTargetColor(LightingShaderControlledColor value) {
+	targetColor = value;
+}
 //--END CUSTOM CODE--//
