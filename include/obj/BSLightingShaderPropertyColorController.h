@@ -54,11 +54,20 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+	/*!
+	 * Get which color in BSLightingShaderProperty to animate
+	 */
+	NIFLIB_API LightingShaderControlledColor GetTargetColor() const;
+
+	/*!
+	 * Set which color in BSLightingShaderProperty to animate
+	 */
+	NIFLIB_API void SetTargetColor(LightingShaderControlledColor value);
 
 	//--END CUSTOM CODE--//
 protected:
 	/*! Which variable in the shader to animate. */
-	unsigned int targetVariable;
+	LightingShaderControlledColor targetColor;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

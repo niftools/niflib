@@ -21,13 +21,7 @@ class BSLightingShaderPropertyFloatController;
 typedef Ref<BSLightingShaderPropertyFloatController> BSLightingShaderPropertyFloatControllerRef;
 
 /*!
- * This controller is used to animate variables in
- * BSLightingShaderPropertyFloatController, target is a number in order they
- * appear:
- *     5: U Offset
- *     6: V Offset
- *     7: U Scale
- *     8: V Scale
+ * This controller is used to animate float variables in BSLightingShaderProperty
  */
 class BSLightingShaderPropertyFloatController : public NiFloatInterpController {
 public:
@@ -62,11 +56,20 @@ public:
 	NIFLIB_API virtual const Type & GetType() const;
 
 	//--BEGIN MISC CUSTOM CODE--//
+	/*!
+	 * Get which float variable in BSLightingShaderProperty to animate
+	 */
+	NIFLIB_API LightingShaderControlledVariable GetTargetVariable() const;
+
+	/*!
+	 * Set which float variable in BSLightingShaderProperty to animate
+	 */
+	NIFLIB_API void SetTargetVariable(LightingShaderControlledVariable value);
 
 	//--END CUSTOM CODE--//
 protected:
 	/*! Which variable in the shader to animate. */
-	unsigned int targetVariable;
+	LightingShaderControlledVariable targetVariable;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );

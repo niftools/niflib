@@ -1170,6 +1170,54 @@ enum MoppDataBuildType {
 
 ostream & operator<<( ostream & out, MoppDataBuildType const & val );
 
+/*! An unsigned 32-bit integer, describing which float variable in BSEffectShaderProperty to animate. */
+enum EffectShaderControlledVariable {
+    ESCV_EMISSIVEMULTIPLE = 0, /*!< EmissiveMultiple */
+    ESCV_FALLOFF_START_ANGLE = 1, /*!< Falloff Start Angle (degrees) */
+    ESCV_FALLOFF_STOP_ANGLE = 2, /*!< Falloff Stop Angle (degrees) */
+    ESCV_FALLOFF_START_OPACITY = 3, /*!< Falloff Start Opacity */
+    ESCV_FALLOFF_STOP_OPACITY = 4, /*!< Falloff Stop Opacity */
+    ESCV_ALPHA_TRANSPARENCY = 5, /*!< Alpha Transparency (Emissive alpha?) */
+    ESCV_U_OFFSET = 6, /*!< U Offset */
+    ESCV_U_SCALE = 7, /*!< U Scale */
+    ESCV_V_OFFSET = 8, /*!< V Offset */
+    ESCV_V_SCALE = 9 /*!< V Scale */
+};
+
+ostream & operator<<( ostream & out, EffectShaderControlledVariable const & val );
+
+/*! An unsigned 32-bit integer, describing which color in BSEffectShaderProperty to animate. */
+enum EffectShaderControlledColor {
+    ESCC_EMISSIVE_COLOR = 0, /*!< Emissive Color */
+};
+
+ostream & operator<<( ostream & out, EffectShaderControlledColor const & val );
+
+/*! An unsigned 32-bit integer, describing which float variable in BSLightingShaderProperty to animate. */
+enum LightingShaderControlledVariable {
+    LSCV_UNKNOWN_FLOAT_2 = 0, /*!< Unknown Float 2 */
+    LSCV_ENVIRONMENT_MAP_SCALE = 8, /*!< Environment Map Scale */
+    LSCV_GLOSSINESS = 9, /*!< Glossiness */
+    LSCV_SPECULAR_STRENGTH = 10, /*!< Specular Strength */
+    LSCV_EMISSIVE_MULTIPLE = 11, /*!< Emissive Multiple */
+    LSCV_ALPHA = 12, /*!< Alpha */
+    LSCV_U_OFFSET = 20, /*!< U Offset */
+    LSCV_U_SCALE = 21, /*!< U Scale */
+    LSCV_V_OFFSET = 22, /*!< V Offset */
+    LSCV_V_SCALE = 23 /*!< V Scale */
+};
+
+ostream & operator<<( ostream & out, LightingShaderControlledVariable const & val );
+
+/*! An unsigned 32-bit integer, describing which color in BSLightingShaderProperty to animate. */
+enum LightingShaderControlledColor {
+    LSCC_SPECULAR_COLOR = 0, /*!< Specular Color */
+    LSCC_EMISSIVE_COLOR = 1 /*!< Emissive Color */
+};
+
+ostream & operator<<( ostream & out, LightingShaderControlledColor const & val );
+
+
 
 }
 #endif

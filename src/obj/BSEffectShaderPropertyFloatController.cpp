@@ -20,7 +20,7 @@ using namespace Niflib;
 //Definition of TYPE constant
 const Type BSEffectShaderPropertyFloatController::TYPE("BSEffectShaderPropertyFloatController", &NiFloatInterpController::TYPE );
 
-BSEffectShaderPropertyFloatController::BSEffectShaderPropertyFloatController() : targetVariable((unsigned int)0) {
+BSEffectShaderPropertyFloatController::BSEffectShaderPropertyFloatController() : targetVariable(ESCV_EMISSIVEMULTIPLE) {
 	//--BEGIN CONSTRUCTOR CUSTOM CODE--//
 
 	//--END CUSTOM CODE--//
@@ -106,5 +106,12 @@ std::list<NiObject *> BSEffectShaderPropertyFloatController::GetPtrs() const {
 }
 
 //--BEGIN MISC CUSTOM CODE--//
+EffectShaderControlledVariable BSEffectShaderPropertyFloatController::GetTargetVariable() const {
+	return targetVariable;
+}
+
+void BSEffectShaderPropertyFloatController::SetTargetVariable(EffectShaderControlledVariable value) {
+	targetVariable = value;
+}
 
 //--END CUSTOM CODE--//

@@ -1974,9 +1974,103 @@ ostream & operator<<( ostream & out, MoppDataBuildType const & val ) {
 		case BUILT_WITH_CHUNK_SUBDIVISION: return out << "BUILT_WITH_CHUNK_SUBDIVISION";
 		case BUILT_WITHOUT_CHUNK_SUBDIVISION: return out << "BUILT_WITHOUT_CHUNK_SUBDIVISION";
 		case BUILD_NOT_SET: return out << "BUILD_NOT_SET";
+		default: return out << "Invalid Value! - " << (byte)(val);
+	}
+}
+
+//---ShaderControlled---//
+
+void NifStream( EffectShaderControlledVariable & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = EffectShaderControlledVariable(temp);
+}
+
+void NifStream( EffectShaderControlledVariable const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, EffectShaderControlledVariable const & val ) {
+	switch ( val ) {
+		case ESCV_EMISSIVEMULTIPLE: return out << "ESCV_EMISSIVEMULTIPLE";
+		case ESCV_FALLOFF_START_ANGLE: return out << "ESCV_FALLOFF_START_ANGLE";
+		case ESCV_FALLOFF_STOP_ANGLE: return out << "ESCV_FALLOFF_STOP_ANGLE";
+		case ESCV_FALLOFF_START_OPACITY: return out << "ESCV_FALLOFF_START_OPACITY";
+		case ESCV_FALLOFF_STOP_OPACITY: return out << "ESCV_FALLOFF_STOP_OPACITY";
+		case ESCV_ALPHA_TRANSPARENCY: return out << "ESCV_ALPHA_TRANSPARENCY";
+		case ESCV_U_OFFSET: return out << "ESCV_U_OFFSET";
+		case ESCV_U_SCALE: return out << "ESCV_U_SCALE";
+		case ESCV_V_OFFSET: return out << "ESCV_V_OFFSET";
+		case ESCV_V_SCALE: return out << "ESCV_V_SCALE";
 		default: return out << "Invalid Value! - " << (unsigned int)(val);
 	}
 }
+
+void NifStream( EffectShaderControlledColor & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = EffectShaderControlledColor(temp);
+}
+
+void NifStream( EffectShaderControlledColor const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, EffectShaderControlledColor const & val ) {
+	switch ( val ) {
+		case ESCC_EMISSIVE_COLOR: return out << "ESCC_EMISSIVE_COLOR";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+void NifStream( LightingShaderControlledVariable & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = LightingShaderControlledVariable(temp);
+}
+
+void NifStream( LightingShaderControlledVariable const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, LightingShaderControlledVariable const & val ) {
+	switch ( val ) {
+		case LSCV_UNKNOWN_FLOAT_2: return out << "LSCV_UNKNOWN_FLOAT_2";
+		case LSCV_ENVIRONMENT_MAP_SCALE: return out << "LSCV_ENVIRONMENT_MAP_SCALE";
+		case LSCV_GLOSSINESS: return out << "LSCV_GLOSSINESS";
+		case LSCV_SPECULAR_STRENGTH: return out << "LSCV_SPECULAR_STRENGTH";
+		case LSCV_EMISSIVE_MULTIPLE: return out << "LSCV_EMISSIVE_MULTIPLE";
+		case LSCV_ALPHA: return out << "LSCV_ALPHA";
+		case LSCV_U_OFFSET: return out << "LSCV_U_OFFSET";
+		case LSCV_U_SCALE: return out << "LSCV_U_SCALE";
+		case LSCV_V_OFFSET: return out << "LSCV_V_OFFSET";
+		case LSCV_V_SCALE: return out << "LSCV_V_SCALE";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+void NifStream( LightingShaderControlledColor & val, istream& in, const NifInfo & info ) {
+	unsigned int temp;
+	NifStream( temp, in, info );
+	val = LightingShaderControlledColor(temp);
+}
+
+void NifStream( LightingShaderControlledColor const & val, ostream& out, const NifInfo & info ) {
+	NifStream( (unsigned int)(val), out, info );
+}
+
+ostream & operator<<( ostream & out, LightingShaderControlledColor const & val ) {
+	switch ( val ) {
+		case LSCC_SPECULAR_COLOR: return out << "LSCC_SPECULAR_COLOR";
+		case LSCC_EMISSIVE_COLOR: return out << "LSCC_EMISSIVE_COLOR";
+		default: return out << "Invalid Value! - " << (unsigned int)(val);
+	}
+}
+
+
+
+
+
 
 
 
