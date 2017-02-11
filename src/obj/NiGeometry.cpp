@@ -649,7 +649,7 @@ void NiGeometry::SetBSProperty(short index, Niflib::Ref<NiProperty> value) {
 	}
 }
 
-array<2,Ref<NiProperty > > Niflib::NiGeometry::GetBSProperties() {
+Niflib::array<2,Ref<NiProperty > > Niflib::NiGeometry::GetBSProperties() {
 	return this->bsProperties;
 }
 
