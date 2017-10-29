@@ -21,7 +21,13 @@ class BSLightingShaderPropertyFloatController;
 typedef Ref<BSLightingShaderPropertyFloatController> BSLightingShaderPropertyFloatControllerRef;
 
 /*!
- * This controller is used to animate float variables in BSLightingShaderProperty
+ * This controller is used to animate variables in
+ * BSLightingShaderPropertyFloatController, target is a number in order they
+ * appear:
+ *     5: U Offset
+ *     6: V Offset
+ *     7: U Scale
+ *     8: V Scale
  */
 class BSLightingShaderPropertyFloatController : public NiFloatInterpController {
 public:

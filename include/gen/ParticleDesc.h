@@ -26,7 +26,7 @@ struct ParticleDesc {
 	/*! Unknown. */
 	Vector3 translation;
 	/*! Unknown. */
-	array<3,float > unknownFloats1;
+	NifArray<3,float > unknownFloats1;
 	/*! Unknown. */
 	float unknownFloat1;
 	/*! Unknown. */

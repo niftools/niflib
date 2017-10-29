@@ -6,6 +6,7 @@ All rights reserved.  Please see niflib.h for license. */
 
 #include <string>
 #include <stdarg.h>
+#include <algorithm> // std::max, std::min
 #include "gen/enums.h"
 #include "nif_versions.h"
 
@@ -78,15 +79,15 @@ struct NifInfo {
 
 /*! Used to enable static arrays to be members of vectors */
 template<int size, class T>
-struct array {
-	array() {
+struct NifArray {
+	NifArray() {
 		for ( size_t i = 0; i < size; ++i )
 			data[i] = T();
 	}
 // XXX ellipsis does not work when T = float
 // XXX see for instance http://support.microsoft.com/kb/71424
 /*
-	array(size_t n, ...) {
+	NifArray(size_t n, ...) {
 		va_list argptr;
 		va_start(argptr, n);
 		for ( size_t i = 0; i < n && i < size; ++i )
@@ -95,25 +96,25 @@ struct array {
 			data[i] = T();
 	}
 */
-	array(size_t n, T t0) {
+	NifArray(size_t n, T t0) {
 		data[0] = t0;
 		for ( size_t i = 1; i < size; ++i )
 			data[i] = T();
 	}
-	array(size_t n, T t0, T t1) {
+	NifArray(size_t n, T t0, T t1) {
 		data[0] = t0;
 		data[1] = t1;
 		for ( size_t i = 2; i < size; ++i )
 			data[i] = T();
 	}
-	array(size_t n, T t0, T t1, T t2) {
+	NifArray(size_t n, T t0, T t1, T t2) {
 		data[0] = t0;
 		data[1] = t1;
 		data[2] = t2;
 		for ( size_t i = 3; i < size; ++i )
 			data[i] = T();
 	}
-	array(size_t n, T t0, T t1, T t2, T t3) {
+	NifArray(size_t n, T t0, T t1, T t2, T t3) {
 		data[0] = t0;
 		data[1] = t1;
 		data[2] = t2;
@@ -121,7 +122,7 @@ struct array {
 		for ( size_t i = 4; i < size; ++i )
 			data[i] = T();
 	}
-	array(size_t n, T t0, T t1, T t2, T t3, T t4) {
+	NifArray(size_t n, T t0, T t1, T t2, T t3, T t4) {
 		data[0] = t0;
 		data[1] = t1;
 		data[2] = t2;
@@ -130,7 +131,7 @@ struct array {
 		for ( size_t i = 5; i < size; ++i )
 			data[i] = T();
 	}
-	array(size_t n, T t0, T t1, T t2, T t3, T t4, T t5) {
+	NifArray(size_t n, T t0, T t1, T t2, T t3, T t4, T t5) {
 		data[0] = t0;
 		data[1] = t1;
 		data[2] = t2;
@@ -140,7 +141,7 @@ struct array {
 		for ( size_t i = 6; i < size; ++i )
 			data[i] = T();
 	}
-  array(size_t n, T t0, T t1, T t2, T t3, T t4, T t5, T t6) {
+	NifArray(size_t n, T t0, T t1, T t2, T t3, T t4, T t5, T t6) {
 		data[0] = t0;
 		data[1] = t1;
 		data[2] = t2;
@@ -151,7 +152,7 @@ struct array {
 		for ( size_t i = 7; i < size; ++i )
 			data[i] = T();
 	}
-	~array() {}
+	~NifArray() {}
 	T & operator[]( unsigned int index ) {
 		return data[index];
 	}

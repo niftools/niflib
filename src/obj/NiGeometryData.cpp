@@ -507,7 +507,7 @@ static void CalcCenteredSphere(const vector<Vector3>& vertices, Vector3& center,
 	for (size_t i=0; i<nv; ++i){
 		Vector3 diff = vertices[ i ] - center;
 		float mag = diff.Magnitude();
-		radius = max(radius, mag);
+		radius = std::max(radius, mag);
 	}
 }
 

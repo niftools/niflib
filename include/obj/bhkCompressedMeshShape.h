@@ -93,7 +93,7 @@ protected:
 	/*! Unknown. */
 	float unknownFloat1;
 	/*! Unknown. */
-	array<4,byte > unknown4Bytes;
+	NifArray<4,byte > unknown4Bytes;
 	/*! Unknown */
 	Vector4 unknownFloats1;
 	/*! A shell with that radius is added around the shape. */

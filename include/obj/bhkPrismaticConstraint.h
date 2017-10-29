@@ -58,7 +58,7 @@ protected:
 	/*! Pivot A. */
 	Vector4 pivotA;
 	/*! 4x4 rotation matrix, rotates the child entity. */
-	array<4,Vector4 > rotationMatrixA;
+	NifArray<4,Vector4 > rotationMatrixA;
 	/*! Pivot B. */
 	Vector4 pivotB;
 	/*! Describes the axis the object is able to travel along. Unit vector. */

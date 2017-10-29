@@ -152,7 +152,7 @@ protected:
 	/*! Unknown. */
 	unsigned int unknownInt1;
 	/*! Unknown. */
-	array<4,unsigned int > unknownInts1;
+	NifArray<4,unsigned int > unknownInts1;
 	/*! Unknown */
 	unsigned int unknownInt2;
 	/*! Scale. Usually (1.0, 1.0, 1.0). */

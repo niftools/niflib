@@ -186,13 +186,13 @@ public:
 	 * Returns the array of the only 2 properties that are specific to Bethesda
 	 * \return Returns the array of the 2 properties
 	 */
-   NIFLIB_API array<2,Ref<NiProperty > > GetBSProperties();
+   NIFLIB_API NifArray<2,Ref<NiProperty > > GetBSProperties();
 
    /*
 	 * Sets the array of the only 2 properties that are specific to Bethesda
 	 * \param[in] The new array of properties
 	 */
-   NIFLIB_API void SetBSProperties( array<2, Ref<NiProperty> > value);
+   NIFLIB_API void SetBSProperties(NifArray<2, Ref<NiProperty> > value);
 
 	//--END CUSTOM CODE--//
 protected:
@@ -221,7 +221,7 @@ protected:
 	/*! Dirty Flag? */
 	bool dirtyFlag;
 	/*! Two property links, used by Bethesda. */
-	array<2,Ref<NiProperty > > bsProperties;
+	NifArray<2,Ref<NiProperty > > bsProperties;
 public:
 	/*! NIFLIB_HIDDEN function.  For internal use only. */
 	NIFLIB_HIDDEN virtual void Read( istream& in, list<unsigned int> & link_stack, const NifInfo & info );
