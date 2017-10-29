@@ -127,7 +127,7 @@ protected:
 	 * Unknown. Must be (0.0,0.0,-0.0,0.0,0.0,-0.0) for arrow detection to work (mind
 	 * the minus signs, -0.0 is 0x80000000 in hex).
 	 */
-	array<6,float > unknown6Floats;
+	NifArray<6,float > unknown6Floats;
 	/*! Number of vertices. */
 	mutable unsigned int numVertices;
 	/*! Vertices. Fourth component is 0. Lexicographically sorted. */

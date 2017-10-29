@@ -159,7 +159,7 @@ protected:
 	/*! The shape's material. */
 	SkyrimHavokMaterial skyrimMaterial;
 	/*! Unknown bytes. */
-	array<8,byte > unknown8Bytes;
+	NifArray<8,byte > unknown8Bytes;
 	/*! Unknown float, might be scale. */
 	float unknownFloat;
 	/*! Number of bytes for MOPP data. */

@@ -309,7 +309,7 @@ protected:
 	 */
 	float radius;
 	/*! Unknown, always 0? */
-	array<13,short > unknown13Shorts;
+	NifArray<13,short > unknown13Shorts;
 	/*!
 	 * Do we have vertex colors? These are usually used to fine-tune the lighting of
 	 * the model.

@@ -56,9 +56,9 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	array<7,float > unkownFloats;
+	NifArray<7,float > unkownFloats;
 	/*! Unknown. (1,0,0,0,0) x 3. */
-	array< 3, array<5,float > > unknownFloats2;
+	NifArray< 3, NifArray<5,float > > unknownFloats2;
 	/*! Unknown. */
 	float unknownFloat;
 public:

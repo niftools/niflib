@@ -258,7 +258,7 @@ void ComplexShape::Merge( NiAVObject * root ) {
 		vector<NiPropertyRef> current_property_group =  (*geom)->GetProperties();
 
 		//Special code to handle the Bethesda Skyrim properties
-		array<2, NiPropertyRef> bs_properties = (*geom)->GetBSProperties();
+		NifArray<2, NiPropertyRef> bs_properties = (*geom)->GetBSProperties();
 		if(bs_properties[0] != NULL) {
 			current_property_group.push_back(bs_properties[0]);
 		}
@@ -949,7 +949,7 @@ Ref<NiAVObject> ComplexShape::Split( NiNode * parent, Matrix44 & transform, int 
 						alpha_property = DynamicCast<NiAlphaProperty>((*prop));
 					}						
 				}
-				array<2, NiPropertyRef> bs_properties;
+				NifArray<2, NiPropertyRef> bs_properties;
 				bs_properties[0] = shader_property;
 				bs_properties[1] = alpha_property;
 				shapes[shape_num]->SetBSProperties(bs_properties);

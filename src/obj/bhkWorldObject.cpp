@@ -47,8 +47,8 @@ void bhkWorldObject::Read( istream& in, list<unsigned int> & link_stack, const N
 	NifStream( block_num, in, info );
 	link_stack.push_back( block_num );
 	if ( info.version < VER_20_2_0_7) {
-	NifStream( layer, in, info );
-	NifStream( colFilter, in, info );
+		NifStream( layer, in, info );
+		NifStream( colFilter, in, info );
 	} else {
 		NifStream( skyrimLayer, in, info );
 		NifStream( flagsAndPartNumber, in, info );

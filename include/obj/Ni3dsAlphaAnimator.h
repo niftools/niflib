@@ -63,7 +63,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	array<40,byte > unknown1;
+	NifArray<40,byte > unknown1;
 	/*! The parent? */
 	Ref<NiObject > parent;
 	/*! Unknown. */

@@ -104,7 +104,7 @@ protected:
 	/*! The shape's material. */
 	SkyrimHavokMaterial skyrimMaterial;
 	/*! Unknown. Set to (0.0,0.0,-0.0,0.0,0.0,-0.0), where -0.0 is 0x80000000 in hex. */
-	array<6,float > unknownFloats;
+	NifArray<6,float > unknownFloats;
 	/*! Unknown Flag */
 	byte unknownByte1;
 	/*! Unknown Flag */

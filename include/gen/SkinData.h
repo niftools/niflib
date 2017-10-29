@@ -36,7 +36,7 @@ struct SkinData {
 	/*! Radius for bounding sphere holding all vertices. */
 	float boundingSphereRadius;
 	/*! Unknown, always 0? */
-	array<13,short > unknown13Shorts;
+	NifArray<13,short > unknown13Shorts;
 	/*! Number of weighted vertices. */
 	mutable unsigned short numVertices;
 	/*! The vertex weights. */
