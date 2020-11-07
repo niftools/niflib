@@ -61,7 +61,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	array<2,int > unknownInts1;
+	Niflib::array<2,int > unknownInts1;
 	/*! Unknown. */
 	byte unknownByte;
 	/*! Unknown. */

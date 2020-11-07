@@ -58,7 +58,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown */
-	array<4,byte > unknown4Bytes;
+	Niflib::array<4,byte > unknown4Bytes;
 	/*! Unknown */
 	Vector3 unknownFloats1;
 	/*! Unknown */
