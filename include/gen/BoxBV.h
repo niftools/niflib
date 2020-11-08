@@ -26,9 +26,9 @@ struct BoxBV {
 	/*! Center */
 	Vector3 center;
 	/*! Axis */
-	array<3,Vector3 > axis;
+	Niflib::array<3,Vector3 > axis;
 	/*! Extent */
-	array<3,float > extent;
+	Niflib::array<3,float > extent;
 	//--BEGIN MISC CUSTOM CODE--//
 	//--END CUSTOM CODE--//
 };

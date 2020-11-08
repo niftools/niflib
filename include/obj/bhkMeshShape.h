@@ -63,13 +63,13 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*! Unknown. */
-	array<9,float > unknown1;
+	Niflib::array<9,float > unknown1;
 	/*! Unknown. */
 	mutable int numUnknownFloats;
 	/*! Unknown. */
-	vector< array<3,float > > unknownFloats;
+	vector< Niflib::array<3,float > > unknownFloats;
 	/*! Unknown. */
-	array<3,int > unknown2;
+	Niflib::array<3,int > unknown2;
 	/*! The number of strips data objects referenced. */
 	mutable unsigned int numStripsData;
 	/*! Refers to a bunch of NiTriStripsData objects that make up this shape. */

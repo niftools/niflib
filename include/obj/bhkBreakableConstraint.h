@@ -60,7 +60,7 @@ public:
 	//--END CUSTOM CODE--//
 protected:
 	/*!  */
-	array<41,int > unknownInts1;
+	Niflib::array<41,int > unknownInts1;
 	/*! Unknown */
 	short unknownShort1;
 	/*! A count or flag? */
