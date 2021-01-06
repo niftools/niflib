@@ -13,7 +13,7 @@ if "%cd%\" == "%~dp0" (
   exit /b 1
 )
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release %~dp0
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release "%~dp0"
 nmake
 nmake package
 nmake package_source
