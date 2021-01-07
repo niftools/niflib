@@ -93,9 +93,12 @@ StyleCopReport.xml
 # Niflib lib files
 lib/
 
+<<<<<<< HEAD
 # Niflib CMake Build Files
 build/
 
+=======
+>>>>>>> Development-Aaron1178
 # Chutzpah Test files
 _Chutzpah*
 
