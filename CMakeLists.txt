@@ -4,6 +4,8 @@ file(STRINGS "VERSION" VERSION)
 
 include_directories("include")
 
+option(NIFLIB_BuildTests "Build the unit tests when BUILD_TESTING is enabled." ${MAIN_PROJECT})
+
 SET(sources
 src/RefObject.cpp
 src/kfm.cpp
@@ -560,8 +562,11 @@ set_target_properties(niflib_static
    COMPILE_DEFINITIONS NIFLIB_STATIC_LINK)
 
 # build the tests, this needs boost
-enable_testing()
-add_subdirectory(test)
+if (NIFLIB_BuildTests)
+    enable_testing()
+	add_subdirectory(test)
+endif()
+
 
 # build documentation
 find_package(Doxygen)
