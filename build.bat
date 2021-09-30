@@ -2,18 +2,17 @@
 
 @echo off
 
-if "%cd%\" == "%~dp0" (
-  echo Please call the script from your build folder, for instance:
-  echo.
-  echo cd ..
-  echo mkdir build
-  echo ..\niflib\build.bat
-  echo.
-  pause
-  exit /b 1
+if not exist "build" (
+	mkdir "build"
 )
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release %~dp0
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -S "%cd%" -B "%cd%/build"
+
+cd "build"
+
 nmake
 nmake package
 nmake package_source
+
+pause
+exit /b 1
